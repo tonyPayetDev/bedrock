@@ -1,6 +1,9 @@
 # Application
 web/app/plugins/*
 !web/app/plugins/.gitkeep
+!web/app/plugins/react-plugin
+web/app/plugins/react-plugin/node_modules
+web/app/plugins/react-plugin/build
 web/app/mu-plugins/*/
 web/app/upgrade
 web/app/uploads/*

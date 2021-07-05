@@ -1,0 +1,15 @@
+{
+  "name": "react-plugin",
+  "version": "1.0.0",
+  "description": "Example of React integration in a plugin",
+  "main": "index.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start"
+  },
+  "author": "tony payet",
+  "license": "ISC",
+  "devDependencies": {
+    "@wordpress/scripts": "^16.1.4"
+  }
+}
