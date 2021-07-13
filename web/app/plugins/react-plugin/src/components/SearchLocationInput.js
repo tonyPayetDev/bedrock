@@ -58,9 +58,9 @@ export default function SearchLocationInput({
           <div>
             <div class="row justify-content-center m-4 fontsize-p">
               <div class="col-8 arrondie_g">
-                <label for="formGroupExampleInput" class="fontsize-p">
+                {/* <label for="formGroupExampleInput" class="fontsize-p">
                   Lieux de prise en charge
-                </label>
+                </label> */}
 
                 <input
                   type="text"

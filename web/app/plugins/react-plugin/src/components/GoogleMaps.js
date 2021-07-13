@@ -2,7 +2,7 @@ import React from "react";
 
 import { Map, InfoWindow, Marker } from "google-maps-react";
 import InfoContent from "./InfoContent.js";
-import Icon from "../images/pin.png";
+import Icon from "../images/house.png";
 import * as APIConfig from "../constants/APIConfig";
 
 const GoogleMaps = ({
@@ -14,7 +14,6 @@ const GoogleMaps = ({
   setSelectedSort,
 }) => {
   let renderMarkers;
-
   const [state, setState] = React.useState({
     lat: -21,
     lng: 55.5,
@@ -48,12 +47,13 @@ const GoogleMaps = ({
       const moto = motorisation
         .filter((motorisation) => motorisation.value == data.motorisation)
         .map((motorisation) => motorisation.label)[0];
-      console.log(Icon);
+        console.log(Icon);
+      console.log("http://localhost:8000/app/plugins/react-plugin/build"+Icon);
       return (
         <Marker
           icon={{
             width: "10%",
-            url: "/app/plugins/react-plugin/build/".Icon,
+            url: "app/plugins/react-plugin/build/"+Icon,
             anchor: window.google.maps.Point(16, 16),
             scaledSize: window.google.maps.Size(32, 32),
           }}
@@ -87,7 +87,7 @@ const GoogleMaps = ({
       center={{ lat: latitude, lng: longitude }}
     >
       {renderMarkers}
-
+    
       <InfoWindow
         marker={state.activeMarker}
         visible={state.showingInfoWindow}

@@ -1,9 +1,12 @@
 import { GoogleApiWrapper } from "google-maps-react";
 import GoogleMaps from "./components/GoogleMaps";
+import ListeAnnonce from "./components/ListeAnnonce";
+
 import SearchLocationInput from "./components/SearchLocationInput";
 import SelectBox from "./components/SelectBox";
 import React, { useState, useEffect } from "react";
 import * as APIConfig from "./constants/APIConfig";
+//import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
   const [state, updateState] = React.useState({
@@ -34,7 +37,7 @@ const App = () => {
   return (
     <div class="container">
       <h3 style={{ margin: "0px 0px 0px 29px " }}>
-        Recherche une voiture a proximité
+        Recherche une location a proximité
       </h3>
 
       <SearchLocationInput
@@ -52,6 +55,21 @@ const App = () => {
         state={state}
       ></SelectBox>
 
+    <div class="row">
+          
+    <div class="col-md-6">
+      <ListeAnnonce
+        options={options}
+        motorisation={optionsMoto}
+        latitude={state.lat}
+        longitude={state.lng}
+        setSelectedSort={setSelectedSort}
+        cars={selectedSort}
+      ></ListeAnnonce>
+
+      </div>
+      <div class="col-md-6">
+ 
       <GoogleMaps
         options={options}
         motorisation={optionsMoto}
@@ -60,7 +78,11 @@ const App = () => {
         setSelectedSort={setSelectedSort}
         cars={selectedSort}
       ></GoogleMaps>
+      </div>
+
+      </div>
     </div>
+
   );
 };
 

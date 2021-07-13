@@ -91,24 +91,22 @@ const SelectBox = (props) => {
 
   return (
     <div class="row justify-content-center m-4">
-      <div class="col-6">
-        <h6 class="center_filter">Filtrer</h6>
-      </div>
-      <div class="col-2">
+  
+      <div class="col-4">
         <Select
           placeholder={<div>Type de voiture</div>}
           options={options}
           onChange={(e) => setSearch(e)}
         />
       </div>
-      <div class="col-2">
+      <div class="col-4">
         <Select
           placeholder={<div>Adresse</div>}
           options={optionsAdrr}
           onChange={(e) => setSearchddress(e)}
         />
       </div>
-      <div class="col-2">
+      <div class="col-4">
         <Select
           placeholder={<div>Motorisation</div>}
           options={optionsMoto}

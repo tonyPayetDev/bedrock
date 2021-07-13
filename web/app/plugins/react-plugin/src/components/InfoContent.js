@@ -3,7 +3,7 @@ import Icon from "../images/flags.png";
 
 const InfoContent = (props) => {
   const { name } = props;
-
+  console.log(name);
   return (
     <div>
       {name ? (

@@ -15,10 +15,11 @@
     "style-loader": "^3.0.0"
   },
   "dependencies": {
-    "bootstrap": "^4.0.0-alpha.6",
+    "bootstrap": "^4.6.0",
     "google-map-react": "^2.1.9",
     "google-maps-react": "^2.0.6",
     "react": "^16.9.0",
+    "react-bootstrap": "^1.6.1",
     "react-dom": "^16.9.0",
     "react-google-maps": "^9.4.5",
     "react-google-places-autocomplete": "^3.3.0",
