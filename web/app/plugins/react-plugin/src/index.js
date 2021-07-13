@@ -2,36 +2,25 @@
 
 // Added lines to use wp.element instead of importing React
 const { Component, render } = wp.element;
-class Timer extends Component {
-    constructor(props) {
-      super(props);
-      this.state = { seconds: 0 };
-    }
-  
-    tick() {
-      this.setState(state => ({
-        seconds: state.seconds + 1
-      }));
-    }
-  
-    componentDidMount() {
-      this.interval = setInterval(() => this.tick(), 1000);
-    }
-  
-    componentWillUnmount() {
-      clearInterval(this.interval);
-    }
-  
-    render() {
-      return (
-        <div>
-          Secondes : {this.state.seconds}
-        </div>
-      );
-    }
-  }
-  
-  ReactDOM.render(
-    <Timer />,
-    document.getElementById('app')
-  );
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux'
+import App from './App';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
+import * as serviceWorker from './serviceWorker';
+import thunk from 'redux-thunk'
+
+const store = createStore(
+    applyMiddleware(thunk)
+)
+
+ReactDOM.render(
+<Provider store={store}><App /></Provider>, document.getElementById('app'));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
