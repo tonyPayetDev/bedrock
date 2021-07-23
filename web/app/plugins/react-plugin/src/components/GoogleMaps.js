@@ -41,14 +41,15 @@ const GoogleMaps = ({
   if (cars) {
     
     renderMarkers = cars.map((data, index) => {
-      const type = options
-        .filter((options) => options.value == data.type)
-        .map((options) => options.label)[0];
-      const moto = motorisation
-        .filter((motorisation) => motorisation.value == data.motorisation)
-        .map((motorisation) => motorisation.label)[0];
-        console.log(Icon);
-      console.log("http://localhost:8000/app/plugins/react-plugin/build"+Icon);
+      // const type = options
+      //   .filter((options) => options.value == data.type)
+      //   .map((options) => options.label)[0];
+      // const moto = motorisation
+      //   .filter((motorisation) => motorisation.value == data.motorisation)
+      //   .map((motorisation) => motorisation.label)[0];
+        console.log(data);
+
+      console.log("app/plugins/react-plugin/build"+Icon);
       return (
         <Marker
           icon={{
@@ -63,14 +64,13 @@ const GoogleMaps = ({
             lat: data.latitude,
             lng: data.longitude,
           }}
-          title={data.marque + " " + data.model}
+          title={data.ville + " " + data.code_postal}
           name={{
-            marque: data.marque,
-            motorisation: moto,
-            type: type,
-            model: data.model,
+            marque: data.ville,
+            // type: data.type,
+            model:data.ville,
             img: data.photo,
-            adresse: data.adresse,
+            adresse: data.code_postal,
           }}
           color="red"
           onClick={onMarkerClick}

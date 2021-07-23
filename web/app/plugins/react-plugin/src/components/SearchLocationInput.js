@@ -26,8 +26,11 @@ export default function SearchLocationInput({
   React.useEffect(
     (props) => {
       // rechercher par type
+      console.log("rechercher par type");
 
       if (cars) {
+        console.log(cars);
+
         const filtre_perimetre = cars
           .filter(
             (cars) =>

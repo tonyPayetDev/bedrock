@@ -75,10 +75,11 @@ const SelectBox = (props) => {
         );
       } else {
         if (cars) {
-      //    console.log(cars[0]["_embedded"]["wp:featuredmedia"][0]["source_url"]);
-            
+          console.log(cars);
+
           const adresse = cars.map((a) => {
-            return { value: a.id, label: a.adresse };
+              
+            return { value: a.id, label: a.ville };
           });
           setOptionsAdrr(adresse);
         }

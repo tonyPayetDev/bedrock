@@ -27,4 +27,6 @@ function example_react_app( $atts = array(), $content = null , $tag = 'example_r
 ?>
 	);
     <?php return ob_get_clean();
+
+    
 }

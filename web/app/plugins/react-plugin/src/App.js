@@ -23,7 +23,7 @@ const App = () => {
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    APIConfig.getItems().then((data) => setCars(data));
+    APIConfig.getItems().then((data) => setCars(data['biens']));
   }, []);
 
   useEffect(() => {
