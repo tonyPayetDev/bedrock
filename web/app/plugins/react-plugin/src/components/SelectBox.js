@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
+import * as APIConfig from "../constants/APIConfig";
 
 const SelectBox = (props) => {
   const { options, optionsMoto, setSelectedSort, cars, state } = props;
@@ -14,9 +15,9 @@ const SelectBox = (props) => {
       // rechercher par type
 
       if (search && searchAddress == "" && searchMoto == "") {
-        setSelectedSort(
-          cars.filter((cars) => cars.type == search.value).map((cars) => cars)
-        );
+        APIConfig.getItems({ secteur:search.value}).then((data) => setSelectedSort(data['biens']));
+        //APIConfig.getItems({prestation_type:"Vente", secteur:search.value}).then((data) => setSelectedSort(data['biens']));
+
       } else if (search == "" && searchMoto == "" && searchAddress) {
         setSelectedSort(
           cars
@@ -35,11 +36,9 @@ const SelectBox = (props) => {
       }
       // rechercher par motorisation
       else if (searchMoto && search == "" && searchAddress == "") {
-        setSelectedSort(
-          cars
-            .filter((cars) => cars.motorisation == searchMoto.value)
-            .map((cars) => cars)
-        );
+
+        APIConfig.getItems({ prestation_type:searchMoto.value}).then((data) => setSelectedSort(data['biens']));
+
       } else if (searchMoto && search && searchAddress == "") {
         setSelectedSort(
           cars
@@ -77,8 +76,7 @@ const SelectBox = (props) => {
         if (cars) {
           console.log(cars);
 
-          const adresse = cars.map((a) => {
-              
+          const adresse = cars.map((a) => {            
             return { value: a.id, label: a.ville };
           });
           setOptionsAdrr(adresse);
@@ -92,24 +90,23 @@ const SelectBox = (props) => {
 
   return (
     <div class="row justify-content-center m-4">
-  
       <div class="col-4">
         <Select
-          placeholder={<div>Type de voiture</div>}
+          placeholder={<div>Secteur</div>}
           options={options}
           onChange={(e) => setSearch(e)}
         />
       </div>
-      <div class="col-4">
+      {/* <div class="col-4">
         <Select
           placeholder={<div>Adresse</div>}
           options={optionsAdrr}
           onChange={(e) => setSearchddress(e)}
         />
-      </div>
+      </div> */}
       <div class="col-4">
         <Select
-          placeholder={<div>Motorisation</div>}
+          placeholder={<div>Type</div>}
           options={optionsMoto}
           onChange={(e) => setSearchMoto(e)}
         />

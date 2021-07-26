@@ -4,6 +4,8 @@ import ListeAnnonce from "./components/ListeAnnonce";
 
 import SearchLocationInput from "./components/SearchLocationInput";
 import SelectBox from "./components/SelectBox";
+import NbResultat from "./components/NbResultat";
+
 import React, { useState, useEffect } from "react";
 import * as APIConfig from "./constants/APIConfig";
 //import 'bootstrap/dist/css/bootstrap.min.css';
@@ -36,10 +38,9 @@ const App = () => {
 
   return (
     <div class="container">
-      <h3 style={{ margin: "0px 0px 0px 29px " }}>
-        Recherche une location a proximité
+      <h3 style={{ margin: "0px 0px 0px 29px " }}>    
+        Recherche une location a proximité  
       </h3>
-
       <SearchLocationInput
         state={state}
         updateState={updateState}
@@ -54,6 +55,10 @@ const App = () => {
         cars={cars}
         state={state}
       ></SelectBox>
+      
+      <NbResultat
+        data={selectedSort}
+      ></NbResultat>
 
     <div class="row">
           

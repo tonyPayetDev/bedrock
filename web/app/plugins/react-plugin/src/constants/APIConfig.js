@@ -11,11 +11,11 @@ export const Zoom = 12;
 export const perimetre_long = 0.2;
 export const perimetre_lat = 0.05;
 
-const fetchURL = `${API_URI}/biens/2?`;
+const fetchURL = `${API_URI}/biens?`;
 
 
-export const getItems = () =>
-  fetch(fetchURL +  new URLSearchParams({prestation_type:"Vente", secteur:"Sud"}), {
+export const getItems = ($filter) =>
+  fetch(fetchURL +  new URLSearchParams($filter), {
     method: "GET",
     headers: HEADERS,
   }).then((res) => res.json());
@@ -34,14 +34,14 @@ export const getItems = () =>
 //     headers: HEADERS,
 //   }).then((res) => res.json());
 
-const fetchURLType = `${API_URI}/types`;
+const fetchURLType = `${API_URI}/secteurs`;
 export const getItemsType = () =>
   fetch(fetchURLType, {
     method: "GET",
     headers: HEADERS,
   }).then((res) => res.json());
 
-const fetchURLMoto = `${API_URI}/motorisations`;
+const fetchURLMoto = `${API_URI}/types`;
 export const getItemsMoto = () =>
   fetch(fetchURLMoto, {
     method: "GET",
