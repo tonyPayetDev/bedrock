@@ -17,15 +17,22 @@ const App = () => {
     showingInfoWindow: false, // Hides or shows the InfoWindow
     activeMarker: {}, // Shows the active marker upon click
     selectedPlace: {},
-  });
+    visible: false,
 
+  });
+  const divStyle = {
+    visibility:"hidden",
+  };
   const [cars, setCars] = useState();
   const [selectedSort, setSelectedSort] = useState();
   const [optionsMoto, setOptionsMoto] = useState([]);
   const [options, setOptions] = useState([]);
+  const [params, setParams] = useState([]);
+
 
   useEffect(() => {
-    APIConfig.getItems().then((data) => setCars(data['biens']));
+    APIConfig.getItems({ prestation_type:"Vente"}).then((data) => setSelectedSort(data));
+   
   }, []);
 
   useEffect(() => {
@@ -34,6 +41,10 @@ const App = () => {
 
   useEffect(() => {
     APIConfig.getItemsMoto().then((data) => setOptionsMoto(data));
+  }, []);
+
+  useEffect(() => {
+    APIConfig.getItemsParams().then((data) => setParams(data));
   }, []);
 
   return (
@@ -55,15 +66,17 @@ const App = () => {
         cars={cars}
         state={state}
       ></SelectBox>
-      
-      <NbResultat
-        data={selectedSort}
-      ></NbResultat>
 
-    <div class="row">
+      <NbResultat
+        data={selectedSort} 
+      ></NbResultat>
+            
+
+    <div    class="row" style=  {params.visible ?null  :  divStyle} >
           
     <div class="col-md-6">
-      <ListeAnnonce
+      <ListeAnnonce 
+       
         options={options}
         motorisation={optionsMoto}
         latitude={state.lat}
@@ -73,7 +86,7 @@ const App = () => {
       ></ListeAnnonce>
 
       </div>
-      <div class="col-md-6">
+      {/* <div class="col-md-6">
  
       <GoogleMaps
         options={options}
@@ -83,7 +96,7 @@ const App = () => {
         setSelectedSort={setSelectedSort}
         cars={selectedSort}
       ></GoogleMaps>
-      </div>
+      </div> */}
 
       </div>
     </div>

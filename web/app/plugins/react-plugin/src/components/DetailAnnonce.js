@@ -3,8 +3,7 @@ import Icon from "../images/flags.png";
 import * as APIConfig from "../constants/APIConfig";
 
 const DetailAnnonce = (props) => {
-  const { name ,data} = props;
-  console.log(data['titre']);
+  const { name } = props;
   return (
 
 <div class="card" >
@@ -26,7 +25,7 @@ const DetailAnnonce = (props) => {
               </div>
             </div>
             <div class="btn-group">
-                  <button type="button" href="#" class="btn btn-sm btn-outline-secondary  stretched-link"  >contactez un pro</button>
+                  <button type="button" href="#" class="btn btn-sm btn-outline-secondary  "  >contactez un pro</button>
                   <button type="button" class="btn btn-sm btn-outline-secondary">favoris</button>
 
                 </div>

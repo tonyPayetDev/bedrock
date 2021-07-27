@@ -11,8 +11,16 @@ add_shortcode( 'example_react_app', 'example_react_app' );
  */
 function example_react_app( $atts = array(), $content = null , $tag = 'example_react_app' ){
     ob_start();
+    	//récupère les paramètres
+	$atts = shortcode_atts(
+        array(
+            'post_type' => 'post',
+            'limit' => 'limit'
+        ), $atts);
+        //transforme les paramètres en variables
+        extract($atts);
     ?>
-      <div id="app">App goes here</div>
+      <div id="app">Chargement</div>
 
         <?php wp_enqueue_script( 'example-app', plugins_url( 'build/index.js', __FILE__ ), array( 'wp-element' ), time(), true ); ?>
         <?php  
@@ -25,7 +33,7 @@ function example_react_app( $atts = array(), $content = null , $tag = 'example_r
        wp_enqueue_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', array('jquery'), 1, true);
        wp_enqueue_script('boostrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array('jquery', 'popper'), 1, true);
 ?>
-	);
+    
     <?php return ob_get_clean();
 
     

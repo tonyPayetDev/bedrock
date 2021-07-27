@@ -13,7 +13,6 @@ export const perimetre_lat = 0.05;
 
 const fetchURL = `${API_URI}/biens?`;
 
-
 export const getItems = ($filter) =>
   fetch(fetchURL +  new URLSearchParams($filter), {
     method: "GET",
@@ -44,6 +43,17 @@ export const getItemsType = () =>
 const fetchURLMoto = `${API_URI}/types`;
 export const getItemsMoto = () =>
   fetch(fetchURLMoto, {
+    method: "GET",
+    headers: HEADERS,
+  }).then((res) => res.json());
+
+
+var url = new URL(document.location.href);
+var page_id = url.searchParams.get("page_id");
+
+const fetchURLParams = `${API_URI}/params?page_id=`+page_id;
+export const getItemsParams = () =>
+  fetch(fetchURLParams, {
     method: "GET",
     headers: HEADERS,
   }).then((res) => res.json());

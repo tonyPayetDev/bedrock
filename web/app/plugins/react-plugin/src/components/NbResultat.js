@@ -8,10 +8,9 @@ const NbResultat = (props) => {
 
 <div>
 
-{data ? data.length+" résultats" : "" }
+{data ? data['count']+" résultats" : "" }
 
 </div>
-
 
   );
 };

@@ -41,15 +41,9 @@ const GoogleMaps = ({
   if (cars) {
     
     renderMarkers = cars.map((data, index) => {
-      // const type = options
-      //   .filter((options) => options.value == data.type)
-      //   .map((options) => options.label)[0];
-      // const moto = motorisation
-      //   .filter((motorisation) => motorisation.value == data.motorisation)
-      //   .map((motorisation) => motorisation.label)[0];
-        console.log(data);
+    console.log(data);
 
-      console.log("app/plugins/react-plugin/build"+Icon);
+  //    console.log("app/plugins/react-plugin/build"+Icon);
       return (
         <Marker
           icon={{

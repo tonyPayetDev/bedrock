@@ -42,20 +42,11 @@ const ListeAnnonce = ({
   };
 
   if (cars) {
-    console.log(  cars);
 
-    renderMarkers = cars.map((data, index) => {
+    renderMarkers = cars['biens'].map((data, index) => {
       console.log(  data);
-
-      // const type = options
-      //   .filter((options) => options.value == data.type)
-      //   .map((options) => options.label)[0];
-      // const moto = motorisation
-      //   .filter((motorisation) => motorisation.value == data.motorisation)
-      //   .map((motorisation) => motorisation.label)[0];
       return (
-      
-        <DetailAnnonce data={data}  name= {data}  > </DetailAnnonce>
+        <DetailAnnonce name={data} > </DetailAnnonce>
 
       );
     });

@@ -15,7 +15,7 @@ const SelectBox = (props) => {
       // rechercher par type
 
       if (search && searchAddress == "" && searchMoto == "") {
-        APIConfig.getItems({ secteur:search.value}).then((data) => setSelectedSort(data['biens']));
+        APIConfig.getItems({ secteur:search.value}).then((data) => setSelectedSort(data));
         //APIConfig.getItems({prestation_type:"Vente", secteur:search.value}).then((data) => setSelectedSort(data['biens']));
 
       } else if (search == "" && searchMoto == "" && searchAddress) {
@@ -37,7 +37,7 @@ const SelectBox = (props) => {
       // rechercher par motorisation
       else if (searchMoto && search == "" && searchAddress == "") {
 
-        APIConfig.getItems({ prestation_type:searchMoto.value}).then((data) => setSelectedSort(data['biens']));
+        APIConfig.getItems({ prestation_type:searchMoto.value}).then((data) => setSelectedSort(data));
 
       } else if (searchMoto && search && searchAddress == "") {
         setSelectedSort(
@@ -80,6 +80,7 @@ const SelectBox = (props) => {
             return { value: a.id, label: a.ville };
           });
           setOptionsAdrr(adresse);
+
         }
 
         //   setSelectedSort(cars);
@@ -90,13 +91,7 @@ const SelectBox = (props) => {
 
   return (
     <div class="row justify-content-center m-4">
-      <div class="col-4">
-        <Select
-          placeholder={<div>Secteur</div>}
-          options={options}
-          onChange={(e) => setSearch(e)}
-        />
-      </div>
+
       {/* <div class="col-4">
         <Select
           placeholder={<div>Adresse</div>}
@@ -104,11 +99,28 @@ const SelectBox = (props) => {
           onChange={(e) => setSearchddress(e)}
         />
       </div> */}
+
       <div class="col-4">
         <Select
           placeholder={<div>Type</div>}
           options={optionsMoto}
           onChange={(e) => setSearchMoto(e)}
+          defaultValue={{ label: "Acheter", value: "Acheter" }}
+
+        />
+      </div>
+      <div class="col-4">
+        <Select
+          placeholder={<div>Secteur</div>}
+          options={options}
+          onChange={(e) => setSearch(e)}
+        />
+      </div>
+      <div class="col-4">
+        <Select
+          placeholder={<div>Type de bien</div>}
+          options={options}
+          onChange={(e) => setSearch(e)}
         />
       </div>
     </div>
