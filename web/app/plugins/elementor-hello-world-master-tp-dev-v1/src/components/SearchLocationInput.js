@@ -5,7 +5,9 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
-
+const divStyle = {
+  visibility:"hidden",
+};
 export default function SearchLocationInput({
   state,
   updateState,
@@ -46,7 +48,7 @@ export default function SearchLocationInput({
           .map((cars) => cars);
 
         // // setCarsPerimetre(filtre_perimetre);
-        setSelectedSort(filtre_perimetre);
+        setSelectedSort(filtre_perimetre);  
       }
     },
     [state]
@@ -56,7 +58,8 @@ export default function SearchLocationInput({
     color: "#252525",
   };
   return (
-    <div>
+
+    <div style={params.visible_search_map ?null : divStyle} >
       <PlacesAutocomplete
         value={address}
         onChange={setAddress}

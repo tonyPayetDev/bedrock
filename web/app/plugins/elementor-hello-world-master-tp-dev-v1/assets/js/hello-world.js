@@ -11,4 +11,8 @@
 	$( window ).on( 'elementor/frontend/init', function() {
 		elementorFrontend.hooks.addAction( 'frontend/element_ready/hello-world.default', WidgetHelloWorldHandler );
 	} );
+	// var sel = document.getElementById("react");
+    // document.querySelector('#app').append(sel)
 } )( jQuery );
+
+

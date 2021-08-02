@@ -8,109 +8,44 @@ const SelectBox = (props) => {
   const [searchAddress, setSearchddress] = useState("");
   const [searchMoto, setSearchMoto] = useState("");
   const [optionsAdrr, setOptionsAdrr] = useState([]);
-  const [tab, setTab] = useState({ "secteur":"", "prestation_type": "" ,"type":""  });
+  const [tab, setTab] = useState({  });// # todo a recupérer en params
 
-  let renderMarkers;
-  var  animals = [];
-  const count = animals.push(searchMoto);
- // const tab={ "secteur":"", "prestation_type": "" ,"type":""  } ;
-  function test(searchMoto){
- 
-  }
-  // filter
+  let renderSelect ;
+
   useEffect(
     (props) => {
       // rechercher par type
 
-      if (search && searchAddress == "" && searchMoto == "") {
-        APIConfig.getItems({ secteur:search.value}).then((data) => setSelectedSort(data));
-        //APIConfig.getItems({prestation_type:"Vente", secteur:search.value}).then((data) => setSelectedSort(data['biens']));
-
-      } else if (search == "" && searchMoto == "" && searchAddress) {
-        setSelectedSort(
-          cars
-            .filter((cars) => cars.id == searchAddress.value)
-            .map((cars) => cars)
-        );
-      } else if (search && searchAddress && searchMoto == "") {
-        setSelectedSort(
-          cars
-            .filter(
-              (cars) =>
-                cars.type == search.value && cars.id == searchAddress.value
-            )
-            .map((cars) => cars)
-        );
-      }
-      // rechercher par motorisation
-      
-      else if (searchMoto && search == "" && searchAddress == "") {
-        tab[searchMoto.name]=searchMoto.value;
+      if (search ) {
+        tab[search.name]=search.value;
         APIConfig.getItems(tab).then((data) => setSelectedSort(data));
-        console.log(tab)
-      } else if (searchMoto && search && searchAddress == "") {
-        setSelectedSort(
-          cars
-            .filter(
-              (cars) =>
-                cars.type == search.value &&
-                cars.motorisation == searchMoto.value
-            )
-            .map((cars) => cars)
-        );
-      } else if (searchMoto && search == "" && searchAddress) {
-        setSelectedSort(
-          cars
-            .filter(
-              (cars) =>
-                cars.id == searchAddress.value &&
-                cars.motorisation == searchMoto.value
-            )
-            .map((cars) => cars)
-        );
-      }
-      // les 3
-      else if (searchMoto && search && searchAddress) {
-        setSelectedSort(
-          cars
-            .filter(
-              (cars) =>
-                cars.id == searchAddress.value &&
-                cars.motorisation == searchMoto.value &&
-                cars.motorisation == searchMoto.value
-            )
-            .map((cars) => cars)
-        );
-      } else {
+      }  else {
         if (cars) {
-          console.log(cars);
-
+          //console.log(cars);
           const adresse = cars.map((a) => {            
             return { value: a.id, label: a.ville };
           });
           setOptionsAdrr(adresse);
 
         }
-
         //   setSelectedSort(cars);
       }
     },
     [search, searchAddress, searchMoto, cars]
   );
-  renderMarkers = params.type.map((data, index) => {
-    
-    return data
-  });
 
-  renderMarkers = renderMarkers.map((data, index) => {
 
+  let col ="col-"+ 12/params.type.length;// calcul le nombre de col d'apres le nombre de select
+
+
+  renderSelect =  params.type.map((data, index) => {
     
     return (
-      <div class="col-4">
+      <div class={col}>
       <Select
-        placeholder={data.name}
+        placeholder={data.label}
         options={data.value}
-        onChange={(e) => setSearchMoto({ "name":data.name, "value": e.value })}
+        onChange={(e) => setSearch({ "name":data.name, "value": e.value })}
         // defaultValue={{ label: "Acheter", value: "Acheter" }}
 
       />
@@ -121,38 +56,8 @@ const SelectBox = (props) => {
 
   return (
     <div class="row justify-content-center m-4">
-      {renderMarkers}
-      {/* <div class="col-4">
-        <Select
-          placeholder={<div>Adresse</div>}
-          options={optionsAdrr}
-          onChange={(e) => setSearchddress(e)}
-        />
-      </div> */}
+      {renderSelect}
 
-      {/* <div class="col-4">
-        <Select
-          placeholder={<div>Type</div>}
-          options={optionsMoto}
-          onChange={(e) => setSearchMoto(e)}
-          defaultValue={{ label: "Acheter", value: "Acheter" }}
-
-        />
-      </div>
-      <div class="col-4">
-        <Select
-          placeholder={<div>Secteur</div>}
-          options={options}
-          onChange={(e) => setSearch(e)}
-        />
-      </div>
-      <div class="col-4">
-        <Select
-          placeholder={<div>Type de bien</div>}
-          options={options}
-          onChange={(e) => setSearch(e)}
-        />
-      </div> */}
     </div>
   );
 };

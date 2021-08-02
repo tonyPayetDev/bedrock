@@ -11,6 +11,7 @@ import * as APIConfig from "./constants/APIConfig";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import params from './jsonFile.json';
 console.log(params);
+
 const App = () => {
   const [state, updateState] = React.useState({
     lat: -21,
@@ -21,6 +22,9 @@ const App = () => {
     visible: false,
 
   });
+  const style = {
+    backgroundColor: params.color ?  params.color : "#ffffff",
+  };
   const divStyle = {
     visibility:"hidden",
   };
@@ -28,10 +32,6 @@ const App = () => {
   const [selectedSort, setSelectedSort] = useState();
   const [optionsMoto, setOptionsMoto] = useState([]);
   const [options, setOptions] = useState([]);
- // const [params, setParams] = useState([]);
-  // useEffect(() => {
-  //   APIConfig.getItemsParams().then((data) => setParams(data));
-  // }, []);
 
   useEffect(() => {
     APIConfig.getItems({ prestation_type:"Vente"}).then((data) => setSelectedSort(data));
@@ -50,17 +50,13 @@ const App = () => {
 
   return (
     <div class="container">
-      <h3 style={{ margin: "0px 0px 0px 29px " }}>    
+      <h3 style={{ margin: "0px 0px 0px 0px " }}>    
         Recherche une location a proximité  
       </h3>
-      <SearchLocationInput
-        state={state}
-        updateState={updateState}
-        cars={cars}
-        setSelectedSort={setSelectedSort}
-        params={params}
-      ></SearchLocationInput>
-      
+
+      <div class="row">
+      <div class="col-11">
+
       <SelectBox
         options={options}
         optionsMoto={optionsMoto}
@@ -69,15 +65,29 @@ const App = () => {
         state={state}
         params={params}
       ></SelectBox>
+      </div>
 
+      <div class="col-1">
+         <a type="button" href={params.url} class="btn btn-primary" style={style}>Recherche</a>
+      </div>
+
+      </div>
       <NbResultat
         data={selectedSort} 
       ></NbResultat>
-            
+      <SearchLocationInput
+       
+       state={state}
+       updateState={updateState}
+       cars={cars}
+       setSelectedSort={setSelectedSort}
+       params={params}
+     ></SearchLocationInput>
 
-    <div    class="row" style=  {params.visible ?null  :  divStyle} >
+
+    <div    class="row" style={params.visible ?null  :  divStyle} >
           
-    <div class="col-md-6">
+    <div class="col-md-6" >
       <ListeAnnonce 
        
         options={options}
