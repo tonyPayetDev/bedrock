@@ -936,8 +936,7 @@ class Hello_World extends Widget_Base
         $file = dirname(__DIR__)."/src/jsonFile.json";
         $context = Timber::get_context();
 
-        $context['ekit_wb_1860_color'] = $settings['ekit_wb_1860_color'];
-
+		// recuperation valeurs select
         $type=[];
         if ($settings['ekit_wb_225_code']) {
             foreach (json_decode($settings['ekit_wb_225_code']) as $key => $value) {
@@ -946,9 +945,8 @@ class Hello_World extends Widget_Base
                 }
             }
         }
-
+		// adaptation du select
         foreach ($settings['categories'] as $category) {
-            //echo $category['category_title'];
             $tab_value=null;
             foreach ($settings['services'] as $service) {
                 if ($category['category_slug'] === $service['category_slug']) {
@@ -957,10 +955,22 @@ class Hello_World extends Widget_Base
             }
             $tab[]= array("name"=>$category['category_slug'], "label"=>$category['category_title'], "value"=>$tab_value);
         }
-		// get pa
-       	$array = array("id"=>$settings['post'] ,"id_active"=>get_permalink(get_the_ID()),'type'=>$tab,'ekit_search_btn' =>  $settings['ekit_search_btn'],'search_text' =>  $settings['search_text'],'heading_text' =>  $settings['heading_text'], 'url' =>  $settings['ekit_wb_226_url']["url"], "API_URI"=> $settings['ekit_wb_225_url']["url"],'color' =>  $settings['ekit_wb_1860_color'] ,'visible' => $settings['ekit_biens'], 'visible_search_map' => $settings['ekit_maps']);
+		$var = get_query_var('prestation'); // "lama"
+	//	var_dump($var);
+		$array = array(
+		   "id"=>$settings['post'] ,
+		   "id_active"=>get_permalink(get_the_ID()), // se base l'url de la page pour checker le bon parametre
+		   'type'=>$tab,
+		   'ekit_search_btn' =>  $settings['ekit_search_btn'],
+		   'search_text' =>  $settings['search_text'],
+		   'heading_text' =>  $settings['heading_text'], 
+		   'url' =>  $settings['ekit_wb_226_url']["url"],
+		    "API_URI"=> $settings['ekit_wb_225_url']["url"],
+			'color' =>  $settings['ekit_wb_1860_color'] ,
+			'visible' => $settings['ekit_biens'],
+			'visible_search_map' => $settings['ekit_maps']);
         
-		 // enregistrement dans le fichier json  
+		// enregistrement dans le fichier json  
         $data = file_get_contents($file);		
         $obj = json_decode($data); 
 
@@ -981,6 +991,7 @@ class Hello_World extends Widget_Base
 			$obj[$id]=$array; // update
 		}
 		$newJsonString = json_encode($obj);
+
 		file_put_contents($file, $newJsonString);
 		
    		Timber::render('index.twig', $context);

@@ -16,7 +16,7 @@ const ListeAnnonce = ({
   setSelectedSort,
   params,
 }) => {
-  let renderMarkers;
+  let renderAnnonce;
   const style = {
     backgroundColor: params.color ?  params.color : "#ffffff",
     color: params.color ?  params.color : "#ffffff",
@@ -30,6 +30,7 @@ const ListeAnnonce = ({
     activeMarker: {}, // Shows the active marker upon click
     selectedPlace: { marque: "", motorisation: "", model: "" },
   });
+  
   const onMarkerClick = (props, marker, e) =>
     setState({
       selectedPlace: props,
@@ -47,22 +48,17 @@ const ListeAnnonce = ({
   };
 
   if (cars) {
-
-    renderMarkers = cars['biens'].map((data, index) => {
-      console.log(  data);
+    renderAnnonce = cars['biens'].map((annonce, index) => {
+      if(annonce)
       return (
-        <DetailAnnonce name={data} params={params} > </DetailAnnonce>
+        <DetailAnnonce name={annonce} params={params} > </DetailAnnonce>
 
       );
     });
   }
 
   return (
-    <div> 
-    
-     {renderMarkers}
-
-     </div>    
+    <div>{renderAnnonce}</div>    
 
   );
 };

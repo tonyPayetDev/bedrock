@@ -13,13 +13,11 @@ export const Zoom = 12;
 export const perimetre_long = 0.2;
 export const perimetre_lat = 0.05;
 var url = new URL(document.location.href);
-export const params=params_json.filter(single => single.id_active ===url.href)[0];
+export const url_const =url;
+export const params=params_json.filter(single => single.id_active ===url.origin+url.pathname)[0];
 export const API_URI = params.API_URI;
-console.log(url);
+var page_id = url.searchParams.get("page_id");// pour la pagination
 
-// chargement des params
-var page_id = url.searchParams.get("page_id");
-var search = url.searchParams.get("search");
 const fetchURLParams = `${API_URI}/params?page_id=`+page_id;
 export const getItemsParams = () =>
   fetch(fetchURLParams, {

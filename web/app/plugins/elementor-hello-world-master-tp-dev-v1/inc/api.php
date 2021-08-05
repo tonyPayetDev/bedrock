@@ -108,9 +108,7 @@ function params(WP_REST_Request $request)
 function biens(WP_REST_Request $request)
 {
     $paged = ($request->get_param('paged')) ? $request->get_param('paged') : 1;
-    var_dump('toto');
-
-    die();
+    
     $r=array();
     
     foreach (name_select() as $key => $name) {

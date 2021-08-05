@@ -9,9 +9,9 @@ import NbResultat from "./components/NbResultat";
 import React, { useState, useEffect } from "react";
 import * as APIConfig from "./constants/APIConfig";
 //import 'bootstrap/dist/css/bootstrap.min.css';
-import params_json from './jsonFile.json';
 
-const id_active=params_json[0].post_id_active
+var page_id = APIConfig.url_const.searchParams.get("page_id");
+
 const App = () => {
   const [state, updateState] = React.useState({
     lat: -21,
@@ -22,9 +22,17 @@ const App = () => {
     visible: false,
 
   });
+  const [tab, setTab] = useState({  });// # stock les filtre d'apres les type récupérer 
 
   const params=APIConfig.params;
+  console.log(  tab);
 
+ params.type.map((data, index) => {
+    var secteur = APIConfig.url_const.searchParams.get( data.name);
+    if(secteur){ // on récuper si l'info et présente
+      tab[data.name]=secteur;
+    }
+  });
 
   const style = {
     backgroundColor: params.color ?  params.color : "#ffffff",
@@ -40,21 +48,16 @@ const App = () => {
   const [selectedSort, setSelectedSort] = useState();
   const [optionsMoto, setOptionsMoto] = useState([]);
   const [options, setOptions] = useState([]);
+  const [url_construct, setUrlConstruct] = useState({prestation_type:"",secteur:""});
 
   useEffect(() => {
-    APIConfig.getItems({ prestation_type:"Vente"}).then((data) => setSelectedSort(data));
+    APIConfig.getItems(tab).then((data) => setSelectedSort(data));
    
   }, []);
-
-  // useEffect(() => {
-  //   APIConfig.getItemsType().then((data) => setOptions(data));
-  // }, []);
 
   useEffect(() => {
     setOptionsMoto(params.secteur)
   }, []);
-
-
 
   return (
     <div class="container"> 
@@ -63,24 +66,26 @@ const App = () => {
       </h3>
 
       <div class="row">
-      <div class="col-12 m-2">
+        <div class="col-12 m-2">
 
-      <SelectBox
-        options={options}
-        optionsMoto={optionsMoto}
-        setSelectedSort={setSelectedSort}
-        cars={cars}
-        state={state}
-        params={params}
-      ></SelectBox>
-      </div>
+        <SelectBox
+          options={options}
+          optionsMoto={optionsMoto}
+          setSelectedSort={setSelectedSort}
+          setUrlConstruct={setUrlConstruct}
+          cars={cars}
+          state={state}
+          params={params}
+
+        ></SelectBox>
+        </div>
 
       </div>
 
       <div class="row">
       <div class="col-12  justify-content-center ">
 
-         <a type="button" href={params.url} class="btn " style={style}> {params.search_text}</a>
+         <a type="button" href={params.url +'?'+  new URLSearchParams(url_construct)} class="btn " style={style}> {params.search_text}</a>
          </div>
 
       </div>

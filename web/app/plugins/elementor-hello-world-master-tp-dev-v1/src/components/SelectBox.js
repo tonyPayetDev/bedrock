@@ -3,7 +3,7 @@ import Select from "react-select";
 import * as APIConfig from "../constants/APIConfig";
 
 const SelectBox = (props) => {
-  const { options, optionsMoto, setSelectedSort, cars, state , params } = props;
+  const { options, optionsMoto, setSelectedSort, cars, state , params ,setUrlConstruct} = props;
   const [search, setSearch] = useState("");
   const [searchAddress, setSearchddress] = useState("");
   const [searchMoto, setSearchMoto] = useState("");
@@ -15,29 +15,16 @@ const SelectBox = (props) => {
   useEffect(
     (props) => {
       // rechercher par type
-
       if (search ) {
         tab[search.name]=search.value;
+        setUrlConstruct(tab);
         APIConfig.getItems(tab).then((data) => setSelectedSort(data));
-      }  else {
-        if (cars) {
-          //console.log(cars);
-          const adresse = cars.map((a) => {            
-            return { value: a.id, label: a.ville };
-          });
-          setOptionsAdrr(adresse);
-
-        }
-        //   setSelectedSort(cars);
-      }
+      }  
     },
     [search, searchAddress, searchMoto, cars]
   );
 
-
   let col ="col-"+ 12/params.type.length;// calcul le nombre de col d'apres le nombre de select
-
-
   renderSelect =  params.type.map((data, index) => {
     
     return (
@@ -47,7 +34,7 @@ const SelectBox = (props) => {
         // isMulti
         options={data.value}
         onChange={(e) => setSearch({ "name":data.name, "value": e.value })}
-        // defaultValue={{ label: "Acheter", value: "Acheter" }}
+        // defaultValue={{ label: "vente", value: "Acheter" }}
 
       />
     </div>
