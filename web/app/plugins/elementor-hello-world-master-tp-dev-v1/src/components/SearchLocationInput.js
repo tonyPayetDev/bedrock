@@ -6,7 +6,7 @@ import PlacesAutocomplete, {
   getLatLng,
 } from "react-places-autocomplete";
 const divStyle = {
-  visibility:"hidden",
+  display:"none",
 };
 export default function SearchLocationInput({
   state,

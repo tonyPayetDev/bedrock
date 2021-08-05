@@ -44,6 +44,7 @@ const SelectBox = (props) => {
       <div class={col}>
       <Select
         placeholder={data.label}
+        // isMulti
         options={data.value}
         onChange={(e) => setSearch({ "name":data.name, "value": e.value })}
         // defaultValue={{ label: "Acheter", value: "Acheter" }}
@@ -53,10 +54,20 @@ const SelectBox = (props) => {
 
     );
   });
+  let text="";
+  if(tab.prestation_type  ){
+      text="Je cherche une " +tab.prestation_type 
+      if(text && tab.secteur){
+        text=text +" secteur " +  tab.secteur
+
+      }
+  }
+  
 
   return (
-    <div class="row justify-content-center m-4">
+    <div class="row justify-content-center ">
       {renderSelect}
+      {text}
 
     </div>
   );

@@ -9,9 +9,9 @@ import NbResultat from "./components/NbResultat";
 import React, { useState, useEffect } from "react";
 import * as APIConfig from "./constants/APIConfig";
 //import 'bootstrap/dist/css/bootstrap.min.css';
-import params from './jsonFile.json';
-console.log(params);
+import params_json from './jsonFile.json';
 
+const id_active=params_json[0].post_id_active
 const App = () => {
   const [state, updateState] = React.useState({
     lat: -21,
@@ -22,11 +22,19 @@ const App = () => {
     visible: false,
 
   });
+
+  const params=APIConfig.params;
+
+
   const style = {
     backgroundColor: params.color ?  params.color : "#ffffff",
+    display: params.ekit_search_btn ?  "" : "none",
+    "border-radius":"0px",
+    color:"white",
+
   };
   const divStyle = {
-    visibility:"hidden",
+    display: "none",
   };
   const [cars, setCars] = useState();
   const [selectedSort, setSelectedSort] = useState();
@@ -49,13 +57,13 @@ const App = () => {
 
 
   return (
-    <div class="container">
-      <h3 style={{ margin: "0px 0px 0px 0px " }}>    
-        Recherche une location a proximité  
+    <div class="container"> 
+      <h3 style={{ margin: "0px 0px 0px 0px " }}>     
+        {params.heading_text}
       </h3>
 
       <div class="row">
-      <div class="col-11">
+      <div class="col-12 m-2">
 
       <SelectBox
         options={options}
@@ -67,9 +75,13 @@ const App = () => {
       ></SelectBox>
       </div>
 
-      <div class="col-1">
-         <a type="button" href={params.url} class="btn btn-primary" style={style}>Recherche</a>
       </div>
+
+      <div class="row">
+      <div class="col-12  justify-content-center ">
+
+         <a type="button" href={params.url} class="btn " style={style}> {params.search_text}</a>
+         </div>
 
       </div>
       <NbResultat
@@ -89,7 +101,7 @@ const App = () => {
           
     <div class="col-md-6" >
       <ListeAnnonce 
-       
+        params={params}
         options={options}
         motorisation={optionsMoto}
         latitude={state.lat}

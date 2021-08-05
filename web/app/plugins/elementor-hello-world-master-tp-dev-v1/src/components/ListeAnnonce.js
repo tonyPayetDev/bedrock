@@ -14,9 +14,14 @@ const ListeAnnonce = ({
   options,
   motorisation,
   setSelectedSort,
+  params,
 }) => {
   let renderMarkers;
+  const style = {
+    backgroundColor: params.color ?  params.color : "#ffffff",
+    color: params.color ?  params.color : "#ffffff",
 
+  };
   const [state, setState] = React.useState({
     lat: -21,
     lng: 55.5,
@@ -46,7 +51,7 @@ const ListeAnnonce = ({
     renderMarkers = cars['biens'].map((data, index) => {
       console.log(  data);
       return (
-        <DetailAnnonce name={data} > </DetailAnnonce>
+        <DetailAnnonce name={data} params={params} > </DetailAnnonce>
 
       );
     });

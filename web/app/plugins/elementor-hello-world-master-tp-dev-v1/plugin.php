@@ -53,7 +53,7 @@ class Plugin
     {    
 
         wp_enqueue_script('example-app', plugins_url('build/index.js', __FILE__), array( 'wp-element' ), time(), true);
-        wp_enqueue_script('example-app2', plugins_url('assets/js/hello-world.js', __FILE__), [ 'jquery' ],  time(), true);
+       // wp_enqueue_script('example-app2', plugins_url('assets/js/hello-world.js', __FILE__), [ 'jquery' ],  time(), true);
         $stylesheet_url =  plugins_url('build/images', __FILE__);
         wp_enqueue_style('my-custom-styles', esc_url($stylesheet_url));
      
