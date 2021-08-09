@@ -197,6 +197,7 @@ final class Elementor_Hello_World
 
 // Instantiate Elementor_Hello_World.
 new Elementor_Hello_World();
-// require_once(__DIR__ . '/inc/features.php');
-// require_once(__DIR__ . '/inc/api.php');
+require_once(__DIR__ . '/inc/features.php');
+require_once(__DIR__ . '/inc/api.php');
+require_once(__DIR__ . '/inc/cptui.php');
 

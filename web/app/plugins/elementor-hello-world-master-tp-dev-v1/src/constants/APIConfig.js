@@ -6,7 +6,6 @@ export const HEADERS = new Headers({
   Accept: "application/json",
   Authorization: "Bearer VotreCléAPI",
 });
-export const SITE = "http://localhost/wordpress-labo/programmes/";
 
 export const KEY_MAP = "AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0";
 export const Zoom = 12;
@@ -14,7 +13,11 @@ export const perimetre_long = 0.2;
 export const perimetre_lat = 0.05;
 var url = new URL(document.location.href);
 export const url_const =url;
+console.log(params_json);
+
 export const params=params_json.filter(single => single.id_active ===url.origin+url.pathname)[0];
+export const URL_POST = params.URL_POST;
+
 export const API_URI = params.API_URI;
 var page_id = url.searchParams.get("page_id");// pour la pagination
 

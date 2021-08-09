@@ -1,7 +1,7 @@
 <?php
 add_filter( 'query_vars', 'my_query_vars' ); 
 function my_query_vars( $query_vars ) {     
-    $query_vars[] = 'foo';
+    $query_vars[] = 'post';
     return $query_vars;
 }
 
@@ -18,26 +18,22 @@ function capitaine_acf_google_map_api($api)
     return $api;
 }
 add_filter('acf/fields/google_map/api', 'capitaine_acf_google_map_api');
+// define the elementor/editor/after_save callback 
+add_action('elementor/editor/after_save', 'custom_elementor_editor_after_save', 10, 2);
+// execute npm run builder pour regenerer code 
+function custom_elementor_editor_after_save( $post_ID,$editor_data ){ 
+    // execute la commande pour regenere le code js si se trouve dans builder
+    exec(dirname(__DIR__).'\build.sh ', $output, $return_var);
 
-
+ } 
+ 
+ //add the action 
 add_action('koytcha_update_annonce', 'my_function');
 function my_function()
 {
+    //delete_post();
 
-    // supprimer tous les posts et meta todo mettre dans fonction
-    $programmes = new WP_query(array('post_type' => 'programmes' ,'posts_per_page'   => -1));
-    
-    foreach ($programmes->posts as $key => $value) {
-        wp_delete_post($value->ID);
-        $meta = get_post_meta($value->ID);
-
-        foreach ($meta as $key => $value) {
-            var_dump($key);
-        
-            $bool =delete_post_meta($value->ID, $key, '');
-        }
-    }
-
+    // recuperation des biens
     global $wpdb;
     $url											= 'https://ki.koytchaimmo.re/annonces-xml/list/user/website/pass/9ab9d5561f7c61ac8bb9b2bbb7baf539/force/1'; // a decomenter en prod ou test
    // $url											= 'C:\wamp64\www\wordpress-labo\wp-content\themes\starter-theme\liste.xml';
@@ -54,7 +50,7 @@ function my_function()
     for ($i = 0; $i < $count; $i++) {
         $d= &$data[$i];
         if (!empty($d)) {
-            $content='[elementor-template id="4592"]';
+            $content='[elementor-template id="2584"]';// a modifier si migration
             $dt = DateTime::createFromFormat('d/m/Y', $d['date_saisie'])->format('Y-m-d H:i:s');
             
             $resultat = $wpdb->insert(
@@ -194,8 +190,25 @@ function my_function()
                 
             wp_publish_post($id_post);
 
-            $post = get_post($id_post);
-            wp_update_post($post);
+            // $post = get_post($id_post);
+            // wp_update_post($post);
         }
     }
+    
+}
+function delete_post(){
+    // supprimer tous les posts et meta todo mettre dans fonction
+    $programmes = new WP_query(array('post_type' => 'programmes' ,'posts_per_page'   => -1));
+    
+    foreach ($programmes->posts as $key => $value) {
+        wp_delete_post($value->ID);
+        $meta = get_post_meta($value->ID);
+
+        foreach ($meta as $key => $value) {
+            var_dump($key);
+        
+            $bool =delete_post_meta($value->ID, $key, '');
+        }
+    }
+
 }

@@ -269,7 +269,21 @@ class Hello_World extends Widget_Base
                 'default' => 'yes',
             ]
         );
-
+		$this->add_control(
+			'ekit_wb_3976_font',
+			array(
+				'label' => esc_html__( 'Font', 'elementskit-lite' ),
+				'type'  => Controls_Manager::FONT,
+				'show_label' => true ,
+				'label_block' => true ,
+				'options' => array(
+					'family-name' => 'Font Name',
+				),
+				'groups' => array(
+					'group-key' => 'group value',
+				),
+			)
+		);
         $this->add_control(
             'ekit_wb_225_url',
             array(
@@ -281,6 +295,22 @@ class Hello_World extends Widget_Base
                 'show_external' => true ,
                 'default' => array(
                     'url' => 'http://localhost/wordpress-labo/wp-json/api/v1',
+                    'is_external' => true,
+                    'nofollow' => true,
+                ),
+            )
+        );
+        $this->add_control(
+            'ekit_wb_225_url_post',
+            array(
+                'label' => esc_html__('API URL', 'elementskit-lite'),
+                'type'  => Controls_Manager::URL,
+                'placeholder' =>  esc_html('Paste URL or type'),
+                'show_label' => true ,
+                'label_block' => true ,
+                'show_external' => true ,
+                'default' => array(
+                    'url' => 'http://localhost:8000/programmes',
                     'is_external' => true,
                     'nofollow' => true,
                 ),
@@ -955,10 +985,9 @@ class Hello_World extends Widget_Base
             }
             $tab[]= array("name"=>$category['category_slug'], "label"=>$category['category_title'], "value"=>$tab_value);
         }
-		$var = get_query_var('prestation'); // "lama"
-	//	var_dump($var);
+       // var_dump( $settings['ekit_wb_3976_font']);
 		$array = array(
-		   "id"=>$settings['post'] ,
+		   "id"=>get_the_ID(),
 		   "id_active"=>get_permalink(get_the_ID()), // se base l'url de la page pour checker le bon parametre
 		   'type'=>$tab,
 		   'ekit_search_btn' =>  $settings['ekit_search_btn'],
@@ -966,10 +995,12 @@ class Hello_World extends Widget_Base
 		   'heading_text' =>  $settings['heading_text'], 
 		   'url' =>  $settings['ekit_wb_226_url']["url"],
 		    "API_URI"=> $settings['ekit_wb_225_url']["url"],
+            "URL_POST"=> $settings['ekit_wb_225_url_post']["url"],
 			'color' =>  $settings['ekit_wb_1860_color'] ,
 			'visible' => $settings['ekit_biens'],
-			'visible_search_map' => $settings['ekit_maps']);
-        
+			'visible_search_map' => $settings['ekit_maps'],
+            'ekit_wb_3976_font' => $settings['ekit_wb_3976_font']);
+
 		// enregistrement dans le fichier json  
         $data = file_get_contents($file);		
         $obj = json_decode($data); 
@@ -991,10 +1022,10 @@ class Hello_World extends Widget_Base
 			$obj[$id]=$array; // update
 		}
 		$newJsonString = json_encode($obj);
-
 		file_put_contents($file, $newJsonString);
-		
+          
    		Timber::render('index.twig', $context);
+   
     }
 
     public function render_plain_content($instance = [])

@@ -6,11 +6,11 @@ const NbResultat = (props) => {
   const { data} = props;
   return (
 
-<div>
+<span>
 
-{data ? data['count']+" résultats" : "" }
+{data ? "("+data['count']+" résultats )" : "" }
 
-</div>
+</span>
 
   );
 };

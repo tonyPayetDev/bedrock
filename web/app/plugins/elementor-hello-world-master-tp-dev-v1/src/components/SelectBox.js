@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import * as APIConfig from "../constants/APIConfig";
+import {Animated} from "react-animated-css";
 
 const SelectBox = (props) => {
   const { options, optionsMoto, setSelectedSort, cars, state , params ,setUrlConstruct} = props;
@@ -54,8 +55,9 @@ const SelectBox = (props) => {
   return (
     <div class="row justify-content-center ">
       {renderSelect}
-      {text}
 
+      {text}
+      
     </div>
   );
 };

@@ -5,10 +5,12 @@ import ListeAnnonce from "./components/ListeAnnonce";
 import SearchLocationInput from "./components/SearchLocationInput";
 import SelectBox from "./components/SelectBox";
 import NbResultat from "./components/NbResultat";
+import {Animated} from "react-animated-css";
 
 import React, { useState, useEffect } from "react";
 import * as APIConfig from "./constants/APIConfig";
 //import 'bootstrap/dist/css/bootstrap.min.css';
+import ParticlesBg from 'particles-bg'
 
 var page_id = APIConfig.url_const.searchParams.get("page_id");
 
@@ -58,13 +60,45 @@ const App = () => {
   useEffect(() => {
     setOptionsMoto(params.secteur)
   }, []);
+  console.log(params.ekit_wb_3976_font );
+  let config = {
+    num: [4, 7],
+    rps: 0.1,
+    radius: [5, 40],
+    life: [1.5, 3],
+    v: [2, 3],
+    tha: [-40, 40],
+    alpha: [0.6, 0],
+    scale: [.1, 0.4],
+    position: "all",
+    color: ["#E2038C", "#FFFFFF","#3f51b5"],
+    cross: "dead",
+    // emitter: "follow",
+    random: 15
+  };
+
+  if (Math.random() > 0.85) {
+    config = Object.assign(config, {
+      onParticleUpdate: (ctx, particle) => {
+        ctx.beginPath();
+        ctx.rect(
+          particle.p.x,
+          particle.p.y,
+          particle.radius * 2,
+          particle.radius * 2
+        );
+        ctx.fillStyle = particle.color;
+        ctx.fill();
+        ctx.closePath();
+      }
+    });
+  }
 
   return (
-    <div class="container"> 
-      <h3 style={{ margin: "0px 0px 0px 0px " }}>     
-        {params.heading_text}
-      </h3>
-
+    <div class="container"  style={{fontFamily:params.ekit_wb_3976_font,fontSize:14 }}  > 
+<h3>     
+              {params.heading_text}
+            </h3>
       <div class="row">
         <div class="col-12 m-2">
 
@@ -84,14 +118,19 @@ const App = () => {
 
       <div class="row">
       <div class="col-12  justify-content-center ">
+      <Animated  isVisible={true}  animationIn="fadeIn" animationOut="fadeout" animationInDuration={4000} animationOutDuration={4000} >
 
-         <a type="button" href={params.url +'?'+  new URLSearchParams(url_construct)} class="btn " style={style}> {params.search_text}</a>
+         <a type="button" href={params.url +'?'+  new URLSearchParams(url_construct)} class="btn " style={style}> {params.search_text}    
+            <NbResultat
+              data={selectedSort} 
+            ></NbResultat>
+         </a>
+         </Animated>
+
          </div>
 
       </div>
-      <NbResultat
-        data={selectedSort} 
-      ></NbResultat>
+
       <SearchLocationInput
        
        state={state}
@@ -105,7 +144,9 @@ const App = () => {
     <div    class="row" style={params.visible ?null  :  divStyle} >
           
     <div class="col-md-6" >
-      <ListeAnnonce 
+
+    <Animated  isVisible={true}  animationIn="pulse" animationOut="fadeout" animationInDuration={2000} animationOutDuration={2000} >
+    <ListeAnnonce 
         params={params}
         options={options}
         motorisation={optionsMoto}
@@ -114,6 +155,8 @@ const App = () => {
         setSelectedSort={setSelectedSort}
         cars={selectedSort}
       ></ListeAnnonce>
+</Animated>
+
 
       </div>
       {/* <div class="col-md-6">
@@ -127,8 +170,10 @@ const App = () => {
         cars={selectedSort}
       ></GoogleMaps>
       </div> */}
+      <ParticlesBg type="custom" config={config} bg={true} />
 
       </div>
+
     </div>
 
   );

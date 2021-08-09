@@ -3,7 +3,7 @@ export const HEADERS = new Headers({
   Accept: "application/json",
   Authorization: "Bearer VotreCléAPI",
 });
-export const SITE = "http://localhost/wordpress-labo/programmes/";
+export const SITE = "http://localhost/wordpress-labo/programmes/";// todo modifier pour etre dynamique
 
 export const API_URI = "http://localhost/wordpress-labo/wp-json/api/v1";
 export const KEY_MAP = "AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0";

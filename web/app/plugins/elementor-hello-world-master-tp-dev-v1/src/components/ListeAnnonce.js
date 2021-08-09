@@ -6,6 +6,7 @@ import DetailAnnonce from "./DetailAnnonce.js";
 
 import * as APIConfig from "../constants/APIConfig";
 import Icon from "../images/house.png" ;
+import {Animated} from "react-animated-css";
 
 const ListeAnnonce = ({
   latitude,
@@ -49,16 +50,18 @@ const ListeAnnonce = ({
 
   if (cars) {
     renderAnnonce = cars['biens'].map((annonce, index) => {
+      console.log(annonce);
       if(annonce)
       return (
-        <DetailAnnonce name={annonce} params={params} > </DetailAnnonce>
-
+      < DetailAnnonce name={annonce} params={params} > </DetailAnnonce>
+      
       );
     });
   }
 
   return (
-    <div>{renderAnnonce}</div>    
+    <div>{renderAnnonce}   
+    </div>    
 
   );
 };
