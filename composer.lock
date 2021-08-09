@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d6e74650978e516ce4f4fd3789f11686",
+    "content-hash": "bba65e26739c465ead2917d4b3f59550",
     "packages": [
         {
             "name": "altorouter/altorouter",
@@ -501,6 +501,58 @@
             },
             "abandoned": "guzzlehttp/guzzle",
             "time": "2015-03-18T18:23:50+00:00"
+        },
+        {
+            "name": "johnbillion/wp-crontrol",
+            "version": "1.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/johnbillion/wp-crontrol.git",
+                "reference": "7ba483db6afe938d3c37fc9dbf30570abb070854"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/johnbillion/wp-crontrol/zipball/7ba483db6afe938d3c37fc9dbf30570abb070854",
+                "reference": "7ba483db6afe938d3c37fc9dbf30570abb070854",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.3.6"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "0.7.0",
+                "phpcompatibility/phpcompatibility-wp": "2.1.0",
+                "wp-coding-standards/wpcs": "2.3.0"
+            },
+            "type": "wordpress-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "John Blackbourn",
+                    "homepage": "https://johnblackbourn.com/"
+                },
+                {
+                    "name": "Edward Dale",
+                    "homepage": "http://scompt.com/"
+                }
+            ],
+            "description": "WP Crontrol lets you view and control what's happening in the WP-Cron system.",
+            "homepage": "https://github.com/johnbillion/wp-crontrol/",
+            "support": {
+                "issues": "https://github.com/johnbillion/wp-crontrol/issues",
+                "source": "https://github.com/johnbillion/wp-crontrol/tree/1.10.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/johnbillion",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-02-21T22:12:39+00:00"
         },
         {
             "name": "oscarotero/env",
