@@ -40,7 +40,6 @@
     "roots/wp-config": "1.0.0",
     "roots/wp-password-bcrypt": "1.0.0",
     "wpackagist-plugin/wp-migrate-db": "^2.0",
-    "guzzlehttp/guzzle": "^7.3",
     "yangm97/elementor-pro": "^3.0",
     "upstatement/timber-starter-theme": "^1.2",
     "wpackagist-plugin/custom-fonts": "^1.3"
