@@ -1,0 +1,87 @@
+body {
+  font-family: "Roboto", cursive;
+}
+.fontsize-p {
+  font-size: 13px;
+  font-weight: bold;
+}
+.fontsize-p2 {
+  font-size: 14px!important;
+}
+.fontsize-adresseinfoview {
+  font-size: 12px!important;
+  color: grey!important;; 
+}
+.btn {
+  padding: 0.55rem 9.75rem !important;
+}
+.arrondie {
+  border: 2px solid white;
+  border-radius: 7px;
+}
+.arrondie_g {
+  border: 1px solid #ced4da;
+  border-radius: 7px;
+}
+
+.center_filter {
+  padding-top: 6px;
+}
+.form-control {
+  border: 0px solid #ced4da !important;
+  padding: 0rem 0.75rem;
+}
+.remove-btn {
+  cursor: pointer;
+}
+
+.counter-btns {
+  display: flex;
+  justify-content: center;
+}
+
+.counter-btns button {
+  margin: 0 5px;
+  text-transform: lowercase;
+}
+.btn-success {
+  background-color: #32b298;
+  border-color: #32b298;
+}
+.namecard {
+  text-transform: capitalize;
+}
+
+/*style the box which holds the text of the information window*/
+.gm-style .gm-style-iw {
+  max-width: 380px !important;
+
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 120px !important;
+  padding-top: 20px;
+  display: block !important;
+}
+
+/*style the paragraph tag*/
+.gm-style .gm-style-iw #google-popup p {
+  padding: 10px;
+}
+
+/*style the annoying little arrow at the bottom*/
+.gm-style div div div div div div div div {
+  margin: 0;
+  padding: 0;
+  top: 0;
+  color: #252525;
+  font-size: 16px;
+}
+
+/*style the link*/
+.gm-style div div div div div div div div a {
+  color: #f1f1f1;
+  font-weight: bold;
+}
+
