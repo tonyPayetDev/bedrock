@@ -23,7 +23,7 @@ add_action('elementor/editor/after_save', 'custom_elementor_editor_after_save', 
 // execute npm run builder pour regenerer code 
 function custom_elementor_editor_after_save( $post_ID,$editor_data ){ 
     // execute la commande pour regenere le code js si se trouve dans builder
-    exec(dirname(__DIR__).'\build.sh ', $output, $return_var);
+   // exec(dirname(__DIR__).'\build.sh ', $output, $return_var);
 
  } 
  

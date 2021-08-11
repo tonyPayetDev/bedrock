@@ -86,6 +86,44 @@ function type(WP_REST_Request $request)
     return  $type  ;
 }
 
+
+/**
+ * liste des type de prestations
+ *
+ * @param array $data Options for the function.
+ * @return string|null Post title for the latest, * or null if none.
+ */
+function url(WP_REST_Request $request)
+{
+    $url="url_api";
+
+    $meta=     array(
+        'key' =>  'api',
+      );
+    $request_p =  array(
+        'post_type' => "page",
+
+        'meta_query' => $meta,
+        'meta_type' => 'DATE',
+        
+      ) ;
+  
+    $biens = new WP_query($request_p);
+    $tab_meta["biens" ][]="";
+    foreach ($biens->posts as $key => $value) {
+        $meta = get_post_meta($value->ID);
+        foreach ($meta as $key => $value_meta) {
+            $tab["id"]=$value->ID;
+            $tab["api"]=$value->api;
+            $tab["post_name"]=$value->post_name;
+
+            
+        }
+        $tab_meta["biens" ][]=$tab;
+    }
+
+    return   $tab_meta   ;
+}
 /**
  * liste des type de prestations
  *
@@ -94,10 +132,12 @@ function type(WP_REST_Request $request)
  */
 function params(WP_REST_Request $request)
 {
-    $value = get_field('heading_text', $request->get_param('page_id'));
-    $color = get_field('ekit_wb_1860_color', $request->get_param('page_id'));
+
+    $file = dirname(__DIR__)."/inc/jsonFile.json";
+    $data = file_get_contents($file);		
+    $obj = json_decode($data); 
     //$value=false; // enlever quand passe sur bedrock
-    return  array("visible"=>    ($value === 'true')    ,"color"=>$color)  ;
+    return $obj ;
 }
 /**
  * retourne la liste des biens
@@ -192,5 +232,11 @@ add_action('rest_api_init', function () {
     register_rest_route('api/v1', '/types', array(
       'methods' => 'GET',
       'callback' => 'type',
+    ));
+});
+add_action('rest_api_init', function () {
+    register_rest_route('api/', '/url', array(
+      'methods' => 'GET',
+      'callback' => 'url',
     ));
 });

@@ -36,7 +36,6 @@ const SelectBox = (props) => {
         options={data.value}
         onChange={(e) => setSearch({ "name":data.name, "value": e.value })}
         // defaultValue={{ label: "vente", value: "Acheter" }}
-
       />
     </div>
 
@@ -47,17 +46,13 @@ const SelectBox = (props) => {
       text="Je cherche une " +tab.prestation_type 
       if(text && tab.secteur){
         text=text +" secteur " +  tab.secteur
-
       }
   }
   
-
   return (
     <div class="row justify-content-center ">
       {renderSelect}
-
-      {text}
-      
+      {text}    
     </div>
   );
 };

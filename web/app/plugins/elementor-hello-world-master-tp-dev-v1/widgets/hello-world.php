@@ -963,9 +963,9 @@ class Hello_World extends Widget_Base
     {
 
         $settings = $this->get_settings_for_display();
-        $file = dirname(__DIR__)."/src/jsonFile.json";
+        $file = dirname(__DIR__)."/inc/jsonFile.json";
         $context = Timber::get_context();
-
+        
 		// recuperation valeurs select
         $type=[];
         if ($settings['ekit_wb_225_code']) {
@@ -1023,7 +1023,8 @@ class Hello_World extends Widget_Base
 		}
 		$newJsonString = json_encode($obj);
 		file_put_contents($file, $newJsonString);
-          
+        $context['params']=base64_encode($newJsonString) ;
+
    		Timber::render('index.twig', $context);
    
     }
