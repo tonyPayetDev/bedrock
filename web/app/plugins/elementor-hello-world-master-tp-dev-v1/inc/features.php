@@ -50,7 +50,7 @@ function my_function()
     for ($i = 0; $i < $count; $i++) {
         $d= &$data[$i];
         if (!empty($d)) {
-            $content='[elementor-template id="189"]';// a modifier si migration ou a mettre en parametre de la cron
+            $content='[elementor-template id="2584"]';// a modifier si migration ou a mettre en parametre de la cron
             $dt = DateTime::createFromFormat('d/m/Y', $d['date_saisie'])->format('Y-m-d H:i:s');
             
             $resultat = $wpdb->insert(
