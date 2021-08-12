@@ -31,10 +31,10 @@
     }
   ],
   "require": {
+    "timber/timber": "^1.18",
     "php": ">=7.4.9",
     "composer/installers": "^1.11",
     "wpackagist-plugin/advanced-custom-fields": "^5.9",
-    "timber/timber": "^1.18",
     "vlucas/phpdotenv": "^5.3",
     "oscarotero/env": "^2.1",
     "roots/wordpress": "5.7.2",
