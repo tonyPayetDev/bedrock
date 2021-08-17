@@ -1,58 +1,93 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import * as APIConfig from "../constants/APIConfig";
-import {Animated} from "react-animated-css";
+import { Animated } from "react-animated-css";
+import ReactLoading from "react-loading";
 
 const SelectBox = (props) => {
-  const { options, optionsMoto, setSelectedSort, cars, state , params ,setUrlConstruct} = props;
+  const { options, optionsMoto, setSelectedSort, cars, state, params, setUrlConstruct, setText } = props;
   const [search, setSearch] = useState("");
   const [searchAddress, setSearchddress] = useState("");
   const [searchMoto, setSearchMoto] = useState("");
   const [optionsAdrr, setOptionsAdrr] = useState([]);
-  const [tab, setTab] = useState({  });// # todo a recupérer en params
+  const [tab, setTab] = useState({});// # todo a recupérer en params
 
-  let renderSelect ;
+  let renderSelect;
 
   useEffect(
     (props) => {
       // rechercher par type
-      if (search ) {
-        tab[search.name]=search.value;
+      if (search) {
+        tab[search.name] = search.value;
         setUrlConstruct(tab);
+        setSelectedSort("");
         APIConfig.getItems(tab).then((data) => setSelectedSort(data));
-      }  
+
+      }
     },
     [search, searchAddress, searchMoto, cars]
   );
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      borderBottom: '1px dotted pink',
+      color: 'red',
+      padding: 20,
+    }),
+    control: () => ({
+      // none of react-select's styles are passed to <Control />
+      width: 200,
+    }),
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = 'opacity 300ms';
 
-  let col ="col-"+ 12/params.type.length;// calcul le nombre de col d'apres le nombre de select
-  renderSelect =  params.type.map((data, index) => {
-    
+      return { ...provided, opacity, transition };
+    }
+  }
+  let col = "col-" + 12 / params.type.length;// calcul le nombre de col d'apres le nombre de select
+  renderSelect = params.type.map((data, index) => {
+
     return (
       <div class={col}>
-      <Select
-        placeholder={data.label}
-        // isMulti
-        options={data.value}
-        onChange={(e) => setSearch({ "name":data.name, "value": e.value })}
+        <Select
+          theme={theme => ({
+            ...theme,
+            borderRadius: 5,
+            colors: {
+              ...theme.colors,
+              neutral80: params.color,
+              primary25: '#FAFAFA',
+              primary: params.color,
+            },
+          })}
+
+          placeholder={data.label}
+          // isMulti
+          options={data.value}
+          onChange={(e) => setSearch({ "name": data.name, "value": e.value })}
         // defaultValue={{ label: "vente", value: "Acheter" }}
-      />
-    </div>
+        />
+      </div>
 
     );
   });
-  let text="";
-  if(tab.prestation_type  ){
-      text="Je cherche une " +tab.prestation_type 
-      if(text && tab.secteur){
-        text=text +" secteur " +  tab.secteur
-      }
-  }
-  
+  // let text = "";
+  // if (tab.prestation_type) {
+  //   text = "Je cherche une " + tab.prestation_type
+  //   if (text && tab.secteur) {
+  //     text = text + " secteur " + tab.secteur
+  //     setText(text);
+
+  //   }
+  // }
+
   return (
+
     <div class="row justify-content-center ">
+
       {renderSelect}
-      {text}    
+
     </div>
   );
 };

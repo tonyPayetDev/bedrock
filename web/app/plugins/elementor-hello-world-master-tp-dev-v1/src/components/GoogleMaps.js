@@ -39,16 +39,14 @@ const GoogleMaps = ({
   };
 
   if (cars) {
-    
-    renderMarkers = cars.map((data, index) => {
-    console.log(data);
+    renderMarkers = cars['biens'].map((data, index) => {
 
-  //    console.log("app/plugins/react-plugin/build"+Icon);
+      //    console.log("app/plugins/react-plugin/build"+Icon);
       return (
         <Marker
           icon={{
             width: "10%",
-            url: "app/plugins/react-plugin/build/"+Icon,
+            url: "app/plugins/react-plugin/build/" + Icon,
             anchor: window.google.maps.Point(16, 16),
             scaledSize: window.google.maps.Size(32, 32),
           }}
@@ -62,7 +60,7 @@ const GoogleMaps = ({
           name={{
             marque: data.ville,
             // type: data.type,
-            model:data.ville,
+            model: data.ville,
             img: data.photo,
             adresse: data.code_postal,
           }}
@@ -81,7 +79,7 @@ const GoogleMaps = ({
       center={{ lat: latitude, lng: longitude }}
     >
       {renderMarkers}
-    
+
       <InfoWindow
         marker={state.activeMarker}
         visible={state.showingInfoWindow}

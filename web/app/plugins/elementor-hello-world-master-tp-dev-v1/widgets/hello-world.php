@@ -8,7 +8,6 @@ use \Elementor\ElementsKit_Widget_Page_List_Handler as Handler;
 use \ElementsKit_Lite\Modules\Controls\Controls_Manager as ElementsKit_Controls_Manager;
 use Elementor\Repeater;
 
-
 if (! defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -269,21 +268,36 @@ class Hello_World extends Widget_Base
                 'default' => 'yes',
             ]
         );
-		$this->add_control(
-			'ekit_wb_3976_font',
-			array(
-				'label' => esc_html__( 'Font', 'elementskit-lite' ),
-				'type'  => Controls_Manager::FONT,
-				'show_label' => true ,
-				'label_block' => true ,
-				'options' => array(
-					'family-name' => 'Font Name',
-				),
-				'groups' => array(
-					'group-key' => 'group value',
-				),
-			)
-		);
+        $this->add_control(
+            'ekit_wb_3976_font',
+            array(
+                'label' => esc_html__('Font', 'elementskit-lite'),
+                'type'  => Controls_Manager::FONT,
+                'show_label' => true ,
+                'label_block' => true ,
+                'options' => array(
+                    'family-name' => 'Font Name',
+                ),
+                'groups' => array(
+                    'group-key' => 'group value',
+                ),
+            )
+        );
+        $this->add_control(
+            'ekit_wb_3976_icons',
+            array(
+                'label' => esc_html__('Icons', 'elementskit-lite'),
+                'type'  => Controls_Manager::ICONS,
+                'show_label' => true ,
+                'label_block' => true ,
+                'skin' => 'media' ,
+                'default' => array(
+                    'value' => '',
+                    'library' => '',
+                )
+            )
+        );
+        
         $this->add_control(
             'ekit_wb_225_url',
             array(
@@ -344,7 +358,7 @@ class Hello_World extends Widget_Base
             ]
         );
 
-		$this->add_control(
+        $this->add_control(
             'ekit_wb_225_code',
             array(
                 'label' => esc_html__('Code', 'elementskit-lite'),
@@ -824,11 +838,11 @@ class Hello_World extends Widget_Base
         $this->start_controls_section(
             'ekit_menu_subtitle_style_tab',
             [
-                'label' => esc_html__('Subtitle', 'elementskit-lite'),
+                'label' => esc_html__('Button', 'elementskit-lite'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
-
+        
 
         $this->add_control(
             'ekit_menu_subtitle_color',
@@ -840,18 +854,52 @@ class Hello_World extends Widget_Base
                 ],
             ]
         );
-
+        
         $this->add_control(
-            'ekit_menu_subtitle_color_hover',
+            'ekit_menu_button_color_critere',
             [
-                'label' => esc_html__('Color Hover', 'elementskit-lite'),
+                'label' => esc_html__('Color Critere bouton ', 'elementskit-lite'),
                 'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-item a:hover .ekit_menu_subtitle' => 'color: {{VALUE}}',
-                ],
+                'default' => esc_html('#000'),
+                'show_label' => true,
+                'label_block' => false,
+                'alpha' => true,
+             
             ]
         );
-
+        $this->add_control(
+            'ekit_critere_btn',
+            [
+                'label' => esc_html__('button critere', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+        $this->add_control(
+            'ekit_menu_button_color_alerte',
+            [
+                'label' => esc_html__('Color Alerte bouton', 'elementskit-lite'),
+                'type' => Controls_Manager::COLOR,
+                'default' => esc_html('#000'),
+                'show_label' => true,
+                'label_block' => false,
+                'alpha' => true,
+            ]
+        );
+        $this->add_control(
+            'ekit_alerte_btn',
+            [
+                'label' => esc_html__('button alerte', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
         $this->add_responsive_control(
             'ekit_menu_subtitle_padding',
             [
@@ -961,12 +1009,11 @@ class Hello_World extends Widget_Base
 
     protected function render($instance = [])
     {
-
         $settings = $this->get_settings_for_display();
         $file = dirname(__DIR__)."/inc/jsonFile.json";
         $context = Timber::get_context();
-        
-		// recuperation valeurs select
+
+        // recuperation valeurs select
         $type=[];
         if ($settings['ekit_wb_225_code']) {
             foreach (json_decode($settings['ekit_wb_225_code']) as $key => $value) {
@@ -975,7 +1022,7 @@ class Hello_World extends Widget_Base
                 }
             }
         }
-		// adaptation du select
+        // adaptation du select
         foreach ($settings['categories'] as $category) {
             $tab_value=null;
             foreach ($settings['services'] as $service) {
@@ -985,48 +1032,55 @@ class Hello_World extends Widget_Base
             }
             $tab[]= array("name"=>$category['category_slug'], "label"=>$category['category_title'], "value"=>$tab_value);
         }
-       // var_dump( $settings['ekit_wb_3976_font']);
-		$array = array(
-		   "id"=>get_the_ID(),
-		   "id_active"=>get_permalink(get_the_ID()), // se base l'url de la page pour checker le bon parametre
-		   'type'=>$tab,
-		   'ekit_search_btn' =>  $settings['ekit_search_btn'],
-		   'search_text' =>  $settings['search_text'],
-		   'heading_text' =>  $settings['heading_text'], 
-		   'url' =>  $settings['ekit_wb_226_url']["url"],
-		    "API_URI"=> $settings['ekit_wb_225_url']["url"],
+        // var_dump( $settings['ekit_wb_3976_font']);
+        $array = array(
+           "id"=>get_the_ID(),
+           "id_active"=>get_permalink(get_the_ID()), // se base l'url de la page pour checker le bon parametre
+           'type'=>$tab,
+           'ekit_search_btn' =>  $settings['ekit_search_btn'],
+           'search_text' =>  $settings['search_text'],
+           'heading_text' =>  $settings['heading_text'],
+           'url' =>  $settings['ekit_wb_226_url']["url"],
+            "API_URI"=> $settings['ekit_wb_225_url']["url"],
             "URL_POST"=> $settings['ekit_wb_225_url_post']["url"],
-			'color' =>  $settings['ekit_wb_1860_color'] ,
-			'visible' => $settings['ekit_biens'],
-			'visible_search_map' => $settings['ekit_maps'],
-            'ekit_wb_3976_font' => $settings['ekit_wb_3976_font']);
+            'color' =>  $settings['ekit_wb_1860_color'] ,
+            'visible' => $settings['ekit_biens'],
+            'visible_search_map' => $settings['ekit_maps'],
+            'ekit_wb_3976_font' => $settings['ekit_wb_3976_font'],
+            'ekit_menu_button_color_critere' => $settings['ekit_menu_button_color_critere'],
+            'ekit_critere_btn' => $settings['ekit_critere_btn'],
+            'ekit_menu_button_color_alerte' => $settings['ekit_menu_button_color_alerte'],
+            'ekit_alerte_btn' => $settings['ekit_alerte_btn'],
+            'ekit_wb_3976_icons' => $settings['ekit_wb_3976_icons']
 
-		// enregistrement dans le fichier json  
-        $data = file_get_contents($file);		
-        $obj = json_decode($data); 
-
-		// recherche si il y un id parametre present
-		$val=false;
-		foreach ($obj as $key => $value) {
-			//var_dump(  $key);
-			if (isset($value->id) && $value->id==get_the_ID() ) {
-				$val=true;
-				$id=$key ;
-			}
-		}
-		// si existe pas on créé un objet param sinon ou update les params
-		if(!$val){
-			$obj[]=array("id"=>get_the_ID());// ajout clé
-		}else{
-						
-			$obj[$id]=$array; // update
-		}
-		$newJsonString = json_encode($obj);
-		file_put_contents($file, $newJsonString);
+            
+                      
+        );
+        
+        // enregistrement dans le fichier json
+        $data = file_get_contents($file);
+        $obj = json_decode($data);
+            
+        // recherche si il y un id parametre present
+        $val=false;
+        foreach ($obj as $key => $value) {
+            //var_dump(  $key);
+            if (isset($value->id) && $value->id==get_the_ID()) {
+                $val=true;
+                $id=$key ;
+            }
+        }
+        // si existe pas on créé un objet param sinon ou update les params
+        if (!$val) {
+            $obj[]=array("id"=>get_the_ID());// ajout clé
+        } else {
+            $obj[$id]=$array; // update
+        }
+        $newJsonString = json_encode($obj);
+        file_put_contents($file, $newJsonString);
         $context['params']=base64_encode($newJsonString) ;
 
-   		Timber::render('index.twig', $context);
-   
+        Timber::render('index.twig', $context);
     }
 
     public function render_plain_content($instance = [])

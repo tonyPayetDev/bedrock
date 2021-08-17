@@ -6,7 +6,7 @@ import PlacesAutocomplete, {
   getLatLng,
 } from "react-places-autocomplete";
 const divStyle = {
-  display:"none",
+  display: "none",
 };
 export default function SearchLocationInput({
   state,
@@ -48,18 +48,18 @@ export default function SearchLocationInput({
           .map((cars) => cars);
 
         // // setCarsPerimetre(filtre_perimetre);
-        setSelectedSort(filtre_perimetre);  
+        setSelectedSort(filtre_perimetre);
       }
     },
     [state]
   );
   const style = {
-    backgroundColor: params.color ?  params.color : "#ffffff",
+    backgroundColor: params.color ? params.color : "#ffffff",
     color: "#252525",
   };
   return (
 
-    <div style={params.visible_search_map ?null : divStyle} >
+    <div style={params.visible_search_map ? null : divStyle} >
       <PlacesAutocomplete
         value={address}
         onChange={setAddress}
@@ -82,8 +82,8 @@ export default function SearchLocationInput({
               </div>
               <div class="col-4">
                 <button
-                 style={style}
-                  class="btn btn-success" 
+                  style={style}
+                  class="btn btn-success"
                   onClick={() =>
                     updateState({
                       lat: coordinates.lat,

@@ -116,8 +116,6 @@ function url(WP_REST_Request $request)
             $tab["id"]=$value->ID;
             $tab["api"]=$value->api;
             $tab["post_name"]=$value->post_name;
-
-            
         }
         $tab_meta["biens" ][]=$tab;
     }
@@ -132,10 +130,9 @@ function url(WP_REST_Request $request)
  */
 function params(WP_REST_Request $request)
 {
-
     $file = dirname(__DIR__)."/inc/jsonFile.json";
-    $data = file_get_contents($file);		
-    $obj = json_decode($data); 
+    $data = file_get_contents($file);
+    $obj = json_decode($data);
     //$value=false; // enlever quand passe sur bedrock
     return $obj ;
 }
@@ -194,7 +191,6 @@ function biens(WP_REST_Request $request)
     foreach ($biens->posts as $key => $value) {
         $meta = get_post_meta($value->ID);
        
-        
         foreach ($meta as $key => $value_meta) {
             $tab["id"]=$value->ID;
             $tab["post_name"]=$value->post_name;

@@ -1,6 +1,7 @@
 <?php
-add_filter( 'query_vars', 'my_query_vars' ); 
-function my_query_vars( $query_vars ) {     
+add_filter('query_vars', 'my_query_vars');
+function my_query_vars($query_vars)
+{
     $query_vars[] = 'post';
     return $query_vars;
 }
@@ -18,16 +19,16 @@ function capitaine_acf_google_map_api($api)
     return $api;
 }
 add_filter('acf/fields/google_map/api', 'capitaine_acf_google_map_api');
-// define the elementor/editor/after_save callback 
+// define the elementor/editor/after_save callback
 add_action('elementor/editor/after_save', 'custom_elementor_editor_after_save', 10, 2);
-// execute npm run builder pour regenerer code 
-function custom_elementor_editor_after_save( $post_ID,$editor_data ){ 
+// execute npm run builder pour regenerer code
+function custom_elementor_editor_after_save($post_ID, $editor_data)
+{
     // execute la commande pour regenere le code js si se trouve dans builder
    // exec(dirname(__DIR__).'\build.sh ', $output, $return_var);
-
- } 
+}
  
- //add the action 
+ //add the action
 add_action('koytcha_update_annonce', 'my_function');
 function my_function()
 {
@@ -36,7 +37,7 @@ function my_function()
     // recuperation des biens
     global $wpdb;
     $url											= 'https://ki.koytchaimmo.re/annonces-xml/list/user/website/pass/9ab9d5561f7c61ac8bb9b2bbb7baf539/force/1'; // a decomenter en prod ou test
-   // $url											= 'C:\wamp64\www\wordpress-labo\wp-content\themes\starter-theme\liste.xml';
+    // $url											= 'C:\wamp64\www\wordpress-labo\wp-content\themes\starter-theme\liste.xml';
     
     if (!$xml = simplexml_load_file($url)) {
         exit('Failed to open '.$url);
@@ -46,7 +47,7 @@ function my_function()
     $data 										= json_decode($json, true);
     $data										= $data['annonce'];
     $count										= count($data);
-    $site=home_url( $wp->request );
+    $site=home_url($wp->request);
     for ($i = 0; $i < $count; $i++) {
         $d= &$data[$i];
         if (!empty($d)) {
@@ -194,9 +195,9 @@ function my_function()
             wp_update_post($post);
         }
     }
-    
 }
-function delete_post(){
+function delete_post()
+{
     // supprimer tous les posts et meta todo mettre dans fonction
     $programmes = new WP_query(array('post_type' => 'programmes' ,'posts_per_page'   => -1));
     
@@ -210,5 +211,4 @@ function delete_post(){
             $bool =delete_post_meta($value->ID, $key, '');
         }
     }
-
 }

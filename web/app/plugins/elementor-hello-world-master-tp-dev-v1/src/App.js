@@ -5,12 +5,13 @@ import ListeAnnonce from "./components/ListeAnnonce";
 import SearchLocationInput from "./components/SearchLocationInput";
 import SelectBox from "./components/SelectBox";
 import NbResultat from "./components/NbResultat";
-import {Animated} from "react-animated-css";
+import Text from "./components/Text";
+
+import { Animated } from "react-animated-css";
 
 import React, { useState, useEffect } from "react";
 import * as APIConfig from "./constants/APIConfig";
-//import 'bootstrap/dist/css/bootstrap.min.css';
-import ParticlesBg from 'particles-bg'
+import ReactLoading from "react-loading";
 
 var page_id = APIConfig.url_const.searchParams.get("page_id");
 
@@ -24,23 +25,39 @@ const App = () => {
     visible: false,
 
   });
-  const [tab, setTab] = useState({  });// # stock les filtre d'apres les type récupérer 
+  let text;
+  const [tab, setTab] = useState({});// # stock les filtre d'apres les type récupérer 
 
-  const params=APIConfig.params;
-  console.log(  tab);
+  const params = APIConfig.params;
 
- params.type.map((data, index) => {
-    var secteur = APIConfig.url_const.searchParams.get( data.name);
-    if(secteur){ // on récuper si l'info et présente
-      tab[data.name]=secteur;
+  params.type.map((data, index) => {
+    var secteur = APIConfig.url_const.searchParams.get(data.name);
+    if (secteur) { // on récuper si l'info et présente
+      tab[data.name] = secteur;
     }
   });
 
   const style = {
-    backgroundColor: params.color ?  params.color : "#ffffff",
-    display: params.ekit_search_btn ?  "" : "none",
-    "border-radius":"0px",
-    color:"white",
+    backgroundColor: params.color ? params.color : "#ffffff",
+    display: params.ekit_search_btn ? "" : "none",
+    "border-radius": "1px 1px 1px 1px",
+    color: "white",
+
+  };
+
+  const stylecriteres = {
+    backgroundColor: params.ekit_menu_button_color_critere ? params.ekit_menu_button_color_critere : "#ffffff",
+    display: params.ekit_critere_btn ? "" : "none",
+    "border-radius": "1px 1px 1px 1px",
+    color: "black",
+  };
+
+  const stylealerte = {
+    backgroundColor: params.ekit_menu_button_color_alerte ? params.ekit_menu_button_color_alerte : "#ffffff",
+    display: params.ekit_alerte_btn ? "" : "none",
+    "border-radius": "20px 20px 20px 20px",
+    color: "white",
+
 
   };
   const divStyle = {
@@ -48,133 +65,127 @@ const App = () => {
   };
   const [cars, setCars] = useState();
   const [selectedSort, setSelectedSort] = useState();
+
   const [optionsMoto, setOptionsMoto] = useState([]);
   const [options, setOptions] = useState([]);
-  const [url_construct, setUrlConstruct] = useState({prestation_type:"",secteur:""});
+  const [url_construct, setUrlConstruct] = useState({ prestation_type: "", secteur: "" });
+  const [text2, setText] = useState([]);
 
   useEffect(() => {
+
     APIConfig.getItems(tab).then((data) => setSelectedSort(data));
-   
+
   }, []);
 
   useEffect(() => {
     setOptionsMoto(params.secteur)
   }, []);
-  console.log(params.ekit_wb_3976_font );
-  let config = {
-    num: [4, 7],
-    rps: 0.1,
-    radius: [5, 40],
-    life: [1.5, 3],
-    v: [2, 3],
-    tha: [-40, 40],
-    alpha: [0.6, 0],
-    scale: [.1, 0.4],
-    position: "all",
-    color: ["#E2038C", "#FFFFFF","#3f51b5"],
-    cross: "dead",
-    // emitter: "follow",
-    random: 15
-  };
-
-  if (Math.random() > 0.85) {
-    config = Object.assign(config, {
-      onParticleUpdate: (ctx, particle) => {
-        ctx.beginPath();
-        ctx.rect(
-          particle.p.x,
-          particle.p.y,
-          particle.radius * 2,
-          particle.radius * 2
-        );
-        ctx.fillStyle = particle.color;
-        ctx.fill();
-        ctx.closePath();
-      }
-    });
-  }
 
   return (
-    <div class="container"  style={{fontFamily:params.ekit_wb_3976_font,fontSize:14 }}  > 
-<h3>     
-              {params.heading_text}
-            </h3>
+    <div style={{ fontFamily: params.ekit_wb_3976_font, fontSize: 14 }}  >
+
+      <h3>
+        <div class="row m-1">
+          <div class="col-6">
+
+            <Text
+              data={selectedSort} text={url_construct}
+            ></Text>
+
+          </div>
+          <div class="col-6" style={{ fontSize: params.fontSize }}>
+
+            Carte Liste galerie
+
+          </div>
+        </div>
+
+      </h3>
       <div class="row">
         <div class="col-12 m-2">
-
-        <SelectBox
-          options={options}
-          optionsMoto={optionsMoto}
-          setSelectedSort={setSelectedSort}
-          setUrlConstruct={setUrlConstruct}
-          cars={cars}
-          state={state}
-          params={params}
-
-        ></SelectBox>
+          <SelectBox
+            options={options}
+            optionsMoto={optionsMoto}
+            setSelectedSort={setSelectedSort}
+            setUrlConstruct={setUrlConstruct}
+            cars={cars}
+            state={state}
+            params={params}
+          ></SelectBox>
         </div>
 
       </div>
 
+      <div class="row m-1">
+        <div class="col-6">
+          <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} class="btn " style={stylecriteres}><i aria-hidden="true" class="icon icon-chevron-down"></i> + de criteres
+          </a>
+        </div >
+        <div class="col-6">
+          <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} class="btn " style={stylealerte}><i aria-hidden="true" class="icon icon-alarm"></i> Créer une alerte
+          </a>
+        </div>
+      </div >
+
+      <NbResultat
+        data={selectedSort}
+      ></NbResultat>
       <div class="row">
-      <div class="col-12  justify-content-center ">
-      <Animated  isVisible={true}  animationIn="fadeIn" animationOut="fadeout" animationInDuration={4000} animationOutDuration={4000} >
 
-         <a type="button" href={params.url +'?'+  new URLSearchParams(url_construct)} class="btn " style={style}> {params.search_text}    
-            <NbResultat
-              data={selectedSort} 
-            ></NbResultat>
-         </a>
-         </Animated>
-
-         </div>
+        <div class="col-12  justify-content-center ">
+          <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={2000} animationOutDuration={2000} >
+            <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} class="btn " style={style}> {params.search_text}
+              <NbResultat paren
+                data={selectedSort}
+              ></NbResultat>
+            </a>
+          </Animated>
+        </div>
 
       </div>
 
       <SearchLocationInput
-       
-       state={state}
-       updateState={updateState}
-       cars={cars}
-       setSelectedSort={setSelectedSort}
-       params={params}
-     ></SearchLocationInput>
-
-
-    <div    class="row" style={params.visible ?null  :  divStyle} >
-          
-    <div class="col-md-6" >
-
-    <Animated  isVisible={true}  animationIn="pulse" animationOut="fadeout" animationInDuration={2000} animationOutDuration={2000} >
-    <ListeAnnonce 
+        state={state}
+        updateState={updateState}
+        cars={cars}
+        setSelectedSort={setSelectedSort}
         params={params}
-        options={options}
-        motorisation={optionsMoto}
-        latitude={state.lat}
-        longitude={state.lng}
-        setSelectedSort={setSelectedSort}
-        cars={selectedSort}
-      ></ListeAnnonce>
-</Animated>
+      ></SearchLocationInput>
+      <div class="row" style={params.visible ? null : divStyle} >
+        {selectedSort ?
+          <div class="col-md-6" >
+            <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >
 
+              < ListeAnnonce
+                params={params}
+                options={options}
+                motorisation={optionsMoto}
+                latitude={state.lat}
+                longitude={state.lng}
+                setSelectedSort={setSelectedSort}
+                cars={selectedSort}
+              ></ListeAnnonce>
+            </Animated>
+
+
+          </div>
+          : <div class="col-6 d-flex justify-content-center" >  <ReactLoading type='bubbles' color={params.color} /></div >
+        }
+        <div class="col-md-6">
+          <GoogleMaps
+            style={{ margin: "400px" }}
+            options={options}
+            motorisation={optionsMoto}
+            latitude={state.lat}
+            longitude={state.lng}
+            setSelectedSort={setSelectedSort}
+            cars={selectedSort}
+          ></GoogleMaps>
+        </div>
 
       </div>
-      {/* <div class="col-md-6">
- 
-      <GoogleMaps
-        options={options}
-        motorisation={optionsMoto}
-        latitude={state.lat}
-        longitude={state.lng}
-        setSelectedSort={setSelectedSort}
-        cars={selectedSort}
-      ></GoogleMaps>
-      </div> */}
-      <ParticlesBg type="custom" config={config} bg={true} />
 
-      </div>
-
-    </div>
+    </div >
 
   );
 };

@@ -5,8 +5,9 @@ import InfoContent from "./InfoContent.js";
 import DetailAnnonce from "./DetailAnnonce.js";
 
 import * as APIConfig from "../constants/APIConfig";
-import Icon from "../images/house.png" ;
-import {Animated} from "react-animated-css";
+import Icon from "../images/house.png";
+import { Animated } from "react-animated-css";
+import ReactLoading from "react-loading";
 
 const ListeAnnonce = ({
   latitude,
@@ -19,8 +20,8 @@ const ListeAnnonce = ({
 }) => {
   let renderAnnonce;
   const style = {
-    backgroundColor: params.color ?  params.color : "#ffffff",
-    color: params.color ?  params.color : "#ffffff",
+    backgroundColor: params.color ? params.color : "#ffffff",
+    color: params.color ? params.color : "#ffffff",
 
   };
   const [state, setState] = React.useState({
@@ -31,7 +32,7 @@ const ListeAnnonce = ({
     activeMarker: {}, // Shows the active marker upon click
     selectedPlace: { marque: "", motorisation: "", model: "" },
   });
-  
+
   const onMarkerClick = (props, marker, e) =>
     setState({
       selectedPlace: props,
@@ -47,21 +48,25 @@ const ListeAnnonce = ({
       });
     }
   };
-
   if (cars) {
     renderAnnonce = cars['biens'].map((annonce, index) => {
-      console.log(annonce);
-      if(annonce)
-      return (
-      < DetailAnnonce name={annonce} params={params} > </DetailAnnonce>
-      
-      );
+
+      if (annonce)
+        return (
+
+          < DetailAnnonce name={annonce} params={params} > </DetailAnnonce>
+        );
     });
   }
-
   return (
-    <div>{renderAnnonce}   
-    </div>    
+
+    <div>
+      <div class="row">
+
+        {renderAnnonce}
+      </div>
+
+    </div>
 
   );
 };
