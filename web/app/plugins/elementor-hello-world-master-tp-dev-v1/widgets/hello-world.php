@@ -247,6 +247,17 @@ class Hello_World extends Widget_Base
             ]
         );
         $this->add_control(
+            'ekit_map_btn',
+            [
+                'label' => esc_html__('carte map', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+        $this->add_control(
             'ekit_search_btn',
             [
                 'label' => esc_html__('button search', 'elementskit-lite'),
@@ -900,6 +911,8 @@ class Hello_World extends Widget_Base
                 'default' => 'yes',
             ]
         );
+
+ 
         $this->add_responsive_control(
             'ekit_menu_subtitle_padding',
             [
@@ -1051,7 +1064,8 @@ class Hello_World extends Widget_Base
             'ekit_critere_btn' => $settings['ekit_critere_btn'],
             'ekit_menu_button_color_alerte' => $settings['ekit_menu_button_color_alerte'],
             'ekit_alerte_btn' => $settings['ekit_alerte_btn'],
-            'ekit_wb_3976_icons' => $settings['ekit_wb_3976_icons']
+            'ekit_wb_3976_icons' => $settings['ekit_wb_3976_icons'],
+            'ekit_map_btn' => $settings['ekit_map_btn']
 
             
                       

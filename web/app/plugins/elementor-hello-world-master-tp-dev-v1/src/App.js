@@ -28,7 +28,7 @@ const App = () => {
   let text;
   const [tab, setTab] = useState({});// # stock les filtre d'apres les type récupérer 
 
-  const params = APIConfig.params;
+  const [params, setParams] = useState(APIConfig.params);
 
   params.type.map((data, index) => {
     var secteur = APIConfig.url_const.searchParams.get(data.name);
@@ -46,10 +46,10 @@ const App = () => {
   };
 
   const stylecriteres = {
-    backgroundColor: params.ekit_menu_button_color_critere ? params.ekit_menu_button_color_critere : "#ffffff",
-    display: params.ekit_critere_btn ? "" : "none",
-    "border-radius": "1px 1px 1px 1px",
-    color: "black",
+    display: params.ekit_alerte_btn ? "" : "none",
+    "border-radius": "20px 20px 20px 20px",
+    color: !params.ekit_menu_button_color_alerte ? params.ekit_menu_button_color_alerte : "black",
+
   };
 
   const stylealerte = {
@@ -58,6 +58,19 @@ const App = () => {
     "border-radius": "20px 20px 20px 20px",
     color: "white",
 
+
+  };
+  const stylemenu = {
+    display: params.ekit_alerte_btn ? "" : "none",
+    "border-radius": "20px 20px 20px 20px",
+    color: params.ekit_menu_button_color_alerte ? params.ekit_menu_button_color_alerte : "#ffffff",
+
+  };
+  const styleContactPro = {
+    boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+    backgroundColor: !params.color ? params.color : "white",
+    color: params.color ? params.color : "white",
+    fontSize: "14px",
 
   };
   const divStyle = {
@@ -70,22 +83,36 @@ const App = () => {
   const [options, setOptions] = useState([]);
   const [url_construct, setUrlConstruct] = useState({ prestation_type: "", secteur: "" });
   const [text2, setText] = useState([]);
+  const [hidecontent, setHideContent] = useState("");
 
-  useEffect(() => {
+  console.log(params);
+  useEffect((event) => {
+    console.log(hidecontent);
+    if (hidecontent == "carte") {
+      params.ekit_map_btn = 'yes';
+      setParams(params);
+
+    }
+    if (hidecontent == "galerie") {
+      params.ekit_map_btn = '';
+
+      setParams(params);
+
+    }
 
     APIConfig.getItems(tab).then((data) => setSelectedSort(data));
 
-  }, []);
+  }, [hidecontent]);
 
-  useEffect(() => {
-    setOptionsMoto(params.secteur)
-  }, []);
+
+  // affiche ou cache la maps
 
   return (
     <div style={{ fontFamily: params.ekit_wb_3976_font, fontSize: 14 }}  >
 
       <h3>
-        <div class="row m-1">
+
+        <div class="row">
           <div class="col-6">
 
             <Text
@@ -93,9 +120,12 @@ const App = () => {
             ></Text>
 
           </div>
-          <div class="col-6" style={{ fontSize: params.fontSize }}>
+          <div class="col-6 " style={{ fontSize: params.fontSize }}>
+            <div class="row justify-content-end">
 
-            Carte Liste galerie
+              <a type="button" class="btn   " onClick={(e) => setHideContent('carte')} style={params.ekit_map_btn ? stylemenu : stylecriteres}>Carte </a>
+              <a type="button" class="btn  mr-2 " onClick={(e) => setHideContent('galerie')} style={params.ekit_map_btn ? stylecriteres : stylemenu}>Galerie </a>
+            </div>
 
           </div>
         </div>
@@ -116,14 +146,22 @@ const App = () => {
 
       </div>
 
-      <div class="row m-1">
+      <div class="row  m-1">
         <div class="col-6">
-          <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} class="btn " style={stylecriteres}><i aria-hidden="true" class="icon icon-chevron-down"></i> + de criteres
-          </a>
+          <div class="row justify-content-end">
+
+            <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} class="btn " style={stylecriteres}><i aria-hidden="true" class="icon icon-chevron-down"></i> + de criteres
+            </a>
+          </div >
+
         </div >
         <div class="col-6">
-          <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} class="btn " style={stylealerte}><i aria-hidden="true" class="icon icon-alarm"></i> Créer une alerte
-          </a>
+          <div class="row justify-content-end">
+
+            <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} class="btn " style={stylealerte}><i aria-hidden="true" class="icon icon-alarm"></i> Créer une alerte
+            </a>
+          </div>
+
         </div>
       </div >
 
@@ -153,7 +191,7 @@ const App = () => {
       ></SearchLocationInput>
       <div class="row" style={params.visible ? null : divStyle} >
         {selectedSort ?
-          <div class="col-md-6" >
+          <div class={params.ekit_map_btn ? 'col-6' : 'col-12'} >
             <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >
 
               < ListeAnnonce
@@ -171,7 +209,7 @@ const App = () => {
           </div>
           : <div class="col-6 d-flex justify-content-center" >  <ReactLoading type='bubbles' color={params.color} /></div >
         }
-        <div class="col-md-6">
+        <div class="col-md-6" style={params.ekit_map_btn ? null : divStyle} >
           <GoogleMaps
             style={{ margin: "400px" }}
             options={options}

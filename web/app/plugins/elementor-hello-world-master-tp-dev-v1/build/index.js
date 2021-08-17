@@ -26146,7 +26146,7 @@ const App = () => {
   let text;
   const [tab, setTab] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])({}); // # stock les filtre d'apres les type récupérer 
 
-  const params = _constants_APIConfig__WEBPACK_IMPORTED_MODULE_10__["params"];
+  const [params, setParams] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])(_constants_APIConfig__WEBPACK_IMPORTED_MODULE_10__["params"]);
   params.type.map((data, index) => {
     var secteur = _constants_APIConfig__WEBPACK_IMPORTED_MODULE_10__["url_const"].searchParams.get(data.name);
 
@@ -26162,16 +26162,26 @@ const App = () => {
     color: "white"
   };
   const stylecriteres = {
-    backgroundColor: params.ekit_menu_button_color_critere ? params.ekit_menu_button_color_critere : "#ffffff",
-    display: params.ekit_critere_btn ? "" : "none",
-    "border-radius": "1px 1px 1px 1px",
-    color: "black"
+    display: params.ekit_alerte_btn ? "" : "none",
+    "border-radius": "20px 20px 20px 20px",
+    color: !params.ekit_menu_button_color_alerte ? params.ekit_menu_button_color_alerte : "black"
   };
   const stylealerte = {
     backgroundColor: params.ekit_menu_button_color_alerte ? params.ekit_menu_button_color_alerte : "#ffffff",
     display: params.ekit_alerte_btn ? "" : "none",
     "border-radius": "20px 20px 20px 20px",
     color: "white"
+  };
+  const stylemenu = {
+    display: params.ekit_alerte_btn ? "" : "none",
+    "border-radius": "20px 20px 20px 20px",
+    color: params.ekit_menu_button_color_alerte ? params.ekit_menu_button_color_alerte : "#ffffff"
+  };
+  const styleContactPro = {
+    boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+    backgroundColor: !params.color ? params.color : "white",
+    color: params.color ? params.color : "white",
+    fontSize: "14px"
   };
   const divStyle = {
     display: "none"
@@ -26185,30 +26195,54 @@ const App = () => {
     secteur: ""
   });
   const [text2, setText] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])([]);
-  Object(react__WEBPACK_IMPORTED_MODULE_9__["useEffect"])(() => {
+  const [hidecontent, setHideContent] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])("");
+  console.log(params);
+  Object(react__WEBPACK_IMPORTED_MODULE_9__["useEffect"])(event => {
+    console.log(hidecontent);
+
+    if (hidecontent == "carte") {
+      params.ekit_map_btn = 'yes';
+      setParams(params);
+    }
+
+    if (hidecontent == "galerie") {
+      params.ekit_map_btn = '';
+      setParams(params);
+    }
+
     _constants_APIConfig__WEBPACK_IMPORTED_MODULE_10__["getItems"](tab).then(data => setSelectedSort(data));
-  }, []);
-  Object(react__WEBPACK_IMPORTED_MODULE_9__["useEffect"])(() => {
-    setOptionsMoto(params.secteur);
-  }, []);
+  }, [hidecontent]); // affiche ou cache la maps
+
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     style: {
       fontFamily: params.ekit_wb_3976_font,
       fontSize: 14
     }
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h3", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "row m-1"
+    class: "row"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "col-6"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_Text__WEBPACK_IMPORTED_MODULE_7__["default"], {
     data: selectedSort,
     text: url_construct
   })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "col-6",
+    class: "col-6 ",
     style: {
       fontSize: params.fontSize
     }
-  }, "Carte Liste galerie"))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    class: "row justify-content-end"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
+    type: "button",
+    class: "btn   ",
+    onClick: e => setHideContent('carte'),
+    style: params.ekit_map_btn ? stylemenu : stylecriteres
+  }, "Carte "), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
+    type: "button",
+    class: "btn  mr-2 ",
+    onClick: e => setHideContent('galerie'),
+    style: params.ekit_map_btn ? stylecriteres : stylemenu
+  }, "Galerie "))))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "row"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "col-12 m-2"
@@ -26221,9 +26255,11 @@ const App = () => {
     state: state,
     params: params
   }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "row m-1"
+    class: "row  m-1"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "col-6"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    class: "row justify-content-end"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
     type: "button",
     href: params.url + '?' + new URLSearchParams(url_construct),
@@ -26232,8 +26268,10 @@ const App = () => {
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("i", {
     "aria-hidden": "true",
     class: "icon icon-chevron-down"
-  }), " + de criteres")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+  }), " + de criteres"))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "col-6"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    class: "row justify-content-end"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
     type: "button",
     href: params.url + '?' + new URLSearchParams(url_construct),
@@ -26242,7 +26280,7 @@ const App = () => {
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("i", {
     "aria-hidden": "true",
     class: "icon icon-alarm"
-  }), " Cr\xE9er une alerte"))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_NbResultat__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }), " Cr\xE9er une alerte")))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_NbResultat__WEBPACK_IMPORTED_MODULE_6__["default"], {
     data: selectedSort
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "row"
@@ -26272,7 +26310,7 @@ const App = () => {
     class: "row",
     style: params.visible ? null : divStyle
   }, selectedSort ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "col-md-6"
+    class: params.ekit_map_btn ? 'col-6' : 'col-12'
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_animated_css__WEBPACK_IMPORTED_MODULE_8__["Animated"], {
     isVisible: true,
     animationIn: "fadeIn",
@@ -26293,7 +26331,8 @@ const App = () => {
     type: "bubbles",
     color: params.color
   })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "col-md-6"
+    class: "col-md-6",
+    style: params.ekit_map_btn ? null : divStyle
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_GoogleMaps__WEBPACK_IMPORTED_MODULE_2__["default"], {
     style: {
       margin: "400px"
@@ -26408,7 +26447,7 @@ const DetailAnnonce = props => {
 
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "col-6"
+    class: params.ekit_map_btn ? 'col-6' : 'col-3'
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "col-6",
     style: {

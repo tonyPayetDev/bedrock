@@ -77,12 +77,10 @@ const DetailAnnonce = (props) => {
     event.target.style.transitionDuration = '500ms',
       event.target.style.objectFit = 'cover'
 
-
   }
   //console.log(name);
-
   return (
-    <div class="col-6"  >
+    <div class={params.ekit_map_btn ? 'col-6' : 'col-3'}  >
       <div >
 
         <div class='col-6' style={{

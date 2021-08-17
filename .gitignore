@@ -9,9 +9,7 @@ web/app/upgrade
 web/app/uploads/*
 !web/app/uploads/.gitkeep
 !web/app/plugins/elementor-hello-world-master-tp-dev-v1
-!web/app/plugins/all-in-one-wp-migration
 !web/app/plugins/all-in-one-wp-migration-file-extension
-!web/app/plugins/elementor
 
 
 # WordPress
