@@ -95,7 +95,7 @@ const DetailAnnonce = (props) => {
           borderRadius: "0px 0px 0px 14px",
           boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
         }} class="card btn-no-waves m-2 " >
-          <a onMouseOver={MouseOverOpacity} onMouseOut={MouseOutOpacity} href={APIConfig.URL_POST + name.post_name}>
+          <a onMouseOver={MouseOverOpacity} onMouseOut={MouseOutOpacity} href={params.URL_POST + name.post_name}>
             <img
               style={styleImage}
               class="card-img-top"

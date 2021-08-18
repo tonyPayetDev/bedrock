@@ -3,6 +3,7 @@ import Select from "react-select";
 import * as APIConfig from "../constants/APIConfig";
 import { Animated } from "react-animated-css";
 import ReactLoading from "react-loading";
+import * as App from "../App";
 
 const SelectBox = (props) => {
   const { options, optionsMoto, setSelectedSort, cars, state, params, setUrlConstruct, setText } = props;
@@ -13,6 +14,7 @@ const SelectBox = (props) => {
   const [tab, setTab] = useState({});// # todo a recupérer en params
 
   let renderSelect;
+  let renderButton;
 
   useEffect(
     (props) => {
@@ -21,7 +23,7 @@ const SelectBox = (props) => {
         tab[search.name] = search.value;
         setUrlConstruct(tab);
         setSelectedSort("");
-        APIConfig.getItems(tab).then((data) => setSelectedSort(data));
+        App.getItems(tab).then((data) => setSelectedSort(data));
 
       }
     },
@@ -46,47 +48,50 @@ const SelectBox = (props) => {
     }
   }
   let col = "col-" + 12 / params.type.length;// calcul le nombre de col d'apres le nombre de select
-  renderSelect = params.type.map((data, index) => {
+  let renderElement = params.type.map((data, index) => {
+    if (data.type == "select") {
+      return (
+        <div class={col}>
+          <Select
+            style={customStyles}
+            theme={theme => ({
+              ...theme,
+              borderRadius: 5,
+              colors: {
+                ...theme.colors,
+                neutral80: params.color,
+                primary25: '#FAFAFA',
+                primary: params.color,
+              },
+            })}
 
-    return (
-      <div class={col}>
-        <Select
-          theme={theme => ({
-            ...theme,
-            borderRadius: 5,
-            colors: {
-              ...theme.colors,
-              neutral80: params.color,
-              primary25: '#FAFAFA',
-              primary: params.color,
-            },
-          })}
+            placeholder={data.label}
+            // isMulti
+            options={data.value}
+            onChange={(e) => setSearch({ "name": data.name, "value": e.value })}
+          // defaultValue={{ label: "vente", value: "Acheter" }}
+          />
+        </div>
 
-          placeholder={data.label}
-          // isMulti
-          options={data.value}
-          onChange={(e) => setSearch({ "name": data.name, "value": e.value })}
-        // defaultValue={{ label: "vente", value: "Acheter" }}
-        />
-      </div>
+      );
+    }
+    return data.value.map((data_value, index) => {
+      console.log(data_value);
 
-    );
+      return (
+        <button class="btn" onClick={(e) => setSearch({ "name": data.name, "value": data_value.value })}>
+          {data_value.label}
+        </button >
+      );
+    }).filter(params => params.type === "button");
+
   });
-  // let text = "";
-  // if (tab.prestation_type) {
-  //   text = "Je cherche une " + tab.prestation_type
-  //   if (text && tab.secteur) {
-  //     text = text + " secteur " + tab.secteur
-  //     setText(text);
-
-  //   }
-  // }
 
   return (
 
     <div class="row justify-content-center ">
 
-      {renderSelect}
+      {renderElement}
 
     </div>
   );

@@ -1,13 +1,14 @@
 
 {% block content %}
 
-    <div id="app"  params='{{params}}' >Module recherche</div>
+    <div id="{{id}}" class="app" params='{{params}}' >Module recherche</div>
 
     {# <div id="app2"  params='{{params}}' >Module recherche</div> #}
 
     {# <button type="button" id="react" class="btn btn-primary" style="background-color:{{params.color}}">toto</button> #}
-    <pre>
-     </pre>
+    {# <pre>
+    dump({{params}});
+     </pre> #}
 {# {{ request.get.action }} #}
 
 {% endblock %}

@@ -26096,11 +26096,14 @@ module.exports = function(module) {
 /*!********************!*\
   !*** ./src/App.js ***!
   \********************/
-/*! exports provided: default */
+/*! exports provided: HEADERS, fetchURL, getItems, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HEADERS", function() { return HEADERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchURL", function() { return fetchURL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getItems", function() { return getItems; });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var google_maps_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! google-maps-react */ "./node_modules/google-maps-react/dist/index.js");
@@ -26118,6 +26121,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants_APIConfig__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./constants/APIConfig */ "./src/constants/APIConfig.js");
 /* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-loading */ "./node_modules/react-loading/dist/react-loading.js");
 /* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(react_loading__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var base_64__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! base-64 */ "./node_modules/base-64/base64.js");
+/* harmony import */ var base_64__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(base_64__WEBPACK_IMPORTED_MODULE_12__);
+
+const HEADERS = new Headers({
+  "Content-Type": "application/json",
+  Accept: "application/json",
+  Authorization: "Bearer VotreCléAPI"
+});
 
 
 
@@ -26131,8 +26142,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var page_id = _constants_APIConfig__WEBPACK_IMPORTED_MODULE_10__["url_const"].searchParams.get("page_id");
+let fetchURL = "";
+const getItems = $filter => fetch(fetchURL + new URLSearchParams($filter), {
+  method: "GET",
+  headers: HEADERS
+}).then(res => res.json());
 
-const App = () => {
+const App = props => {
+  const {
+    id
+  } = props;
   const [state, updateState] = react__WEBPACK_IMPORTED_MODULE_9___default.a.useState({
     lat: -21,
     lng: 55.5,
@@ -26146,7 +26165,24 @@ const App = () => {
   let text;
   const [tab, setTab] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])({}); // # stock les filtre d'apres les type récupérer 
 
-  const [params, setParams] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])(_constants_APIConfig__WEBPACK_IMPORTED_MODULE_10__["params"]);
+  let decoded;
+
+  function param(id) {
+    let params_json;
+
+    for (var i = 0; i < document.getElementsByClassName("app").length; i++) {
+      decoded = Object(base_64__WEBPACK_IMPORTED_MODULE_12__["decode"])(document.getElementsByClassName("app")[i].getAttribute("params")); //  id = document.getElementsByClassName("app")[i].getAttribute("id");
+
+      params_json = JSON.parse(decoded);
+      params_json = params_json.filter(single => single.id === id);
+    }
+
+    return params_json;
+  }
+
+  const [params, setParams] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])(param(id)[0]);
+  fetchURL = `${params.API_URI}biens?`; // console.log(params);
+
   params.type.map((data, index) => {
     var secteur = _constants_APIConfig__WEBPACK_IMPORTED_MODULE_10__["url_const"].searchParams.get(data.name);
 
@@ -26196,10 +26232,7 @@ const App = () => {
   });
   const [text2, setText] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])([]);
   const [hidecontent, setHideContent] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])("");
-  console.log(params);
   Object(react__WEBPACK_IMPORTED_MODULE_9__["useEffect"])(event => {
-    console.log(hidecontent);
-
     if (hidecontent == "carte") {
       params.ekit_map_btn = 'yes';
       setParams(params);
@@ -26210,7 +26243,7 @@ const App = () => {
       setParams(params);
     }
 
-    _constants_APIConfig__WEBPACK_IMPORTED_MODULE_10__["getItems"](tab).then(data => setSelectedSort(data));
+    getItems(tab).then(data => setSelectedSort(data));
   }, [hidecontent]); // affiche ou cache la maps
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
@@ -26467,7 +26500,7 @@ const DetailAnnonce = props => {
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
     onMouseOver: MouseOverOpacity,
     onMouseOut: MouseOutOpacity,
-    href: _constants_APIConfig__WEBPACK_IMPORTED_MODULE_3__["URL_POST"] + name.post_name
+    href: params.URL_POST + name.post_name
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
     style: styleImage,
     class: "card-img-top",
@@ -26970,6 +27003,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_animated_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_animated_css__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-loading */ "./node_modules/react-loading/dist/react-loading.js");
 /* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_loading__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../App */ "./src/App.js");
+
 
 
 
@@ -26995,13 +27030,14 @@ const SelectBox = props => {
   const [tab, setTab] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])({}); // # todo a recupérer en params
 
   let renderSelect;
+  let renderButton;
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(props => {
     // rechercher par type
     if (search) {
       tab[search.name] = search.value;
       setUrlConstruct(tab);
       setSelectedSort("");
-      _constants_APIConfig__WEBPACK_IMPORTED_MODULE_3__["getItems"](tab).then(data => setSelectedSort(data));
+      _App__WEBPACK_IMPORTED_MODULE_6__["getItems"](tab).then(data => setSelectedSort(data));
     }
   }, [search, searchAddress, searchMoto, cars]);
   const customStyles = {
@@ -27025,39 +27061,45 @@ const SelectBox = props => {
   };
   let col = "col-" + 12 / params.type.length; // calcul le nombre de col d'apres le nombre de select
 
-  renderSelect = params.type.map((data, index) => {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-      class: col
-    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_select__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      theme: theme => ({ ...theme,
-        borderRadius: 5,
-        colors: { ...theme.colors,
-          neutral80: params.color,
-          primary25: '#FAFAFA',
-          primary: params.color
-        }
-      }),
-      placeholder: data.label // isMulti
-      ,
-      options: data.value,
-      onChange: e => setSearch({
-        "name": data.name,
-        "value": e.value
-      }) // defaultValue={{ label: "vente", value: "Acheter" }}
+  let renderElement = params.type.map((data, index) => {
+    if (data.type == "select") {
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+        class: col
+      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_select__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        style: customStyles,
+        theme: theme => ({ ...theme,
+          borderRadius: 5,
+          colors: { ...theme.colors,
+            neutral80: params.color,
+            primary25: '#FAFAFA',
+            primary: params.color
+          }
+        }),
+        placeholder: data.label // isMulti
+        ,
+        options: data.value,
+        onChange: e => setSearch({
+          "name": data.name,
+          "value": e.value
+        }) // defaultValue={{ label: "vente", value: "Acheter" }}
 
-    }));
-  }); // let text = "";
-  // if (tab.prestation_type) {
-  //   text = "Je cherche une " + tab.prestation_type
-  //   if (text && tab.secteur) {
-  //     text = text + " secteur " + tab.secteur
-  //     setText(text);
-  //   }
-  // }
+      }));
+    }
 
+    return data.value.map((data_value, index) => {
+      console.log(data_value);
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
+        class: "btn",
+        onClick: e => setSearch({
+          "name": data.name,
+          "value": data_value.value
+        })
+      }, data_value.label);
+    }).filter(params => params.type === "button");
+  });
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "row justify-content-center "
-  }, renderSelect);
+  }, renderElement);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (SelectBox);
@@ -27123,7 +27165,7 @@ const Text = props => {
 /*!************************************!*\
   !*** ./src/constants/APIConfig.js ***!
   \************************************/
-/*! exports provided: HEADERS, KEY_MAP, Zoom, perimetre_long, perimetre_lat, url_const, params, URL_POST, API_URI, getItemsParams, getItems, getItemsType, getItemsMoto */
+/*! exports provided: HEADERS, KEY_MAP, Zoom, perimetre_long, perimetre_lat, url_const */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27134,16 +27176,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "perimetre_long", function() { return perimetre_long; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "perimetre_lat", function() { return perimetre_lat; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "url_const", function() { return url_const; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "params", function() { return params; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "URL_POST", function() { return URL_POST; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "API_URI", function() { return API_URI; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getItemsParams", function() { return getItemsParams; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getItems", function() { return getItems; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getItemsType", function() { return getItemsType; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getItemsMoto", function() { return getItemsMoto; });
 /* harmony import */ var base_64__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! base-64 */ "./node_modules/base-64/base64.js");
 /* harmony import */ var base_64__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(base_64__WEBPACK_IMPORTED_MODULE_0__);
 // import params_json from '../jsonFile.json';
+ // import * as App from "../App";
 
 const HEADERS = new Headers({
   "Content-Type": "application/json",
@@ -27155,35 +27191,30 @@ const Zoom = 12;
 const perimetre_long = 0.2;
 const perimetre_lat = 0.05;
 var url = new URL(document.location.href);
-const url_const = url;
-const attributID = document.querySelector("#app").getAttribute("params");
-let decoded = Object(base_64__WEBPACK_IMPORTED_MODULE_0__["decode"])(attributID);
-const params_json = JSON.parse(decoded);
-const params = params_json.filter(single => single.id_active === url.origin + url.pathname)[0];
-const URL_POST = params.URL_POST;
-const API_URI = params.API_URI;
-var page_id = url.searchParams.get("page_id"); // pour la pagination
+const url_const = url; //const attributID = document.getElementsByClassName("app").getAttribute("params");
+// document.getElementsByClassName("app").map((params, index) => {
+//   console.log(params);
+// });
 
-const fetchURLParams = `${API_URI}/params?page_id=` + page_id;
-const getItemsParams = () => fetch(fetchURLParams, {
-  method: "GET",
-  headers: HEADERS
-}).then(res => res.json());
-const fetchURL = `${API_URI}/biens?`;
-const getItems = $filter => fetch(fetchURL + new URLSearchParams($filter), {
-  method: "GET",
-  headers: HEADERS
-}).then(res => res.json());
-const fetchURLType = `${API_URI}/secteurs`;
-const getItemsType = () => fetch(fetchURLType, {
-  method: "GET",
-  headers: HEADERS
-}).then(res => res.json());
-const fetchURLMoto = `${API_URI}/types`;
-const getItemsMoto = () => fetch(fetchURLMoto, {
-  method: "GET",
-  headers: HEADERS
-}).then(res => res.json());
+var page_id = url.searchParams.get("page_id"); // pour la pagination
+// const fetchURL = `${App.API_URI}/biens?`;
+// export const getItems = ($filter) =>
+//   fetch(fetchURL + new URLSearchParams($filter), {
+//     method: "GET",
+//     headers: HEADERS,
+//   }).then((res) => res.json());
+// const fetchURLType = `${API_URI}/secteurs`;
+// export const getItemsType = () =>
+//   fetch(fetchURLType, {
+//     method: "GET",
+//     headers: HEADERS,
+//   }).then((res) => res.json());
+// const fetchURLMoto = `${API_URI}/types`;
+// export const getItemsMoto = () =>
+//   fetch(fetchURLMoto, {
+//     method: "GET",
+//     headers: HEADERS,
+//   }).then((res) => res.json());
 
 /***/ }),
 
@@ -27264,11 +27295,19 @@ const {
 
 
 const store = Object(redux__WEBPACK_IMPORTED_MODULE_5__["createStore"])(Object(redux__WEBPACK_IMPORTED_MODULE_5__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_8__["default"]));
-react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render(Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_redux__WEBPACK_IMPORTED_MODULE_4__["Provider"], {
-  store: store
-}, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_App__WEBPACK_IMPORTED_MODULE_6__["default"], null)), document.getElementById('app')); // If you want your app to work offline and load faster, you can change
+
+for (var i = 0; i < document.getElementsByClassName("app").length; i++) {
+  let id = document.getElementsByClassName("app")[i].getAttribute("id");
+  console.log(id);
+  react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render(Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_redux__WEBPACK_IMPORTED_MODULE_4__["Provider"], {
+    store: store
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_App__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    id: id
+  })), document.getElementById(id));
+} // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
+
 
 _serviceWorker__WEBPACK_IMPORTED_MODULE_7__["unregister"]();
 

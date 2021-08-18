@@ -1,3 +1,10 @@
+export const HEADERS = new Headers({
+  "Content-Type": "application/json",
+  Accept: "application/json",
+  Authorization: "Bearer VotreCléAPI",
+});
+
+
 import { GoogleApiWrapper } from "google-maps-react";
 import GoogleMaps from "./components/GoogleMaps";
 import ListeAnnonce from "./components/ListeAnnonce";
@@ -12,10 +19,18 @@ import { Animated } from "react-animated-css";
 import React, { useState, useEffect } from "react";
 import * as APIConfig from "./constants/APIConfig";
 import ReactLoading from "react-loading";
+import { decode as base64_decode, encode as base64_encode } from 'base-64';
 
 var page_id = APIConfig.url_const.searchParams.get("page_id");
+export let fetchURL = "";
+export const getItems = ($filter) =>
+  fetch(fetchURL + new URLSearchParams($filter), {
+    method: "GET",
+    headers: HEADERS,
+  }).then((res) => res.json());
 
-const App = () => {
+const App = (props) => {
+  const { id } = props;
   const [state, updateState] = React.useState({
     lat: -21,
     lng: 55.5,
@@ -27,8 +42,25 @@ const App = () => {
   });
   let text;
   const [tab, setTab] = useState({});// # stock les filtre d'apres les type récupérer 
+  let decoded;
 
-  const [params, setParams] = useState(APIConfig.params);
+  function param(id) {
+    let params_json;
+
+    for (var i = 0; i < document.getElementsByClassName("app").length; i++) {
+      decoded = base64_decode(document.getElementsByClassName("app")[i].getAttribute("params"));
+      //  id = document.getElementsByClassName("app")[i].getAttribute("id");
+      params_json = JSON.parse(decoded);
+      params_json = params_json.filter(single => single.id === id);
+
+    }
+    return params_json;
+  }
+  const [params, setParams] = useState(param(id)[0]);
+
+  fetchURL = `${params.API_URI}biens?`;
+
+  // console.log(params);
 
   params.type.map((data, index) => {
     var secteur = APIConfig.url_const.searchParams.get(data.name);
@@ -85,9 +117,7 @@ const App = () => {
   const [text2, setText] = useState([]);
   const [hidecontent, setHideContent] = useState("");
 
-  console.log(params);
   useEffect((event) => {
-    console.log(hidecontent);
     if (hidecontent == "carte") {
       params.ekit_map_btn = 'yes';
       setParams(params);
@@ -100,7 +130,7 @@ const App = () => {
 
     }
 
-    APIConfig.getItems(tab).then((data) => setSelectedSort(data));
+    getItems(tab).then((data) => setSelectedSort(data));
 
   }, [hidecontent]);
 

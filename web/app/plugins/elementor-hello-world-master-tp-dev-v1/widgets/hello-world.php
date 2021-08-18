@@ -69,7 +69,18 @@ class Hello_World extends Widget_Base
                 'label_block' => true,
             ]
         );
-    
+        $repeater->add_control(
+            'type_element',
+            [
+                'label' => esc_html__('Type element', 'elementskit-lite'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'select',
+                'options' => [
+                    'select'  => esc_html__('Select', 'elementskit-lite'),
+                    'button' => esc_html__('Button', 'elementskit-lite'),
+                ],
+            ]
+        );
         $this->add_control(
             'categories',
             [
@@ -100,7 +111,7 @@ class Hello_World extends Widget_Base
                 'label_block' => true,
             ]
         );
-    
+
         $serviceRepeater->add_control(
             'service_title',
             [
@@ -110,6 +121,7 @@ class Hello_World extends Widget_Base
                 'label_block' => true,
             ]
         );
+        
     
         $serviceRepeater->add_control(
             'service_price',
@@ -120,7 +132,7 @@ class Hello_World extends Widget_Base
                 'label_block' => true,
             ]
         );
-    
+            
         $this->add_control(
             'services',
             [
@@ -1036,6 +1048,7 @@ class Hello_World extends Widget_Base
             }
         }
         // adaptation du select
+            
         foreach ($settings['categories'] as $category) {
             $tab_value=null;
             foreach ($settings['services'] as $service) {
@@ -1043,11 +1056,11 @@ class Hello_World extends Widget_Base
                     $tab_value[]= array("value"=>$service['service_title'],"label"=>$service['service_price']);
                 }
             }
-            $tab[]= array("name"=>$category['category_slug'], "label"=>$category['category_title'], "value"=>$tab_value);
+            $tab[]= array('type'=>$category['type_element'],"name"=>$category['category_slug'], "label"=>$category['category_title'], "value"=>$tab_value);
         }
         // var_dump( $settings['ekit_wb_3976_font']);
         $array = array(
-           "id"=>get_the_ID(),
+           "id"=>$settings['post'],
            "id_active"=>get_permalink(get_the_ID()), // se base l'url de la page pour checker le bon parametre
            'type'=>$tab,
            'ekit_search_btn' =>  $settings['ekit_search_btn'],
@@ -1079,20 +1092,22 @@ class Hello_World extends Widget_Base
         $val=false;
         foreach ($obj as $key => $value) {
             //var_dump(  $key);
-            if (isset($value->id) && $value->id==get_the_ID()) {
+            if (isset($value->id) && $value->id==$settings['post']) {
                 $val=true;
                 $id=$key ;
             }
         }
         // si existe pas on créé un objet param sinon ou update les params
         if (!$val) {
-            $obj[]=array("id"=>get_the_ID());// ajout clé
+            $obj[]=array("id"=>$settings['post']);// ajout clé
         } else {
             $obj[$id]=$array; // update
         }
         $newJsonString = json_encode($obj);
         file_put_contents($file, $newJsonString);
         $context['params']=base64_encode($newJsonString) ;
+        $context['id']=$settings['post'];
+                
 
         Timber::render('index.twig', $context);
     }
