@@ -77,13 +77,13 @@ const GoogleMaps = ({
     >
       {renderMarkers}
 
-      {/* <InfoWindow
+      <InfoWindow
         marker={state.activeMarker}
         visible={state.showingInfoWindow}
         onClose={onClose}
       >
-        <InfoContent name={state.selectedPlace.name}> </InfoContent>
-      </InfoWindow> */}
+        {/* <InfoContent name={state.selectedPlace.name}> </InfoContent> */}
+      </InfoWindow>
     </Map>
   );
 };
