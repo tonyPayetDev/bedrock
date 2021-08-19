@@ -30,7 +30,7 @@ export const url_const = url;
 
 var page_id = url.searchParams.get("page_id");// pour la pagination
 
-export let params_json = [];
+export let params_json = "";
 
 export function param(id) {
   let tab = []
@@ -38,9 +38,9 @@ export function param(id) {
     let decoded = base64_decode(document.getElementsByClassName("app")[i].getAttribute("params"));
     params_json = JSON.parse(decoded);
     params_json = params_json.filter(single => single.id === id);
-    console.log(params_json);
+    return params_json;
+
   }
-  return params_json;
 
 }
 
