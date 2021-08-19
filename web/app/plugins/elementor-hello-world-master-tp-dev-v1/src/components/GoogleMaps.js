@@ -35,7 +35,6 @@ const GoogleMaps = ({
       });
     }
   };
-  console.log(cars);
   if (cars) {
     renderMarkers = cars['data'].map((data, index) => {
 
@@ -78,13 +77,13 @@ const GoogleMaps = ({
     >
       {renderMarkers}
 
-      <InfoWindow
+      {/* <InfoWindow
         marker={state.activeMarker}
         visible={state.showingInfoWindow}
         onClose={onClose}
       >
         <InfoContent name={state.selectedPlace.name}> </InfoContent>
-      </InfoWindow>
+      </InfoWindow> */}
     </Map>
   );
 };

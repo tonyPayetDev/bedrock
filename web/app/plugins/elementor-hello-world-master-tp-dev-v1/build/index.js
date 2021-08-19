@@ -26354,7 +26354,18 @@ const App = props => {
     longitude: state.lng,
     setSelectedSort: setSelectedSort,
     cars: selectedSort
-  })))));
+  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    class: "col-md-6",
+    style: params.ekit_map_btn ? null : divStyle
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_GoogleMaps__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    style: {
+      margin: "400px"
+    },
+    latitude: state.lat,
+    longitude: state.lng,
+    setSelectedSort: setSelectedSort,
+    cars: selectedSort
+  }))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(google_maps_react__WEBPACK_IMPORTED_MODULE_1__["GoogleApiWrapper"])({
@@ -26595,8 +26606,6 @@ const GoogleMaps = ({
     }
   };
 
-  console.log(cars);
-
   if (cars) {
     renderMarkers = cars['data'].map((data, index) => {
       //    console.log("app/plugins/react-plugin/build"+Icon);
@@ -26639,13 +26648,7 @@ const GoogleMaps = ({
       lat: latitude,
       lng: longitude
     }
-  }, renderMarkers, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(google_maps_react__WEBPACK_IMPORTED_MODULE_2__["InfoWindow"], {
-    marker: state.activeMarker,
-    visible: state.showingInfoWindow,
-    onClose: onClose
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_InfoContent_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    name: state.selectedPlace.name
-  }, " ")));
+  }, renderMarkers);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (GoogleMaps);

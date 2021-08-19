@@ -213,7 +213,7 @@ const App = (props) => {
 
         </div>
 
-        {/* <div class="col-md-6" style={params.ekit_map_btn ? null : divStyle} >
+        <div class="col-md-6" style={params.ekit_map_btn ? null : divStyle} >
           <GoogleMaps
             style={{ margin: "400px" }}
             latitude={state.lat}
@@ -221,7 +221,7 @@ const App = (props) => {
             setSelectedSort={setSelectedSort}
             cars={selectedSort}
           ></GoogleMaps>
-        </div> */}
+        </div>
 
       </div>
 
