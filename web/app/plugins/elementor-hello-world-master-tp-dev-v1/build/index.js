@@ -26354,18 +26354,7 @@ const App = props => {
     longitude: state.lng,
     setSelectedSort: setSelectedSort,
     cars: selectedSort
-  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "col-md-6",
-    style: params.ekit_map_btn ? null : divStyle
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_GoogleMaps__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    style: {
-      margin: "400px"
-    },
-    latitude: state.lat,
-    longitude: state.lng,
-    setSelectedSort: setSelectedSort,
-    cars: selectedSort
-  }))));
+  })))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(google_maps_react__WEBPACK_IMPORTED_MODULE_1__["GoogleApiWrapper"])({
