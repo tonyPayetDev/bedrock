@@ -1,8 +1,3 @@
-export const HEADERS = new Headers({
-  "Content-Type": "application/json",
-  Accept: "application/json",
-  Authorization: "Bearer VotreCléAPI",
-});
 
 
 import { GoogleApiWrapper } from "google-maps-react";
@@ -22,15 +17,10 @@ import ReactLoading from "react-loading";
 import { decode as base64_decode, encode as base64_encode } from 'base-64';
 
 var page_id = APIConfig.url_const.searchParams.get("page_id");
-export let fetchURL = "";
-export const getItems = ($filter) =>
-  fetch(fetchURL + new URLSearchParams($filter), {
-    method: "GET",
-    headers: HEADERS,
-  }).then((res) => res.json());
 
 const App = (props) => {
-  const { id } = props;
+  const { id } = props;; // charge les paremetres au premier rechargement
+
   const [state, updateState] = React.useState({
     lat: -21,
     lng: 55.5,
@@ -43,24 +33,12 @@ const App = (props) => {
   let text;
   const [tab, setTab] = useState({});// # stock les filtre d'apres les type récupérer 
   let decoded;
+  const [params, setParams] = useState(APIConfig.param(id)[0]);
+  const fetchURL = `${params.API_URI}&`;
 
-  function param(id) {
-    let params_json;
+  console.log(params.API_URI);
 
-    for (var i = 0; i < document.getElementsByClassName("app").length; i++) {
-      decoded = base64_decode(document.getElementsByClassName("app")[i].getAttribute("params"));
-      //  id = document.getElementsByClassName("app")[i].getAttribute("id");
-      params_json = JSON.parse(decoded);
-      params_json = params_json.filter(single => single.id === id);
 
-    }
-    return params_json;
-  }
-  const [params, setParams] = useState(param(id)[0]);
-
-  fetchURL = `${params.API_URI}biens?`;
-
-  // console.log(params);
 
   params.type.map((data, index) => {
     var secteur = APIConfig.url_const.searchParams.get(data.name);
@@ -74,6 +52,7 @@ const App = (props) => {
     display: params.ekit_search_btn ? "" : "none",
     "border-radius": "1px 1px 1px 1px",
     color: "white",
+
 
   };
 
@@ -108,49 +87,43 @@ const App = (props) => {
   const divStyle = {
     display: "none",
   };
+  const styledynamictext = {
+    display: params.ekit_dynamic_text ? "" : "none",
+    "border-radius": "20px 20px 20px 20px",
+    color: params.color ? params.color : "#ffffff",
+
+  };
   const [cars, setCars] = useState();
   const [selectedSort, setSelectedSort] = useState();
-
-  const [optionsMoto, setOptionsMoto] = useState([]);
-  const [options, setOptions] = useState([]);
   const [url_construct, setUrlConstruct] = useState({ prestation_type: "", secteur: "" });
-  const [text2, setText] = useState([]);
   const [hidecontent, setHideContent] = useState("");
 
   useEffect((event) => {
     if (hidecontent == "carte") {
       params.ekit_map_btn = 'yes';
       setParams(params);
-
     }
     if (hidecontent == "galerie") {
       params.ekit_map_btn = '';
-
       setParams(params);
-
     }
-
-    getItems(tab).then((data) => setSelectedSort(data));
+    APIConfig.getItems(fetchURL + new URLSearchParams(tab)).then((data) => setSelectedSort(data));
 
   }, [hidecontent]);
 
 
   // affiche ou cache la maps
-
+  let col = "col-" + params.col;
   return (
     <div style={{ fontFamily: params.ekit_wb_3976_font, fontSize: 14 }}  >
-
       <h3>
-
         <div class="row">
-          <div class="col-6">
+          <Text
+            data={selectedSort} text={url_construct} params={params} style={style}
+          ></Text>
 
-            <Text
-              data={selectedSort} text={url_construct}
-            ></Text>
 
-          </div>
-          <div class="col-6 " style={{ fontSize: params.fontSize }}>
+          <div class={col} style={{ fontSize: params.fontSize }}>
             <div class="row justify-content-end">
 
               <a type="button" class="btn   " onClick={(e) => setHideContent('carte')} style={params.ekit_map_btn ? stylemenu : stylecriteres}>Carte </a>
@@ -160,17 +133,17 @@ const App = (props) => {
           </div>
         </div>
 
-      </h3>
+      </h3 >
       <div class="row">
         <div class="col-12 m-2">
           <SelectBox
-            options={options}
-            optionsMoto={optionsMoto}
             setSelectedSort={setSelectedSort}
             setUrlConstruct={setUrlConstruct}
             cars={cars}
             state={state}
             params={params}
+            fetchURL={fetchURL}
+
           ></SelectBox>
         </div>
 
@@ -219,31 +192,30 @@ const App = (props) => {
         setSelectedSort={setSelectedSort}
         params={params}
       ></SearchLocationInput>
+
+      {selectedSort ? "" : <div class="col-12 d-flex justify-content-center" >  <ReactLoading type='bubbles' color={params.color} /></div >}
+
       <div class="row" style={params.visible ? null : divStyle} >
-        {selectedSort ?
-          <div class={params.ekit_map_btn ? 'col-6' : 'col-12'} >
-            <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >
+        <div class={params.ekit_map_btn ? 'col-6' : 'col-12'} >
+          <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >
 
-              < ListeAnnonce
-                params={params}
-                options={options}
-                motorisation={optionsMoto}
-                latitude={state.lat}
-                longitude={state.lng}
-                setSelectedSort={setSelectedSort}
-                cars={selectedSort}
-              ></ListeAnnonce>
-            </Animated>
+            < ListeAnnonce
 
 
-          </div>
-          : <div class="col-6 d-flex justify-content-center" >  <ReactLoading type='bubbles' color={params.color} /></div >
-        }
+              params={params}
+              latitude={state.lat}
+              longitude={state.lng}
+              setSelectedSort={setSelectedSort}
+              cars={selectedSort}
+            ></ListeAnnonce>
+          </Animated>
+
+
+        </div>
+
         <div class="col-md-6" style={params.ekit_map_btn ? null : divStyle} >
           <GoogleMaps
             style={{ margin: "400px" }}
-            options={options}
-            motorisation={optionsMoto}
             latitude={state.lat}
             longitude={state.lng}
             setSelectedSort={setSelectedSort}

@@ -101,7 +101,20 @@ class Hello_World extends Widget_Base
         );
     
         $serviceRepeater = new Repeater();
-    
+        // $serviceRepeater ->add_control(
+        //     'service_ekit_tab_active',
+        //     [
+        //         'label' => esc_html__('button active', 'elementskit-lite'),
+        //         'type' => Controls_Manager::SWITCHER,
+        //         'label_on' => esc_html__('Show', 'elementskit-lite'),
+        //         'label_off' => esc_html__('Hide', 'elementskit-lite'),
+        //         'return_value' => 'yes',
+        //         'default' => 'yes',
+        //         'label_block' => true,
+
+        //     ]
+        // );
+
         $serviceRepeater->add_control(
             'category_slug',
             [
@@ -121,14 +134,27 @@ class Hello_World extends Widget_Base
                 'label_block' => true,
             ]
         );
-        
-    
         $serviceRepeater->add_control(
-            'service_price',
+            'service_label',
             [
-                'label'       => __('Price', 'elementor'),
+                'label'       => __('Service Label', 'elementor'),
                 'type'        => Controls_Manager::TEXT,
-                'default'     => __('40,00', 'elementor'),
+                'default'     => __('Service Title', 'elementor'),
+                'label_block' => true,
+            ]
+        );
+        
+        
+        $serviceRepeater->add_control(
+            'service_active',
+            [
+                'label'       => __('Active', 'elementor'),
+
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+
+                'default'     => __('yes', 'elementor'),
                 'label_block' => true,
             ]
         );
@@ -167,6 +193,35 @@ class Hello_World extends Widget_Base
                 'type' => Controls_Manager::TEXT,
                 'default' => '',
                 'title' => __('Enter some text', 'elementor-custom-widget'),
+            ]
+        );
+        $this->add_control(
+            'col_heading_text',
+            [
+                'label' => __('Number column heading ', 'elementor-custom-widget'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'title' => __('Enter number column heading text', 'elementor-custom-widget'),
+            ]
+        );
+        $this->add_control(
+            'col_post',
+            [
+                'label' => __('Number column post ', 'elementor-custom-widget'),
+                'type' => Controls_Manager::TEXT,
+                'default' => 'col-3',
+                'title' => __('Enter number column post', 'elementor-custom-widget'),
+            ]
+        );
+        $this->add_control(
+            'ekit_dynamic_text',
+            [
+                'label' => esc_html__('Dynamique text heading ', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
             ]
         );
         $this->add_control(
@@ -353,6 +408,8 @@ class Hello_World extends Widget_Base
                 ),
             )
         );
+
+        
         $this->add_control(
             'ekit_wb_226_url',
             array(
@@ -1053,10 +1110,10 @@ class Hello_World extends Widget_Base
             $tab_value=null;
             foreach ($settings['services'] as $service) {
                 if ($category['category_slug'] === $service['category_slug']) {
-                    $tab_value[]= array("value"=>$service['service_title'],"label"=>$service['service_price']);
+                    $tab_value[]= array("value"=>$service['service_title'],"label"=>$service['service_label'],"ekit_tab_active"=>$service['service_active']);
                 }
             }
-            $tab[]= array('type'=>$category['type_element'],"name"=>$category['category_slug'], "label"=>$category['category_title'], "value"=>$tab_value);
+            $tab[]= array('type'=>$category['type_element'],"name"=>$category['category_slug'] , "label"=>$category['category_title'], "value"=>$tab_value);
         }
         // var_dump( $settings['ekit_wb_3976_font']);
         $array = array(
@@ -1078,10 +1135,13 @@ class Hello_World extends Widget_Base
             'ekit_menu_button_color_alerte' => $settings['ekit_menu_button_color_alerte'],
             'ekit_alerte_btn' => $settings['ekit_alerte_btn'],
             'ekit_wb_3976_icons' => $settings['ekit_wb_3976_icons'],
-            'ekit_map_btn' => $settings['ekit_map_btn']
+            'ekit_map_btn' => $settings['ekit_map_btn'],
+            'col_heading_text' => $settings['col_heading_text'],
+            'col_post' => $settings['col_post'],
+            'ekit_dynamic_text' => $settings['ekit_dynamic_text']
 
             
-                      
+
         );
         
         // enregistrement dans le fichier json

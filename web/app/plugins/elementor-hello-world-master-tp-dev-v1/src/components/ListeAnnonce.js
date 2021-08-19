@@ -13,8 +13,6 @@ const ListeAnnonce = ({
   latitude,
   longitude,
   cars,
-  options,
-  motorisation,
   setSelectedSort,
   params,
 }) => {
@@ -49,7 +47,7 @@ const ListeAnnonce = ({
     }
   };
   if (cars) {
-    renderAnnonce = cars['biens'].map((annonce, index) => {
+    renderAnnonce = cars['data'].map((annonce, index) => {
 
       if (annonce)
         return (

@@ -3,57 +3,53 @@ import Select from "react-select";
 import * as APIConfig from "../constants/APIConfig";
 import { Animated } from "react-animated-css";
 import ReactLoading from "react-loading";
-import * as App from "../App";
 
 const SelectBox = (props) => {
-  const { options, optionsMoto, setSelectedSort, cars, state, params, setUrlConstruct, setText } = props;
+  const { setSelectedSort, cars, state, params, setUrlConstruct, setText, style, fetchURL } = props;
   const [search, setSearch] = useState("");
-  const [searchAddress, setSearchddress] = useState("");
-  const [searchMoto, setSearchMoto] = useState("");
-  const [optionsAdrr, setOptionsAdrr] = useState([]);
+
   const [tab, setTab] = useState({});// # todo a recupérer en params
+  const [active, setActive] = useState(false);// # todo a recupérer en params
 
-  let renderSelect;
-  let renderButton;
+  const styletabactive = {
+    // display: params.ekit_alerte_btn ? "" : "none",
+    boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+    color: !params.color ? params.color : "white",
+    backgroundColor: params.color ? params.color : "white",
+    margin: ".25rem"
 
+  };
+  const styletab = {
+    // display: params.ekit_alerte_btn ? "" : "none",
+    boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+    color: params.color ? params.color : "white",
+    margin: ".25rem"
+  };
   useEffect(
     (props) => {
-      // rechercher par type
+
       if (search) {
         tab[search.name] = search.value;
         setUrlConstruct(tab);
         setSelectedSort("");
-        App.getItems(tab).then((data) => setSelectedSort(data));
+        APIConfig.getItems(fetchURL + new URLSearchParams(tab)).then((data) => setSelectedSort(data));
+
+        //APIConfig.getItems(tab).then((data) => setSelectedSort(data));
+        if (search.type == "btn") {
+          setActive(search.value);
+
+        }
 
       }
     },
-    [search, searchAddress, searchMoto, cars]
+    [search, cars]
   );
-  const customStyles = {
-    option: (provided, state) => ({
-      ...provided,
-      borderBottom: '1px dotted pink',
-      color: 'red',
-      padding: 20,
-    }),
-    control: () => ({
-      // none of react-select's styles are passed to <Control />
-      width: 200,
-    }),
-    singleValue: (provided, state) => {
-      const opacity = state.isDisabled ? 0.5 : 1;
-      const transition = 'opacity 300ms';
-
-      return { ...provided, opacity, transition };
-    }
-  }
   let col = "col-" + 12 / params.type.length;// calcul le nombre de col d'apres le nombre de select
   let renderElement = params.type.map((data, index) => {
     if (data.type == "select") {
       return (
         <div class={col}>
           <Select
-            style={customStyles}
             theme={theme => ({
               ...theme,
               borderRadius: 5,
@@ -75,11 +71,22 @@ const SelectBox = (props) => {
 
       );
     }
-    return data.value.map((data_value, index) => {
-      console.log(data_value);
 
+    return data.value.map((data_value, index) => {
+
+      // on récupere la valeur active
+      if (!active && data_value.ekit_tab_active) {
+        data_value.ekit_tab_active = data_value.value;
+      }
+      else {
+        // si clique on récupere value actif
+        data_value.ekit_tab_active = active;
+      }
+      let col = "col-" + 10 / data.value.length;// calcul le nombre de col d'apres le nombre de select
+
+      col = "btn " + col;
       return (
-        <button class="btn" onClick={(e) => setSearch({ "name": data.name, "value": data_value.value })}>
+        <button class={col} style={data_value.ekit_tab_active == data_value.value ? styletabactive : styletab} onClick={(e) => setSearch({ "name": data.name, "value": data_value.value, 'active': data_value.ekit_tab_active, type: 'btn' })}>
           {data_value.label}
         </button >
       );

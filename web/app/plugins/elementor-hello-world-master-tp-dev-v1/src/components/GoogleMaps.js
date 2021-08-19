@@ -9,8 +9,6 @@ const GoogleMaps = ({
   latitude,
   longitude,
   cars,
-  options,
-  motorisation,
   setSelectedSort,
 }) => {
   let renderMarkers;
@@ -37,9 +35,9 @@ const GoogleMaps = ({
       });
     }
   };
-
+  console.log(cars);
   if (cars) {
-    renderMarkers = cars['biens'].map((data, index) => {
+    renderMarkers = cars['data'].map((data, index) => {
 
       //    console.log("app/plugins/react-plugin/build"+Icon);
       return (

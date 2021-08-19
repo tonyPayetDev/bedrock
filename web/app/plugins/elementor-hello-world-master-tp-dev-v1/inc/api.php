@@ -145,7 +145,6 @@ function params(WP_REST_Request $request)
 function biens(WP_REST_Request $request)
 {
     $paged = ($request->get_param('paged')) ? $request->get_param('paged') : 1;
-    
     $r=array();
     
     foreach (name_select() as $key => $name) {
@@ -158,16 +157,9 @@ function biens(WP_REST_Request $request)
         }
     }
 
-    // if ($request->get_param('secteur')) {
-    //     $meta=   array(
-    //         'key' => 'secteur',
-    //         'value' =>(string)$request->get_param('secteur'),
-    //     );
-    //     array_push($r, $meta);
-    // }
-    // todo ajouter d'autre filtrer
+    $type=$request->get_param('type');
     $request_p =  array(
-      'post_type' => "programmes",
+      'post_type' => $type,
       'posts_per_page'   => 10,//-1 all
 
       'meta_query' => $r,
@@ -180,14 +172,14 @@ function biens(WP_REST_Request $request)
     $biens = new WP_query($request_p);
 
     $request_nb =  array(
-        'post_type' => "programmes",
+        'post_type' => $type,
         'posts_per_page'   => -1 ,
         'meta_query' => $r,
   
       ) ;
   
     $count_biens = new WP_query($request_nb);
-    $tab_meta["biens" ][]="";
+    $tab_meta['data'][]="";
     foreach ($biens->posts as $key => $value) {
         $meta = get_post_meta($value->ID);
        
@@ -197,7 +189,7 @@ function biens(WP_REST_Request $request)
 
             $tab[$key]=$value_meta[0];
         }
-        $tab_meta["biens" ][]=$tab;
+        $tab_meta['data'][]=$tab;
     }
 
     $tab_meta["count" ]=count($count_biens->posts);
@@ -211,7 +203,7 @@ add_action('rest_api_init', function () {
     ));
 });
 add_action('rest_api_init', function () {
-    register_rest_route('api/v1', '/biens', array(
+    register_rest_route('api/v1', '/data', array(
       'methods' => 'GET',
       'callback' => 'biens',
     ));

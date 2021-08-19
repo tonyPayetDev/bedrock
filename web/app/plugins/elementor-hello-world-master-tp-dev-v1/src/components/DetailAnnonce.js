@@ -80,7 +80,8 @@ const DetailAnnonce = (props) => {
   }
   //console.log(name);
   return (
-    <div class={params.ekit_map_btn ? 'col-6' : 'col-3'}  >
+    <div class={params.ekit_map_btn ? 'col-6' : params.col_post
+    }  >
       <div >
 
         <div class='col-6' style={{

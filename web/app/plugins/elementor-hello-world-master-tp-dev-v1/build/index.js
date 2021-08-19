@@ -26096,14 +26096,11 @@ module.exports = function(module) {
 /*!********************!*\
   !*** ./src/App.js ***!
   \********************/
-/*! exports provided: HEADERS, fetchURL, getItems, default */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HEADERS", function() { return HEADERS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchURL", function() { return fetchURL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getItems", function() { return getItems; });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var google_maps_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! google-maps-react */ "./node_modules/google-maps-react/dist/index.js");
@@ -26124,11 +26121,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var base_64__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! base-64 */ "./node_modules/base-64/base64.js");
 /* harmony import */ var base_64__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(base_64__WEBPACK_IMPORTED_MODULE_12__);
 
-const HEADERS = new Headers({
-  "Content-Type": "application/json",
-  Accept: "application/json",
-  Authorization: "Bearer VotreCléAPI"
-});
 
 
 
@@ -26142,16 +26134,13 @@ const HEADERS = new Headers({
 
 
 var page_id = _constants_APIConfig__WEBPACK_IMPORTED_MODULE_10__["url_const"].searchParams.get("page_id");
-let fetchURL = "";
-const getItems = $filter => fetch(fetchURL + new URLSearchParams($filter), {
-  method: "GET",
-  headers: HEADERS
-}).then(res => res.json());
 
 const App = props => {
   const {
     id
   } = props;
+  ; // charge les paremetres au premier rechargement
+
   const [state, updateState] = react__WEBPACK_IMPORTED_MODULE_9___default.a.useState({
     lat: -21,
     lng: 55.5,
@@ -26166,23 +26155,9 @@ const App = props => {
   const [tab, setTab] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])({}); // # stock les filtre d'apres les type récupérer 
 
   let decoded;
-
-  function param(id) {
-    let params_json;
-
-    for (var i = 0; i < document.getElementsByClassName("app").length; i++) {
-      decoded = Object(base_64__WEBPACK_IMPORTED_MODULE_12__["decode"])(document.getElementsByClassName("app")[i].getAttribute("params")); //  id = document.getElementsByClassName("app")[i].getAttribute("id");
-
-      params_json = JSON.parse(decoded);
-      params_json = params_json.filter(single => single.id === id);
-    }
-
-    return params_json;
-  }
-
-  const [params, setParams] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])(param(id)[0]);
-  fetchURL = `${params.API_URI}biens?`; // console.log(params);
-
+  const [params, setParams] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])(_constants_APIConfig__WEBPACK_IMPORTED_MODULE_10__["param"](id)[0]);
+  const fetchURL = `${params.API_URI}&`;
+  console.log(params.API_URI);
   params.type.map((data, index) => {
     var secteur = _constants_APIConfig__WEBPACK_IMPORTED_MODULE_10__["url_const"].searchParams.get(data.name);
 
@@ -26222,15 +26197,17 @@ const App = props => {
   const divStyle = {
     display: "none"
   };
+  const styledynamictext = {
+    display: params.ekit_dynamic_text ? "" : "none",
+    "border-radius": "20px 20px 20px 20px",
+    color: params.color ? params.color : "#ffffff"
+  };
   const [cars, setCars] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])();
   const [selectedSort, setSelectedSort] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])();
-  const [optionsMoto, setOptionsMoto] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])([]);
-  const [options, setOptions] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])([]);
   const [url_construct, setUrlConstruct] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])({
     prestation_type: "",
     secteur: ""
   });
-  const [text2, setText] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])([]);
   const [hidecontent, setHideContent] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])("");
   Object(react__WEBPACK_IMPORTED_MODULE_9__["useEffect"])(event => {
     if (hidecontent == "carte") {
@@ -26243,9 +26220,10 @@ const App = props => {
       setParams(params);
     }
 
-    getItems(tab).then(data => setSelectedSort(data));
+    _constants_APIConfig__WEBPACK_IMPORTED_MODULE_10__["getItems"](fetchURL + new URLSearchParams(tab)).then(data => setSelectedSort(data));
   }, [hidecontent]); // affiche ou cache la maps
 
+  let col = "col-" + params.col;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     style: {
       fontFamily: params.ekit_wb_3976_font,
@@ -26253,13 +26231,13 @@ const App = props => {
     }
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h3", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "row"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "col-6"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_Text__WEBPACK_IMPORTED_MODULE_7__["default"], {
     data: selectedSort,
-    text: url_construct
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "col-6 ",
+    text: url_construct,
+    params: params,
+    style: style
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    class: col,
     style: {
       fontSize: params.fontSize
     }
@@ -26280,13 +26258,12 @@ const App = props => {
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "col-12 m-2"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_SelectBox__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    options: options,
-    optionsMoto: optionsMoto,
     setSelectedSort: setSelectedSort,
     setUrlConstruct: setUrlConstruct,
     cars: cars,
     state: state,
-    params: params
+    params: params,
+    fetchURL: fetchURL
   }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "row  m-1"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
@@ -26339,10 +26316,15 @@ const App = props => {
     cars: cars,
     setSelectedSort: setSelectedSort,
     params: params
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+  }), selectedSort ? "" : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    class: "col-12 d-flex justify-content-center"
+  }, "  ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_loading__WEBPACK_IMPORTED_MODULE_11___default.a, {
+    type: "bubbles",
+    color: params.color
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "row",
     style: params.visible ? null : divStyle
-  }, selectedSort ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: params.ekit_map_btn ? 'col-6' : 'col-12'
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_animated_css__WEBPACK_IMPORTED_MODULE_8__["Animated"], {
     isVisible: true,
@@ -26352,26 +26334,17 @@ const App = props => {
     animationOutDuration: 1000
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_ListeAnnonce__WEBPACK_IMPORTED_MODULE_3__["default"], {
     params: params,
-    options: options,
-    motorisation: optionsMoto,
     latitude: state.lat,
     longitude: state.lng,
     setSelectedSort: setSelectedSort,
     cars: selectedSort
-  }))) : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "col-6 d-flex justify-content-center"
-  }, "  ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_loading__WEBPACK_IMPORTED_MODULE_11___default.a, {
-    type: "bubbles",
-    color: params.color
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "col-md-6",
     style: params.ekit_map_btn ? null : divStyle
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_GoogleMaps__WEBPACK_IMPORTED_MODULE_2__["default"], {
     style: {
       margin: "400px"
     },
-    options: options,
-    motorisation: optionsMoto,
     latitude: state.lat,
     longitude: state.lng,
     setSelectedSort: setSelectedSort,
@@ -26480,7 +26453,7 @@ const DetailAnnonce = props => {
 
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: params.ekit_map_btn ? 'col-6' : 'col-3'
+    class: params.ekit_map_btn ? 'col-6' : params.col_post
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "col-6",
     style: {
@@ -26583,8 +26556,6 @@ const GoogleMaps = ({
   latitude,
   longitude,
   cars,
-  options,
-  motorisation,
   setSelectedSort
 }) => {
   let renderMarkers;
@@ -26619,8 +26590,10 @@ const GoogleMaps = ({
     }
   };
 
+  console.log(cars);
+
   if (cars) {
-    renderMarkers = cars['biens'].map((data, index) => {
+    renderMarkers = cars['data'].map((data, index) => {
       //    console.log("app/plugins/react-plugin/build"+Icon);
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(google_maps_react__WEBPACK_IMPORTED_MODULE_2__["Marker"], {
         icon: {
@@ -26770,8 +26743,6 @@ const ListeAnnonce = ({
   latitude,
   longitude,
   cars,
-  options,
-  motorisation,
   setSelectedSort,
   params
 }) => {
@@ -26812,7 +26783,7 @@ const ListeAnnonce = ({
   };
 
   if (cars) {
-    renderAnnonce = cars['biens'].map((annonce, index) => {
+    renderAnnonce = cars['data'].map((annonce, index) => {
       if (annonce) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_DetailAnnonce_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
         name: annonce,
         params: params
@@ -27003,8 +26974,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_animated_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_animated_css__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-loading */ "./node_modules/react-loading/dist/react-loading.js");
 /* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_loading__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../App */ "./src/App.js");
-
 
 
 
@@ -27014,51 +26983,45 @@ __webpack_require__.r(__webpack_exports__);
 
 const SelectBox = props => {
   const {
-    options,
-    optionsMoto,
     setSelectedSort,
     cars,
     state,
     params,
     setUrlConstruct,
-    setText
+    setText,
+    style,
+    fetchURL
   } = props;
   const [search, setSearch] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])("");
-  const [searchAddress, setSearchddress] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])("");
-  const [searchMoto, setSearchMoto] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])("");
-  const [optionsAdrr, setOptionsAdrr] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]);
   const [tab, setTab] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])({}); // # todo a recupérer en params
 
-  let renderSelect;
-  let renderButton;
+  const [active, setActive] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false); // # todo a recupérer en params
+
+  const styletabactive = {
+    // display: params.ekit_alerte_btn ? "" : "none",
+    boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+    color: !params.color ? params.color : "white",
+    backgroundColor: params.color ? params.color : "white",
+    margin: ".25rem"
+  };
+  const styletab = {
+    // display: params.ekit_alerte_btn ? "" : "none",
+    boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+    color: params.color ? params.color : "white",
+    margin: ".25rem"
+  };
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(props => {
-    // rechercher par type
     if (search) {
       tab[search.name] = search.value;
       setUrlConstruct(tab);
       setSelectedSort("");
-      _App__WEBPACK_IMPORTED_MODULE_6__["getItems"](tab).then(data => setSelectedSort(data));
+      _constants_APIConfig__WEBPACK_IMPORTED_MODULE_3__["getItems"](fetchURL + new URLSearchParams(tab)).then(data => setSelectedSort(data)); //APIConfig.getItems(tab).then((data) => setSelectedSort(data));
+
+      if (search.type == "btn") {
+        setActive(search.value);
+      }
     }
-  }, [search, searchAddress, searchMoto, cars]);
-  const customStyles = {
-    option: (provided, state) => ({ ...provided,
-      borderBottom: '1px dotted pink',
-      color: 'red',
-      padding: 20
-    }),
-    control: () => ({
-      // none of react-select's styles are passed to <Control />
-      width: 200
-    }),
-    singleValue: (provided, state) => {
-      const opacity = state.isDisabled ? 0.5 : 1;
-      const transition = 'opacity 300ms';
-      return { ...provided,
-        opacity,
-        transition
-      };
-    }
-  };
+  }, [search, cars]);
   let col = "col-" + 12 / params.type.length; // calcul le nombre de col d'apres le nombre de select
 
   let renderElement = params.type.map((data, index) => {
@@ -27066,7 +27029,6 @@ const SelectBox = props => {
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
         class: col
       }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_select__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        style: customStyles,
         theme: theme => ({ ...theme,
           borderRadius: 5,
           colors: { ...theme.colors,
@@ -27087,12 +27049,25 @@ const SelectBox = props => {
     }
 
     return data.value.map((data_value, index) => {
-      console.log(data_value);
+      // on récupere la valeur active
+      if (!active && data_value.ekit_tab_active) {
+        data_value.ekit_tab_active = data_value.value;
+      } else {
+        // si clique on récupere value actif
+        data_value.ekit_tab_active = active;
+      }
+
+      let col = "col-" + 10 / data.value.length; // calcul le nombre de col d'apres le nombre de select
+
+      col = "btn " + col;
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
-        class: "btn",
+        class: col,
+        style: data_value.ekit_tab_active == data_value.value ? styletabactive : styletab,
         onClick: e => setSearch({
           "name": data.name,
-          "value": data_value.value
+          "value": data_value.value,
+          'active': data_value.ekit_tab_active,
+          type: 'btn'
         })
       }, data_value.label);
     }).filter(params => params.type === "button");
@@ -27129,26 +27104,34 @@ __webpack_require__.r(__webpack_exports__);
 const Text = props => {
   const {
     data,
-    text
+    text,
+    params,
+    style
   } = props;
-  console.log(text);
-  let t = "Achat";
+  let t = params.heading_text;
+  console.log(params.ekit_dynamic_text);
+  let col = "col-" + params.col_heading_text;
 
-  if (text.prestation_type !== undefined) {
-    if (text.prestation_type == "location") {
-      t = "Louer";
-    }
+  if (params.ekit_dynamic_text) {
+    t = "Achat";
 
-    if (text.prestation_type == "vente") {
-      t = "Acheter";
-    }
+    if (text.prestation_type !== undefined) {
+      if (text.prestation_type == "location") {
+        t = "Louer";
+      }
 
-    if (text.secteur) {
-      t = t + " secteur  " + text.secteur.toLowerCase();
+      if (text.prestation_type == "vente") {
+        t = "Acheter";
+      }
+
+      if (text.secteur) {
+        t = t + " secteur  " + text.secteur.toLowerCase();
+      }
     }
   }
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", {
+    class: col,
     style: {
       margin: "12px",
       fontSize: '20px',
@@ -27165,7 +27148,7 @@ const Text = props => {
 /*!************************************!*\
   !*** ./src/constants/APIConfig.js ***!
   \************************************/
-/*! exports provided: HEADERS, KEY_MAP, Zoom, perimetre_long, perimetre_lat, url_const */
+/*! exports provided: HEADERS, KEY_MAP, Zoom, perimetre_long, perimetre_lat, fetchURL, url_const, params_json, param, getItems */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27175,7 +27158,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Zoom", function() { return Zoom; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "perimetre_long", function() { return perimetre_long; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "perimetre_lat", function() { return perimetre_lat; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchURL", function() { return fetchURL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "url_const", function() { return url_const; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "params_json", function() { return params_json; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "param", function() { return param; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getItems", function() { return getItems; });
 /* harmony import */ var base_64__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! base-64 */ "./node_modules/base-64/base64.js");
 /* harmony import */ var base_64__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(base_64__WEBPACK_IMPORTED_MODULE_0__);
 // import params_json from '../jsonFile.json';
@@ -27190,6 +27177,7 @@ const KEY_MAP = "AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0";
 const Zoom = 12;
 const perimetre_long = 0.2;
 const perimetre_lat = 0.05;
+let fetchURL = "";
 var url = new URL(document.location.href);
 const url_const = url; //const attributID = document.getElementsByClassName("app").getAttribute("params");
 // document.getElementsByClassName("app").map((params, index) => {
@@ -27197,8 +27185,24 @@ const url_const = url; //const attributID = document.getElementsByClassName("app
 // });
 
 var page_id = url.searchParams.get("page_id"); // pour la pagination
-// const fetchURL = `${App.API_URI}/biens?`;
-// export const getItems = ($filter) =>
+
+let params_json = [];
+function param(id) {
+  let tab = [];
+
+  for (var i = 0; i < document.getElementsByClassName("app").length; i++) {
+    let decoded = Object(base_64__WEBPACK_IMPORTED_MODULE_0__["decode"])(document.getElementsByClassName("app")[i].getAttribute("params"));
+    params_json = JSON.parse(decoded);
+    params_json = params_json.filter(single => single.id === id);
+    console.log(params_json);
+  }
+
+  return params_json;
+}
+const getItems = $filter => fetch($filter, {
+  method: "GET",
+  headers: HEADERS
+}).then(res => res.json()); // export const getItems = ($filter) =>
 //   fetch(fetchURL + new URLSearchParams($filter), {
 //     method: "GET",
 //     headers: HEADERS,
@@ -27298,7 +27302,6 @@ const store = Object(redux__WEBPACK_IMPORTED_MODULE_5__["createStore"])(Object(r
 
 for (var i = 0; i < document.getElementsByClassName("app").length; i++) {
   let id = document.getElementsByClassName("app")[i].getAttribute("id");
-  console.log(id);
   react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render(Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_redux__WEBPACK_IMPORTED_MODULE_4__["Provider"], {
     store: store
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_App__WEBPACK_IMPORTED_MODULE_6__["default"], {

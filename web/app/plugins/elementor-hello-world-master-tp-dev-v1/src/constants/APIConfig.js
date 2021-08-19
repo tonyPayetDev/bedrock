@@ -13,6 +13,8 @@ export const KEY_MAP = "AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0";
 export const Zoom = 12;
 export const perimetre_long = 0.2;
 export const perimetre_lat = 0.05;
+export let fetchURL = "";
+
 var url = new URL(document.location.href);
 
 export const url_const = url;
@@ -24,11 +26,31 @@ export const url_const = url;
 // });
 
 
+
+
 var page_id = url.searchParams.get("page_id");// pour la pagination
 
+export let params_json = [];
+
+export function param(id) {
+  let tab = []
+  for (var i = 0; i < document.getElementsByClassName("app").length; i++) {
+    let decoded = base64_decode(document.getElementsByClassName("app")[i].getAttribute("params"));
+    params_json = JSON.parse(decoded);
+    params_json = params_json.filter(single => single.id === id);
+    console.log(params_json);
+  }
+  return params_json;
+
+}
+
+export const getItems = ($filter) =>
+  fetch($filter, {
+    method: "GET",
+    headers: HEADERS,
+  }).then((res) => res.json());
 
 
-// const fetchURL = `${App.API_URI}/biens?`;
 
 // export const getItems = ($filter) =>
 //   fetch(fetchURL + new URLSearchParams($filter), {
