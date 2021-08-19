@@ -26648,13 +26648,7 @@ const GoogleMaps = ({
       lat: latitude,
       lng: longitude
     }
-  }, renderMarkers, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(google_maps_react__WEBPACK_IMPORTED_MODULE_2__["InfoWindow"], {
-    marker: state.activeMarker,
-    visible: state.showingInfoWindow,
-    onClose: onClose
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_InfoContent_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    name: state.selectedPlace.name
-  }, " ")));
+  }, renderMarkers);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (GoogleMaps);
