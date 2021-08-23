@@ -46,14 +46,22 @@ const ListeAnnonce = ({
       });
     }
   };
+  //console.log(params.post);
   if (cars) {
     renderAnnonce = cars['data'].map((annonce, index) => {
 
-      if (annonce)
-        return (
+      if (annonce) {
+        annonce = params.post.map((post, index2) => {
+          if (post.active) {
+            return annonce = { "value": cars['data'][index][post.field], 'style': post };
+          }
 
+        });
+        //   console.log(annonce);
+        return (
           < DetailAnnonce name={annonce} params={params} > </DetailAnnonce>
         );
+      }
     });
   }
   return (

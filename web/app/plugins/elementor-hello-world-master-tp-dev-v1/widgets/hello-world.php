@@ -1111,15 +1111,26 @@ class Hello_World extends Widget_Base
             if ($key=='data') {
                 foreach ($value['1'] as $key3 => $value3) {
                     $this->add_control(
-                        $key3,
+                        $key3.'_color',
                         [
-                            'label'       => __($key3, 'elementor'),
+                            'label'       => __($key3.'_color', 'elementor'),
                             'type'        => Controls_Manager::COLOR,
-                            'default'     => __($key3, 'elementor'),
+                            'default'     => __("#FFFFFF", 'elementor'),
                             'label_block' => true,
                         ]
                     );
-                    $tab_key_post[]=$key3;
+                    $this->add_control(
+                        $key3.'_active',
+                        [
+                            'label' => esc_html__($key3.'_active', 'elementskit-lite'),
+                            'type' => Controls_Manager::SWITCHER,
+                            'label_on' => esc_html__('Show', 'elementskit-lite'),
+                            'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                            'return_value' => 'yes',
+                            'default' => '',
+                        ]
+                    );
+                    $tab_key_post[]['id']=$key3;
                 }
             }
         }
@@ -1150,13 +1161,15 @@ class Hello_World extends Widget_Base
             }
             $tab[]= array('type'=>$category['type_element'],"name"=>$category['category_slug'] , "label"=>$category['category_title'], "value"=>$tab_value);
         }
-
+        // var_dump($tab_key_post);
         foreach ($tab_key_post as $item) {
-            $post[$item]= array('color'=>$settings[$item]);
+            $id_color=$item['id'].'_color';
+            $id_active=$item['id'].'_active';
+
+            $post[]= array('field'=> $item['id'] , 'color'=> $settings[ $id_color] ,'active'=> $settings[$id_active]);
         }
-        var_dump($post);
-        
-        // var_dump( $settings['ekit_wb_3976_font']);
+                
+        //var_dump($post);
         $array = array(
            "id"=>$settings['post'],
            "id_active"=>get_permalink(get_the_ID()), // se base l'url de la page pour checker le bon parametre

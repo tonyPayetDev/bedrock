@@ -78,10 +78,28 @@ const DetailAnnonce = (props) => {
       event.target.style.objectFit = 'cover'
 
   }
+  let fieldsAnnonce;
+  if (name) {
+    fieldsAnnonce = name.map((annonce, index) => {
+      //  console.log(annonce);
+      if (annonce) {
+        return (
 
+          // <div class="row">
+          <div style={annonce.style}>
+            <p class="card-text">{annonce.value} </p>
 
-  //console.log(params.post);
+          </div>
 
+          // </div>
+
+        );
+      }
+
+    });
+  }
+
+  // console.log(fieldsAnnonce);
 
   return (
     <div class={params.ekit_map_btn ? 'col-6' : params.col_post
@@ -108,7 +126,8 @@ const DetailAnnonce = (props) => {
               alt="Logo" alt="Card image cap"  ></img>
           </a>
           <div class="card-body" type="button" >
-            <div class="row">
+            {fieldsAnnonce}
+            {/* <div class="row">
               <div class="col-8 " style={{ color: "#7A7A7A", fontSize: "14px " }}>
                 <p class="card-text">{name.bien_type} - {name.surface} m²</p>
 
@@ -122,7 +141,7 @@ const DetailAnnonce = (props) => {
 
             </div>
 
-            <p class="card-text ">{name.ville}</p>
+            <p class="card-text ">{name.ville}</p> */}
 
             <div class="btn-group">
               <button type="button" onMouseOver={MouseOver} onMouseOut={MouseOut} href="#" class="stretched-link btn  mr-3" style={styleContactPro} > <i aria-hidden="true" class="far fa-envelope"></i> contactez un pro</button>

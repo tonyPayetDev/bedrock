@@ -26465,7 +26465,25 @@ const DetailAnnonce = props => {
     event.target.style.filter = "saturate(1)";
     event.target.style.transform = "translateY(0%) scale(1)";
     event.target.style.transitionDuration = '500ms', event.target.style.objectFit = 'cover';
-  } //console.log(params.post);
+  }
+
+  let fieldsAnnonce;
+
+  if (name) {
+    fieldsAnnonce = name.map((annonce, index) => {
+      //  console.log(annonce);
+      if (annonce) {
+        return (// <div class="row">
+          Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+            style: annonce.style
+          }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", {
+            class: "card-text"
+          }, annonce.value, " ")) // </div>
+
+        );
+      }
+    });
+  } // console.log(fieldsAnnonce);
 
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
@@ -26499,26 +26517,7 @@ const DetailAnnonce = props => {
   })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "card-body",
     type: "button"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "row"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "col-8 ",
-    style: {
-      color: "#7A7A7A",
-      fontSize: "14px "
-    }
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", {
-    class: "card-text"
-  }, name.bien_type, " - ", name.surface, " m\xB2")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "col-4 ",
-    style: styleText
-  }, name.prestation_type == "Location" ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", {
-    class: "card-text"
-  }, name.tarif, "/mois ") : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", {
-    class: "card-text"
-  }, name.prix, " \u20AC "))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", {
-    class: "card-text "
-  }, name.ville), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+  }, fieldsAnnonce, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "btn-group"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
     type: "button",
@@ -26792,14 +26791,26 @@ const ListeAnnonce = ({
         activeMarker: null
       });
     }
-  };
+  }; //console.log(params.post);
+
 
   if (cars) {
     renderAnnonce = cars['data'].map((annonce, index) => {
-      if (annonce) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_DetailAnnonce_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        name: annonce,
-        params: params
-      }, " ");
+      if (annonce) {
+        annonce = params.post.map((post, index2) => {
+          if (post.active) {
+            return annonce = {
+              "value": cars['data'][index][post.field],
+              'style': post
+            };
+          }
+        }); //   console.log(annonce);
+
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_DetailAnnonce_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          name: annonce,
+          params: params
+        }, " ");
+      }
     });
   }
 
