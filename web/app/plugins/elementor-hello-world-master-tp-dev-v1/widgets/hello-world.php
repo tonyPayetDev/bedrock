@@ -408,7 +408,6 @@ class Hello_World extends Widget_Base
                 ),
             )
         );
-
         
         $this->add_control(
             'ekit_wb_226_url',
@@ -1091,6 +1090,42 @@ class Hello_World extends Widget_Base
 
     protected function render($instance = [])
     {
+
+        // ajout dynamique des champs todo mette dans une fonction
+        $post_id = get_the_ID();
+
+        $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers('page');
+        $page_settings_model = $page_settings_manager->get_model($post_id);
+
+        $this->start_controls_section(
+            'section_api',
+            [
+                'label' => __('Api', 'elementor'),
+            ]
+        );
+        
+        $response = wp_remote_get($page_settings_model->get_settings('url'));
+        $body     = wp_remote_retrieve_body($response);
+        $body =json_decode($body);
+        foreach ($body as $key => $value) {
+            if ($key=='data') {
+                foreach ($value['1'] as $key3 => $value3) {
+                    $this->add_control(
+                        $key3,
+                        [
+                            'label'       => __($key3, 'elementor'),
+                            'type'        => Controls_Manager::COLOR,
+                            'default'     => __($key3, 'elementor'),
+                            'label_block' => true,
+                        ]
+                    );
+                    $tab_key_post[]=$key3;
+                }
+            }
+        }
+        $this->end_controls_section();
+        // fin dynamique des champs todo mette dans une fonction
+        
         $settings = $this->get_settings_for_display();
         $file = dirname(__DIR__)."/inc/jsonFile.json";
         $context = Timber::get_context();
@@ -1115,11 +1150,19 @@ class Hello_World extends Widget_Base
             }
             $tab[]= array('type'=>$category['type_element'],"name"=>$category['category_slug'] , "label"=>$category['category_title'], "value"=>$tab_value);
         }
+
+        foreach ($tab_key_post as $item) {
+            $post[$item]= array('color'=>$settings[$item]);
+        }
+        var_dump($post);
+        
         // var_dump( $settings['ekit_wb_3976_font']);
         $array = array(
            "id"=>$settings['post'],
            "id_active"=>get_permalink(get_the_ID()), // se base l'url de la page pour checker le bon parametre
            'type'=>$tab,
+           'post'=>$post,
+
            'ekit_search_btn' =>  $settings['ekit_search_btn'],
            'search_text' =>  $settings['search_text'],
            'heading_text' =>  $settings['heading_text'],

@@ -26272,7 +26272,7 @@ const App = props => {
   }, "Galerie "))))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "row"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "col-12 m-2"
+    class: "col-12 "
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_SelectBox__WEBPACK_IMPORTED_MODULE_5__["default"], {
     setSelectedSort: setSelectedSort,
     setUrlConstruct: setUrlConstruct,
@@ -26465,7 +26465,7 @@ const DetailAnnonce = props => {
     event.target.style.filter = "saturate(1)";
     event.target.style.transform = "translateY(0%) scale(1)";
     event.target.style.transitionDuration = '500ms', event.target.style.objectFit = 'cover';
-  } //console.log(name);
+  } //console.log(params.post);
 
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {

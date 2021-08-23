@@ -48,11 +48,11 @@ class Page_Settings
         );
 
         $document->add_control(
-            'text',
+            'url',
             [
-                'label' => __('Title', 'elementor-hello-world'),
+                'label' => __('Url', 'elementor-hello-world'),
                 'type' => Controls_Manager::TEXT,
-                'default' => __('Title', 'elementor-hello-world'),
+                'default' => __('url', 'elementor-hello-world'),
             ]
         );
 

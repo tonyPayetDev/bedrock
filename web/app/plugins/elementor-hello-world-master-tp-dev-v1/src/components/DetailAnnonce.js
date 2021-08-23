@@ -78,7 +78,11 @@ const DetailAnnonce = (props) => {
       event.target.style.objectFit = 'cover'
 
   }
-  //console.log(name);
+
+
+  //console.log(params.post);
+
+
   return (
     <div class={params.ekit_map_btn ? 'col-6' : params.col_post
     }  >
