@@ -36,11 +36,138 @@ class Hello_World extends Widget_Base
         return 'eicon-post-list';
     }
 
-    protected function _register_controls2()
-    {
-    }
     protected function register_controls()
     {
+        $this->start_controls_section(
+            'section_fields',
+            [
+                'label' => __('Custom field', 'elementor'),
+            ]
+        );
+    
+    
+        // on limite a deux pour l'instant pourra étre ameliorer par la suite #todo recuperer le nombre d'api
+        // for ($i = 1; $i <= 2; $i++) {
+        //     $opt['api'.$i]=  esc_html__('api'.$i, 'elementskit-lite');
+        // }
+        $opt=$this->get_api();
+        $this->add_control(
+            'view',
+            [
+                'label' => esc_html__('Choix api', 'elementskit-lite'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'api1',
+                'options' => $opt,
+                'render_type' => 'template',
+                'classes' => 'elementor-control-start-end',
+                'label_block' => false,
+                'style_transfer' => true,
+            ]
+        );
+        for ($i = 1; $i <= 12; $i++) {
+            $col['col-'.$i]=esc_html__($i, 'elementskit-lite');
+        }
+        
+        foreach ($opt as $opt_key => $value) {
+            $repeater3 = new Repeater();
+
+            $repeater3->add_control(
+                'choice_field',
+                [
+                    'label' => esc_html__('Choix Field ', 'elementskit-lite'),
+                    'type' => Controls_Manager::SELECT,
+                    'default' => 'id',
+                    'options' =>$this->get_key_post($opt_key),
+                    
+
+                ]
+            );
+            $repeater3->add_control(
+                'field_url',
+                [
+                    'label' => esc_html__('Url ', 'elementskit-lite'),
+                    'type' => Controls_Manager::SELECT,
+                    'default' => 'id',
+                    'options' =>$this->get_key_post($opt_key),
+                    
+                ]
+            );
+            
+            $repeater3->add_control(
+                'field_text',
+                [
+                    'label'       => __('Text', 'elementor'),
+                    'type'        => Controls_Manager::TEXT,
+                    'default'     => __("", 'elementor'),
+                    'label_block' => true,
+    
+                ]
+            );
+            $repeater3->add_control(
+                "field_type",
+                [
+                    'label' => esc_html__('Type field ', 'elementskit-lite'),
+                    'type' => Controls_Manager::SELECT,
+                    'default' => 'text',
+                    'options' => [
+                        'text'  => esc_html__('Text', 'elementskit-lite'),
+                        'select'  => esc_html__('Select', 'elementskit-lite'),
+                        'button' => esc_html__('Button', 'elementskit-lite'),
+                        'photos' => esc_html__('Photos', 'elementskit-lite'),
+                        'hide' => esc_html__('hide', 'elementskit-lite'),
+
+                    ],
+                ]
+            );
+            $repeater3->add_control(
+                'field_color',
+                [
+                    'label'       => __('Color', 'elementor'),
+                    'type'        => Controls_Manager::COLOR,
+                    'default'     => __("#FFFFFF", 'elementor'),
+                    'label_block' => true,
+    
+                ]
+            );
+   
+            $repeater3->add_control(
+                'field_col',
+                [
+                    'label' => esc_html__('Nb column ', 'elementskit-lite'),
+                    'type' => Controls_Manager::SELECT,
+                    'default' => '2',
+                    'options' =>$col
+                ]
+            );
+            $repeater3->add_control(
+                'field_icon',
+                array(
+                    'label' => esc_html__('Icons', 'elementskit-lite'),
+                    'type'  => Controls_Manager::ICONS,
+                    'show_label' => true ,
+                    'label_block' => true ,
+                    'skin' => 'media' ,
+                    'default' => array(
+                        'value' => '',
+                        'library' => '',
+                    )
+                )
+            );
+            $this->add_control(
+                $opt_key.'fields',
+                [
+                    'label'       => __('Fields '.$opt_key, 'elementor'),
+                    'type'        => Controls_Manager::REPEATER,
+                    'fields'      => $repeater3->get_controls(),
+                    'title_field' =>'{{{ field_type }}} {{{ choice_field }}}',
+                    'condition' => ['view' => $opt_key]
+    
+                ]
+            );
+        }
+    
+        $this->end_controls_section();
+
         $this->start_controls_section(
             'section_categories',
             [
@@ -101,19 +228,6 @@ class Hello_World extends Widget_Base
         );
     
         $serviceRepeater = new Repeater();
-        // $serviceRepeater ->add_control(
-        //     'service_ekit_tab_active',
-        //     [
-        //         'label' => esc_html__('button active', 'elementskit-lite'),
-        //         'type' => Controls_Manager::SWITCHER,
-        //         'label_on' => esc_html__('Show', 'elementskit-lite'),
-        //         'label_off' => esc_html__('Hide', 'elementskit-lite'),
-        //         'return_value' => 'yes',
-        //         'default' => 'yes',
-        //         'label_block' => true,
-
-        //     ]
-        // );
 
         $serviceRepeater->add_control(
             'category_slug',
@@ -262,44 +376,23 @@ class Hello_World extends Widget_Base
                 'alpha' => true,
             )
         );
-        $this->add_control(
-            'view',
-            [
-                'label' => esc_html__('Layout', 'elementskit-lite'),
-                'type' => Controls_Manager::CHOOSE,
-                'default' => 'traditional',
-                'options' => [
-                    'traditional' => [
-                        'title' => esc_html__('Default', 'elementskit-lite'),
-                        'icon' => 'eicon-editor-list-ul',
-                    ],
-                    'inline' => [
-                        'title' => esc_html__('Inline', 'elementskit-lite'),
-                        'icon' => 'eicon-ellipsis-h',
-                    ],
-                ],
-                'render_type' => 'template',
-                'classes' => 'elementor-control-start-end',
-                'label_block' => false,
-                'style_transfer' => true,
-            ]
-        );
+ 
 
-        $this->add_responsive_control(
-            'page_grid',
-            [
-                'label' => esc_html__('Columns Grid', 'elementskit-lite'),
-                'type' =>  Controls_Manager::SELECT,
-                'options' => [
-                    '12'  => esc_html__('1 Columns', 'elementskit-lite'),
-                    '6'  => esc_html__('2 Columns', 'elementskit-lite'),
-                    '4' => esc_html__('3 Columns', 'elementskit-lite'),
-                    '3' => esc_html__('4 Columns', 'elementskit-lite'),
-                    '2' => esc_html__('6 Columns', 'elementskit-lite'),
-                ],
-                'condition' => ['view' => 'inline']
-            ]
-        );
+        // $this->add_responsive_control(
+        //     'page_grid',
+        //     [
+        //         'label' => esc_html__('Columns Grid', 'elementskit-lite'),
+        //         'type' =>  Controls_Manager::SELECT,
+        //         'options' => [
+        //             '12'  => esc_html__('1 Columns', 'elementskit-lite'),
+        //             '6'  => esc_html__('2 Columns', 'elementskit-lite'),
+        //             '4' => esc_html__('3 Columns', 'elementskit-lite'),
+        //             '3' => esc_html__('4 Columns', 'elementskit-lite'),
+        //             '2' => esc_html__('6 Columns', 'elementskit-lite'),
+        //         ],
+        //         'condition' => ['view' => 'inline']
+        //     ]
+        // );
 
         $this->add_control(
             'ekit_href_target',
@@ -392,23 +485,6 @@ class Hello_World extends Widget_Base
                 ),
             )
         );
-        $this->add_control(
-            'ekit_wb_225_url_post',
-            array(
-                'label' => esc_html__('API URL', 'elementskit-lite'),
-                'type'  => Controls_Manager::URL,
-                'placeholder' =>  esc_html('Paste URL or type'),
-                'show_label' => true ,
-                'label_block' => true ,
-                'show_external' => true ,
-                'default' => array(
-                    'url' => 'http://localhost:8000/programmes',
-                    'is_external' => true,
-                    'nofollow' => true,
-                ),
-            )
-        );
-        
         $this->add_control(
             'ekit_wb_226_url',
             array(
@@ -1083,64 +1159,149 @@ class Hello_World extends Widget_Base
                 ],
             ]
         );
-        $this->end_controls_section();
+        // $this->end_controls_section();
+        // // ajout dynamique des champs d'apres url dans page todo mette dans une fonction
+        // $post_id = get_the_ID();
+
+
+        // $this->start_controls_section(
+        //     'section_api',
+        //     [
+        //             'label' => __('Api ', 'elementor'),
+        //         ]
+        // );
+        // // on limite a deux pour l'instant pourra étre ameliorer par la suite
+        // for ($i = 1; $i <= 2; $i++) {
+        //     $opt['api'.$i]=  esc_html__('api'.$i, 'elementskit-lite');
+        // }
+            
+        // $this->add_control(
+        //     'view',
+        //     [
+        //             'label' => esc_html__('Choix api', 'elementskit-lite'),
+        //             'type' => Controls_Manager::SELECT,
+        //             'default' => 'api1',
+        //             'options' => $opt,
+        //             'render_type' => 'template',
+        //             'classes' => 'elementor-control-start-end',
+        //             'label_block' => false,
+        //             'style_transfer' => true,
+        //         ]
+        // );
+                
+            
+        // foreach ($opt as $opt_key => $value) {
+        //     $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers('page');
+        //     $page_settings_model = $page_settings_manager->get_model($post_id);
+        //     $url =$page_settings_model->get_settings($opt_key);
+                
+        //     $response = wp_remote_get($url);
+        //     $body     = wp_remote_retrieve_body($response);
+        //     $body =json_decode($body);
+        //     foreach ($body as $key => $value) {
+        //         if ($key=='data') {
+        //             foreach ($value['1'] as $key3 => $value3) {
+        //                 $this->add_control(
+        //                     $key3.'_active',
+        //                     [
+        //                         'label' => esc_html__('>> '.$key3, 'elementskit-lite'),
+        //                         'type' => Controls_Manager::SWITCHER,
+        //                         'label_on' => esc_html__('Show', 'elementskit-lite'),
+        //                         'label_off' => esc_html__('Hide', 'elementskit-lite'),
+        //                         'return_value' => 'yes',
+        //                         'default' => '',
+        //                         'condition' => ['view' =>$opt_key],
+        //                         'separator' => 'before'
+
+        //                     ]
+        //                 );
+        //                 $this->add_control(
+        //                     $key3.'_pos',
+        //                     [
+        //                         'label'       => __('Position', 'elementor'),
+        //                         'type'        => Controls_Manager::TEXT,
+        //                         'default'     => __("", 'elementor'),
+        //                         'label_block' => true,
+        //                         'condition' => ['view' => $opt_key]
+    
+        //                     ]
+        //                 );
+        //                 $this->add_control(
+        //                     $key3.'_color',
+        //                     [
+        //                         'label'       => __('Color', 'elementor'),
+        //                         'type'        => Controls_Manager::COLOR,
+        //                         'default'     => __("#FFFFFF", 'elementor'),
+        //                         'label_block' => true,
+        //                         'condition' => ['view' => $opt_key]
+    
+        //                     ]
+        //                 );
+        //                 $this->add_control(
+        //                     $key3.'_col',
+        //                     [
+        //                         'label'       => __('Col', 'elementor'),
+        //                         'type'        => Controls_Manager::TEXT,
+        //                         'default'     => __("6", 'elementor'),
+        //                         'label_block' => true,
+        //                         'condition' => ['view' => $opt_key]
+    
+        //                     ]
+        //                 );
+        //             }
+        //         }
+        //     }
+        // }
+        // $this->end_controls_section();
     }
-
-  
-
-    protected function render($instance = [])
+    // return les api saisie dans param elementor
+    public function get_api()
     {
-
-        // ajout dynamique des champs todo mette dans une fonction
-        $post_id = get_the_ID();
-
+        for ($i = 1; $i <= 10; $i++) {
+            $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers('page');
+            $page_settings_model = $page_settings_manager->get_model(get_the_ID());
+            $url =$page_settings_model->get_settings('api'.$i);
+            if ($url) {
+                $opt['api'.$i]=  esc_html__('api'.$i, 'elementskit-lite');
+            }
+        }
+        return $opt;
+    }
+    public function get_key_post($opt_key)
+    {
         $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers('page');
-        $page_settings_model = $page_settings_manager->get_model($post_id);
-
-        $this->start_controls_section(
-            'section_api',
-            [
-                'label' => __('Api', 'elementor'),
-            ]
-        );
-        
-        $response = wp_remote_get($page_settings_model->get_settings('url'));
+        $page_settings_model = $page_settings_manager->get_model(get_the_ID());
+        $url =$page_settings_model->get_settings($opt_key);
+                
+        $response = wp_remote_get($url);
         $body     = wp_remote_retrieve_body($response);
         $body =json_decode($body);
-        foreach ($body as $key => $value) {
-            if ($key=='data') {
-                foreach ($value['1'] as $key3 => $value3) {
-                    $this->add_control(
-                        $key3.'_color',
-                        [
-                            'label'       => __($key3.'_color', 'elementor'),
-                            'type'        => Controls_Manager::COLOR,
-                            'default'     => __("#FFFFFF", 'elementor'),
-                            'label_block' => true,
-                        ]
-                    );
-                    $this->add_control(
-                        $key3.'_active',
-                        [
-                            'label' => esc_html__($key3.'_active', 'elementskit-lite'),
-                            'type' => Controls_Manager::SWITCHER,
-                            'label_on' => esc_html__('Show', 'elementskit-lite'),
-                            'label_off' => esc_html__('Hide', 'elementskit-lite'),
-                            'return_value' => 'yes',
-                            'default' => '',
-                        ]
-                    );
-                    $tab_key_post[]['id']=$key3;
+        if ($body) {
+            foreach ($body as $key => $value) {
+                $tab_key_post[$opt_key] ;
+                                        
+                if ($key=='data') {
+                    foreach ($value['1'] as $key3 => $value3) {
+                        //  $tab_key_post[$opt_key][]=$key3;
+                        $tab_key_post[$key3 ]=  esc_html__($key3, 'elementskit-lite');
+                    }
                 }
             }
         }
-        $this->end_controls_section();
-        // fin dynamique des champs todo mette dans une fonction
-        
+
+        return $tab_key_post;
+    }
+    
+    protected function render($instance = [])
+    {
         $settings = $this->get_settings_for_display();
+        $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers('page');
+        $page_settings_model = $page_settings_manager->get_model(get_the_ID());
+        $url =$page_settings_model->get_settings($settings['view']);
+        
+        // fin dynamique des champs todo mette dans une fonction
         $file = dirname(__DIR__)."/inc/jsonFile.json";
         $context = Timber::get_context();
-
         // recuperation valeurs select
         $type=[];
         if ($settings['ekit_wb_225_code']) {
@@ -1151,7 +1312,6 @@ class Hello_World extends Widget_Base
             }
         }
         // adaptation du select
-            
         foreach ($settings['categories'] as $category) {
             $tab_value=null;
             foreach ($settings['services'] as $service) {
@@ -1161,15 +1321,40 @@ class Hello_World extends Widget_Base
             }
             $tab[]= array('type'=>$category['type_element'],"name"=>$category['category_slug'] , "label"=>$category['category_title'], "value"=>$tab_value);
         }
-        // var_dump($tab_key_post);
-        foreach ($tab_key_post as $item) {
-            $id_color=$item['id'].'_color';
-            $id_active=$item['id'].'_active';
 
-            $post[]= array('field'=> $item['id'] , 'color'=> $settings[ $id_color] ,'active'=> $settings[$id_active]);
+        foreach ($this->get_api() as $api) {
+            $api_settings=$settings[$api.'fields'];
+            if ($api_settings) {
+                foreach ($api_settings as $field) {
+                    $post[]= array(
+                    'field'=> $field['choice_field'] ,
+                    'color'=> $field['field_color'] ,
+                    'col'=> $field['field_col'],
+                    'type'=> $field['field_type'],
+                    'url'=> $field['field_url'],
+                    'text'=> $field['field_text'],
+                    'icon'=> $field['field_icon'],
+
+                    
+                );
+                }
+            }
         }
+        // récupere les champs dynamiques
+        // foreach ($this->get_key_post($settings['view']) as $key => $item_key_post) {
+        //     if ($settings['view']===$key) {
+        //         foreach ($item_key_post as $key2 => $item) {
+        //             $id_color=$item.'_color';
+        //             $id_active=$item.'_active';
+        //             $id_col=$item.'_col';
+        //             $id_pos=$item.'_pos';
+
+        //             $post_id = get_the_ID();
+        //             $post[]= array( 'field'=> $item , 'color'=> $settings[ $id_color] ,'active'=> $settings[$id_active],'col'=> $settings[$id_col]);
+        //         }
+        //     }
+        // }
                 
-        //var_dump($post);
         $array = array(
            "id"=>$settings['post'],
            "id_active"=>get_permalink(get_the_ID()), // se base l'url de la page pour checker le bon parametre
@@ -1180,7 +1365,7 @@ class Hello_World extends Widget_Base
            'search_text' =>  $settings['search_text'],
            'heading_text' =>  $settings['heading_text'],
            'url' =>  $settings['ekit_wb_226_url']["url"],
-            "API_URI"=> $settings['ekit_wb_225_url']["url"],
+            "API_URI"=> $url,
             "URL_POST"=> $settings['ekit_wb_225_url_post']["url"],
             'color' =>  $settings['ekit_wb_1860_color'] ,
             'visible' => $settings['ekit_biens'],
@@ -1196,11 +1381,9 @@ class Hello_World extends Widget_Base
             'col_post' => $settings['col_post'],
             'ekit_dynamic_text' => $settings['ekit_dynamic_text']
 
-            
-
         );
         
-        // enregistrement dans le fichier json
+        //enregistrement dans le fichier json
         $data = file_get_contents($file);
         $obj = json_decode($data);
             
@@ -1224,7 +1407,7 @@ class Hello_World extends Widget_Base
         $context['params']=base64_encode($newJsonString) ;
         $context['id']=$settings['post'];
                 
-
+        
         Timber::render('index.twig', $context);
     }
 

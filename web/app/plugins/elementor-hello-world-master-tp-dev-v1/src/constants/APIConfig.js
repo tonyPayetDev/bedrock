@@ -6,7 +6,8 @@ import { decode as base64_decode, encode as base64_encode } from 'base-64';
 export const HEADERS = new Headers({
   "Content-Type": "application/json",
   Accept: "application/json",
-  Authorization: "Bearer VotreCléAPI",
+  // "Access-Control-Allow-Origin": "*"
+  // Authorization: "Bearer VotreCléAPI",
 });
 
 export const KEY_MAP = "AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0";

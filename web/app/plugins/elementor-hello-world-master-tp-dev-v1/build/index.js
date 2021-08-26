@@ -26468,19 +26468,51 @@ const DetailAnnonce = props => {
   }
 
   let fieldsAnnonce;
+  let fieldsBtn;
 
   if (name) {
+    fieldsBtn = name.map((annonce, index) => {
+      if (annonce.post.type === "button") {
+        let col = 'btn ' + annonce.post.col;
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
+          type: "button",
+          onMouseOver: MouseOver,
+          onMouseOut: MouseOut,
+          style: annonce.post,
+          class: col,
+          style: styleContactPro
+        }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("i", {
+          "aria-hidden": "true",
+          class: annonce.post.icon.value
+        }), "  ", annonce.post.text);
+      }
+    });
     fieldsAnnonce = name.map((annonce, index) => {
-      //  console.log(annonce);
-      if (annonce) {
-        return (// <div class="row">
-          Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-            style: annonce.style
-          }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", {
-            class: "card-text"
-          }, annonce.value, " ")) // </div>
+      if (annonce.post.type === "text") {
+        let col = '' + annonce.post.col;
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+          style: annonce.post,
+          class: col
+        }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", {
+          class: "card-text"
+        }, " ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("i", {
+          "aria-hidden": "true",
+          class: annonce.post.icon.value
+        }), " ", annonce.value, annonce.post.text, " "));
+      }
 
-        );
+      if (annonce.post.type === "photos") {
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
+          onMouseOver: MouseOverOpacity,
+          onMouseOut: MouseOutOpacity,
+          href: params.URL_POST + annonce.href
+        }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
+          style: styleImage,
+          class: "card-img-top",
+          src: annonce.value,
+          alt: "Logo",
+          alt: "Card image cap"
+        }));
       }
     });
   } // console.log(fieldsAnnonce);
@@ -26504,38 +26536,14 @@ const DetailAnnonce = props => {
       boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
     },
     class: "card btn-no-waves m-2 "
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
-    onMouseOver: MouseOverOpacity,
-    onMouseOut: MouseOutOpacity,
-    href: params.URL_POST + name.post_name
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
-    style: styleImage,
-    class: "card-img-top",
-    src: name.photos,
-    alt: "Logo",
-    alt: "Card image cap"
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "card-body",
     type: "button"
-  }, fieldsAnnonce, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "btn-group"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
-    type: "button",
-    onMouseOver: MouseOver,
-    onMouseOut: MouseOut,
-    href: "#",
-    class: "stretched-link btn  mr-3",
-    style: styleContactPro
-  }, " ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("i", {
-    "aria-hidden": "true",
-    class: "far fa-envelope"
-  }), " contactez un pro"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
-    type: "button",
-    onMouseOver: MouseOverHeart,
-    onMouseOut: MouseOutHeart,
-    className: "stretched-link btn " + params.ekit_wb_3976_icons.value,
-    style: style
-  }))))));
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    class: "row"
+  }, fieldsAnnonce), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    class: "btn-group row"
+  }, fieldsBtn)))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (DetailAnnonce);
@@ -26797,15 +26805,17 @@ const ListeAnnonce = ({
   if (cars) {
     renderAnnonce = cars['data'].map((annonce, index) => {
       if (annonce) {
+        // check si il apparait dans les params
         annonce = params.post.map((post, index2) => {
-          if (post.active) {
+          if (post.field) {
+            console.log(post.url);
             return annonce = {
               "value": cars['data'][index][post.field],
-              'style': post
+              'post': post,
+              'href': cars['data'][index][post.url]
             };
           }
-        }); //   console.log(annonce);
-
+        });
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_DetailAnnonce_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
           name: annonce,
           params: params
@@ -27132,7 +27142,6 @@ const Text = props => {
     style
   } = props;
   let t = params.heading_text;
-  console.log(params.ekit_dynamic_text);
   let col = "col-" + params.col_heading_text;
 
   if (params.ekit_dynamic_text) {
@@ -27193,8 +27202,9 @@ __webpack_require__.r(__webpack_exports__);
 
 const HEADERS = new Headers({
   "Content-Type": "application/json",
-  Accept: "application/json",
-  Authorization: "Bearer VotreCléAPI"
+  Accept: "application/json" // "Access-Control-Allow-Origin": "*"
+  // Authorization: "Bearer VotreCléAPI",
+
 });
 const KEY_MAP = "AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0";
 const Zoom = 12;

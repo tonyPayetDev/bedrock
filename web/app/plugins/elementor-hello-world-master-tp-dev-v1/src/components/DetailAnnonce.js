@@ -79,23 +79,52 @@ const DetailAnnonce = (props) => {
 
   }
   let fieldsAnnonce;
-  if (name) {
-    fieldsAnnonce = name.map((annonce, index) => {
-      //  console.log(annonce);
-      if (annonce) {
-        return (
+  let fieldsBtn;
 
-          // <div class="row">
-          <div style={annonce.style}>
-            <p class="card-text">{annonce.value} </p>
+  if (name) {
+
+    fieldsBtn = name.map((annonce, index) => {
+
+      if (annonce.post.type === "button") {
+        let col = 'btn ' + annonce.post.col;
+
+        return (
+          <button type="button" onMouseOver={MouseOver} onMouseOut={MouseOut} style={annonce.post} class={col} style={styleContactPro} >
+            <i aria-hidden="true" class={annonce.post.icon.value}></i>  {annonce.post.text}
+          </button>
+
+        );
+      }
+    });
+    fieldsAnnonce = name.map((annonce, index) => {
+
+      if (annonce.post.type === "text") {
+        let col = '' + annonce.post.col;
+
+        return (
+          <div style={annonce.post} class={col}>
+            <p class="card-text"> <i aria-hidden="true" class={annonce.post.icon.value}></i> {annonce.value}{annonce.post.text} </p>
 
           </div>
 
-          // </div>
 
         );
       }
 
+
+      if (annonce.post.type === "photos") {
+
+        return (
+          <a onMouseOver={MouseOverOpacity} onMouseOut={MouseOutOpacity} href={params.URL_POST + annonce.href}>
+            <img
+              style={styleImage}
+              class="card-img-top"
+              src={annonce.value}
+              alt="Logo" alt="Card image cap"  ></img>
+          </a>
+
+        );
+      }
     });
   }
 
@@ -118,15 +147,13 @@ const DetailAnnonce = (props) => {
           borderRadius: "0px 0px 0px 14px",
           boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
         }} class="card btn-no-waves m-2 " >
-          <a onMouseOver={MouseOverOpacity} onMouseOut={MouseOutOpacity} href={params.URL_POST + name.post_name}>
-            <img
-              style={styleImage}
-              class="card-img-top"
-              src={name.photos}
-              alt="Logo" alt="Card image cap"  ></img>
-          </a>
+
           <div class="card-body" type="button" >
-            {fieldsAnnonce}
+
+            <div class="row">
+              {fieldsAnnonce}
+
+            </div>
             {/* <div class="row">
               <div class="col-8 " style={{ color: "#7A7A7A", fontSize: "14px " }}>
                 <p class="card-text">{name.bien_type} - {name.surface} m²</p>
@@ -143,10 +170,10 @@ const DetailAnnonce = (props) => {
 
             <p class="card-text ">{name.ville}</p> */}
 
-            <div class="btn-group">
-              <button type="button" onMouseOver={MouseOver} onMouseOut={MouseOut} href="#" class="stretched-link btn  mr-3" style={styleContactPro} > <i aria-hidden="true" class="far fa-envelope"></i> contactez un pro</button>
-              <button type="button" onMouseOver={MouseOverHeart} onMouseOut={MouseOutHeart} className={"stretched-link btn " + params.ekit_wb_3976_icons.value} style={style} ></button>
-
+            <div class="btn-group row">
+              {/* <button type="button" onMouseOver={MouseOver} onMouseOut={MouseOut} href="#" class="stretched-link btn  mr-3" style={styleContactPro} > <i aria-hidden="true" class="far fa-envelope"></i> contactez un pro</button>
+              <button type="button" onMouseOver={MouseOverHeart} onMouseOut={MouseOutHeart} className={"stretched-link btn " + params.ekit_wb_3976_icons.value} style={style} ></button> */}
+              {fieldsBtn}
             </div>
           </div>
         </div>

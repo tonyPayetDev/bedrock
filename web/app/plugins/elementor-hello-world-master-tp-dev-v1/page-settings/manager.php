@@ -23,7 +23,7 @@ class Page_Settings
      */
     public function add_panel_tab()
     {
-        Controls_Manager::add_tab(self::PANEL_TAB, __('New Tab', 'elementor-hello-world'));
+        Controls_Manager::add_tab(self::PANEL_TAB, __('Api search ktp ', 'elementor-hello-world'));
     }
 
     /**
@@ -48,14 +48,21 @@ class Page_Settings
         );
 
         $document->add_control(
-            'url',
+            'api1',
             [
-                'label' => __('Url', 'elementor-hello-world'),
+                'label' => __('Url api 1', 'elementor-hello-world'),
                 'type' => Controls_Manager::TEXT,
                 'default' => __('url', 'elementor-hello-world'),
             ]
         );
-
+        $document->add_control(
+            'api2',
+            [
+                'label' => __('Url api 2', 'elementor-hello-world'),
+                'type' => Controls_Manager::TEXT,
+                'default' => __('url', 'elementor-hello-world'),
+            ]
+        );
         $document->end_controls_section();
     }
 }

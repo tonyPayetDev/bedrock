@@ -200,8 +200,6 @@ const App = (props) => {
           <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >
 
             < ListeAnnonce
-
-
               params={params}
               latitude={state.lat}
               longitude={state.lng}

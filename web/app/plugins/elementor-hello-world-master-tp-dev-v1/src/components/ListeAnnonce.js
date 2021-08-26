@@ -51,13 +51,15 @@ const ListeAnnonce = ({
     renderAnnonce = cars['data'].map((annonce, index) => {
 
       if (annonce) {
+        // check si il apparait dans les params
         annonce = params.post.map((post, index2) => {
-          if (post.active) {
-            return annonce = { "value": cars['data'][index][post.field], 'style': post };
+          if (post.field) {
+            console.log(post.url);
+            return annonce = { "value": cars['data'][index][post.field], 'post': post, 'href': cars['data'][index][post.url] };
           }
 
         });
-        //   console.log(annonce);
+
         return (
           < DetailAnnonce name={annonce} params={params} > </DetailAnnonce>
         );

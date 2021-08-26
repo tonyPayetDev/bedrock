@@ -5,7 +5,6 @@ import * as APIConfig from "../constants/APIConfig";
 const Text = (props) => {
   const { data, text, params, style } = props;
   let t = params.heading_text;
-  console.log(params.ekit_dynamic_text);
   let col = "col-" + params.col_heading_text;
 
   if (params.ekit_dynamic_text) {
