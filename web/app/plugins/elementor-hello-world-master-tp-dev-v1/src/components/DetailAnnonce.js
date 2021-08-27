@@ -3,9 +3,11 @@ import Icon from "../images/flags.png";
 import * as APIConfig from "../constants/APIConfig";
 import { Animated } from "react-animated-css";
 import ParticlesBg from 'particles-bg'
+import injectSheet from 'react-jss';
+
 
 const DetailAnnonce = (props) => {
-  const { name, params } = props;
+  const { name, params, classes } = props;
   const style = {
     backgroundColor: params.color ? params.color : "#ffffff",
     color: "white",
@@ -30,13 +32,43 @@ const DetailAnnonce = (props) => {
     fontSize: "14px",
 
   };
+
+  const style_card = {
+    'position': 'absolute',
+    padding: '50px 10px',
+    maxWidth: "200px",
+    top: "50%",
+    left: "-20px",
+    width: "105%",
+    height: "60%",
+
+    transform: 'translateY(-50%)',
+    "-webkit-transform": "translateY(-50 %)",
+    "-moz-transform": " translateY(-50 %)",
+    "-o-transform": "translateY(-50 %)",
+    "-ms-transform": "translateY(-50 %)",
+
+    background: "#fff",
+    color: "#fff",
+    textAlign: "center",
+
+    border: " 1px solid #ddd",
+    borderWidth: "0px 0px 3px 0px ",
+    borderRadius: "0px 0px 0px 14px",
+    boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+  };
+  //console.log(style_card.border);
   const styleImage = {
-    width: "108%", height: "80%",
+    width: "108%",
+    height: "80%",
     boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
     opacity: 1,
     color: "red",
-    filter: "saturate(1)"
-
+    filter: "saturate(1)",
+    backgroundSize: "cover",
+    backgroundPosition: "center center",
+    "borderRadius": "0px 0px 0px 14px",
+    backgroundRepeat: "no-repeat"
   };
   function MouseOver(event) {
     event.target.style.background = params.color ? params.color : "#ffffff";
@@ -80,7 +112,39 @@ const DetailAnnonce = (props) => {
   }
   let fieldsAnnonce;
   let fieldsBtn;
+  let fieldsPhotos;
+  let card;
+  let cardbody;
 
+  if (params.cardbody) {
+    cardbody = JSON.parse(params.cardbody);
+  } else {
+    cardbody = {
+
+      "color": "#FAFAFA",
+      "textAlign": "center",
+      "borderWidth": "0px 0px 3px 0px ",
+      "borderRadius": "0px 0px 0px 14px",
+    }
+  }
+
+  if (params.card) {
+    card = JSON.parse(params.card);
+  } else {
+    card = {
+      margin: "10px  10px 10px 10px  ",
+      background: "#FAFAFA",
+      border: " 1px solid #ddd",
+      borderRadius: "4px",
+      padding: "10px",
+      width: "105%",
+      height: "60%",
+      borderColor: params.color,
+      borderWidth: "0px 0px 3px 0px ",
+      borderRadius: "0px 0px 0px 14px",
+      boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+    }
+  }
   if (name) {
 
     fieldsBtn = name.map((annonce, index) => {
@@ -104,14 +168,14 @@ const DetailAnnonce = (props) => {
         return (
           <div style={annonce.post} class={col}>
             <p class="card-text"> <i aria-hidden="true" class={annonce.post.icon.value}></i> {annonce.value}{annonce.post.text} </p>
-
           </div>
-
-
         );
       }
 
 
+
+    });
+    fieldsPhotos = name.map((annonce, index) => {
       if (annonce.post.type === "photos") {
 
         return (
@@ -126,65 +190,32 @@ const DetailAnnonce = (props) => {
         );
       }
     });
+
   }
 
-  // console.log(fieldsAnnonce);
 
   return (
-    <div class={params.ekit_map_btn ? 'col-6' : params.col_post
-    }  >
-      <div >
-
-        <div class='col-6' style={{
-          margin: "10px  10px 10px 10px  ",
-          background: "#FAFAFA",
-          border: " 1px solid #ddd",
-          borderRadius: "4px",
-          padding: "10px",
-          width: "105%", height: "60%",
-          borderColor: params.color,
-          borderWidth: "0px 0px 3px 0px ",
-          borderRadius: "0px 0px 0px 14px",
-          boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-        }} class="card btn-no-waves m-2 " >
-
-          <div class="card-body" type="button" >
-
+    <div class={params.ekit_map_btn ? 'col-6' : params.col_post}  >
+      <div>
+        <div class='col-6' style={card} class="card"  >
+          {fieldsPhotos}
+          <div class="card-body" type="button" style={cardbody} >
             <div class="row">
               {fieldsAnnonce}
-
             </div>
-            {/* <div class="row">
-              <div class="col-8 " style={{ color: "#7A7A7A", fontSize: "14px " }}>
-                <p class="card-text">{name.bien_type} - {name.surface} m²</p>
-
-              </div>
-              <div class="col-4 " style={styleText}>
-                {name.prestation_type == "Location" ?
-                  <p class="card-text">{name.tarif}/mois </p> :
-                  <p class="card-text">{name.prix} € </p>
-                }
-              </div>
-
-            </div>
-
-            <p class="card-text ">{name.ville}</p> */}
-
             <div class="btn-group row">
               {/* <button type="button" onMouseOver={MouseOver} onMouseOut={MouseOut} href="#" class="stretched-link btn  mr-3" style={styleContactPro} > <i aria-hidden="true" class="far fa-envelope"></i> contactez un pro</button>
-              <button type="button" onMouseOver={MouseOverHeart} onMouseOut={MouseOutHeart} className={"stretched-link btn " + params.ekit_wb_3976_icons.value} style={style} ></button> */}
+        <button type="button" onMouseOver={MouseOverHeart} onMouseOut={MouseOutHeart} className={"stretched-link btn " + params.ekit_wb_3976_icons.value} style={style} ></button> */}
               {fieldsBtn}
             </div>
           </div>
         </div>
-
       </div>
     </div >
 
 
 
-
   );
 };
+export default DetailAnnonce
 
-export default DetailAnnonce;

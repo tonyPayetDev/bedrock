@@ -376,23 +376,6 @@ class Hello_World extends Widget_Base
                 'alpha' => true,
             )
         );
- 
-
-        // $this->add_responsive_control(
-        //     'page_grid',
-        //     [
-        //         'label' => esc_html__('Columns Grid', 'elementskit-lite'),
-        //         'type' =>  Controls_Manager::SELECT,
-        //         'options' => [
-        //             '12'  => esc_html__('1 Columns', 'elementskit-lite'),
-        //             '6'  => esc_html__('2 Columns', 'elementskit-lite'),
-        //             '4' => esc_html__('3 Columns', 'elementskit-lite'),
-        //             '3' => esc_html__('4 Columns', 'elementskit-lite'),
-        //             '2' => esc_html__('6 Columns', 'elementskit-lite'),
-        //         ],
-        //         'condition' => ['view' => 'inline']
-        //     ]
-        // );
 
         $this->add_control(
             'ekit_href_target',
@@ -417,6 +400,18 @@ class Hello_World extends Widget_Base
                 'default' => 'yes',
             ]
         );
+        $this->add_control(
+            'ekit_resultat',
+            [
+                'label' => esc_html__('Resultat 1', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+        
         $this->add_control(
             'ekit_search_btn',
             [
@@ -516,11 +511,23 @@ class Hello_World extends Widget_Base
         $this->add_control(
             'ekit_wb_225_code',
             array(
-                'label' => esc_html__('Code', 'elementskit-lite'),
+                'label' => esc_html__('Card body', 'elementskit-lite'),
                 'type'  => Controls_Manager::CODE,
                 'show_label' => true,
                 'label_block' => true,
-                'language' => 'html',
+                'language' => 'json',
+
+            )
+        );
+        $this->add_control(
+            'ekit_wb_226_code',
+            array(
+                'label' => esc_html__('Card', 'elementskit-lite'),
+                'type'  => Controls_Manager::CODE,
+                'show_label' => true,
+                'label_block' => true,
+                'language' => 'json',
+
             )
         );
         $this->end_controls_section();
@@ -1159,100 +1166,6 @@ class Hello_World extends Widget_Base
                 ],
             ]
         );
-        // $this->end_controls_section();
-        // // ajout dynamique des champs d'apres url dans page todo mette dans une fonction
-        // $post_id = get_the_ID();
-
-
-        // $this->start_controls_section(
-        //     'section_api',
-        //     [
-        //             'label' => __('Api ', 'elementor'),
-        //         ]
-        // );
-        // // on limite a deux pour l'instant pourra étre ameliorer par la suite
-        // for ($i = 1; $i <= 2; $i++) {
-        //     $opt['api'.$i]=  esc_html__('api'.$i, 'elementskit-lite');
-        // }
-            
-        // $this->add_control(
-        //     'view',
-        //     [
-        //             'label' => esc_html__('Choix api', 'elementskit-lite'),
-        //             'type' => Controls_Manager::SELECT,
-        //             'default' => 'api1',
-        //             'options' => $opt,
-        //             'render_type' => 'template',
-        //             'classes' => 'elementor-control-start-end',
-        //             'label_block' => false,
-        //             'style_transfer' => true,
-        //         ]
-        // );
-                
-            
-        // foreach ($opt as $opt_key => $value) {
-        //     $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers('page');
-        //     $page_settings_model = $page_settings_manager->get_model($post_id);
-        //     $url =$page_settings_model->get_settings($opt_key);
-                
-        //     $response = wp_remote_get($url);
-        //     $body     = wp_remote_retrieve_body($response);
-        //     $body =json_decode($body);
-        //     foreach ($body as $key => $value) {
-        //         if ($key=='data') {
-        //             foreach ($value['1'] as $key3 => $value3) {
-        //                 $this->add_control(
-        //                     $key3.'_active',
-        //                     [
-        //                         'label' => esc_html__('>> '.$key3, 'elementskit-lite'),
-        //                         'type' => Controls_Manager::SWITCHER,
-        //                         'label_on' => esc_html__('Show', 'elementskit-lite'),
-        //                         'label_off' => esc_html__('Hide', 'elementskit-lite'),
-        //                         'return_value' => 'yes',
-        //                         'default' => '',
-        //                         'condition' => ['view' =>$opt_key],
-        //                         'separator' => 'before'
-
-        //                     ]
-        //                 );
-        //                 $this->add_control(
-        //                     $key3.'_pos',
-        //                     [
-        //                         'label'       => __('Position', 'elementor'),
-        //                         'type'        => Controls_Manager::TEXT,
-        //                         'default'     => __("", 'elementor'),
-        //                         'label_block' => true,
-        //                         'condition' => ['view' => $opt_key]
-    
-        //                     ]
-        //                 );
-        //                 $this->add_control(
-        //                     $key3.'_color',
-        //                     [
-        //                         'label'       => __('Color', 'elementor'),
-        //                         'type'        => Controls_Manager::COLOR,
-        //                         'default'     => __("#FFFFFF", 'elementor'),
-        //                         'label_block' => true,
-        //                         'condition' => ['view' => $opt_key]
-    
-        //                     ]
-        //                 );
-        //                 $this->add_control(
-        //                     $key3.'_col',
-        //                     [
-        //                         'label'       => __('Col', 'elementor'),
-        //                         'type'        => Controls_Manager::TEXT,
-        //                         'default'     => __("6", 'elementor'),
-        //                         'label_block' => true,
-        //                         'condition' => ['view' => $opt_key]
-    
-        //                     ]
-        //                 );
-        //             }
-        //         }
-        //     }
-        // }
-        // $this->end_controls_section();
     }
     // return les api saisie dans param elementor
     public function get_api()
@@ -1282,7 +1195,6 @@ class Hello_World extends Widget_Base
                                         
                 if ($key=='data') {
                     foreach ($value['1'] as $key3 => $value3) {
-                        //  $tab_key_post[$opt_key][]=$key3;
                         $tab_key_post[$key3 ]=  esc_html__($key3, 'elementskit-lite');
                     }
                 }
@@ -1304,14 +1216,6 @@ class Hello_World extends Widget_Base
         $context = Timber::get_context();
         // recuperation valeurs select
         $type=[];
-        if ($settings['ekit_wb_225_code']) {
-            foreach (json_decode($settings['ekit_wb_225_code']) as $key => $value) {
-                foreach ($value as $key2 => $value2) {
-                    $type[]=array("value"=>$key2,"label"=>$value2);
-                }
-            }
-        }
-        // adaptation du select
         foreach ($settings['categories'] as $category) {
             $tab_value=null;
             foreach ($settings['services'] as $service) {
@@ -1334,33 +1238,20 @@ class Hello_World extends Widget_Base
                     'url'=> $field['field_url'],
                     'text'=> $field['field_text'],
                     'icon'=> $field['field_icon'],
-
-                    
                 );
                 }
             }
         }
-        // récupere les champs dynamiques
-        // foreach ($this->get_key_post($settings['view']) as $key => $item_key_post) {
-        //     if ($settings['view']===$key) {
-        //         foreach ($item_key_post as $key2 => $item) {
-        //             $id_color=$item.'_color';
-        //             $id_active=$item.'_active';
-        //             $id_col=$item.'_col';
-        //             $id_pos=$item.'_pos';
-
-        //             $post_id = get_the_ID();
-        //             $post[]= array( 'field'=> $item , 'color'=> $settings[ $id_color] ,'active'=> $settings[$id_active],'col'=> $settings[$id_col]);
-        //         }
-        //     }
-        // }
-                
+        
+           
         $array = array(
            "id"=>$settings['post'],
            "id_active"=>get_permalink(get_the_ID()), // se base l'url de la page pour checker le bon parametre
            'type'=>$tab,
            'post'=>$post,
-
+           'ekit_resultat'=> $settings['ekit_resultat'],
+           'cardbody'=> $settings['ekit_wb_225_code'],
+           'card'=> $settings['ekit_wb_226_code'],
            'ekit_search_btn' =>  $settings['ekit_search_btn'],
            'search_text' =>  $settings['search_text'],
            'heading_text' =>  $settings['heading_text'],

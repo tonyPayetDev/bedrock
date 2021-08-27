@@ -30,15 +30,9 @@ const App = (props) => {
     visible: false,
 
   });
-  let text;
   const [tab, setTab] = useState({});// # stock les filtre d'apres les type récupérer 
-  let decoded;
   const [params, setParams] = useState(APIConfig.param(id)[0]);
   const fetchURL = `${params.API_URI}&`;
-
-  console.log(params.API_URI);
-
-
 
   params.type.map((data, index) => {
     var secteur = APIConfig.url_const.searchParams.get(data.name);
@@ -50,10 +44,9 @@ const App = (props) => {
   const style = {
     backgroundColor: params.color ? params.color : "#ffffff",
     display: params.ekit_search_btn ? "" : "none",
-    "border-radius": "1px 1px 1px 1px",
+    "border-radius": "4px",
     color: "white",
-
-
+    fontSize: "15px"
   };
 
   const stylecriteres = {
@@ -113,7 +106,7 @@ const App = (props) => {
 
 
   // affiche ou cache la maps
-  let col = "col-" + params.col;
+  let col = "col-" + params.col_heading_text;
   return (
     <div style={{ fontFamily: params.ekit_wb_3976_font, fontSize: 14 }}  >
       <h3>
@@ -167,10 +160,11 @@ const App = (props) => {
 
         </div>
       </div >
+      {params.ekit_resultat ?
+        <NbResultat
+          data={selectedSort}
+        ></NbResultat> : ""}
 
-      <NbResultat
-        data={selectedSort}
-      ></NbResultat>
       <div class="row">
 
         <div class="col-12  justify-content-center ">

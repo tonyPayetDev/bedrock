@@ -19,16 +19,6 @@ export let fetchURL = "";
 var url = new URL(document.location.href);
 
 export const url_const = url;
-//const attributID = document.getElementsByClassName("app").getAttribute("params");
-
-// document.getElementsByClassName("app").map((params, index) => {
-
-//   console.log(params);
-// });
-
-
-
-
 var page_id = url.searchParams.get("page_id");// pour la pagination
 
 export let params_json = "";
@@ -40,9 +30,7 @@ export function param(id) {
     params_json = JSON.parse(decoded);
     params_json = params_json.filter(single => single.id === id);
     return params_json;
-
   }
-
 }
 
 export const getItems = ($filter) =>
@@ -51,20 +39,6 @@ export const getItems = ($filter) =>
     headers: HEADERS,
   }).then((res) => res.json());
 
-
-
-// export const getItems = ($filter) =>
-//   fetch(fetchURL + new URLSearchParams($filter), {
-//     method: "GET",
-//     headers: HEADERS,
-//   }).then((res) => res.json());
-
-// const fetchURLType = `${API_URI}/secteurs`;
-// export const getItemsType = () =>
-//   fetch(fetchURLType, {
-//     method: "GET",
-//     headers: HEADERS,
-//   }).then((res) => res.json());
 
 // const fetchURLMoto = `${API_URI}/types`;
 // export const getItemsMoto = () =>

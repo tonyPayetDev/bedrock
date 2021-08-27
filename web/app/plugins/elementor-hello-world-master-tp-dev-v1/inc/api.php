@@ -179,7 +179,6 @@ function biens(WP_REST_Request $request)
       ) ;
   
     $count_biens = new WP_query($request_nb);
-    $tab_meta['data'][]="";
     foreach ($biens->posts as $key => $value) {
         $meta = get_post_meta($value->ID);
        

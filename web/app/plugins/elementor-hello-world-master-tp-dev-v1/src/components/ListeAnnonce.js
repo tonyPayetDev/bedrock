@@ -46,20 +46,16 @@ const ListeAnnonce = ({
       });
     }
   };
-  //console.log(params.post);
+
   if (cars) {
     renderAnnonce = cars['data'].map((annonce, index) => {
-
       if (annonce) {
         // check si il apparait dans les params
         annonce = params.post.map((post, index2) => {
           if (post.field) {
-            console.log(post.url);
             return annonce = { "value": cars['data'][index][post.field], 'post': post, 'href': cars['data'][index][post.url] };
           }
-
         });
-
         return (
           < DetailAnnonce name={annonce} params={params} > </DetailAnnonce>
         );
@@ -70,7 +66,6 @@ const ListeAnnonce = ({
 
     <div>
       <div class="row">
-
         {renderAnnonce}
       </div>
 

@@ -27,6 +27,7 @@
     "react-google-maps": "^9.4.5",
     "react-google-places-autocomplete": "^3.3.0",
     "react-hook-google-maps": "0.0.3",
+    "react-jss": "^10.7.1",
     "react-loading": "^2.0.3",
     "react-places-autocomplete": "^7.3.0",
     "react-redux": "^7.1.1",
