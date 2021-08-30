@@ -114,6 +114,7 @@ class Hello_World extends Widget_Base
                         'select'  => esc_html__('Select', 'elementskit-lite'),
                         'button' => esc_html__('Button', 'elementskit-lite'),
                         'photos' => esc_html__('Photos', 'elementskit-lite'),
+                        'condition' => esc_html__('condition', 'elementskit-lite'),
                         'hide' => esc_html__('hide', 'elementskit-lite'),
 
                     ],
@@ -152,6 +153,16 @@ class Hello_World extends Widget_Base
                         'library' => '',
                     )
                 )
+            );
+            $repeater3->add_control(
+                'field_condition',
+                [
+                    'label'       => __('Condition egalité (type condition)  ', 'elementor'),
+                    'type'        => Controls_Manager::TEXT,
+                    'default'     => __("", 'elementor'),
+                    'label_block' => true,
+    
+                ]
             );
             $this->add_control(
                 $opt_key.'fields',
@@ -1238,6 +1249,8 @@ class Hello_World extends Widget_Base
                     'url'=> $field['field_url'],
                     'text'=> $field['field_text'],
                     'icon'=> $field['field_icon'],
+                    'condition'=> $field['field_condition'],
+
                 );
                 }
             }
