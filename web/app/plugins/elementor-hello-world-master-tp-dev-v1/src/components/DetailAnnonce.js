@@ -17,8 +17,11 @@ let test = {
   "borderRadius": "0px 0px 0px 14px",
   "boxShadow": " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
 }
+let cpt = 0;
+
 const DetailAnnonce = (props) => {
   const { name, params, classes } = props;
+
   const style = {
     backgroundColor: params.color ? params.color : "#ffffff",
     color: "white",
@@ -156,13 +159,32 @@ const DetailAnnonce = (props) => {
       boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
     }
   }
+  cpt = cpt + 1;
+  if (cpt > 1) {
+    cpt = 0;
+  }
+  if (cpt === 0) {
+    cardbody.right = "-20px";
+    cardbody.left = "";
+    card.right = "-20px";
+    card.left = "";
+
+  } else {
+    cardbody.left = "-20px";
+    cardbody.right = "";
+    card.right = "-20px";
+    card.left = "";
+  }
+
+  console.log(cpt);
+
   if (name) {
 
     fieldsBtn = name.map((annonce, index) => {
       // change la couleur sur certaine condition  todo a voir si possible facoriser
       if (annonce.post.type === "condition") {
-        console.log(annonce.post);
-        console.log(annonce.value);
+        // console.log(annonce.post);
+        // console.log(annonce.value);
 
         if (annonce.post.condition === annonce.value) {
           styleContactPro.color = annonce.post.color;
