@@ -32538,9 +32538,8 @@ const App = props => {
   }, "  ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_loading__WEBPACK_IMPORTED_MODULE_11___default.a, {
     type: "bubbles",
     color: params.color
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "row",
-    style: params.visible ? null : divStyle
+  })), params.visible ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    class: "row"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: params.ekit_map_btn ? 'col-6' : 'col-12'
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_animated_css__WEBPACK_IMPORTED_MODULE_8__["Animated"], {
@@ -32566,7 +32565,7 @@ const App = props => {
     longitude: state.lng,
     setSelectedSort: setSelectedSort,
     cars: selectedSort
-  }))));
+  }))) : "");
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(google_maps_react__WEBPACK_IMPORTED_MODULE_1__["GoogleApiWrapper"])({

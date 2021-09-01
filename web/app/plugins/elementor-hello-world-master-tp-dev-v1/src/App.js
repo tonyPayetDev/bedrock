@@ -189,34 +189,33 @@ const App = (props) => {
 
       {selectedSort ? "" : <div class="col-12 d-flex justify-content-center" >  <ReactLoading type='bubbles' color={params.color} /></div >}
 
-      <div class="row" style={params.visible ? null : divStyle} >
-        <div class={params.ekit_map_btn ? 'col-6' : 'col-12'} >
-          <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >
+      {params.visible ?
+        <div class="row">
+          <div class={params.ekit_map_btn ? 'col-6' : 'col-12'} >
+            <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >
+              < ListeAnnonce
+                params={params}
+                latitude={state.lat}
+                longitude={state.lng}
+                setSelectedSort={setSelectedSort}
+                cars={selectedSort}
+              ></ListeAnnonce>
+            </Animated>
+          </div>
 
-            < ListeAnnonce
-              params={params}
+          <div class="col-md-6" style={params.ekit_map_btn ? null : divStyle} >
+            <GoogleMaps
+              style={{ margin: "400px" }}
               latitude={state.lat}
               longitude={state.lng}
               setSelectedSort={setSelectedSort}
               cars={selectedSort}
-            ></ListeAnnonce>
-          </Animated>
-
+            ></GoogleMaps>
+          </div>
 
         </div>
-
-        <div class="col-md-6" style={params.ekit_map_btn ? null : divStyle} >
-          <GoogleMaps
-            style={{ margin: "400px" }}
-            latitude={state.lat}
-            longitude={state.lng}
-            setSelectedSort={setSelectedSort}
-            cars={selectedSort}
-          ></GoogleMaps>
-        </div>
-
-      </div>
-
+        : ""
+      }
     </div >
 
   );
