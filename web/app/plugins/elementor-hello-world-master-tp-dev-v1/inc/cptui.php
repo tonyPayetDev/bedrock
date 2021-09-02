@@ -63,7 +63,7 @@ function cptui_register_biens()
 
     $labels = [
         "name" => __("Biens", "custom-post-type-ui"),
-        "singular_name" => __("Programme", "custom-post-type-ui"),
+        "singular_name" => __("Bien", "custom-post-type-ui"),
     ];
 
     $args = [
