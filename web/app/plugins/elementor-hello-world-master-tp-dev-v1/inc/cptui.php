@@ -1,5 +1,102 @@
 <?php
 
+/**
+ * enregistre custom post type programmes
+ *
+ * @param array $data Options for the function.
+ * @return string|null Post title for the latest, * or null if none.
+ */
+function cptui_register_pro()
+{
+
+    /**
+     * Post Type: Programmes.
+     */
+
+    $labels = [
+        "name" => __("Programmes", "custom-post-type-ui"),
+        "singular_name" => __("Programme", "custom-post-type-ui"),
+    ];
+
+    $args = [
+        "label" => __("Programmes", "custom-post-type-ui"),
+        "labels" => $labels,
+        "description" => "",
+        "public" => true,
+        "publicly_queryable" => true,
+        "show_ui" => true,
+        "show_in_rest" => true,
+        "rest_base" => "",
+        "rest_controller_class" => "WP_REST_Posts_Controller",
+        "has_archive" => false,
+        "show_in_menu" => true,
+        "show_in_nav_menus" => true,
+        "delete_with_user" => false,
+        "exclude_from_search" => false,
+        "capability_type" => "post",
+        "map_meta_cap" => true,
+        "hierarchical" => false,
+        "rewrite" => [ "slug" => "programmes", "with_front" => true ],
+        "query_var" => true,
+        "supports" => [ "title", "editor", "thumbnail", "custom-fields" ],
+        "show_in_graphql" => false,
+    ];
+
+    register_post_type("programmes", $args);
+}
+
+add_action('init', 'cptui_register_pro');
+
+
+/**
+ * enregistre custom post type biens
+ *
+ * @param array $data Options for the function.
+ * @return string|null Post title for the latest, * or null if none.
+ */
+function cptui_register_biens()
+{
+
+    /**
+     * Post Type: Biens.
+     */
+
+    $labels = [
+        "name" => __("Biens", "custom-post-type-ui"),
+        "singular_name" => __("Programme", "custom-post-type-ui"),
+    ];
+
+    $args = [
+        "label" => __("Biens", "custom-post-type-ui"),
+        "labels" => $labels,
+        "description" => "",
+        "public" => true,
+        "publicly_queryable" => true,
+        "show_ui" => true,
+        "show_in_rest" => true,
+        "rest_base" => "",
+        "rest_controller_class" => "WP_REST_Posts_Controller",
+        "has_archive" => false,
+        "show_in_menu" => true,
+        "show_in_nav_menus" => true,
+        "delete_with_user" => false,
+        "exclude_from_search" => false,
+        "capability_type" => "post",
+        "map_meta_cap" => true,
+        "hierarchical" => false,
+        "rewrite" => [ "slug" => "biens", "with_front" => true ],
+        "query_var" => true,
+        "supports" => [ "title", "editor", "thumbnail", "custom-fields" ],
+        "show_in_graphql" => false,
+    ];
+
+    register_post_type("biens", $args);
+}
+
+add_action('init', 'cptui_register_biens');
+
+// #addd acf_add_local_field_group
+
 if (function_exists('acf_add_local_field_group')):
 
     acf_add_local_field_group(array(
@@ -224,97 +321,3 @@ if (function_exists('acf_add_local_field_group')):
     ));
     
     endif;
-/**
- * enregistre custom post type programmes
- *
- * @param array $data Options for the function.
- * @return string|null Post title for the latest, * or null if none.
- */
-function cptui_register_pro()
-{
-
-    /**
-     * Post Type: Programmes.
-     */
-
-    $labels = [
-        "name" => __("Programmes", "custom-post-type-ui"),
-        "singular_name" => __("Programme", "custom-post-type-ui"),
-    ];
-
-    $args = [
-        "label" => __("Programmes", "custom-post-type-ui"),
-        "labels" => $labels,
-        "description" => "",
-        "public" => true,
-        "publicly_queryable" => true,
-        "show_ui" => true,
-        "show_in_rest" => true,
-        "rest_base" => "",
-        "rest_controller_class" => "WP_REST_Posts_Controller",
-        "has_archive" => false,
-        "show_in_menu" => true,
-        "show_in_nav_menus" => true,
-        "delete_with_user" => false,
-        "exclude_from_search" => false,
-        "capability_type" => "post",
-        "map_meta_cap" => true,
-        "hierarchical" => false,
-        "rewrite" => [ "slug" => "programmes", "with_front" => true ],
-        "query_var" => true,
-        "supports" => [ "title", "editor", "thumbnail", "custom-fields" ],
-        "show_in_graphql" => false,
-    ];
-
-    register_post_type("programmes", $args);
-}
-
-add_action('init', 'cptui_register_pro');
-
-
-/**
- * enregistre custom post type biens
- *
- * @param array $data Options for the function.
- * @return string|null Post title for the latest, * or null if none.
- */
-function cptui_register_biens()
-{
-
-    /**
-     * Post Type: Biens.
-     */
-
-    $labels = [
-        "name" => __("Biens", "custom-post-type-ui"),
-        "singular_name" => __("Programme", "custom-post-type-ui"),
-    ];
-
-    $args = [
-        "label" => __("Biens", "custom-post-type-ui"),
-        "labels" => $labels,
-        "description" => "",
-        "public" => true,
-        "publicly_queryable" => true,
-        "show_ui" => true,
-        "show_in_rest" => true,
-        "rest_base" => "",
-        "rest_controller_class" => "WP_REST_Posts_Controller",
-        "has_archive" => false,
-        "show_in_menu" => true,
-        "show_in_nav_menus" => true,
-        "delete_with_user" => false,
-        "exclude_from_search" => false,
-        "capability_type" => "post",
-        "map_meta_cap" => true,
-        "hierarchical" => false,
-        "rewrite" => [ "slug" => "biens", "with_front" => true ],
-        "query_var" => true,
-        "supports" => [ "title", "editor", "thumbnail", "custom-fields" ],
-        "show_in_graphql" => false,
-    ];
-
-    register_post_type("biens", $args);
-}
-
-add_action('init', 'cptui_register_biens');
