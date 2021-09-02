@@ -95,7 +95,7 @@ function cptui_register_biens()
 
 add_action('init', 'cptui_register_biens');
 
-// #addd acf_add_local_field_group
+// #addd acf_add_local_field_group  test
 
 if (function_exists('acf_add_local_field_group')):
 
