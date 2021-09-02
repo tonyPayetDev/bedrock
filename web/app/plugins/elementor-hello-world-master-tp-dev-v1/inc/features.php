@@ -57,7 +57,7 @@ function my_function()
             $resultat = $wpdb->insert(
                 $wpdb->prefix . 'posts',
                 array(
-                        'post_type' => 'programmes',// a mettre par la suite dans annonce
+                        'post_type' => 'biens',// a mettre par la suite dans annonce
                         'post_content' =>$content,
                         'post_title' => $d['titre'],
                         'post_name' =>  $d['titre'],
@@ -199,9 +199,9 @@ function my_function()
 function delete_post()
 {
     // supprimer tous les posts et meta todo mettre dans fonction
-    $programmes = new WP_query(array('post_type' => 'programmes' ,'posts_per_page'   => -1));
+    $biens = new WP_query(array('post_type' => 'biens' ,'posts_per_page'   => -1));
     
-    foreach ($programmes->posts as $key => $value) {
+    foreach ($biens->posts as $key => $value) {
         wp_delete_post($value->ID);
         $meta = get_post_meta($value->ID);
 

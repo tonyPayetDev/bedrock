@@ -32630,16 +32630,34 @@ const DetailAnnonce = props => {
     fontSize: "17px",
     lineHeight: " 1.33",
     padding: "0px 7px",
-    margin: "0px 0px 0px 60px"
+    margin: "0px 25px 25px"
   };
   const styleText = {
     color: params.color ? params.color : "#ffffff"
   };
   const styleContactPro = {
     boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-    backgroundColor: !params.color ? params.color : "white",
-    color: params.color ? params.color : "white",
+    backgroundColor: params.color ? params.color : "white",
+    color: !params.color ? params.color : "white",
     fontSize: "14px"
+  };
+  const styleBtnCondition = {
+    boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+    backgroundColor: params.color ? params.color : "white",
+    color: !params.color ? params.color : "white",
+    fontSize: "14px",
+    "text-align": "center",
+    width: "40px",
+    height: "40px",
+    " line-height": "40px",
+    "display": "block",
+    "border-radius": "50px",
+    "font-size": "20px",
+    margin: "0px 20px 20px 20px"
+  };
+  const styleCondition = {
+    color: "white",
+    fontSize: "16px"
   };
   const style_card = {
     'position': 'absolute',
@@ -32657,12 +32675,12 @@ const DetailAnnonce = props => {
     background: "#fff",
     color: "#fff",
     textAlign: "center",
+    borderColor: "red",
     border: " 1px solid #ddd",
     borderWidth: "0px 0px 3px 0px ",
     borderRadius: "0px 0px 0px 14px",
     boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-  }; //console.log(style_card.border);
-
+  };
   const styleImage = {
     width: "108%",
     height: "80%",
@@ -32677,8 +32695,17 @@ const DetailAnnonce = props => {
   };
 
   function MouseOver(event) {
-    event.target.style.background = params.color ? params.color : "#ffffff";
-    event.target.style.color = "white";
+    if (event.target.type) {
+      event.target.style.color = styleContactPro.backgroundColor;
+      event.target.style.background = "#ffffff";
+    }
+  }
+
+  function MouseOut(event) {
+    if (event.target.type) {
+      event.target.style.color = "#ffffff";
+      event.target.style.background = styleContactPro.backgroundColor;
+    }
   }
 
   function MouseOverHeart(event) {
@@ -32689,11 +32716,6 @@ const DetailAnnonce = props => {
   function MouseOutHeart(event) {
     event.target.style.background = params.color ? params.color : "#ffffff";
     event.target.style.color = "white";
-  }
-
-  function MouseOut(event) {
-    event.target.style.background = "";
-    event.target.style.color = params.color ? params.color : "#ffffff";
   }
 
   function MouseOverOpacity(event) {
@@ -32722,7 +32744,8 @@ const DetailAnnonce = props => {
       "color": "#FAFAFA",
       "textAlign": "center",
       "borderWidth": "0px 0px 3px 0px ",
-      "borderRadius": "0px 0px 0px 14px"
+      "borderRadius": "0px 0px 0px 14px",
+      borderColor: params.color
     };
   }
 
@@ -32753,16 +32776,13 @@ const DetailAnnonce = props => {
   if (cpt === 0) {
     cardbody.right = "-20px";
     cardbody.left = "";
-    card.right = "-20px";
-    card.left = "";
+    card.left = "5px";
   } else {
-    cardbody.left = "-20px";
     cardbody.right = "";
-    card.right = "-20px";
-    card.left = "";
-  }
+    cardbody.left = "-20px";
+    card.left = "25px";
+  } //cardbody.borderStyle = "solid";
 
-  console.log(cpt);
 
   if (name) {
     fieldsBtn = name.map((annonce, index) => {
@@ -32770,17 +32790,22 @@ const DetailAnnonce = props => {
       if (annonce.post.type === "condition") {
         // console.log(annonce.post);
         // console.log(annonce.value);
-        if (annonce.post.condition === annonce.value) {
-          styleContactPro.color = annonce.post.color;
-        }
-      }
+        let col = 'btn ' + annonce.post.col;
 
-      if (annonce.post.type === "button") {
+        if (annonce.post.condition === annonce.value) {
+          styleContactPro.backgroundColor = annonce.post.color;
+          styleContactPro.borderRadius = "12px";
+          cardbody.border = annonce.post.color; //  params.color = annonce.post.color;
+          // return (
+          //   <button type="button" style={annonce.post} class={col} style={styleBtnCondition} >
+          //     <i aria-hidden="true" class={annonce.post.icon.value}></i>
+          //   </button>
+          // );
+        }
+      } else if (annonce.post.type === "button") {
         let col = 'btn ' + annonce.post.col;
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
           type: "button",
-          onMouseOver: MouseOver,
-          onMouseOut: MouseOut,
           style: annonce.post,
           class: col,
           style: styleContactPro
@@ -32791,13 +32816,22 @@ const DetailAnnonce = props => {
       }
     });
     fieldsAnnonce = name.map((annonce, index) => {
-      if (annonce.post.type === "condition") {
-        console.log(annonce.post);
+      if (annonce.post.type === "condition" & annonce.post.type !== "button") {
+        let col = annonce.post.col;
+        console.log(col);
 
         if (annonce.post.condition === annonce.value) {
-          cardbody.color = annonce.post.color;
-          cardbody.background = annonce.post.color;
-          card.borderColor = annonce.post.color;
+          styleCondition.color = annonce.post.color;
+          return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+            style: annonce.post,
+            class: col,
+            style: styleCondition
+          }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", {
+            class: "card-text"
+          }, " ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("i", {
+            "aria-hidden": "true",
+            class: annonce.post.icon.value
+          }), " ", annonce.post.text, " "));
         }
       }
 
@@ -32846,6 +32880,8 @@ const DetailAnnonce = props => {
   }, fieldsPhotos, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "card-body",
     type: "button",
+    onMouseOver: MouseOver,
+    onMouseOut: MouseOut,
     style: cardbody
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "row"

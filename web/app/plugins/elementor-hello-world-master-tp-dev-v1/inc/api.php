@@ -120,14 +120,14 @@ function url(WP_REST_Request $request)
         $tab_meta["biens" ][]=$tab;
     }
 
-    return   $tab_meta   ;
+    return $tab_meta ;
 }
 /**
- * liste des type de prestations
- *
- * @param array $data Options for the function.
- * @return string|null Post title for the latest, * or null if none.
- */
+* liste des type de prestations
+*
+* @param array $data Options for the function.
+* @return string|null Post title for the latest, * or null if none.
+*/
 function params(WP_REST_Request $request)
 {
     $file = dirname(__DIR__)."/inc/jsonFile.json";
@@ -137,55 +137,58 @@ function params(WP_REST_Request $request)
     return $obj ;
 }
 /**
- * retourne la liste des biens
- *
- * @param array $data Options for the function.
- * @return string|null Post title for the latest, * or null if none.
- */
+* retourne la liste des biens
+*
+* @param array $data Options for the function.
+* @return string|null Post title for the latest, * or null if none.
+*/
 function biens(WP_REST_Request $request)
 {
     $paged = ($request->get_param('paged')) ? $request->get_param('paged') : 1;
     $r=array();
-    
+
     foreach (name_select() as $key => $name) {
         if ($request->get_param($name)) {
-            $meta=     array(
-                'key' =>  $name,
-                'value' =>(string)$request->get_param($name),
-              );
+            $meta= array(
+'key' => $name,
+'value' =>(string)$request->get_param($name),
+);
             array_push($r, $meta);
         }
     }
 
     $type=$request->get_param('type');
-    $request_p =  array(
-      'post_type' => $type,
-      'posts_per_page'   => 10,//-1 all
+    $request_p = array(
+'post_type' => $type,
+'posts_per_page' => 10,//-1 all
 
-      'meta_query' => $r,
-      'paged' => $paged,
-      'orderby' => 'date_saisie',
-      'meta_type' => 'DATE',
-      'order' => 'DESC'
-    ) ;
+'meta_query' => $r,
+'paged' => $paged,
+'orderby' => 'date_saisie',
+'meta_type' => 'DATE',
+'order' => 'DESC'
+) ;
 
     $biens = new WP_query($request_p);
 
-    $request_nb =  array(
-        'post_type' => $type,
-        'posts_per_page'   => -1 ,
-        'meta_query' => $r,
-  
-      ) ;
-  
+    $request_nb = array(
+'post_type' => $type,
+'posts_per_page' => -1 ,
+'meta_query' => $r,
+
+) ;
+
     $count_biens = new WP_query($request_nb);
     foreach ($biens->posts as $key => $value) {
         $meta = get_post_meta($value->ID);
-       
+
         foreach ($meta as $key => $value_meta) {
             $tab["id"]=$value->ID;
             $tab["post_name"]=$value->post_name;
-
+            $url = wp_get_attachment_image_src($value->photo, 'medium-large')[0];// recupere juste l'ul
+            
+            $tab["photo"]= $url;
+            
             $tab[$key]=$value_meta[0];
         }
         $tab_meta['data'][]=$tab;
@@ -197,33 +200,33 @@ function biens(WP_REST_Request $request)
 }
 add_action('rest_api_init', function () {
     register_rest_route('api/v1', '/params', array(
-      'methods' => 'GET',
-      'callback' => 'params',
-    ));
+'methods' => 'GET',
+'callback' => 'params',
+));
 });
 add_action('rest_api_init', function () {
     register_rest_route('api/v1', '/data', array(
-      'methods' => 'GET',
-      'callback' => 'biens',
-    ));
+'methods' => 'GET',
+'callback' => 'biens',
+));
 });
 
 add_action('rest_api_init', function () {
     register_rest_route('api/v1', '/secteurs', array(
-      'methods' => 'GET',
-      'callback' => 'secteur',
-    ));
+'methods' => 'GET',
+'callback' => 'secteur',
+));
 });
 
 add_action('rest_api_init', function () {
     register_rest_route('api/v1', '/types', array(
-      'methods' => 'GET',
-      'callback' => 'type',
-    ));
+'methods' => 'GET',
+'callback' => 'type',
+));
 });
 add_action('rest_api_init', function () {
     register_rest_route('api/', '/url', array(
-      'methods' => 'GET',
-      'callback' => 'url',
-    ));
+'methods' => 'GET',
+'callback' => 'url',
+));
 });
