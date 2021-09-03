@@ -48,7 +48,8 @@
     "pojome/elementor": "^0.4.1",
     "johnbillion/wp-crontrol": "^1.10",
     "wpackagist-plugin/advanced-custom-fields": "^5.9",
-    "wpackagist-plugin/elementskit-lite": "^2.3"
+    "wpackagist-plugin/elementskit-lite": "^2.3",
+    "wpackagist-plugin/esix-user-role": "^1.0"
 
   },
   "require-dev": {
