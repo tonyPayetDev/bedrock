@@ -1200,10 +1200,8 @@ class Hello_World extends Widget_Base
         $response = wp_remote_get($url);
         $body     = wp_remote_retrieve_body($response);
         $body =json_decode($body);
-        if ($body) {
+        if ($body && $opt_key) {
             foreach ($body as $key => $value) {
-                $tab_key_post[$opt_key] ;
-                                        
                 if ($key=='data') {
                     foreach ($value['1'] as $key3 => $value3) {
                         $tab_key_post[$key3 ]=  esc_html__($key3, 'elementskit-lite');
