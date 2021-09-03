@@ -32481,7 +32481,12 @@ const App = props => {
     state: state,
     params: params,
     fetchURL: fetchURL
-  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    class: col,
+    style: {
+      fontSize: params.fontSize
+    }
+  }, "criteres"))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "row  m-1"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "col-6"
