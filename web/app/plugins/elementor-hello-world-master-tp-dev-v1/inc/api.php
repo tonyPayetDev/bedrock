@@ -176,7 +176,9 @@ function biens(WP_REST_Request $request)
         foreach ($meta as $key => $value_meta) {
             $tab["id"]=$value->ID;
             $tab["post_name"]=$value->post_name;
-
+            $url = wp_get_attachment_image_src($value->photo, 'medium')[0];// recupere juste l'ul
+            
+            $tab["photo"]= $url;
             $tab[$key]=$value_meta[0];
         }
         $tab_meta['data'][]=$tab;
