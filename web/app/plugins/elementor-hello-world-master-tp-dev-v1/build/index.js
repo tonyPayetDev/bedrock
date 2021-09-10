@@ -52925,9 +52925,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants_APIConfig__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./constants/APIConfig */ "./src/constants/APIConfig.js");
 /* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-loading */ "./node_modules/react-loading/dist/react-loading.js");
 /* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(react_loading__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var base_64__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! base-64 */ "./node_modules/base-64/base64.js");
-/* harmony import */ var base_64__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(base_64__WEBPACK_IMPORTED_MODULE_12__);
-
 
 
 
@@ -53007,11 +53004,6 @@ const App = props => {
   const divStyle = {
     display: "none"
   };
-  const styledynamictext = {
-    display: params.ekit_dynamic_text ? "" : "none",
-    borderRadius: "20px 20px 20px 20px",
-    color: params.color ? params.color : "#ffffff"
-  };
   const [cars, setCars] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])();
   const [selectedSort, setSelectedSort] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])();
   const [url_construct, setUrlConstruct] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])({
@@ -53019,7 +53011,6 @@ const App = props => {
     secteur: ""
   });
   const [hidecontent, setHideContent] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])("");
-  const [isOpened, setIsOpened] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])(false);
   Object(react__WEBPACK_IMPORTED_MODULE_9__["useEffect"])(event => {
     if (hidecontent == "carte") {
       params.ekit_map_btn = 'yes';
@@ -53032,12 +53023,7 @@ const App = props => {
     }
 
     _constants_APIConfig__WEBPACK_IMPORTED_MODULE_10__["getItems"](fetchURL + new URLSearchParams(tab)).then(data => setSelectedSort(data));
-  }, [hidecontent]);
-
-  function toggle() {
-    setIsOpened(wasOpened => !wasOpened);
-  } // affiche ou cache la maps
-
+  }, [hidecontent]); // affiche ou cache la maps
 
   let col = "col-" + params.col_heading_text;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
@@ -53079,41 +53065,9 @@ const App = props => {
     cars: cars,
     state: state,
     params: params,
-    fetchURL: fetchURL
-  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "row  m-1"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "col-6"
-  }, params.ekit_critere_btn && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "row justify-content-end"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
-    type: "button",
-    onClick: toggle,
-    class: "btn ",
-    style: stylecriteres
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("i", {
-    "aria-hidden": "true",
-    style: style_invers,
-    class: "icon icon-chevron-down"
-  }), " + de criteres")))), isOpened && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_animated_css__WEBPACK_IMPORTED_MODULE_8__["Animated"], {
-    isVisible: true,
-    animationIn: "fadeIn",
-    animationOut: "fadeIn",
-    animationInDuration: 500,
-    animationOutDuration: 1000
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: col,
-    style: {
-      fontSize: params.fontSize
-    }
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_SelectBox__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    setSelectedSort: setSelectedSort,
-    setUrlConstruct: setUrlConstruct,
-    cars: cars,
-    state: state,
-    params: params,
     fetchURL: fetchURL,
-    critere: "yes"
+    style_invers: style_invers,
+    stylecriteres: stylecriteres
   }))), params.ekit_resultat ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_NbResultat__WEBPACK_IMPORTED_MODULE_6__["default"], {
     data: selectedSort
   }) : "", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
@@ -54027,9 +53981,12 @@ const SelectBox = props => {
     params,
     setUrlConstruct,
     fetchURL,
-    critere
+    critere,
+    stylecriteres,
+    style_invers
   } = props;
   const [search, setSearch] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])("");
+  const [isOpened, setIsOpened] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(false);
   const [tab, setTab] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])({}); // # todo a recupérer en params
 
   const [active, setActive] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(false); // # todo a recupérer en params
@@ -54044,13 +54001,7 @@ const SelectBox = props => {
     setState({ ...state,
       [event.target.name]: event.target.checked
     });
-  }; // const handleChange = (event) => {
-  //   setValues({
-  //     ...values,
-  //     [event.target.name]: event.target.value
-  //   });
-  // };
-
+  };
 
   const styletabactive = {
     // display: params.ekit_alerte_btn ? "" : "none",
@@ -54068,6 +54019,12 @@ const SelectBox = props => {
   Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(props => {
     if (search) {
       tab[search.name] = search.value;
+
+      if (search.value === "") {
+        // je supprime la clé si checkbox a false enleve la valeur dans l'url
+        delete tab[search.name];
+      }
+
       setUrlConstruct(tab);
       setSelectedSort("");
       _constants_APIConfig__WEBPACK_IMPORTED_MODULE_4__["getItems"](fetchURL + new URLSearchParams(tab)).then(data => setSelectedSort(data));
@@ -54083,7 +54040,7 @@ const SelectBox = props => {
       }
 
       if (search.type == "checkbox") {
-        if (search.active) {
+        if (state[search.name]) {
           state[search.name] = false;
         } else {
           state[search.name] = true;
@@ -54092,10 +54049,13 @@ const SelectBox = props => {
     }
   }, [search, cars]);
 
+  function toggle() {
+    setIsOpened(wasOpened => !wasOpened);
+  }
+
   function filtre_facto(data, index) {
     if (data.type == "select") {
       let col = data.col + " mb-2";
-      console.log(index + data.name);
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
         class: col
       }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(react_select__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -54148,8 +54108,7 @@ const SelectBox = props => {
         margin: "dense",
         variant: "outlined",
         color: "secondary"
-      })) // <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-      ;
+      }));
     }
 
     if (data.type == "button") {
@@ -54177,33 +54136,33 @@ const SelectBox = props => {
     }
 
     if (data.type == "checkbox") {
-      let col = "btn mb-3 " + data.col;
-      let value;
-      let name = data.name; // todo a revoir xml
-      // if (state[name] && data.value) {
-      //   if (data.value[0]) {
-      //     value = data.value[0].value
-      //   }
-      // } else {
-      //   if (data.value[1]) {
-      //     value = data.value[1].value
-      //   }
-      // }
-      // todo revoir a genere un champs de type text pour les details technique 
+      let col = "mb-3 " + data.col; // todo util pour le multi select
 
       return data.value.map((data_value, index) => {
+        console.log(state[data_value.value]);
+        let value;
+
+        if (!state[data_value.value]) {
+          value = {
+            "name": data_value.value,
+            "value": 1,
+            type: 'checkbox'
+          };
+        } else {
+          value = {
+            "name": data_value.value,
+            "value": '',
+            type: 'checkbox'
+          };
+        }
+
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_material_ui_core_FormControlLabel__WEBPACK_IMPORTED_MODULE_11__["default"], {
+          class: col,
           control: Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_material_ui_core_Checkbox__WEBPACK_IMPORTED_MODULE_10__["default"], {
             style: {
               color: params.color
-            } // checked={state[name]}
-            ,
-            onClick: e => setSearch({
-              "name": data.name,
-              'active': true,
-              "value": data_value.value,
-              type: 'checkbox'
-            }),
+            },
+            onClick: e => setSearch(value),
             name: data_value.name
           }),
           label: data_value.label
@@ -54212,19 +54171,32 @@ const SelectBox = props => {
     }
   }
 
+  console.log(isOpened);
   let renderElement = params.type.map((data, index) => {
     if (!data.critere && !critere) {
       return filtre_facto(data, index);
     }
-  });
-  let renderElementCritere = params.type.map((data, index) => {
-    if (data.critere && critere) {
+
+    if (isOpened) {
       return filtre_facto(data, index);
     }
   });
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
     class: "row justify-content-center "
-  }, renderElement, renderElementCritere);
+  }, renderElement, params.ekit_critere_btn && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
+    class: "col-12"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
+    class: "row justify-content-center"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("a", {
+    type: "button",
+    onClick: toggle,
+    class: "btn ",
+    style: stylecriteres
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("i", {
+    "aria-hidden": "true",
+    style: style_invers,
+    className: isOpened ? "icon    icon-chevron-up" : "icon    icon-chevron-down"
+  }), isOpened ? " - de critéres" : " + de critéres"))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (SelectBox);

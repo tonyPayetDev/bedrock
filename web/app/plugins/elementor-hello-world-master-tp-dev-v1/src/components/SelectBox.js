@@ -59,8 +59,9 @@ const CssTextField = withStyles({
 })(TextField);
 
 const SelectBox = (props) => {
-  const { setSelectedSort, cars, params, setUrlConstruct, fetchURL, critere } = props;
+  const { setSelectedSort, cars, params, setUrlConstruct, fetchURL, critere, stylecriteres, style_invers } = props;
   const [search, setSearch] = useState("");
+  const [isOpened, setIsOpened] = useState(false);
 
   const [tab, setTab] = useState({});// # todo a recupérer en params
   const [active, setActive] = useState(false);// # todo a recupérer en params
@@ -72,12 +73,7 @@ const SelectBox = (props) => {
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
-  // const handleChange = (event) => {
-  //   setValues({
-  //     ...values,
-  //     [event.target.name]: event.target.value
-  //   });
-  // };
+
   const styletabactive = {
     // display: params.ekit_alerte_btn ? "" : "none",
     boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
@@ -100,6 +96,9 @@ const SelectBox = (props) => {
       if (search) {
 
         tab[search.name] = search.value;
+        if (search.value === "") {// je supprime la clé si checkbox a false enleve la valeur dans l'url
+          delete tab[search.name];
+        }
 
         setUrlConstruct(tab);
         setSelectedSort("");
@@ -115,27 +114,26 @@ const SelectBox = (props) => {
           });
         }
 
-
         if (search.type == "checkbox") {
 
-
-          if (search.active) {
+          if (state[search.name]) {
             state[search.name] = false;
           } else {
             state[search.name] = true;
           }
-
         }
       }
     },
     [search, cars]
   );
 
+  function toggle() {
+    setIsOpened(wasOpened => !wasOpened);
+  }
 
   function filtre_facto(data, index) {
     if (data.type == "select") {
       let col = data.col + " mb-2";
-      console.log(index + data.name);
       return (
         <div class={col}>
           <Select
@@ -185,7 +183,6 @@ const SelectBox = (props) => {
           />
         </div >
 
-        // <TextField id="outlined-basic" label="Outlined" variant="outlined" />
       );
     }
     if (data.type == "button") {
@@ -212,32 +209,24 @@ const SelectBox = (props) => {
     }
 
     if (data.type == "checkbox") {
-      let col = "btn mb-3 " + data.col;
-      let value;
-      let name = data.name;
-      // todo a revoir xml
-      // if (state[name] && data.value) {
-      //   if (data.value[0]) {
-      //     value = data.value[0].value
-      //   }
+      let col = "mb-3 " + data.col;
 
-      // } else {
-      //   if (data.value[1]) {
-      //     value = data.value[1].value
-      //   }
-      // }
-      // todo revoir a genere un champs de type text pour les details technique 
-
+      // todo util pour le multi select
       return data.value.map((data_value, index) => {
+        console.log(state[data_value.value]);
+        let value;
 
+        if (!state[data_value.value]) {
+          value = { "name": data_value.value, "value": 1, type: 'checkbox' };
+        } else {
+          value = { "name": data_value.value, "value": '', type: 'checkbox' };
 
+        }
         return (
-          <FormControlLabel
+          <FormControlLabel class={col}
             control={< Checkbox
               style={{ color: params.color }}
-
-              // checked={state[name]}
-              onClick={(e) => setSearch({ "name": data.name, 'active': true, "value": data_value.value, type: 'checkbox' })}
+              onClick={(e) => setSearch(value)}
               name={data_value.name} />}
             label={data_value.label}
           />
@@ -247,19 +236,17 @@ const SelectBox = (props) => {
     }
 
   }
+  console.log(isOpened);
   let renderElement = params.type.map((data, index) => {
-
     if (!data.critere && !critere) {
+
+      return filtre_facto(data, index);
+    }
+    if (isOpened) {
+
       return filtre_facto(data, index);
     }
 
-  });
-
-  let renderElementCritere = params.type.map((data, index) => {
-
-    if (data.critere && critere) {
-      return filtre_facto(data, index);
-    }
   });
 
   return (
@@ -267,9 +254,27 @@ const SelectBox = (props) => {
     <div class="row justify-content-center ">
 
       {renderElement}
-      {renderElementCritere}
 
-    </div>
+      {params.ekit_critere_btn && (
+        <div class="col-12">
+
+          <div class="row justify-content-center">
+
+            <a type="button" onClick={toggle} class="btn "
+              style={stylecriteres}>
+              <i aria-hidden="true"
+                style={style_invers} className={isOpened ? "icon    icon-chevron-up" : "icon    icon-chevron-down"} >
+
+              </i>
+              {isOpened ? " - de critéres" : " + de critéres"}
+
+            </a>
+          </div >
+        </div >
+      )
+      }
+
+    </div >
 
   );
 };

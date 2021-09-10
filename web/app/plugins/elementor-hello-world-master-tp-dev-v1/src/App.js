@@ -14,7 +14,6 @@ import { Animated } from "react-animated-css";
 import React, { useState, useEffect } from "react";
 import * as APIConfig from "./constants/APIConfig";
 import ReactLoading from "react-loading";
-import { decode as base64_decode, encode as base64_encode } from 'base-64';
 
 var page_id = APIConfig.url_const.searchParams.get("page_id");
 
@@ -85,17 +84,11 @@ const App = (props) => {
   const divStyle = {
     display: "none",
   };
-  const styledynamictext = {
-    display: params.ekit_dynamic_text ? "" : "none",
-    borderRadius: "20px 20px 20px 20px",
-    color: params.color ? params.color : "#ffffff",
 
-  };
   const [cars, setCars] = useState();
   const [selectedSort, setSelectedSort] = useState();
   const [url_construct, setUrlConstruct] = useState({ prestation_type: "", secteur: "" });
   const [hidecontent, setHideContent] = useState("");
-  const [isOpened, setIsOpened] = useState(false);
 
   useEffect((event) => {
     if (hidecontent == "carte") {
@@ -109,9 +102,7 @@ const App = (props) => {
     APIConfig.getItems(fetchURL + new URLSearchParams(tab)).then((data) => setSelectedSort(data));
 
   }, [hidecontent]);
-  function toggle() {
-    setIsOpened(wasOpened => !wasOpened);
-  }
+
 
   // affiche ou cache la maps
   let col = "col-" + params.col_heading_text;
@@ -148,61 +139,12 @@ const App = (props) => {
             state={state}
             params={params}
             fetchURL={fetchURL}
-
+            style_invers={style_invers}
+            stylecriteres={stylecriteres}
           ></SelectBox>
-
-
         </div>
 
       </div>
-
-      <div class="row  m-1">
-        <div class="col-6">
-          {params.ekit_critere_btn && (
-            <div class="row justify-content-end">
-
-              <a type="button" onClick={toggle} class="btn "
-                style={stylecriteres}><i aria-hidden="true"
-                  style={style_invers} class="icon icon-chevron-down"></i> + de criteres
-              </a>
-            </div >
-
-
-          )}
-
-        </div >
-        {/* <div class="col-6">
-          <div class="row justify-content-end">
-
-            <a type="button"
-              href={params.url + '?' + new URLSearchParams(url_construct)} class="btn "
-              style={stylealerte}><i aria-hidden="true" class="icon icon-alarm"></i> Créer une alerte
-            </a>
-          </div>
-
-        </div> */}
-      </div >
-
-      {isOpened && (
-        <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeIn" animationInDuration={500} animationOutDuration={1000} >
-
-          <div class={col} style={{ fontSize: params.fontSize }}>
-
-            <SelectBox
-              setSelectedSort={setSelectedSort}
-              setUrlConstruct={setUrlConstruct}
-              cars={cars}
-              state={state}
-              params={params}
-              fetchURL={fetchURL}
-              critere='yes'
-            ></SelectBox>
-
-
-          </div>
-        </Animated>
-
-      )}
 
       {params.ekit_resultat ?
         <NbResultat
