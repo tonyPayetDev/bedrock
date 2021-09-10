@@ -208,6 +208,19 @@ class Hello_World extends Widget_Base
             ]
         );
         $repeater->add_control(
+            'category_criteres',
+            [
+                'label'       => __('Critere', 'elementor'),
+
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+
+                'default'     => __('', 'elementor'),
+                'label_block' => true,
+            ]
+        );
+        $repeater->add_control(
             'type_element',
             [
                 'label' => esc_html__('Type element', 'elementskit-lite'),
@@ -216,7 +229,27 @@ class Hello_World extends Widget_Base
                 'options' => [
                     'select'  => esc_html__('Select', 'elementskit-lite'),
                     'button' => esc_html__('Button', 'elementskit-lite'),
+                    'text' => esc_html__('Input', 'elementskit-lite'),
+                    'checkbox' => esc_html__('Checkbox', 'elementskit-lite'),
+
                 ],
+            ]
+        );
+        $repeater->add_control(
+            'type_symbole',
+            [
+                'label' => esc_html__('Symbole', 'elementskit-lite'),
+                'type' => Controls_Manager::TEXT,
+                'label_block' => true,
+            ]
+        );
+        $repeater->add_control(
+            'category_col',
+            [
+                'label' => esc_html__('Nb column ', 'elementskit-lite'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'col-3',
+                'options' =>$col
             ]
         );
         $this->add_control(
@@ -228,7 +261,7 @@ class Hello_World extends Widget_Base
                 'title_field' => '{{{ category_title }}}',
             ]
         );
-    
+
         $this->end_controls_section();
     
         $this->start_controls_section(
@@ -283,7 +316,7 @@ class Hello_World extends Widget_Base
                 'label_block' => true,
             ]
         );
-            
+
         $this->add_control(
             'services',
             [
@@ -1052,6 +1085,17 @@ class Hello_World extends Widget_Base
             ]
         );
         $this->add_control(
+            'ekit_menu_active',
+            [
+                'label' => esc_html__('Affichage menu (carte galerie)', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+        $this->add_control(
             'ekit_menu_button_color_alerte',
             [
                 'label' => esc_html__('Color Alerte bouton', 'elementskit-lite'),
@@ -1229,12 +1273,12 @@ class Hello_World extends Widget_Base
             $tab_value=null;
             foreach ($settings['services'] as $service) {
                 if ($category['category_slug'] === $service['category_slug']) {
-                    $tab_value[]= array("value"=>$service['service_title'],"label"=>$service['service_label'],"ekit_tab_active"=>$service['service_active']);
+                    $tab_value[]= array("value"=>$service['service_title'],"label"=>$service['service_label'],"ekit_tab_active"=>$service['service_active'] );
                 }
             }
-            $tab[]= array('type'=>$category['type_element'],"name"=>$category['category_slug'] , "label"=>$category['category_title'], "value"=>$tab_value);
+            $tab[]= array('type'=>$category['type_element'],'symbole'=>$category['type_symbole'],  "name"=>$category['category_slug'] ,"col"=>$category['category_col']  ,"critere"=>$category['category_criteres'], "label"=>$category['category_title'], "value"=>$tab_value);
         }
-
+        
         foreach ($this->get_api() as $api) {
             $api_settings=$settings[$api.'fields'];
             if ($api_settings) {
@@ -1275,6 +1319,7 @@ class Hello_World extends Widget_Base
             'ekit_wb_3976_font' => $settings['ekit_wb_3976_font'],
             'ekit_menu_button_color_critere' => $settings['ekit_menu_button_color_critere'],
             'ekit_critere_btn' => $settings['ekit_critere_btn'],
+            'ekit_menu_active' => $settings['ekit_menu_active'],
             'ekit_menu_button_color_alerte' => $settings['ekit_menu_button_color_alerte'],
             'ekit_alerte_btn' => $settings['ekit_alerte_btn'],
             'ekit_wb_3976_icons' => $settings['ekit_wb_3976_icons'],

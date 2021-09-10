@@ -23,7 +23,7 @@ const Text = (props) => {
     }
   }
   return (
-    <span class={col} style={{ margin: "12px", fontSize: '28px', color: "#54595f" }}>
+    <span className={col} style={{ margin: "12px", fontSize: '28px', color: "#54595f" }}>
       {t}
     </span>
 

@@ -44,14 +44,19 @@ const App = (props) => {
   const style = {
     backgroundColor: params.color ? params.color : "#ffffff",
     display: params.ekit_search_btn ? "" : "none",
-    "border-radius": "4px",
+    borderRadius: "4px",
     color: "white",
+    fontSize: "15px"
+  };
+  const style_invers = {
+    backgroundColor: "white",
+    borderRadius: "4px",
+    color: params.color ? params.color : "#ffffff",
     fontSize: "15px"
   };
 
   const stylecriteres = {
-    display: params.ekit_alerte_btn ? "" : "none",
-    "border-radius": "20px 20px 20px 20px",
+    borderRadius: "20px 20px 20px 20px",
     color: !params.ekit_menu_button_color_alerte ? params.ekit_menu_button_color_alerte : "black",
 
   };
@@ -59,14 +64,14 @@ const App = (props) => {
   const stylealerte = {
     backgroundColor: params.ekit_menu_button_color_alerte ? params.ekit_menu_button_color_alerte : "#ffffff",
     display: params.ekit_alerte_btn ? "" : "none",
-    "border-radius": "20px 20px 20px 20px",
+    borderRadius: "20px 20px 20px 20px",
     color: "white",
 
 
   };
   const stylemenu = {
     display: params.ekit_alerte_btn ? "" : "none",
-    "border-radius": "20px 20px 20px 20px",
+    borderRadius: "20px 20px 20px 20px",
     color: params.ekit_menu_button_color_alerte ? params.ekit_menu_button_color_alerte : "#ffffff",
 
   };
@@ -82,7 +87,7 @@ const App = (props) => {
   };
   const styledynamictext = {
     display: params.ekit_dynamic_text ? "" : "none",
-    "border-radius": "20px 20px 20px 20px",
+    borderRadius: "20px 20px 20px 20px",
     color: params.color ? params.color : "#ffffff",
 
   };
@@ -90,6 +95,7 @@ const App = (props) => {
   const [selectedSort, setSelectedSort] = useState();
   const [url_construct, setUrlConstruct] = useState({ prestation_type: "", secteur: "" });
   const [hidecontent, setHideContent] = useState("");
+  const [isOpened, setIsOpened] = useState(false);
 
   useEffect((event) => {
     if (hidecontent == "carte") {
@@ -103,7 +109,9 @@ const App = (props) => {
     APIConfig.getItems(fetchURL + new URLSearchParams(tab)).then((data) => setSelectedSort(data));
 
   }, [hidecontent]);
-
+  function toggle() {
+    setIsOpened(wasOpened => !wasOpened);
+  }
 
   // affiche ou cache la maps
   let col = "col-" + params.col_heading_text;
@@ -115,18 +123,22 @@ const App = (props) => {
             data={selectedSort} text={url_construct} params={params} style={style}
           ></Text>
 
+          {params.ekit_menu_active && (
 
-          <div class={col} style={{ fontSize: params.fontSize }}>
-            <div class="row justify-content-end">
+            <div class={col} style={{ fontSize: params.fontSize }}>
+              <div class="row justify-content-end">
 
-              <a type="button" class="btn   " onClick={(e) => setHideContent('carte')} style={params.ekit_map_btn ? stylemenu : stylecriteres}>Carte </a>
-              <a type="button" class="btn  mr-2 " onClick={(e) => setHideContent('galerie')} style={params.ekit_map_btn ? stylecriteres : stylemenu}>Galerie </a>
+                <a type="button" class="btn   " onClick={(e) => setHideContent('carte')} style={params.ekit_map_btn ? stylemenu : stylecriteres}>Carte </a>
+                <a type="button" class="btn  mr-2 " onClick={(e) => setHideContent('galerie')} style={params.ekit_map_btn ? stylecriteres : stylemenu}>Galerie </a>
+              </div>
+
             </div>
+          )}
 
-          </div>
         </div>
-
       </h3 >
+
+
       <div class="row">
         <div class="col-12 ">
           <SelectBox
@@ -138,28 +150,60 @@ const App = (props) => {
             fetchURL={fetchURL}
 
           ></SelectBox>
+
+
         </div>
 
       </div>
 
       <div class="row  m-1">
         <div class="col-6">
-          <div class="row justify-content-end">
+          {params.ekit_critere_btn && (
+            <div class="row justify-content-end">
 
-            <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} class="btn " style={stylecriteres}><i aria-hidden="true" class="icon icon-chevron-down"></i> + de criteres
-            </a>
-          </div >
+              <a type="button" onClick={toggle} class="btn "
+                style={stylecriteres}><i aria-hidden="true"
+                  style={style_invers} class="icon icon-chevron-down"></i> + de criteres
+              </a>
+            </div >
+
+
+          )}
 
         </div >
-        <div class="col-6">
+        {/* <div class="col-6">
           <div class="row justify-content-end">
 
-            <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} class="btn " style={stylealerte}><i aria-hidden="true" class="icon icon-alarm"></i> Créer une alerte
+            <a type="button"
+              href={params.url + '?' + new URLSearchParams(url_construct)} class="btn "
+              style={stylealerte}><i aria-hidden="true" class="icon icon-alarm"></i> Créer une alerte
             </a>
           </div>
 
-        </div>
+        </div> */}
       </div >
+
+      {isOpened && (
+        <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeIn" animationInDuration={500} animationOutDuration={1000} >
+
+          <div class={col} style={{ fontSize: params.fontSize }}>
+
+            <SelectBox
+              setSelectedSort={setSelectedSort}
+              setUrlConstruct={setUrlConstruct}
+              cars={cars}
+              state={state}
+              params={params}
+              fetchURL={fetchURL}
+              critere='yes'
+            ></SelectBox>
+
+
+          </div>
+        </Animated>
+
+      )}
+
       {params.ekit_resultat ?
         <NbResultat
           data={selectedSort}
@@ -167,7 +211,7 @@ const App = (props) => {
 
       <div class="row">
 
-        <div class="col-12  justify-content-center ">
+        <div class="col-12  justify-content-center mt-2 ">
           <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={2000} animationOutDuration={2000} >
             <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} class="btn " style={style}> {params.search_text}
               <NbResultat paren
