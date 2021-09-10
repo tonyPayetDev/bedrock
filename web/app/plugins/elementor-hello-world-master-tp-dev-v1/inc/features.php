@@ -20,7 +20,24 @@ function custom_elementor_editor_after_save($post_ID, $editor_data)
    // exec(dirname(__DIR__).'\build.sh ', $output, $return_var);
 }
  
- //add the action
+add_action('koytcha_delete_annonce', 'delete_post');
+function delete_post()
+{
+    // supprimer tous les posts et meta todo mettre dans fonction
+    $biens = new WP_query(array('post_type' => 'biens' ,'posts_per_page'   => -1));
+    
+    foreach ($biens->posts as $key => $value) {
+        wp_delete_post($value->ID);
+        $meta = get_post_meta($value->ID);
+
+        foreach ($meta as $key => $value) {
+            var_dump($key);
+        
+            $bool =delete_post_meta($value->ID, $key, '');
+        }
+    }
+    return bool ;
+}
 add_action('koytcha_update_annonce', 'my_function');
 function my_function()
 {
@@ -205,24 +222,6 @@ function my_function()
 
             // $post = get_post($id_post);
             // wp_update_post($post);
-        }
-    }
-}
-add_action('koytcha_update_annonce_delete', 'delete_post');
-
-function delete_post()
-{
-    // supprimer tous les posts et meta todo mettre dans fonction
-    $biens = new WP_query(array('post_type' => 'biens' ,'posts_per_page'   => -1));
-    
-    foreach ($biens->posts as $key => $value) {
-        wp_delete_post($value->ID);
-        $meta = get_post_meta($value->ID);
-
-        foreach ($meta as $key => $value) {
-            var_dump($key);
-        
-            $bool =delete_post_meta($value->ID, $key, '');
         }
     }
 }
