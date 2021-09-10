@@ -122,7 +122,7 @@ function my_function()
             }
             
             foreach ($d as $meta => $value2) {
-                if ($meta!='photos' & $meta!='details_techniques') {
+                if ($meta!='photos' & $meta!='details_techniques' & $meta!='contact') {
                     $resultat = $wpdb->insert(
                         $wpdb->prefix . 'postmeta',
                         array(
@@ -140,15 +140,12 @@ function my_function()
                 }
             }
             
-            $tab_details_techniques				= explode(',', $d['details_techniques']);
-                                
-            $t									= array();
-            for ($j = 0; $j < count($tab_details_techniques); $j++) {
+            foreach ($d['contact'] as $meta => $contact) {
                 $resultat = $wpdb->insert(
                     $wpdb->prefix . 'postmeta',
                     array(
-                            'meta_key' =>str_replace(' ', '', $tab_details_techniques[$j]),// a mettre par la suite dans annonce
-                            'meta_value' =>1,
+                            'meta_key' => "contact_".$meta,// ajout meta contact
+                            'meta_value' =>$contact,
                             'post_id' =>$id_post,
                             
                         ),
@@ -158,6 +155,46 @@ function my_function()
                             '%s',
                         )
                 );
+            }
+            
+            $tab_details_techniques				= explode(',', $d['details_techniques']);
+                                
+            for ($j = 0; $j < count($tab_details_techniques); $j++) {
+                $value=str_replace(' ', '', $tab_details_techniques[$j]);
+                $value=explode(':', $value);
+                if ($value) {
+                    if ($value[1]) {
+                        $resultat = $wpdb->insert(
+                            $wpdb->prefix . 'postmeta',
+                            array(
+                                    'meta_key' =>$value[0],// certaine data avec  :
+                                    'meta_value' =>$value[1],
+                                    'post_id' =>$id_post,
+                                    
+                                ),
+                            array(
+                                    '%s',
+                                    '%s',
+                                    '%s',
+                                )
+                        );
+                    } else {
+                        $resultat = $wpdb->insert(
+                            $wpdb->prefix . 'postmeta',
+                            array(
+                                    'meta_key' => $value[0],// // certaine data sans  :
+                                    'meta_value' =>1,
+                                    'post_id' =>$id_post,
+                                    
+                                ),
+                            array(
+                                    '%s',
+                                    '%s',
+                                    '%s',
+                                )
+                        );
+                    }
+                }
             }
                 
             $resultat = $wpdb->insert(
