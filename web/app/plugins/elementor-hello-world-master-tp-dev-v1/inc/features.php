@@ -1,12 +1,4 @@
 <?php
-add_filter('query_vars', 'my_query_vars');
-function my_query_vars($query_vars)
-{
-    $query_vars[] = 'post';
-    return $query_vars;
-}
-
-//my_function();
 
 // Clé d'API (au début du fichier, important)
 define('CAPITAINE_GMAP_API_KEY', 'AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0');
@@ -32,7 +24,7 @@ function custom_elementor_editor_after_save($post_ID, $editor_data)
 add_action('koytcha_update_annonce', 'my_function');
 function my_function()
 {
-    delete_post();
+    //  delete_post();
 
     // recuperation des biens
     global $wpdb;
@@ -111,9 +103,9 @@ function my_function()
                     );
                 }
             }
-        
+            
             foreach ($d as $meta => $value2) {
-                if ($meta!='photos') {
+                if ($meta!='photos' & $meta!='details_techniques') {
                     $resultat = $wpdb->insert(
                         $wpdb->prefix . 'postmeta',
                         array(
@@ -130,13 +122,33 @@ function my_function()
                     );
                 }
             }
-
+            
+            $tab_details_techniques				= explode(',', $d['details_techniques']);
+                                
+            $t									= array();
+            for ($j = 0; $j < count($tab_details_techniques); $j++) {
+                $resultat = $wpdb->insert(
+                    $wpdb->prefix . 'postmeta',
+                    array(
+                            'meta_key' =>str_replace(' ', '', $tab_details_techniques[$j]),// a mettre par la suite dans annonce
+                            'meta_value' =>1,
+                            'post_id' =>$id_post,
+                            
+                        ),
+                    array(
+                            '%s',
+                            '%s',
+                            '%s',
+                        )
+                );
+            }
+                
             $resultat = $wpdb->insert(
                 $wpdb->prefix . 'postmeta',
                 array(
                         'meta_key' => '_wp_page_template',// a mettre par la suite dans annonce
                         'meta_value' =>'elementor_canvas',
-                        'post_id' => $id_post,
+                        'post_id' =>$id_post,
                         
                     ),
                 array(
@@ -150,7 +162,7 @@ function my_function()
                 array(
                         'meta_key' => '_elementor_template_type',
                         'meta_value' =>'wp-post',
-                        'post_id' => $id_post,
+                        'post_id' =>$id_post,
                         
                     ),
                 array(
@@ -165,7 +177,7 @@ function my_function()
                 array(
                         'meta_key' => '_elementor_edit_mode',
                         'meta_value' =>'builder',
-                        'post_id' => $id_post,
+                        'post_id' =>$id_post,
                         
                     ),
                 array(
@@ -191,11 +203,13 @@ function my_function()
                 
             wp_publish_post($id_post);
 
-            $post = get_post($id_post);
-            wp_update_post($post);
+            // $post = get_post($id_post);
+            // wp_update_post($post);
         }
     }
 }
+add_action('koytcha_update_annonce_delete', 'delete_post');
+
 function delete_post()
 {
     // supprimer tous les posts et meta todo mettre dans fonction

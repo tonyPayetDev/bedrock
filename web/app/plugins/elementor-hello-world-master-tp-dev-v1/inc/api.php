@@ -18,7 +18,7 @@ function name_select($type)
         $meta = get_post_meta($value->ID);
       
         foreach ($meta as $key => $value_meta) {
-            $tab[]=$key;
+            $tab[]=str_replace(' ', '', $key); // probléme d'espace dans le xml
         }
     }
           
@@ -142,17 +142,28 @@ function params(WP_REST_Request $request)
  * @param array $data Options for the function.
  * @return string|null Post title for the latest, * or null if none.
  */
+
+function title_filter($where, &$wp_query)
+{
+    global $wpdb;
+    // 2. pull the custom query in here:
+    if ($search_term = $wp_query->get('search_prod_title')) {
+        $where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'%' . esc_sql(like_escape($search_term)) . '%\'';
+    }
+    return $where;
+}
+
 function biens(WP_REST_Request $request)
 {
     $paged = ($request->get_param('paged')) ? $request->get_param('paged') : 1;
     $r=array();
     $type=$request->get_param('type');
-
     foreach (name_select($type) as $key => $name) {
         if ($request->get_param($name)) {
             $meta=     array(
-                'key' =>  $name,
-                'value' =>$request->get_param($name),
+                'key' =>  (string)$name,
+                'value' => (string)$request->get_param($name),
+
               );
             array_push($r, $meta);
         }
@@ -172,7 +183,7 @@ function biens(WP_REST_Request $request)
 
     foreach ($biens->posts as $key => $value) {
         $meta = get_post_meta($value->ID);
-       
+        $tab=[];
         foreach ($meta as $key => $value_meta) {
             $tab["id"]=$value->ID;
             $tab["post_name"]=$value->post_name;
@@ -184,14 +195,14 @@ function biens(WP_REST_Request $request)
         $tab_meta['data'][]=$tab;
     }
    
-
+ 
     $request_nb =  array(
         'post_type' => $type,
         'posts_per_page'   => -1 ,
         'meta_query' => $r,
   
       ) ;
-  
+
     $count_biens = new WP_query($request_nb);
 
     $tab_meta["count" ]=count($count_biens->posts);
