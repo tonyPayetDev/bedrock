@@ -53342,34 +53342,27 @@ const DetailAnnonce = props => {
     cardbody.right = "";
     cardbody.left = "-20px";
     card.left = "25px";
-  } //cardbody.borderStyle = "solid";
-
+  }
 
   if (name) {
     fieldsBtn = name.map((annonce, index) => {
       // change la couleur sur certaine condition  todo a voir si possible facoriser
       if (annonce.post.type === "condition") {
-        // console.log(annonce.post);
-        // console.log(annonce.value);
         let col = 'btn ' + annonce.post.col;
 
         if (annonce.post.condition === annonce.value) {
           styleContactPro.backgroundColor = annonce.post.color;
           styleContactPro.borderRadius = "12px";
-          cardbody.border = annonce.post.color; //  params.color = annonce.post.color;
-          // return (
-          //   <button type="button" style={annonce.post} class={col} style={styleBtnCondition} >
-          //     <i aria-hidden="true" class={annonce.post.icon.value}></i>
-          //   </button>
-          // );
+          cardbody.border = annonce.post.color;
         }
       } else if (annonce.post.type === "button") {
         let col = 'btn ' + annonce.post.col;
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
           type: "button",
           style: annonce.post,
           class: col,
-          style: styleContactPro
+          style: styleContactPro,
+          href: annonce.post.url + "?" + annonce.post.url_param + "=" + annonce.value
         }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("i", {
           "aria-hidden": "true",
           class: annonce.post.icon.value
@@ -53410,13 +53403,8 @@ const DetailAnnonce = props => {
       }
     });
     fieldsPhotos = name.map((annonce, index) => {
-      // if (annonce.post.type === "condition") {
-      //   console.log(annonce.post);
-      //   if (annonce.post.condition === annonce.value) {
-      //     styleImage.borderColor = annonce.post.color;
-      //   }
-      // }
       if (annonce.post.type === "photos") {
+        console.log(annonce.href);
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
           onMouseOver: MouseOverOpacity,
           onMouseOut: MouseOutOpacity,

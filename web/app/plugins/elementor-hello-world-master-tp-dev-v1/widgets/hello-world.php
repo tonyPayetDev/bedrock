@@ -85,7 +85,17 @@ class Hello_World extends Widget_Base
             $repeater3->add_control(
                 'field_url',
                 [
-                    'label' => esc_html__('Url ', 'elementskit-lite'),
+                    'label'       => __('Url', 'elementor'),
+                    'type'        => Controls_Manager::TEXT,
+                    'default'     => __("", 'elementor'),
+                    'label_block' => true,
+    
+                ]
+            );
+            $repeater3->add_control(
+                'field_url_param',
+                [
+                    'label' => esc_html__('Url param ', 'elementskit-lite'),
                     'type' => Controls_Manager::SELECT,
                     'default' => 'id',
                     'options' =>$this->get_key_post($opt_key),
@@ -1289,6 +1299,7 @@ class Hello_World extends Widget_Base
                     'col'=> $field['field_col'],
                     'type'=> $field['field_type'],
                     'url'=> $field['field_url'],
+                    'url_param'=> $field['field_url_param'],
                     'text'=> $field['field_text'],
                     'icon'=> $field['field_icon'],
                     'condition'=> $field['field_condition'],

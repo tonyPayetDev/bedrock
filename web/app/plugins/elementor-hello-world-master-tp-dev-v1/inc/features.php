@@ -1,5 +1,25 @@
 <?php
 
+
+add_action("wpcf7_before_send_mail", "kodex_wpcf7_before_send_mail");
+function kodex_wpcf7_before_send_mail($contact_form)
+{
+    // On récupère les propriétés du formulaire (réglages)
+    $current_mail_array = $contact_form->prop('mail');
+ 
+    // On récupère les données du formulaire posté
+    $submission = WPCF7_Submission::get_instance();
+    $posted_data = $submission->get_posted_data();
+    if ($posted_data['contact_email']) {
+        $current_mail_array['recipient'] = $posted_data['contact_email'];
+        error_log("email envoyé à ".$posted_data['contact_email']);
+    }
+    
+    // On réattribue les nouvelles propriétés au formulaire
+    $contact_form->set_properties(array('mail'=>$current_mail_array));
+}
+
+
 // Clé d'API (au début du fichier, important)
 define('CAPITAINE_GMAP_API_KEY', 'AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0');
 
