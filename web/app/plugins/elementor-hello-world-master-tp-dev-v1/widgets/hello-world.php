@@ -64,6 +64,7 @@ class Hello_World extends Widget_Base
                 'style_transfer' => true,
             ]
         );
+        $col[]="";
         for ($i = 1; $i <= 12; $i++) {
             $col['col-'.$i]=esc_html__($i, 'elementskit-lite');
         }
@@ -172,6 +173,17 @@ class Hello_World extends Widget_Base
                     'default'     => __("", 'elementor'),
                     'label_block' => true,
     
+                ]
+            );
+            $repeater3->add_responsive_control(
+                'field__margin',
+                [
+                    'label' => esc_html__('Margin', 'elementskit-lite'),
+                    'type' => Controls_Manager::DIMENSIONS,
+                    'size_units' => [ 'px', '%', 'em' ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ekit_menu_label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ]
                 ]
             );
             $this->add_control(
@@ -577,6 +589,17 @@ class Hello_World extends Widget_Base
             'ekit_wb_226_code',
             array(
                 'label' => esc_html__('Card', 'elementskit-lite'),
+                'type'  => Controls_Manager::CODE,
+                'show_label' => true,
+                'label_block' => true,
+                'language' => 'json',
+
+            )
+        );
+        $this->add_control(
+            'ekit_wb_227_code',
+            array(
+                'label' => esc_html__('Card image', 'elementskit-lite'),
                 'type'  => Controls_Manager::CODE,
                 'show_label' => true,
                 'label_block' => true,
@@ -1251,14 +1274,17 @@ class Hello_World extends Widget_Base
         $page_settings_model = $page_settings_manager->get_model(get_the_ID());
         $url =$page_settings_model->get_settings($opt_key);
                 
-        $response = wp_remote_get($url);
+        $response = wp_remote_get($url."&paged=4");//todo a voir pour optimiser la recuperation des champs
         $body     = wp_remote_retrieve_body($response);
         $body =json_decode($body);
         if ($body && $opt_key) {
             foreach ($body as $key => $value) {
                 if ($key=='data') {
-                    foreach ($value['1'] as $key3 => $value3) {
-                        $tab_key_post[$key3 ]=  esc_html__($key3, 'elementskit-lite');
+                    foreach ($value as $key2 => $value2) {
+                        foreach ($value2 as $key3 => $value3) {
+                            $tab_key_post[$key3 ]=  esc_html__($key3, 'elementskit-lite');
+                            $tab_key_post["Nombre"]=  esc_html__($key3, 'elementskit-lite');
+                        }
                     }
                 }
             }
@@ -1303,7 +1329,10 @@ class Hello_World extends Widget_Base
                     'text'=> $field['field_text'],
                     'icon'=> $field['field_icon'],
                     'condition'=> $field['field_condition'],
-
+                    // 'margin'=>"0px 0px  30px 0px",
+                    'margin'=>$field['field__margin']['top'].$field['field__margin']["unit"].' '.$field['field__margin']['right'].$field['field__margin']["unit"].' '.$field['field__margin']['bottom'].$field['field__margin']["unit"].' '.$field['field__margin']['left'].$field['field__margin']["unit"],
+                        
+                    
                 );
                 }
             }
@@ -1316,8 +1345,11 @@ class Hello_World extends Widget_Base
            'type'=>$tab,
            'post'=>$post,
            'ekit_resultat'=> $settings['ekit_resultat'],
+           
            'cardbody'=> $settings['ekit_wb_225_code'],
            'card'=> $settings['ekit_wb_226_code'],
+           'cardimage'=> $settings['ekit_wb_227_code'],
+
            'ekit_search_btn' =>  $settings['ekit_search_btn'],
            'search_text' =>  $settings['search_text'],
            'heading_text' =>  $settings['heading_text'],

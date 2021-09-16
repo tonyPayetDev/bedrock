@@ -34,8 +34,9 @@ const App = (props) => {
   const fetchURL = `${params.API_URI}&`;
 
   params.type.map((data, index) => {
+    console.log(data.name);
     var secteur = APIConfig.url_const.searchParams.get(data.name);
-    if (secteur) { // on récuper si l'info et présente
+    if (secteur) { // on récupére si fais partie des filtres elementor
       tab[data.name] = secteur;
     }
   });
@@ -85,9 +86,10 @@ const App = (props) => {
     display: "none",
   };
 
+  //  todo cars a renormer en data
   const [cars, setCars] = useState();
   const [selectedSort, setSelectedSort] = useState();
-  const [url_construct, setUrlConstruct] = useState({ prestation_type: "", secteur: "" });
+  const [url_construct, setUrlConstruct] = useState({ prestation_type: "", secteur: "", pro_res: "" });
   const [hidecontent, setHideContent] = useState("");
 
   useEffect((event) => {
@@ -153,7 +155,7 @@ const App = (props) => {
 
       <div class="row">
 
-        <div class="col-12  justify-content-center mt-2 ">
+        <div class="col-12  justify-content-center mt-3 ">
           <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={2000} animationOutDuration={2000} >
             <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} class="btn " style={style}> {params.search_text}
               <NbResultat paren

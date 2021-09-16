@@ -133,7 +133,7 @@ const SelectBox = (props) => {
 
   function filtre_facto(data, index) {
     if (data.type == "select") {
-      let col = data.col + " mb-2";
+      let col = data.col + " mt-1";
       return (
         <div class={col}>
           <Select
@@ -159,10 +159,11 @@ const SelectBox = (props) => {
       );
     }
     if (data.type == "text") {
+      let col = data.col + " mt-1";
 
       return (
 
-        <div class={data.col}>
+        <div class={col}>
           <CssTextField
             style={{ marginTop: "0px", zIndex: 0, background: "white", color: params.color }}
 

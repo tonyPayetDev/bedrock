@@ -1,22 +1,9 @@
 import React from "react";
 import Icon from "../images/flags.png";
-import * as APIConfig from "../constants/APIConfig";
 import { Animated } from "react-animated-css";
 import ParticlesBg from 'particles-bg'
-import injectSheet from 'react-jss';
 
-let test = {
-  "margin": "10px  10px 10px 10px  ",
-  "background": "#FAFAFA",
-  "border": " 1px solid #ddd",
-  "padding": "0px",
-  "width": "105%",
-  "height": "60%",
-  "borderColor": "#EA1096DE",
-  "borderWidth": "0px 0px 3px 0px ",
-  "borderRadius": "0px 0px 0px 14px",
-  "boxShadow": " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-}
+
 let cpt = 0;
 
 const DetailAnnonce = (props) => {
@@ -33,8 +20,6 @@ const DetailAnnonce = (props) => {
     lineHeight: " 1.33",
     padding: "0px 7px",
     margin: "0px 25px 25px"
-
-
   };
   const styleText = {
     color: params.color ? params.color : "#ffffff",
@@ -90,18 +75,7 @@ const DetailAnnonce = (props) => {
     borderRadius: "0px 0px 0px 14px",
     boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
   };
-  const styleImage = {
-    width: "108%",
-    height: "80%",
-    boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-    opacity: 1,
-    color: "red",
-    filter: "saturate(1)",
-    backgroundSize: "cover",
-    backgroundPosition: "center center",
-    "borderRadius": "0px 0px 0px 14px",
-    backgroundRepeat: "no-repeat"
-  };
+
   function MouseOver(event) {
     if (event.target.type) {
       event.target.style.color = styleContactPro.backgroundColor;
@@ -129,29 +103,42 @@ const DetailAnnonce = (props) => {
   function MouseOverOpacity(event) {
 
     event.target.style.filter = " saturate(2)";
-
-
     event.target.style.transform = "translateY(-2%) scale(1)";
     event.target.style.transitionTimingFunction = 'cubic-bezier(0.4, 0, 1, 1)';
-    event.target.style.transitionDuration = '500ms',
-      event.target.style.objectFit = 'cover'
-
+    event.target.style.transitionDuration = '500ms'
 
   }
   function MouseOutOpacity(event) {
     event.target.style.filter = "saturate(1)";
     event.target.style.transform = "translateY(0%) scale(1)";
-
-    event.target.style.transitionDuration = '500ms',
-      event.target.style.objectFit = 'cover'
+    event.target.style.transitionDuration = '500ms'
 
   }
+
   let fieldsAnnonce;
   let fieldsBtn;
   let fieldsPhotos;
   let card;
   let cardbody;
+  let styleImage;
 
+  if (params.cardimage) {
+    styleImage = JSON.parse(params.cardimage);
+  } else {
+    styleImage = {
+      width: "300px",
+      height: "200px",
+      boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+      opacity: 1,
+      color: "red",
+      filter: "saturate(1)",
+      backgroundSize: "cover",
+      backgroundPosition: "center center",
+      borderRadius: "1px",
+      backgroundRepeat: "no-repeat",
+      objectFit: 'cover'
+    };
+  }
   if (params.cardbody) {
     cardbody = JSON.parse(params.cardbody);
   } else {
@@ -170,13 +157,14 @@ const DetailAnnonce = (props) => {
     card = JSON.parse(params.card);
   } else {
     card = {
-      margin: "10px  10px 10px 10px  ",
+      marginLeft: "0px",
+      marginTop: "3px",
       background: "#FAFAFA",
       border: " 1px solid #ddd",
       borderRadius: "4px",
       padding: "10px",
-      width: "105%",
-      height: "60%",
+      width: "100%",
+      height: "50%",
       borderColor: params.color,
       borderWidth: "0px 0px 3px 0px ",
       borderRadius: "0px 0px 0px 14px",
@@ -187,15 +175,19 @@ const DetailAnnonce = (props) => {
   if (cpt > 1) {
     cpt = 0;
   }
+
   if (cpt === 0) {
     cardbody.right = "-20px";
     cardbody.left = "";
     card.left = "5px";
+    card.borderRadius = "0px 0px 14px 0px ";
+
 
   } else {
     cardbody.right = "";
     cardbody.left = "-20px";
     card.left = "25px";
+    card.borderRadius = "0px 0px 0px 14px ";
 
   }
 
@@ -218,7 +210,6 @@ const DetailAnnonce = (props) => {
       else if (annonce.post.type === "button") {
         let col = 'btn ' + annonce.post.col;
 
-
         return (
           <a type="button" style={annonce.post} class={col} style={styleContactPro} href={annonce.post.url + "?" + annonce.post.url_param + "=" + annonce.value} >
             <i aria-hidden="true" class={annonce.post.icon.value}></i>  {annonce.post.text}
@@ -231,7 +222,6 @@ const DetailAnnonce = (props) => {
       if (annonce.post.type === "condition" & annonce.post.type !== "button") {
         let col = annonce.post.col;
 
-        console.log(col);
         if (annonce.post.condition === annonce.value) {
 
           styleCondition.color = annonce.post.color;
@@ -244,14 +234,24 @@ const DetailAnnonce = (props) => {
         }
       }
 
-      if (annonce.post.type === "text") {
-        let col = ' ' + annonce.post.col;
+      if (annonce.post.type === "text" && annonce.value) {
+        if (annonce.post.col != 0) {
+          let col = ' ' + annonce.post.col;
+          return (
+            <div style={annonce.post} class={col}>
+              <p class="card-text"> <i aria-hidden="true" class={annonce.post.icon.value}></i> {annonce.value}{annonce.post.text} </p>
+            </div>
+          );
+        } {
+          console.log(annonce);
 
-        return (
-          <div style={annonce.post} class={col}>
-            <p class="card-text"> <i aria-hidden="true" class={annonce.post.icon.value}></i> {annonce.value}{annonce.post.text} </p>
-          </div>
-        );
+          return (
+            <p style={annonce.post}  >{" " + annonce.value}{annonce.post.text} </p>
+
+          );
+        }
+
+
       }
 
 
@@ -283,7 +283,8 @@ const DetailAnnonce = (props) => {
       <div>
         <div class='col-6' style={card} class="card"  >
           {fieldsPhotos}
-          <div class="card-body" type="button" onMouseOver={MouseOver} onMouseOut={MouseOut} style={cardbody} >
+          {/* todo pour plustard rajouer mouse over qui marche sur programmes et biens //onMouseOver={MouseOver} onMouseOut={MouseOut}  */}
+          <div class="card-body" type="button" style={cardbody} >
             <div class="row">
               {fieldsAnnonce}
             </div>
@@ -296,8 +297,6 @@ const DetailAnnonce = (props) => {
         </div>
       </div>
     </div >
-
-
 
   );
 };
