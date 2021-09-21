@@ -30,6 +30,7 @@ const ListeAnnonce = ({
     activeMarker: {}, // Shows the active marker upon click
     selectedPlace: { marque: "", motorisation: "", model: "" },
   });
+  let [cpt, setCpt] = React.useState(0);
 
   const onMarkerClick = (props, marker, e) =>
     setState({
@@ -46,19 +47,13 @@ const ListeAnnonce = ({
       });
     }
   };
+
   if (cars) {
-    console.log(cars['count']);
     if (cars['count'] != 0) {
       renderAnnonce = cars['data'].map((annonce, index) => {
         if (annonce) {
-          // check si il apparait dans les params
-          annonce = params.post.map((post, index2) => {
-            if (post.field) {
-              return annonce = { "value": cars['data'][index][post.field], 'post': post, 'href': cars['data'][index][post.url] };
-            }
-          });
           return (
-            < DetailAnnonce name={annonce} params={params} > </DetailAnnonce>
+            < DetailAnnonce name={annonce} params={params} index={index}  > </DetailAnnonce>
           );
         }
       });
