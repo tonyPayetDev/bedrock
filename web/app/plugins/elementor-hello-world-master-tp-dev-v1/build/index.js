@@ -51011,11 +51011,10 @@ const DetailAnnonce = props => {
       let row = Object.values(value).map((annonce, index) => {
         let value = name[annonce.field];
         let url = name[annonce.url];
-        console.log(annonce.col);
+        console.log(annonce);
+        let col = annonce.col;
 
         if (annonce.type === "condition" & annonce.type !== "button") {
-          let col = annonce.col;
-
           if (annonce.condition === value) {
             styleCondition.color = annonce.color;
             return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
@@ -51032,10 +51031,9 @@ const DetailAnnonce = props => {
         }
 
         if (annonce.type === "text" && value) {
-          let class_concat = annonce.col;
           return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
             style: annonce,
-            class: class_concat
+            class: col
           }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("i", {
             "aria-hidden": "true",
             class: annonce.icon.value

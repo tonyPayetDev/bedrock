@@ -191,9 +191,10 @@ const DetailAnnonce = (props) => {
       let row = Object.values(value).map((annonce, index) => {
         let value = name[annonce.field];
         let url = name[annonce.url];
-        console.log(annonce.col);
+        console.log(annonce);
+        let col = annonce.col;
+
         if (annonce.type === "condition" & annonce.type !== "button") {
-          let col = annonce.col;
 
           if (annonce.condition === value) {
 
@@ -207,8 +208,7 @@ const DetailAnnonce = (props) => {
           }
         }
         if (annonce.type === "text" && value) {
-          let class_concat = annonce.col;
-          return <div style={annonce} class={class_concat} >
+          return <div style={annonce} class={col} >
             <i aria-hidden="true" class={annonce.icon.value}></i> {value}{annonce.text}
           </div >;
         }
