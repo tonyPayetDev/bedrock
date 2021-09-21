@@ -50628,6 +50628,7 @@ const App = props => {
 
   const [params, setParams] = Object(react__WEBPACK_IMPORTED_MODULE_9__["useState"])(_constants_APIConfig__WEBPACK_IMPORTED_MODULE_10__["param"](id)[0]);
   const fetchURL = `${params.API_URI}&`;
+  console.log(params);
   params.type.map((data, index) => {
     console.log(data.name);
     var secteur = _constants_APIConfig__WEBPACK_IMPORTED_MODULE_10__["url_const"].searchParams.get(data.name);
@@ -50774,7 +50775,7 @@ const App = props => {
   })), params.visible ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "row"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: params.ekit_map_btn ? 'col-6' : 'col-12'
+    class: params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12' : 'col-lg-12 col-md-12 col-xs-12'
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_animated_css__WEBPACK_IMPORTED_MODULE_8__["Animated"], {
     isVisible: true,
     animationIn: "fadeIn",
@@ -50829,13 +50830,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let cpt = 0;
 
 const DetailAnnonce = props => {
   const {
     name,
     params,
-    classes
+    classes,
+    index
   } = props;
   const style = {
     backgroundColor: params.color ? params.color : "#ffffff",
@@ -50990,15 +50991,10 @@ const DetailAnnonce = props => {
       borderRadius: "0px 0px 0px 14px",
       boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
     };
-  }
+  } // modulo de l'index pour avoir 1 ou 0 // even odd 
 
-  cpt = cpt + 1;
 
-  if (cpt > 1) {
-    cpt = 0;
-  }
-
-  if (cpt === 0) {
+  if (index % 2 === 1) {
     cardbody.right = "-20px";
     cardbody.left = "";
     card.left = "5px";
@@ -51011,102 +51007,110 @@ const DetailAnnonce = props => {
   }
 
   if (name) {
-    fieldsBtn = name.map((annonce, index) => {
-      // change la couleur sur certaine condition  todo a voir si possible facoriser
-      if (annonce.post.type === "condition") {
-        let col = 'btn ' + annonce.post.col;
+    fieldsAnnonce = Object.values(params.post).map(value => {
+      let row = Object.values(value).map((annonce, index) => {
+        let value = name[annonce.field];
+        let url = name[annonce.url];
+        console.log(annonce.col);
 
-        if (annonce.post.condition === annonce.value) {
-          styleContactPro.backgroundColor = annonce.post.color;
-          styleContactPro.borderRadius = "12px";
-          cardbody.border = annonce.post.color;
+        if (annonce.type === "condition" & annonce.type !== "button") {
+          let col = annonce.col;
+
+          if (annonce.condition === value) {
+            styleCondition.color = annonce.color;
+            return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+              style: annonce,
+              class: col,
+              style: styleCondition
+            }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", {
+              class: "card-text"
+            }, " ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("i", {
+              "aria-hidden": "true",
+              class: annonce.icon.value
+            }), " ", annonce.text, " "));
+          }
         }
-      } else if (annonce.post.type === "button") {
-        let col = 'btn ' + annonce.post.col;
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
-          type: "button",
-          style: annonce.post,
-          class: col,
-          style: styleContactPro,
-          href: annonce.post.url + "?" + annonce.post.url_param + "=" + annonce.value
-        }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("i", {
-          "aria-hidden": "true",
-          class: annonce.post.icon.value
-        }), "  ", annonce.post.text);
-      }
-    });
-    fieldsAnnonce = name.map((annonce, index) => {
-      if (annonce.post.type === "condition" & annonce.post.type !== "button") {
-        let col = annonce.post.col;
 
-        if (annonce.post.condition === annonce.value) {
-          styleCondition.color = annonce.post.color;
+        if (annonce.type === "text" && value) {
+          let class_concat = annonce.col;
           return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+            style: annonce,
+            class: class_concat
+          }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("i", {
+            "aria-hidden": "true",
+            class: annonce.icon.value
+          }), " ", value, annonce.text);
+        }
+      });
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+        class: "row"
+      }, row, " ");
+    });
+    fieldsPhotos = Object.values(params.post).map(value => {
+      let row = Object.values(value).map((annonce, index) => {
+        let value = name[annonce.field];
+        let url = name[annonce.url];
+
+        if (annonce.type === "photos") {
+          return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
+            onMouseOver: MouseOverOpacity,
+            onMouseOut: MouseOutOpacity,
+            href: params.URL_POST + url
+          }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
+            style: styleImage,
+            class: "card-img-top",
+            src: value,
+            alt: "Logo",
+            alt: "Card image cap"
+          }));
+        }
+      });
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+        class: ""
+      }, row, " ");
+    });
+    fieldsBtn = Object.values(params.post).map(value => {
+      let row = Object.values(value).map((annonce, index) => {
+        let value = name[annonce.field];
+        let url = name[annonce.url];
+        let col = 'btn ' + annonce.col;
+
+        if (annonce.type === "condition") {
+          if (annonce.condition === value) {
+            styleContactPro.backgroundColor = annonce.color;
+            styleContactPro.borderRadius = "12px";
+            cardbody.border = annonce.color;
+          }
+        } else if (annonce.type === "button") {
+          return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
+            type: "button",
             style: annonce.post,
             class: col,
-            style: styleCondition
-          }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", {
-            class: "card-text"
-          }, " ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("i", {
+            style: styleContactPro,
+            href: annonce.url + "?" + annonce.url_param + "=" + value
+          }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("i", {
             "aria-hidden": "true",
-            class: annonce.post.icon.value
-          }), " ", annonce.post.text, " "));
+            class: annonce.icon.value
+          }), "  ", annonce.text);
         }
-      }
-
-      if (annonce.post.type === "text" && annonce.value) {
-        if (annonce.post.col != 0) {
-          let col = ' ' + annonce.post.col;
-          return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-            style: annonce.post,
-            class: col
-          }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", {
-            class: "card-text"
-          }, " ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("i", {
-            "aria-hidden": "true",
-            class: annonce.post.icon.value
-          }), " ", annonce.value, annonce.post.text, " "));
-        }
-
-        {
-          console.log(annonce);
-          return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", {
-            style: annonce.post
-          }, " " + annonce.value, annonce.post.text, " ");
-        }
-      }
-    });
-    fieldsPhotos = name.map((annonce, index) => {
-      if (annonce.post.type === "photos") {
-        console.log(annonce.href);
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
-          onMouseOver: MouseOverOpacity,
-          onMouseOut: MouseOutOpacity,
-          href: params.URL_POST + annonce.href
-        }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
-          style: styleImage,
-          class: "card-img-top",
-          src: annonce.value,
-          alt: "Logo",
-          alt: "Card image cap"
-        }));
-      }
+      });
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+        class: ""
+      }, row, " ");
     });
   }
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: params.ekit_map_btn ? 'col-6' : params.col_post
+    class: params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12' : params.col_post
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "col-6",
+    class: "col-lg-6 col-md-12 col-xs-12",
     style: card,
     class: "card"
   }, fieldsPhotos, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "card-body",
     type: "button",
     style: cardbody
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "row"
-  }, fieldsAnnonce), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+  }, fieldsAnnonce, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "btn-group row"
   }, fieldsBtn)))));
 };
@@ -51351,6 +51355,7 @@ const ListeAnnonce = ({
       model: ""
     }
   });
+  let [cpt, setCpt] = react__WEBPACK_IMPORTED_MODULE_1___default.a.useState(0);
 
   const onMarkerClick = (props, marker, e) => setState({
     selectedPlace: props,
@@ -51369,24 +51374,13 @@ const ListeAnnonce = ({
   };
 
   if (cars) {
-    console.log(cars['count']);
-
     if (cars['count'] != 0) {
       renderAnnonce = cars['data'].map((annonce, index) => {
         if (annonce) {
-          // check si il apparait dans les params
-          annonce = params.post.map((post, index2) => {
-            if (post.field) {
-              return annonce = {
-                "value": cars['data'][index][post.field],
-                'post': post,
-                'href': cars['data'][index][post.url]
-              };
-            }
-          });
           return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_DetailAnnonce_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
             name: annonce,
-            params: params
+            params: params,
+            index: index
           }, " ");
         }
       });

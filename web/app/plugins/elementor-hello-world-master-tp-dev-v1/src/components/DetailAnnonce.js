@@ -4,10 +4,9 @@ import { Animated } from "react-animated-css";
 import ParticlesBg from 'particles-bg'
 
 
-let cpt = 0;
 
 const DetailAnnonce = (props) => {
-  const { name, params, classes } = props;
+  const { name, params, classes, index } = props;
 
   const style = {
     backgroundColor: params.color ? params.color : "#ffffff",
@@ -171,12 +170,8 @@ const DetailAnnonce = (props) => {
       boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
     }
   }
-  cpt = cpt + 1;
-  if (cpt > 1) {
-    cpt = 0;
-  }
-
-  if (cpt === 0) {
+  // modulo de l'index pour avoir 1 ou 0 // even odd 
+  if (index % 2 === 1) {
     cardbody.right = "-20px";
     cardbody.left = "";
     card.left = "5px";
@@ -190,104 +185,98 @@ const DetailAnnonce = (props) => {
     card.borderRadius = "0px 0px 0px 14px ";
 
   }
-
   if (name) {
 
-    fieldsBtn = name.map((annonce, index) => {
-      // change la couleur sur certaine condition  todo a voir si possible facoriser
-      if (annonce.post.type === "condition") {
+    fieldsAnnonce = Object.values(params.post).map(value => {
+      let row = Object.values(value).map((annonce, index) => {
+        let value = name[annonce.field];
+        let url = name[annonce.url];
+        console.log(annonce.col);
+        if (annonce.type === "condition" & annonce.type !== "button") {
+          let col = annonce.col;
 
-        let col = 'btn ' + annonce.post.col;
+          if (annonce.condition === value) {
 
-        if (annonce.post.condition === annonce.value) {
-          styleContactPro.backgroundColor = annonce.post.color;
-          styleContactPro.borderRadius = "12px";
-          cardbody.border = annonce.post.color;
+            styleCondition.color = annonce.color;
+            return (
 
+              <div style={annonce} class={col} style={styleCondition}  >
+                <p class="card-text"> <i aria-hidden="true" class={annonce.icon.value}></i> {annonce.text} </p>
+              </div>
+            );
+          }
         }
-      }
+        if (annonce.type === "text" && value) {
+          let class_concat = annonce.col;
+          return <div style={annonce} class={class_concat} >
+            <i aria-hidden="true" class={annonce.icon.value}></i> {value}{annonce.text}
+          </div >;
+        }
+      });
+      return <div class="row">{row} </div>;
 
-      else if (annonce.post.type === "button") {
-        let col = 'btn ' + annonce.post.col;
-
-        return (
-          <a type="button" style={annonce.post} class={col} style={styleContactPro} href={annonce.post.url + "?" + annonce.post.url_param + "=" + annonce.value} >
-            <i aria-hidden="true" class={annonce.post.icon.value}></i>  {annonce.post.text}
-          </a>
-
-        );
-      }
     });
-    fieldsAnnonce = name.map((annonce, index) => {
-      if (annonce.post.type === "condition" & annonce.post.type !== "button") {
-        let col = annonce.post.col;
 
-        if (annonce.post.condition === annonce.value) {
-
-          styleCondition.color = annonce.post.color;
-          return (
-
-            <div style={annonce.post} class={col} style={styleCondition}  >
-              <p class="card-text"> <i aria-hidden="true" class={annonce.post.icon.value}></i> {annonce.post.text} </p>
-            </div>
-          );
-        }
-      }
-
-      if (annonce.post.type === "text" && annonce.value) {
-        if (annonce.post.col != 0) {
-          let col = ' ' + annonce.post.col;
-          return (
-            <div style={annonce.post} class={col}>
-              <p class="card-text"> <i aria-hidden="true" class={annonce.post.icon.value}></i> {annonce.value}{annonce.post.text} </p>
-            </div>
-          );
-        } {
-          console.log(annonce);
+    fieldsPhotos = Object.values(params.post).map(value => {
+      let row = Object.values(value).map((annonce, index) => {
+        let value = name[annonce.field];
+        let url = name[annonce.url];
+        if (annonce.type === "photos") {
 
           return (
-            <p style={annonce.post}  >{" " + annonce.value}{annonce.post.text} </p>
+            <a onMouseOver={MouseOverOpacity} onMouseOut={MouseOutOpacity} href={params.URL_POST + url}>
+              <img
+                style={styleImage}
+                class="card-img-top"
+                src={value}
+                alt="Logo" alt="Card image cap"  ></img>
+            </a>
 
           );
         }
-
-
-      }
-
-
-
-    });
-    fieldsPhotos = name.map((annonce, index) => {
-
-      if (annonce.post.type === "photos") {
-        console.log(annonce.href);
-        return (
-          <a onMouseOver={MouseOverOpacity} onMouseOut={MouseOutOpacity} href={params.URL_POST + annonce.href}>
-            <img
-              style={styleImage}
-              class="card-img-top"
-              src={annonce.value}
-              alt="Logo" alt="Card image cap"  ></img>
-          </a>
-
-        );
-      }
+      });
+      return <div class="">{row} </div>;
     });
 
+    fieldsBtn = Object.values(params.post).map(value => {
+      let row = Object.values(value).map((annonce, index) => {
+        let value = name[annonce.field];
+        let url = name[annonce.url];
+        let col = 'btn ' + annonce.col;
 
+        if (annonce.type === "condition") {
+
+          if (annonce.condition === value) {
+            styleContactPro.backgroundColor = annonce.color;
+            styleContactPro.borderRadius = "12px";
+            cardbody.border = annonce.color;
+          }
+        }
+
+        else if (annonce.type === "button") {
+
+          return (
+            <a type="button" style={annonce.post} class={col} style={styleContactPro} href={annonce.url + "?" + annonce.url_param + "=" + value} >
+              <i aria-hidden="true" class={annonce.icon.value}></i>  {annonce.text}
+            </a>
+
+          );
+        }
+      });
+      return <div class="">{row} </div>;
+    });
   }
 
 
   return (
-    <div class={params.ekit_map_btn ? 'col-6' : params.col_post}  >
+    <div class={params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12' : params.col_post}  >
       <div>
-        <div class='col-6' style={card} class="card"  >
+        <div class='col-lg-6 col-md-12 col-xs-12' style={card} class="card"  >
           {fieldsPhotos}
           {/* todo pour plustard rajouer mouse over qui marche sur programmes et biens //onMouseOver={MouseOver} onMouseOut={MouseOut}  */}
           <div class="card-body" type="button" style={cardbody} >
-            <div class="row">
-              {fieldsAnnonce}
-            </div>
+            {fieldsAnnonce}
+
             <div class="btn-group row">
               {/* <button type="button" onMouseOver={MouseOver} onMouseOut={MouseOut} href="#" class="stretched-link btn  mr-3" style={styleContactPro} > <i aria-hidden="true" class="far fa-envelope"></i> contactez un pro</button>
         <button type="button" onMouseOver={MouseOverHeart} onMouseOut={MouseOutHeart} className={"stretched-link btn " + params.ekit_wb_3976_icons.value} style={style} ></button> */}

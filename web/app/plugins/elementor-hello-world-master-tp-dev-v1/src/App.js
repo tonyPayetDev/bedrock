@@ -32,6 +32,7 @@ const App = (props) => {
   const [tab, setTab] = useState({});// # stock les filtre d'apres les type récupérer 
   const [params, setParams] = useState(APIConfig.param(id)[0]);
   const fetchURL = `${params.API_URI}&`;
+  console.log(params);
 
   params.type.map((data, index) => {
     console.log(data.name);
@@ -40,7 +41,6 @@ const App = (props) => {
       tab[data.name] = secteur;
     }
   });
-
   const style = {
     backgroundColor: params.color ? params.color : "#ffffff",
     display: params.ekit_search_btn ? "" : "none",
@@ -179,7 +179,7 @@ const App = (props) => {
 
       {params.visible ?
         <div class="row">
-          <div class={params.ekit_map_btn ? 'col-6' : 'col-12'} >
+          <div class={params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12' : 'col-lg-12 col-md-12 col-xs-12'} >
             <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >
               < ListeAnnonce
                 params={params}

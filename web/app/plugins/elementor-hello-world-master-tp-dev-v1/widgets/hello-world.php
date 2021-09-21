@@ -64,11 +64,17 @@ class Hello_World extends Widget_Base
                 'style_transfer' => true,
             ]
         );
-        $col[]="";
+        $col[0]=" ";
         for ($i = 1; $i <= 12; $i++) {
             $col['col-'.$i]=esc_html__($i, 'elementskit-lite');
         }
-        
+        $float=[
+            " "=>esc_html__(" ", 'elementskit-lite'),
+            "margin-left"=>esc_html__("margin-left", 'elementskit-lite'),
+            "margin-right"=>esc_html__("margin-right", 'elementskit-lite')
+            // "margin-center"=>esc_html__("auto", 'elementskit-lite')
+
+        ];
         foreach ($opt as $opt_key => $value) {
             $repeater3 = new Repeater();
 
@@ -83,6 +89,27 @@ class Hello_World extends Widget_Base
 
                 ]
             );
+            $repeater3->add_control(
+                'field_row',
+                [
+                    'label'       => __('Row', 'elementor'),
+                    'type'        => Controls_Manager::TEXT,
+                    'default'     => __("row", 'elementor'),
+                    'label_block' => true,
+    
+                ]
+            );
+            $repeater3->add_control(
+                'font_size',
+                [
+                    'label'       => __('Row', 'elementor'),
+                    'type'        => Controls_Manager::TEXT,
+                    'default'     => __("12px", 'elementor'),
+                    'label_block' => true,
+    
+                ]
+            );
+            
             $repeater3->add_control(
                 'field_url',
                 [
@@ -147,8 +174,17 @@ class Hello_World extends Widget_Base
                 [
                     'label' => esc_html__('Nb column ', 'elementskit-lite'),
                     'type' => Controls_Manager::SELECT,
-                    'default' => '2',
+                    'default' => 'nul',
                     'options' =>$col
+                ]
+            );
+            $repeater3->add_control(
+                'field_float',
+                [
+                    'label' => esc_html__('Float ', 'elementskit-lite'),
+                    'type' => Controls_Manager::SELECT,
+                    'default' => '',
+                    'options' =>$float
                 ]
             );
             $repeater3->add_control(
@@ -1273,7 +1309,6 @@ class Hello_World extends Widget_Base
         $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers('page');
         $page_settings_model = $page_settings_manager->get_model(get_the_ID());
         $url =$page_settings_model->get_settings($opt_key);
-                
         $response = wp_remote_get($url."&paged=4");//todo a voir pour optimiser la recuperation des champs
         $body     = wp_remote_retrieve_body($response);
         $body =json_decode($body);
@@ -1299,10 +1334,13 @@ class Hello_World extends Widget_Base
         $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers('page');
         $page_settings_model = $page_settings_manager->get_model(get_the_ID());
         $url =$page_settings_model->get_settings($settings['view']);
-        
+
         // fin dynamique des champs todo mette dans une fonction
         $file = dirname(__DIR__)."/inc/jsonFile.json";
         $context = Timber::get_context();
+        if ($_SERVER['QUERY_STRING']) {
+            var_dump($_SERVER['QUERY_STRING']);
+        }
         // recuperation valeurs select
         $type=[];
         foreach ($settings['categories'] as $category) {
@@ -1314,27 +1352,36 @@ class Hello_World extends Widget_Base
             }
             $tab[]= array('type'=>$category['type_element'],'symbole'=>$category['type_symbole'],  "name"=>$category['category_slug'] ,"col"=>$category['category_col']  ,"critere"=>$category['category_criteres'], "label"=>$category['category_title'], "value"=>$tab_value);
         }
-        
+        // todo a voir si possible ici
+
         foreach ($this->get_api() as $api) {
             $api_settings=$settings[$api.'fields'];
             if ($api_settings) {
                 foreach ($api_settings as $field) {
-                    $post[]= array(
-                    'field'=> $field['choice_field'] ,
-                    'color'=> $field['field_color'] ,
-                    'col'=> $field['field_col'],
-                    'type'=> $field['field_type'],
-                    'url'=> $field['field_url'],
-                    'url_param'=> $field['field_url_param'],
-                    'text'=> $field['field_text'],
-                    'icon'=> $field['field_icon'],
-                    'condition'=> $field['field_condition'],
-                    // 'margin'=>"0px 0px  30px 0px",
-                    'margin'=>$field['field__margin']['top'].$field['field__margin']["unit"].' '.$field['field__margin']['right'].$field['field__margin']["unit"].' '.$field['field__margin']['bottom'].$field['field__margin']["unit"].' '.$field['field__margin']['left'].$field['field__margin']["unit"],
-                        
-                    
-                );
+                    $array_field= array(
+                        'field'=> $field['choice_field'] ,
+                        'color'=> $field['field_color'] ,
+                        'col'=> $field['field_col']==0?"":$field['field_col'],
+                        $field['field_float']=> "auto",
+                        'type'=> $field['field_type'],
+                        'url'=> $field['field_url'],
+                        'font-size'=> $field['font_size'],
+                        'url_param'=> $field['field_url_param'],
+                        'text'=> $field['field_text'],
+                        'icon'=> $field['field_icon'],
+                        'condition'=> $field['field_condition'],
+                        // 'margin'=>$field['field__margin']['top'].$field['field__margin']["unit"].' '.$field['field__margin']['right'].$field['field__margin']["unit"].' '.$field['field__margin']['bottom'].$field['field__margin']["unit"].' '.$field['field__margin']['left'].$field['field__margin']["unit"],
+                                                
+                    );
+                  
+                    if ($field['field_row']) {
+                        $cpt++;
+                        $post[(string)$cpt][]= $array_field;
+                    } else {
+                        $post[(string)$cpt][]= $array_field;
+                    }
                 }
+                $post['count']=$cpt;
             }
         }
         
@@ -1345,11 +1392,9 @@ class Hello_World extends Widget_Base
            'type'=>$tab,
            'post'=>$post,
            'ekit_resultat'=> $settings['ekit_resultat'],
-           
            'cardbody'=> $settings['ekit_wb_225_code'],
            'card'=> $settings['ekit_wb_226_code'],
            'cardimage'=> $settings['ekit_wb_227_code'],
-
            'ekit_search_btn' =>  $settings['ekit_search_btn'],
            'search_text' =>  $settings['search_text'],
            'heading_text' =>  $settings['heading_text'],
