@@ -10,7 +10,6 @@ const GoogleMaps = ({
   latitude,
   longitude,
   cars,
-  setSelectedSort,
 }) => {
   let renderMarkers;
   let renderCircle;
@@ -213,10 +212,8 @@ const GoogleMaps = ({
 
           < InfoWindow
             pixelOffset={"0"}
-
             marker={state.activeMarker}
             visible={state.showingInfoWindow}
-
             onClose={onClose}
 
           >

@@ -1376,9 +1376,9 @@ class Hello_World extends Widget_Base
         // fin dynamique des champs todo mette dans une fonction
         $file = dirname(__DIR__)."/inc/jsonFile.json";
         $context = Timber::get_context();
-        if ($_SERVER['QUERY_STRING']) {
-            var_dump($_SERVER['QUERY_STRING']);
-        }
+        // if ($_SERVER['QUERY_STRING']) {
+        //     var_dump($_SERVER['QUERY_STRING']);
+        // }
         // recuperation valeurs select
         $type=[];
         foreach ($settings['categories'] as $category) {

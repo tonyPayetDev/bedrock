@@ -16,6 +16,7 @@ import * as APIConfig from "./constants/APIConfig";
 import ReactLoading from "react-loading";
 
 var page_id = APIConfig.url_const.searchParams.get("page_id");
+import Map from './Map'
 
 const App = (props) => {
   const { id } = props;; // charge les paremetres au premier rechargement
@@ -32,7 +33,7 @@ const App = (props) => {
   const [tab, setTab] = useState({});// # stock les filtre d'apres les type récupérer 
   const [params, setParams] = useState(APIConfig.param(id)[0]);
   const fetchURL = `${params.API_URI}&`;
-  console.log(params);
+
 
   params.type.map((data, index) => {
     console.log(data.name);
@@ -192,13 +193,24 @@ const App = (props) => {
           </div>
 
           <div class="col-md-6" style={params.ekit_map_btn ? null : divStyle} >
-            <GoogleMaps
+            {/* <GoogleMaps
               style={{ margin: "400px" }}
               latitude={state.lat}
               longitude={state.lng}
               setSelectedSort={setSelectedSort}
               cars={selectedSort}
-            ></GoogleMaps>
+            ></GoogleMaps> */}
+
+            <Map
+              params={params}
+              defaultOptions={{ scaleControl: true }}
+              googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0&libraries=visualization,drawing,geometry,places`}
+              loadingElement={<div style={{ height: '100%' }}> Loading... </div>}
+              containerElement={<div style={{ height: '100vh' }} />}
+              mapElement={<div style={{ height: '100%' }} />}
+              setSelectedSort={setSelectedSort}
+              selectedSort={selectedSort}
+            />
           </div>
 
         </div>

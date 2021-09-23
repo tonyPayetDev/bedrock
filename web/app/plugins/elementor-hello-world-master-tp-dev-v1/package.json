@@ -20,6 +20,7 @@
     "bootstrap": "^4.6.0",
     "google-map-react": "^2.1.9",
     "google-maps-react": "^2.0.6",
+    "mdi-material-ui": "^6.22.1",
     "particles-bg": "^2.5.5",
     "react": "^16.9.0",
     "react-animated-css": "^1.2.1",
