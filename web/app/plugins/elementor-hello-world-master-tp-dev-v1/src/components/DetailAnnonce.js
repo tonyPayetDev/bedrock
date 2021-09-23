@@ -191,7 +191,6 @@ const DetailAnnonce = (props) => {
       let row = Object.values(value).map((annonce, index) => {
         let value = name[annonce.field];
         let url = name[annonce.url];
-        console.log(annonce);
         let col = annonce.col;
 
         if (annonce.type === "condition" & annonce.type !== "button") {

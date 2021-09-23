@@ -1,5 +1,5 @@
 import React from "react";
-import Icon from "../images/flags.png";
+import Icon from "../images/logo.png";
 
 const InfoContent = (props) => {
   const { name } = props;
@@ -26,7 +26,7 @@ const InfoContent = (props) => {
             <h5>
               <div class="row">
                 <h6>
-                  <div class="fontsize-adresseinfoview"><img src={Icon} alt="Logo" /> {name.adresse}</div>
+                  <div class="fontsize-adresseinfoview"><img src={"http://localhost:8000/app/plugins/elementor-hello-world-master-tp-dev-v1/build/" + Icon} alt="Logo" /> {name.adresse}</div>
                 </h6>
               </div>
 

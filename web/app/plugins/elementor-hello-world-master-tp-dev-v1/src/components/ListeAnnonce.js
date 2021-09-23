@@ -1,11 +1,7 @@
 import React from "react";
 
-import { Map, InfoWindow, Marker } from "google-maps-react";
-import InfoContent from "./InfoContent.js";
 import DetailAnnonce from "./DetailAnnonce.js";
 
-import * as APIConfig from "../constants/APIConfig";
-import Icon from "../images/house.png";
 import { Animated } from "react-animated-css";
 import ReactLoading from "react-loading";
 

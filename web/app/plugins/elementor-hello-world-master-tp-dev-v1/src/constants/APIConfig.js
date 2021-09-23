@@ -11,7 +11,7 @@ export const HEADERS = new Headers({
 });
 
 export const KEY_MAP = "AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0";
-export const Zoom = 12;
+export const Zoom = 10;
 export const perimetre_long = 0.2;
 export const perimetre_lat = 0.05;
 export let fetchURL = "";

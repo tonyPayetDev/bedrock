@@ -51011,7 +51011,6 @@ const DetailAnnonce = props => {
       let row = Object.values(value).map((annonce, index) => {
         let value = name[annonce.field];
         let url = name[annonce.url];
-        console.log(annonce);
         let col = annonce.col;
 
         if (annonce.type === "condition" & annonce.type !== "button") {
@@ -51133,8 +51132,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var google_maps_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! google-maps-react */ "./node_modules/google-maps-react/dist/index.js");
 /* harmony import */ var google_maps_react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(google_maps_react__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _InfoContent_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InfoContent.js */ "./src/components/InfoContent.js");
-/* harmony import */ var _images_house_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../images/house.png */ "./src/images/house.png");
+/* harmony import */ var _images_logo_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../images/logo.png */ "./src/images/logo.png");
 /* harmony import */ var _constants_APIConfig__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../constants/APIConfig */ "./src/constants/APIConfig.js");
+/* harmony import */ var react_places_autocomplete__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-places-autocomplete */ "./node_modules/react-places-autocomplete/dist/index.js");
+/* harmony import */ var react_places_autocomplete__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_places_autocomplete__WEBPACK_IMPORTED_MODULE_6__);
+
 
 
 
@@ -51149,6 +51151,7 @@ const GoogleMaps = ({
   setSelectedSort
 }) => {
   let renderMarkers;
+  let renderCircle;
   const [state, setState] = react__WEBPACK_IMPORTED_MODULE_1___default.a.useState({
     lat: -21,
     lng: 55.5,
@@ -51180,43 +51183,135 @@ const GoogleMaps = ({
     }
   };
 
+  let nb_ville;
+
   if (cars) {
     if (cars['count'] != 0) {
-      renderMarkers = cars['data'].map((data, index) => {
-        //    console.log("app/plugins/react-plugin/build"+Icon);
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(google_maps_react__WEBPACK_IMPORTED_MODULE_2__["Marker"], {
-          icon: {
-            width: "10%",
-            url: "app/plugins/react-plugin/build/" + _images_house_png__WEBPACK_IMPORTED_MODULE_4__["default"],
-            anchor: window.google.maps.Point(16, 16),
-            scaledSize: window.google.maps.Size(32, 32)
-          },
-          key: index,
-          id: index,
-          position: {
-            lat: data.latitude,
-            lng: data.longitude
-          },
-          title: data.ville + " " + data.code_postal,
-          name: {
-            marque: data.ville,
-            // type: data.type,
-            model: data.ville,
-            img: data.photo,
-            adresse: data.code_postal
-          },
-          color: "red",
-          onClick: onMarkerClick
+      const places = {
+        id: 1,
+        name: "Park Slope",
+        latitude: "40.6710729",
+        longitude: "-73.9988001",
+        circle: {
+          radius: 2000,
+          options: {
+            strokeColor: "#E6007E"
+          }
+        }
+      };
+      renderCircle = Object.values(cars['map']).map((data_by_ville, index) => {
+        console.log(data_by_ville.length);
+        return data_by_ville.map((data, index) => {
+          let latitude = data.latitude;
+          let longitude = data.longitude;
+
+          if (index == 0) {
+            return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(google_maps_react__WEBPACK_IMPORTED_MODULE_2__["Circle"], {
+              strokeColor: "#E6007E",
+              strokeOpacity: "0.8",
+              onMouseover: () => console.log('mouseover'),
+              onClick: () => console.log('click'),
+              onMouseout: () => console.log('mouseout'),
+              strokeColor: "transparent",
+              strokeOpacity: 0,
+              strokeWeight: 5,
+              name: "Test",
+              fillColor: "#E6007F",
+              fillOpacity: "0.3",
+              center: {
+                lat: parseFloat(longitude),
+                lng: parseFloat(latitude)
+              },
+              radius: 2000
+            });
+          }
+        });
+      }); // let renderCount = cars['map'].map((data, index) => {
+      //   if (data.ville) {
+      //     console.log(data.ville);
+      //     //  console.log(data.longitude);
+      //   }
+      // });
+
+      renderMarkers = Object.values(cars['map']).map((data_by_ville, index) => {
+        console.log(data_by_ville.length);
+        nb_ville = data_by_ville.length;
+        return data_by_ville.map((data, index) => {
+          // console.log(data);
+          let latitude = data.latitude; //Math.round(data.latitude * 100) / 100;
+
+          let longitude = data.longitude; //Math.round(data.longitude * 100) / 100;
+          // console.log(longitude);
+          // console.log(latitude);
+
+          if (index == 0) {
+            return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(google_maps_react__WEBPACK_IMPORTED_MODULE_2__["Marker"], {
+              icon: {
+                width: "10%",
+                url: " ",
+                //"http://localhost:8000/app/plugins/elementor-hello-world-master-tp-dev-v1/build/" + Icon,
+                anchor: window.google.maps.Point(16, 16),
+                scaledSize: window.google.maps.Size(32, 32)
+              },
+              key: index,
+              id: index,
+              position: {
+                lng: latitude,
+                lat: longitude
+              } // color="red"
+              ,
+              title: data.reference + " " + data.ville + " " + data.code_postal,
+              name: {
+                marque: data.bien_type,
+                // type: data.type,
+                model: data.ville,
+                img: data.photos,
+                adresse: data.code_postal
+              },
+              onClick: onMarkerClick,
+              label: {
+                color: '#000',
+                fontSize: '12px',
+                fontWeight: '600',
+                text: nb_ville + ""
+              }
+            }) // <Marker
+            //   icon={{
+            //     width: "10%",
+            //     // url: "",//"app/plugins/react-plugin/build/" + Icon,
+            //     url: "http://localhost:8000/app/plugins/elementor-hello-world-master-tp-dev-v1/build/" + Icon,
+            //     anchor: window.google.maps.Point(16, 16),
+            //     scaledSize: window.google.maps.Size(32, 32),
+            //   }}
+            //   key={index}
+            //   id={index}
+            //   position={{
+            //     lat: data.latitude,
+            //     lng: data.longitude,
+            //   }}
+            // // title={data.ville + " " + data.code_postal}
+            // // name={{
+            // //   marque: data.ville,
+            // //   // type: data.type,
+            // //   model: data.ville,
+            // //   img: data.photo,
+            // //   adresse: data.code_postal,
+            // // }}
+            // // color="red"
+            // onClick={onMarkerClick}
+            // />
+            ;
+          }
         });
       });
     }
   }
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, renderMarkers ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(google_maps_react__WEBPACK_IMPORTED_MODULE_2__["Map"], {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(google_maps_react__WEBPACK_IMPORTED_MODULE_2__["Map"], {
     style: {
       margin: "0px 0px 0px 29px ",
       width: "81%",
-      height: "65%"
+      height: "85%"
     },
     google: window.google,
     zoom: _constants_APIConfig__WEBPACK_IMPORTED_MODULE_5__["Zoom"],
@@ -51224,11 +51319,14 @@ const GoogleMaps = ({
       lat: latitude,
       lng: longitude
     }
-  }, renderMarkers, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(google_maps_react__WEBPACK_IMPORTED_MODULE_2__["InfoWindow"], {
+  }, renderMarkers, renderCircle, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(google_maps_react__WEBPACK_IMPORTED_MODULE_2__["InfoWindow"], {
+    pixelOffset: "0",
     marker: state.activeMarker,
     visible: state.showingInfoWindow,
     onClose: onClose
-  })) : "");
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_InfoContent_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    name: state.selectedPlace.name
+  }, " "))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (GoogleMaps);
@@ -51248,7 +51346,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _images_flags_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../images/flags.png */ "./src/images/flags.png");
+/* harmony import */ var _images_logo_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../images/logo.png */ "./src/images/logo.png");
 
 
 
@@ -51279,7 +51377,7 @@ const InfoContent = props => {
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h6", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "fontsize-adresseinfoview"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
-    src: _images_flags_png__WEBPACK_IMPORTED_MODULE_2__["default"],
+    src: "http://localhost:8000/app/plugins/elementor-hello-world-master-tp-dev-v1/build/" + _images_logo_png__WEBPACK_IMPORTED_MODULE_2__["default"],
     alt: "Logo"
   }), " ", name.adresse))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "row m-1 "
@@ -51307,20 +51405,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var google_maps_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! google-maps-react */ "./node_modules/google-maps-react/dist/index.js");
-/* harmony import */ var google_maps_react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(google_maps_react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _InfoContent_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InfoContent.js */ "./src/components/InfoContent.js");
-/* harmony import */ var _DetailAnnonce_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DetailAnnonce.js */ "./src/components/DetailAnnonce.js");
-/* harmony import */ var _constants_APIConfig__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../constants/APIConfig */ "./src/constants/APIConfig.js");
-/* harmony import */ var _images_house_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../images/house.png */ "./src/images/house.png");
-/* harmony import */ var react_animated_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-animated-css */ "./node_modules/react-animated-css/lib/index.js");
-/* harmony import */ var react_animated_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_animated_css__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-loading */ "./node_modules/react-loading/dist/react-loading.js");
-/* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_loading__WEBPACK_IMPORTED_MODULE_8__);
-
-
-
-
+/* harmony import */ var _DetailAnnonce_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DetailAnnonce.js */ "./src/components/DetailAnnonce.js");
+/* harmony import */ var react_animated_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-animated-css */ "./node_modules/react-animated-css/lib/index.js");
+/* harmony import */ var react_animated_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_animated_css__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-loading */ "./node_modules/react-loading/dist/react-loading.js");
+/* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_loading__WEBPACK_IMPORTED_MODULE_4__);
 
 
 
@@ -51375,7 +51464,7 @@ const ListeAnnonce = ({
     if (cars['count'] != 0) {
       renderAnnonce = cars['data'].map((annonce, index) => {
         if (annonce) {
-          return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_DetailAnnonce_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_DetailAnnonce_js__WEBPACK_IMPORTED_MODULE_2__["default"], {
             name: annonce,
             params: params,
             index: index
@@ -51967,7 +52056,7 @@ const HEADERS = new Headers({
 
 });
 const KEY_MAP = "AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0";
-const Zoom = 12;
+const Zoom = 10;
 const perimetre_long = 0.2;
 const perimetre_lat = 0.05;
 let fetchURL = "";
@@ -52011,16 +52100,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/images/house.png":
-/*!******************************!*\
-  !*** ./src/images/house.png ***!
-  \******************************/
+/***/ "./src/images/logo.png":
+/*!*****************************!*\
+  !*** ./src/images/logo.png ***!
+  \*****************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "images/house.37e2b3c3.png");
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "images/logo.2da99b77.png");
 
 /***/ }),
 
