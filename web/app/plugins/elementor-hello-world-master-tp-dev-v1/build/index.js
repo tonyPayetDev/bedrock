@@ -244059,13 +244059,13 @@ __webpack_require__.r(__webpack_exports__);
 
 const Map = Object(react_google_maps__WEBPACK_IMPORTED_MODULE_2__["withScriptjs"])(Object(react_google_maps__WEBPACK_IMPORTED_MODULE_2__["withGoogleMap"])(props => {
   const mapRef = Object(react__WEBPACK_IMPORTED_MODULE_1__["useRef"])(null);
-  const [zoom, setZoom] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(9.5);
+  const [zoom, setZoom] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(10.4);
   const [marker, setMarker] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])({
     hasMarker: false,
     position: {}
   });
   const [center, setCenter] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])({
-    lat: -21,
+    lat: -21.18,
     lng: 55.5
   });
   let tab = [];

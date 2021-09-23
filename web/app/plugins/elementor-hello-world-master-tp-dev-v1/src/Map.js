@@ -15,9 +15,9 @@ import MarkerCarrierIcon from "./components/MarkerCarrierIcon";
 const Map = withScriptjs(
     withGoogleMap((props) => {
         const mapRef = useRef(null);
-        const [zoom, setZoom] = useState(9.5);
+        const [zoom, setZoom] = useState(10.4);
         const [marker, setMarker] = useState({ hasMarker: false, position: {} });
-        const [center, setCenter] = useState({ lat: -21, lng: 55.5 });
+        const [center, setCenter] = useState({ lat: -21.18, lng: 55.5 });
         let tab = [];
         var url = new URL(document.location.href);
 
