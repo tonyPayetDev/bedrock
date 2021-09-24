@@ -207,12 +207,17 @@ function biens(WP_REST_Request $request)
     $biens = new WP_query($request_p);
     $ville ;
     $per_page=1;
-    $cpt=1;
+    $tab=[];
+    $cpt=0;
+
     foreach ($biens->posts as $key => $value) {
         $meta = get_post_meta($value->ID);
-        $tab=[];
-        $cpt++;
 
+        if ($cpt==10) {// decoupe par paquer de 10
+            $per_page++;
+            $cpt=0;
+        }
+        $cpt++;
         foreach ($meta as $key => $value_meta) {
             $tab["id"]=$value->ID;
             $tab["post_name"]=$value->post_name;
@@ -221,13 +226,9 @@ function biens(WP_REST_Request $request)
             $tab["photo"]= $url;
             $tab[$key]=$value_meta[0];
         }
-  
-        if ($cpt==10) {// decoupe par paquer de 10
-            $cpt=0;
-            $per_page++;
-        }
 
-        $tab_meta['data'][  $per_page][]=$tab;
+
+        $tab_meta['data'][$per_page][]=$tab;
     }
     $request_nb =  array(
         'post_type' => $type,
