@@ -207,6 +207,7 @@ function biens(WP_REST_Request $request)
     $biens = new WP_query($request_p);
     $ville ;
     $per_page=1;
+    $cpt=1;
     foreach ($biens->posts as $key => $value) {
         $meta = get_post_meta($value->ID);
         $tab=[];
@@ -219,14 +220,13 @@ function biens(WP_REST_Request $request)
             
             $tab["photo"]= $url;
             $tab[$key]=$value_meta[0];
-            // if ($key=="ville") {
-            //     $ville=$value_meta[0];
-            // }
         }
+  
         if ($cpt==10) {// decoupe par paquer de 10
             $cpt=0;
             $per_page++;
         }
+
         $tab_meta['data'][  $per_page][]=$tab;
     }
     $request_nb =  array(
