@@ -1,6 +1,7 @@
 import React from "react";
 
 import DetailAnnonce from "./DetailAnnonce.js";
+import Paginator from "./Paginator";
 
 import { Animated } from "react-animated-css";
 import ReactLoading from "react-loading";
@@ -67,9 +68,18 @@ const ListeAnnonce = ({
     <div>
       <div class="row">
         {renderAnnonce}
+
+        {renderAnnonce ?
+          < Paginator
+            params={params}
+            data={cars}
+            nb_page_afficher={2}
+          />
+          : ""}
+
       </div>
 
-    </div>
+    </div >
 
   );
 };

@@ -176,11 +176,14 @@ const App = (props) => {
         params={params}
       ></SearchLocationInput>
 
-      {selectedSort ? "" : <div class="col-12 d-flex justify-content-center" >  <ReactLoading type='bubbles' color={params.color} /></div >}
 
       {params.visible ?
-        <div class="row">
-          <div class={params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12' : 'col-lg-12 col-md-12 col-xs-12'} >
+        <div class="row" style={{ "overflow-y": "auto", height: '70vh' }}>
+
+
+          <div class={params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12 ' : 'col-lg-12 col-md-12 col-xs-12 sticky-top'} >
+            {selectedSort ? "" : <div class="col-12 d-flex justify-content-center" >  <ReactLoading type='bubbles' color={params.color} /></div >}
+
             <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >
               < ListeAnnonce
                 params={params}
@@ -189,31 +192,40 @@ const App = (props) => {
                 setSelectedSort={setSelectedSort}
                 cars={selectedSort}
               ></ListeAnnonce>
+
             </Animated>
           </div>
 
-          <div class="col-md-6" style={params.ekit_map_btn ? null : divStyle} >
-            {/* <GoogleMaps
-              style={{ margin: "400px" }}
-              latitude={state.lat}
-              longitude={state.lng}
-              setSelectedSort={setSelectedSort}
-              cars={selectedSort}
-            ></GoogleMaps> */}
+          <div class="col-md-6 " style={{
+            position: "absolute", left: " 49%"
+          }}
+          >
+            {params.ekit_map_btn ?
 
-            <Map
-              params={params}
-              defaultOptions={{ scaleControl: true }}
-              googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0&libraries=visualization,drawing,geometry,places`}
-              loadingElement={<div style={{ height: '100%' }}> Loading... </div>}
-              containerElement={<div style={{ height: '100vh' }} />}
-              mapElement={<div style={{ height: '100%' }} />}
-              setSelectedSort={setSelectedSort}
-              selectedSort={selectedSort}
-            />
+
+              /* <GoogleMaps
+            style={{ margin: "400px" }}
+            latitude={state.lat}
+            longitude={state.lng}
+            setSelectedSort={setSelectedSort}
+            cars={selectedSort}
+          ></GoogleMaps> */
+              < Map
+                params={params}
+                defaultOptions={{ scaleControl: true }}
+                googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0&libraries=visualization,drawing,geometry,places`}
+                loadingElement={<div style={{ height: '100%' }}> Loading... </div>}
+                containerElement={<div style={{ height: '70vh' }} />}
+                mapElement={<div style={{ height: '100%' }} />}
+                setSelectedSort={setSelectedSort}
+                selectedSort={selectedSort}
+              />
+
+
+              : ""}
           </div>
 
-        </div>
+        </div >
         : ""
       }
     </div >
