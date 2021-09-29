@@ -16,7 +16,7 @@ import * as APIConfig from "./constants/APIConfig";
 import ReactLoading from "react-loading";
 
 var page_id = APIConfig.url_const.searchParams.get("page_id");
-import Map from './Map'
+import Map from './components/Map'
 
 const App = (props) => {
   const { id } = props;; // charge les paremetres au premier rechargement
@@ -36,7 +36,7 @@ const App = (props) => {
 
 
   params.type.map((data, index) => {
-    console.log(data.name);
+    // console.log(data.name);
     var secteur = APIConfig.url_const.searchParams.get(data.name);
     if (secteur) { // on récupére si fais partie des filtres elementor
       tab[data.name] = secteur;
@@ -196,23 +196,16 @@ const App = (props) => {
             </Animated>
           </div>
 
-          <div class="col-md-6 " style={{
-            position: "absolute", left: " 49%"
-          }}
-          >
+          <div class="col-md-6 " style={{ position: "absolute", left: " 49%" }}>
             {params.ekit_map_btn ?
-
-
-              /* <GoogleMaps
-            style={{ margin: "400px" }}
-            latitude={state.lat}
-            longitude={state.lng}
-            setSelectedSort={setSelectedSort}
-            cars={selectedSort}
-          ></GoogleMaps> */
               < Map
+
                 params={params}
-                defaultOptions={{ scaleControl: true }}
+                fetchURL={fetchURL}
+                params={params}
+                defaultOptions={{
+                  scaleControl: true
+                }}
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0&libraries=visualization,drawing,geometry,places`}
                 loadingElement={<div style={{ height: '100%' }}> Loading... </div>}
                 containerElement={<div style={{ height: '70vh' }} />}
@@ -220,8 +213,6 @@ const App = (props) => {
                 setSelectedSort={setSelectedSort}
                 selectedSort={selectedSort}
               />
-
-
               : ""}
           </div>
 

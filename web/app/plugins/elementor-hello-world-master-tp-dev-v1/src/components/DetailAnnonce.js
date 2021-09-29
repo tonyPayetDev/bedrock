@@ -6,7 +6,7 @@ import ParticlesBg from 'particles-bg'
 
 
 const DetailAnnonce = (props) => {
-  const { name, params, classes, index } = props;
+  const { name, params, classes, index, disable_even_odd } = props;
 
   const style = {
     backgroundColor: params.color ? params.color : "#ffffff",
@@ -171,19 +171,22 @@ const DetailAnnonce = (props) => {
     }
   }
   // modulo de l'index pour avoir 1 ou 0 // even odd 
-  if (index % 2 === 1) {
-    cardbody.right = "-20px";
-    cardbody.left = "";
-    card.left = "5px";
-    card.borderRadius = "0px 0px 14px 0px ";
+  if (!disable_even_odd) {
+
+    if (index % 2 === 1) {
+      cardbody.right = "-20px";
+      cardbody.left = "";
+      card.left = "5px";
+      card.borderRadius = "0px 0px 14px 0px ";
 
 
-  } else {
-    cardbody.right = "";
-    cardbody.left = "-20px";
-    card.left = "25px";
-    card.borderRadius = "0px 0px 0px 14px ";
+    } else {
+      cardbody.right = "";
+      cardbody.left = "-20px";
+      card.left = "25px";
+      card.borderRadius = "0px 0px 0px 14px ";
 
+    }
   }
   if (name) {
 
@@ -234,7 +237,7 @@ const DetailAnnonce = (props) => {
           );
         }
       });
-      return <div class="">{row} </div>;
+      return <div class=" text-center">{row} </div>;
     });
 
     fieldsBtn = Object.values(params.post).map(value => {
@@ -268,23 +271,21 @@ const DetailAnnonce = (props) => {
 
 
   return (
-    <div class={params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12' : params.col_post}  >
-      <div>
-        <div class='col-lg-6 col-md-12 col-xs-12' style={card} class="card"  >
-          {fieldsPhotos}
-          {/* todo pour plustard rajouer mouse over qui marche sur programmes et biens //onMouseOver={MouseOver} onMouseOut={MouseOut}  */}
-          <div class="card-body" type="button" style={cardbody} >
-            {fieldsAnnonce}
+    <div>
+      <div class='col-lg-6 col-md-12 col-xs-12' style={card} class="card"  >
+        {fieldsPhotos}
+        {/* todo pour plustard rajouer mouse over qui marche sur programmes et biens //onMouseOver={MouseOver} onMouseOut={MouseOut}  */}
+        <div class="card-body" type="button" style={cardbody} >
+          {fieldsAnnonce}
 
-            <div class="btn-group row">
-              {/* <button type="button" onMouseOver={MouseOver} onMouseOut={MouseOut} href="#" class="stretched-link btn  mr-3" style={styleContactPro} > <i aria-hidden="true" class="far fa-envelope"></i> contactez un pro</button>
+          <div class="btn-group row">
+            {/* <button type="button" onMouseOver={MouseOver} onMouseOut={MouseOut} href="#" class="stretched-link btn  mr-3" style={styleContactPro} > <i aria-hidden="true" class="far fa-envelope"></i> contactez un pro</button>
         <button type="button" onMouseOver={MouseOverHeart} onMouseOut={MouseOutHeart} className={"stretched-link btn " + params.ekit_wb_3976_icons.value} style={style} ></button> */}
-              {fieldsBtn}
-            </div>
+            {fieldsBtn}
           </div>
         </div>
       </div>
-    </div >
+    </div>
 
   );
 };

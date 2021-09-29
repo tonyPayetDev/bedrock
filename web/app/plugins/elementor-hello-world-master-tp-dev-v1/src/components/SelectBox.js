@@ -65,7 +65,6 @@ const SelectBox = (props) => {
 
   const [tab, setTab] = useState({});// # todo a recupérer en params
   const [active, setActive] = useState(false);// # todo a recupérer en params
-  const [value, setValue] = React.useState('');
   const [values, setValues] = React.useState({
     numberformat: ""
   });
