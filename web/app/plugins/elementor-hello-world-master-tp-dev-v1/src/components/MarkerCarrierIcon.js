@@ -81,6 +81,8 @@ const MarkerCarrierIcon = ({ lac, onMarkerClick, url_icon, params }) => {
             {
                 state.isOpen &&
                 <InfoWindow options={{
+                    maxWidth: 460,
+
                 }} pixelOffset={"0"} position={state.position} visible={state.isOpen} >
                     <div class="row text-right">
                         <div class="col-lg-12 col-md-12 col-xs-12">

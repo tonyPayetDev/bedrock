@@ -113,7 +113,7 @@ const Map = withScriptjs(
         // };
         const OPTIONS = {
             minZoom: 8,
-            maxZoom: 12,
+            maxZoom: 13,
         }
 
         let renderInfo;
@@ -155,6 +155,28 @@ const Map = withScriptjs(
                 </SwiperSlide >;
             })
         }
+        const swiper = <Swiper
+            centeredSlides={true}
+            roundLengths={true}
+            loop={true}
+            lazy={true}
+            preloadImages={true}
+            loopAdditionalSlides={30}
+            navigation={{
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev"
+            }
+
+            }
+            autoplay={{
+                "delay": 3000,
+                "disableOnInteraction": true
+            }
+            } pagination={{
+                "clickable": false
+            }} navigation={true} className="mySwiper" >
+            {renderInfo}
+        </Swiper >;
 
         const handleToggleClose = (event) => {
             setState({
@@ -251,18 +273,7 @@ const Map = withScriptjs(
                                     <i class="fas fa-window-close"></i>
 
                                 </a>
-                                <Swiper
-                                    centeredSlides={true}
-                                    spaceBetween={20}
-                                    // slidesPerView={2}
-                                    autoplay={{
-                                        "delay": 2500,
-                                        "disableOnInteraction": false
-                                    }} pagination={{
-                                        "clickable": false
-                                    }} navigation={true} className="mySwiper" >
-                                    {renderInfo}
-                                </Swiper>
+                                {swiper}
                                 <div class="col-12 m-1 text-center" > <span style={{ color: params.color, fontSize: "15px" }}> {nb_annonce}</span> annonce </div>
 
                             </div>
