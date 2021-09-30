@@ -3,6 +3,7 @@
 import { GoogleApiWrapper } from "google-maps-react";
 import GoogleMaps from "./components/GoogleMaps";
 import ListeAnnonce from "./components/ListeAnnonce";
+import { Pagination } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 
 import SearchLocationInput from "./components/SearchLocationInput";
@@ -224,7 +225,7 @@ const App = (props) => {
         </div >
         : ""
       }
-      {selectedSort ?
+      {selectedSort && params.visible ?
 
 
         < Paginator

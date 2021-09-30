@@ -296218,20 +296218,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var google_maps_react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(google_maps_react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _components_GoogleMaps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/GoogleMaps */ "./src/components/GoogleMaps.js");
 /* harmony import */ var _components_ListeAnnonce__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/ListeAnnonce */ "./src/components/ListeAnnonce.js");
-/* harmony import */ var semantic_ui_css_semantic_min_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! semantic-ui-css/semantic.min.css */ "./node_modules/semantic-ui-css/semantic.min.css");
-/* harmony import */ var _components_SearchLocationInput__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/SearchLocationInput */ "./src/components/SearchLocationInput.js");
-/* harmony import */ var _components_SelectBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/SelectBox */ "./src/components/SelectBox.js");
-/* harmony import */ var _components_NbResultat__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/NbResultat */ "./src/components/NbResultat.js");
-/* harmony import */ var _components_Text__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/Text */ "./src/components/Text.js");
-/* harmony import */ var _components_Paginator__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/Paginator */ "./src/components/Paginator.js");
-/* harmony import */ var react_animated_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-animated-css */ "./node_modules/react-animated-css/lib/index.js");
-/* harmony import */ var react_animated_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_animated_css__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _constants_APIConfig__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./constants/APIConfig */ "./src/constants/APIConfig.js");
-/* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-loading */ "./node_modules/react-loading/dist/react-loading.js");
-/* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(react_loading__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _components_Map__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/Map */ "./src/components/Map.js");
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
+/* harmony import */ var semantic_ui_css_semantic_min_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! semantic-ui-css/semantic.min.css */ "./node_modules/semantic-ui-css/semantic.min.css");
+/* harmony import */ var _components_SearchLocationInput__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/SearchLocationInput */ "./src/components/SearchLocationInput.js");
+/* harmony import */ var _components_SelectBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/SelectBox */ "./src/components/SelectBox.js");
+/* harmony import */ var _components_NbResultat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/NbResultat */ "./src/components/NbResultat.js");
+/* harmony import */ var _components_Text__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/Text */ "./src/components/Text.js");
+/* harmony import */ var _components_Paginator__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/Paginator */ "./src/components/Paginator.js");
+/* harmony import */ var react_animated_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-animated-css */ "./node_modules/react-animated-css/lib/index.js");
+/* harmony import */ var react_animated_css__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(react_animated_css__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _constants_APIConfig__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./constants/APIConfig */ "./src/constants/APIConfig.js");
+/* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-loading */ "./node_modules/react-loading/dist/react-loading.js");
+/* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(react_loading__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _components_Map__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/Map */ "./src/components/Map.js");
 
 
 
@@ -296246,7 +296247,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var page_id = _constants_APIConfig__WEBPACK_IMPORTED_MODULE_12__["url_const"].searchParams.get("page_id");
+
+var page_id = _constants_APIConfig__WEBPACK_IMPORTED_MODULE_13__["url_const"].searchParams.get("page_id");
 
 
 const App = props => {
@@ -296255,7 +296257,7 @@ const App = props => {
   } = props;
   ; // charge les paremetres au premier rechargement
 
-  const [state, updateState] = react__WEBPACK_IMPORTED_MODULE_11___default.a.useState({
+  const [state, updateState] = react__WEBPACK_IMPORTED_MODULE_12___default.a.useState({
     lat: -21,
     lng: 55.5,
     showingInfoWindow: false,
@@ -296265,13 +296267,13 @@ const App = props => {
     selectedPlace: {},
     visible: false
   });
-  const [tab, setTab] = Object(react__WEBPACK_IMPORTED_MODULE_11__["useState"])({}); // # stock les filtre d'apres les type récupérer 
+  const [tab, setTab] = Object(react__WEBPACK_IMPORTED_MODULE_12__["useState"])({}); // # stock les filtre d'apres les type récupérer 
 
-  const [params, setParams] = Object(react__WEBPACK_IMPORTED_MODULE_11__["useState"])(_constants_APIConfig__WEBPACK_IMPORTED_MODULE_12__["param"](id)[0]);
+  const [params, setParams] = Object(react__WEBPACK_IMPORTED_MODULE_12__["useState"])(_constants_APIConfig__WEBPACK_IMPORTED_MODULE_13__["param"](id)[0]);
   const fetchURL = `${params.API_URI}&`;
   params.type.map((data, index) => {
     // console.log(data.name);
-    var secteur = _constants_APIConfig__WEBPACK_IMPORTED_MODULE_12__["url_const"].searchParams.get(data.name);
+    var secteur = _constants_APIConfig__WEBPACK_IMPORTED_MODULE_13__["url_const"].searchParams.get(data.name);
 
     if (secteur) {
       // on récupére si fais partie des filtres elementor
@@ -296316,16 +296318,16 @@ const App = props => {
     display: "none"
   }; //  todo cars a renormer en data
 
-  const [cars, setCars] = Object(react__WEBPACK_IMPORTED_MODULE_11__["useState"])();
-  const [selectedSort, setSelectedSort] = Object(react__WEBPACK_IMPORTED_MODULE_11__["useState"])();
-  const [url_construct, setUrlConstruct] = Object(react__WEBPACK_IMPORTED_MODULE_11__["useState"])({
+  const [cars, setCars] = Object(react__WEBPACK_IMPORTED_MODULE_12__["useState"])();
+  const [selectedSort, setSelectedSort] = Object(react__WEBPACK_IMPORTED_MODULE_12__["useState"])();
+  const [url_construct, setUrlConstruct] = Object(react__WEBPACK_IMPORTED_MODULE_12__["useState"])({
     prestation_type: "",
     secteur: "",
     pro_res: ""
   });
-  const [hidecontent, setHideContent] = Object(react__WEBPACK_IMPORTED_MODULE_11__["useState"])("");
-  let [page, setPage] = Object(react__WEBPACK_IMPORTED_MODULE_11__["useState"])(1);
-  Object(react__WEBPACK_IMPORTED_MODULE_11__["useEffect"])(event => {
+  const [hidecontent, setHideContent] = Object(react__WEBPACK_IMPORTED_MODULE_12__["useState"])("");
+  let [page, setPage] = Object(react__WEBPACK_IMPORTED_MODULE_12__["useState"])(1);
+  Object(react__WEBPACK_IMPORTED_MODULE_12__["useEffect"])(event => {
     if (hidecontent == "carte") {
       params.ekit_map_btn = 'yes';
       setParams(params);
@@ -296336,7 +296338,7 @@ const App = props => {
       setParams(params);
     }
 
-    _constants_APIConfig__WEBPACK_IMPORTED_MODULE_12__["getItems"](fetchURL + new URLSearchParams(tab)).then(data => setSelectedSort(data));
+    _constants_APIConfig__WEBPACK_IMPORTED_MODULE_13__["getItems"](fetchURL + new URLSearchParams(tab)).then(data => setSelectedSort(data));
   }, [hidecontent]); // affiche ou cache la maps
 
   let col = "col-" + params.col_heading_text;
@@ -296347,7 +296349,7 @@ const App = props => {
     }
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h3", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "row"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_Text__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_Text__WEBPACK_IMPORTED_MODULE_9__["default"], {
     data: selectedSort,
     text: url_construct,
     params: params,
@@ -296373,7 +296375,7 @@ const App = props => {
     class: "row"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "col-12 "
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_SelectBox__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_SelectBox__WEBPACK_IMPORTED_MODULE_7__["default"], {
     setSelectedSort: setSelectedSort,
     setUrlConstruct: setUrlConstruct,
     cars: cars,
@@ -296382,13 +296384,13 @@ const App = props => {
     fetchURL: fetchURL,
     style_invers: style_invers,
     stylecriteres: stylecriteres
-  }))), params.ekit_resultat ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_NbResultat__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  }))), params.ekit_resultat ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_NbResultat__WEBPACK_IMPORTED_MODULE_8__["default"], {
     data: selectedSort
   }) : "", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "row"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "col-12  justify-content-center mt-3 "
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_animated_css__WEBPACK_IMPORTED_MODULE_10__["Animated"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_animated_css__WEBPACK_IMPORTED_MODULE_11__["Animated"], {
     isVisible: true,
     animationIn: "fadeIn",
     animationOut: "fadeOut",
@@ -296399,10 +296401,10 @@ const App = props => {
     href: params.url + '?' + new URLSearchParams(url_construct),
     class: "btn ",
     style: style
-  }, " ", params.search_text, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_NbResultat__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  }, " ", params.search_text, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_NbResultat__WEBPACK_IMPORTED_MODULE_8__["default"], {
     paren: true,
     data: selectedSort
-  }))))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_SearchLocationInput__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }))))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_SearchLocationInput__WEBPACK_IMPORTED_MODULE_6__["default"], {
     state: state,
     updateState: updateState,
     cars: cars,
@@ -296418,10 +296420,10 @@ const App = props => {
     class: params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12 ' : 'col-lg-12 col-md-12 col-xs-12 sticky-top'
   }, selectedSort ? "" : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "col-12 d-flex justify-content-center"
-  }, "  ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_loading__WEBPACK_IMPORTED_MODULE_13___default.a, {
+  }, "  ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_loading__WEBPACK_IMPORTED_MODULE_14___default.a, {
     type: "bubbles",
     color: params.color
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_animated_css__WEBPACK_IMPORTED_MODULE_10__["Animated"], {
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_animated_css__WEBPACK_IMPORTED_MODULE_11__["Animated"], {
     isVisible: true,
     animationIn: "fadeIn",
     animationOut: "fadeOut",
@@ -296440,7 +296442,7 @@ const App = props => {
       position: "absolute",
       left: " 49%"
     }
-  }, params.ekit_map_btn ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_Map__WEBPACK_IMPORTED_MODULE_14__["default"], {
+  }, params.ekit_map_btn ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_Map__WEBPACK_IMPORTED_MODULE_15__["default"], {
     params: params,
     fetchURL: fetchURL,
     params: params,
@@ -296465,7 +296467,7 @@ const App = props => {
     }),
     setSelectedSort: setSelectedSort,
     selectedSort: selectedSort
-  }) : "")) : "", selectedSort ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_Paginator__WEBPACK_IMPORTED_MODULE_9__["default"], {
+  }) : "")) : "", selectedSort && params.visible ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_Paginator__WEBPACK_IMPORTED_MODULE_10__["default"], {
     params: params,
     data: selectedSort,
     nb_page_afficher: 10,
@@ -296474,7 +296476,7 @@ const App = props => {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(google_maps_react__WEBPACK_IMPORTED_MODULE_1__["GoogleApiWrapper"])({
-  apiKey: _constants_APIConfig__WEBPACK_IMPORTED_MODULE_12__["KEY_MAP"]
+  apiKey: _constants_APIConfig__WEBPACK_IMPORTED_MODULE_13__["KEY_MAP"]
 })(App));
 
 /***/ }),
