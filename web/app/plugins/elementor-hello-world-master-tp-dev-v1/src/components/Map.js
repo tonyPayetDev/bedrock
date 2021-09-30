@@ -1,7 +1,10 @@
 import React, { useState, useRef } from "react";
 // import Swiper core and required modules
 // Import Swiper React components
+import { Animated } from "react-animated-css";
+
 import DetailAnnonce from "./DetailAnnonce.js";
+import Slider from "react-slick";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/swiper-bundle.min.css'
@@ -36,34 +39,42 @@ import InfoContent from "./InfoContent.js";
 
 // import SearchBox from "./components/SearchBox";
 import MarkerCarrierIcon from "./MarkerCarrierIcon";
+function SampleNextArrow(props) {
+    const { className, style, onClick, color } = props;
+    console.log(color);
+    return (
+        <div className={className} onClick={onClick} style={{ ...style, display: "block", color: color, zIndex: 1, fontSize: "24px", float: "right", marginTop: "36px" }}><i aria-hidden="true" class="fas fa-arrow-circle-right"></i>  </div>
+    );
+}
+
+function SamplePrevArrow(props) {
+    const { className, style, onClick, color } = props;
+    return (
+
+        <div className={className} onClick={onClick} style={{ ...style, display: "block", color: color, float: "left", zIndex: 1, fontSize: "24px", transform: "translateY(50%)", }}
+        ><i aria-hidden="true" class="fas fa-arrow-circle-left"></i>  </div>
+
+
+    );
+}
 //import list from "./list";
 const Map = withScriptjs(
     withGoogleMap((props) => {
 
         let params = props.params;
-        let card = {
-            marginLeft: "0px",
-            marginTop: "3px",
-            background: "#FAFAFA",
-            border: " 1px solid #ddd",
-            borderRadius: "4px",
-            padding: "10px",
-            width: "100%",
-            height: "50%",
-            borderColor: params.color,
-            borderWidth: "0px 0px 3px 0px ",
-            borderRadius: "0px 0px 0px 14px",
-            boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-        }
-        let cardbody = {
+        var settings = {
+            dots: false,
+            lazyLoad: true,
+            infinite: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            autoplay: false,
+            autoplaySpeed: 2500,
+            pauseOnHover: true,
+            nextArrow: <SampleNextArrow color={params.color} />,
+            prevArrow: <SamplePrevArrow color={params.color} />,
+        };
 
-            "color": "#FAFAFA",
-            "textAlign": "center",
-            "borderWidth": "0px 0px 3px 0px ",
-            "borderRadius": "0px 0px 0px 14px",
-            borderColor: params.color,
-
-        }
         const mapRef = useRef(null);
         const [zoom, setZoom] = useState(10.3);
         const [marker, setMarker] = useState({ hasMarker: false, position: {} });
@@ -146,38 +157,39 @@ const Map = withScriptjs(
             const annonce = Object.values(state.tab_infoWindow);
             nb_annonce = annonce.length;
             renderInfo = annonce.map((annonce, index) => {
-                return < SwiperSlide id={index + annonce.id} >
-                    <div class="  text-center">
-                        <div class={params.ekit_map_btn ? 'col-lg-12 col-md-12 col-xs-12  ' : params.col_post}  >
-                            < DetailAnnonce name={annonce} params={params} index={index} disable_even_odd > </DetailAnnonce>
-                        </div>
-                    </div>
-                </SwiperSlide >;
+                return <div class={params.ekit_map_btn ? 'col-lg-12 col-md-12 col-xs-12  ' : params.col_post}  >
+                    < DetailAnnonce name={annonce} params={params} index={index} disable_even_odd > </DetailAnnonce>
+                </div>
             })
         }
-        const swiper = <Swiper
-            centeredSlides={true}
-            roundLengths={true}
-            loop={true}
-            lazy={true}
-            preloadImages={true}
-            loopAdditionalSlides={30}
-            navigation={{
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev"
-            }
+        // const swiper = <Swiper
+        //     centeredSlides={true}
+        //     roundLengths={true}
+        //     loop={true}
+        //     lazy={true}
+        //     preloadImages={true}
+        //     loopAdditionalSlides={30}
+        //     navigation={{
+        //         nextEl: ".swiper-button-next",
+        //         prevEl: ".swiper-button-prev"
+        //     }
 
-            }
-            autoplay={{
-                "delay": 3000,
-                "disableOnInteraction": true
-            }
-            } pagination={{
-                "clickable": false
-            }} navigation={true} className="mySwiper" >
+        //     }
+        //     autoplay={{
+        //         "delay": 3000,
+        //         "disableOnInteraction": true
+        //     }
+        //     } pagination={{
+        //         "clickable": false
+        //     }} navigation={true} className="mySwiper" >
+        //     {renderInfo}
+        // </Swiper >;
+        const swiper = <Slider  {...settings}>
+
+
             {renderInfo}
-        </Swiper >;
 
+        </Slider >
         const handleToggleClose = (event) => {
             setState({
                 isOpen: false,
@@ -263,21 +275,32 @@ const Map = withScriptjs(
 
                             options={{
                                 maxWidth: 460,
-                                closeBoxMargin: "10px 20px 2px 2px",
                             }} pixelOffset={"0"} position={state.position} visible={state.isOpen}
                         >
+                            {swiper ?
+                                <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={4000} animationOutDuration={2500} >
+                                    <div >
 
-                            {/* <InfoContent name={state.selectedPlace.name}> </InfoContent> */}
-                            <div>
-                                <a style={{ fontSize: "20px", color: params.color }} onClick={handleToggleClose} draggable="false" aria-label="Fermer" title="Fermer" type="button" class="gm-ui-hover-effect float-right" >
-                                    <i class="fas fa-window-close"></i>
+                                        {/* <InfoContent name={state.selectedPlace.name}> </InfoContent> */}
+                                        <a style={{ fontSize: "20px", color: params.color }} onClick={handleToggleClose} draggable="false" aria-label="Fermer" title="Fermer" type="button" class="gm-ui-hover-effect text-right col-12" >
+                                            <i class="fas fa-window-close"></i>
 
-                                </a>
-                                {swiper}
-                                <div class="col-12 m-1 text-center" > <span style={{ color: params.color, fontSize: "15px" }}> {nb_annonce}</span> annonce </div>
+                                        </a>
+                                        <div class=" row justify-content-center">
 
-                            </div>
+                                            <div class="col-10 ">
+                                                <div class="text-center ">
 
+                                                    {swiper}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 m-2 text-center" > <span style={{ color: params.color, fontSize: "17px" }}><span class="font-weight-bold"> {nb_annonce}</span> </span> annonces </div>
+                                    </div>
+
+                                </Animated>
+                                : <div > </div>}
                         </InfoWindow>
                     }
                 </MarkerClusterer >

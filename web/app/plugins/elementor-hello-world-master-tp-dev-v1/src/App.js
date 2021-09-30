@@ -3,11 +3,13 @@
 import { GoogleApiWrapper } from "google-maps-react";
 import GoogleMaps from "./components/GoogleMaps";
 import ListeAnnonce from "./components/ListeAnnonce";
+import 'semantic-ui-css/semantic.min.css'
 
 import SearchLocationInput from "./components/SearchLocationInput";
 import SelectBox from "./components/SelectBox";
 import NbResultat from "./components/NbResultat";
 import Text from "./components/Text";
+import Paginator from "./components/Paginator";
 
 import { Animated } from "react-animated-css";
 
@@ -92,6 +94,7 @@ const App = (props) => {
   const [selectedSort, setSelectedSort] = useState();
   const [url_construct, setUrlConstruct] = useState({ prestation_type: "", secteur: "", pro_res: "" });
   const [hidecontent, setHideContent] = useState("");
+  let [page, setPage] = useState(1);
 
   useEffect((event) => {
     if (hidecontent == "carte") {
@@ -191,6 +194,8 @@ const App = (props) => {
                 longitude={state.lng}
                 setSelectedSort={setSelectedSort}
                 cars={selectedSort}
+                page={page}
+
               ></ListeAnnonce>
 
             </Animated>
@@ -219,6 +224,17 @@ const App = (props) => {
         </div >
         : ""
       }
+      {selectedSort ?
+
+
+        < Paginator
+          params={params}
+          data={selectedSort}
+          nb_page_afficher={10}
+          setPage={setPage}
+
+        />
+        : ""}
     </div >
 
   );

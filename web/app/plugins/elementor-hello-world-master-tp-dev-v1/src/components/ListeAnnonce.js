@@ -1,10 +1,8 @@
 import React from "react";
 
 import DetailAnnonce from "./DetailAnnonce.js";
-import Paginator from "./Paginator";
 
 import { Animated } from "react-animated-css";
-import ReactLoading from "react-loading";
 
 const ListeAnnonce = ({
   latitude,
@@ -12,6 +10,7 @@ const ListeAnnonce = ({
   cars,
   setSelectedSort,
   params,
+  page,
 }) => {
   let renderAnnonce;
   const style = {
@@ -28,7 +27,6 @@ const ListeAnnonce = ({
     selectedPlace: { marque: "", motorisation: "", model: "" },
   });
   let [cpt, setCpt] = React.useState(0);
-  let [page, setPage] = React.useState(1);
 
   const onMarkerClick = (props, marker, e) =>
     setState({
@@ -52,8 +50,11 @@ const ListeAnnonce = ({
       renderAnnonce = cars['data'][page].map((annonce, index) => {
         if (annonce) {
           return (
+
             <div class={params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12' : params.col_post}  >
+
               < DetailAnnonce name={annonce} params={params} index={index}  > </DetailAnnonce>
+
             </div>
           );
         }
@@ -63,8 +64,6 @@ const ListeAnnonce = ({
       renderAnnonce = <div class="row"><span class="col-6"> Desolé, nous avons aucune annonce qui correspond a votre recherche
       </span> <a class="col-6 btn " type="button" href="" style={style}> Prendre RDV avec un commercial
         </a></div>
-
-
     }
   }
   return (
@@ -72,19 +71,7 @@ const ListeAnnonce = ({
     <div>
       <div class="row">
         {renderAnnonce}
-
-        {renderAnnonce ?
-          < Paginator
-            params={params}
-            data={cars}
-            nb_page_afficher={10}
-            setPage={setPage}
-
-          />
-          : ""}
-
       </div>
-
     </div >
 
   );

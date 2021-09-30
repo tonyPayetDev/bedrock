@@ -271,7 +271,10 @@ const DetailAnnonce = (props) => {
 
 
   return (
-    <div>
+
+    <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={2500} animationOutDuration={2500} >
+
+
       <div class='col-lg-6 col-md-12 col-xs-12' style={card} class="card"  >
         {fieldsPhotos}
         {/* todo pour plustard rajouer mouse over qui marche sur programmes et biens //onMouseOver={MouseOver} onMouseOut={MouseOut}  */}
@@ -285,7 +288,7 @@ const DetailAnnonce = (props) => {
           </div>
         </div>
       </div>
-    </div>
+    </Animated>
 
   );
 };
