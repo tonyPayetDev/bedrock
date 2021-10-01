@@ -162,10 +162,17 @@ const App = (props) => {
 
         <div class="col-12  justify-content-center mt-3 ">
           <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={2000} animationOutDuration={2000} >
-            <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} class="btn " style={style}> {params.search_text}
+            <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} class="btn   " style={style}>
+
+
               <NbResultat paren
+
+                params={params}
                 data={selectedSort}
               ></NbResultat>
+
+
+
             </a>
           </Animated>
         </div>
@@ -183,7 +190,6 @@ const App = (props) => {
 
       {params.visible ?
         <div class="row" style={{ "overflow-y": "auto", height: '70vh' }}>
-
 
           <div class={params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12 ' : 'col-lg-12 col-md-12 col-xs-12 sticky-top'} >
             {selectedSort ? "" : <div class="col-12 d-flex justify-content-center" >  <ReactLoading type='bubbles' color={params.color} /></div >}

@@ -296399,10 +296399,11 @@ const App = props => {
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
     type: "button",
     href: params.url + '?' + new URLSearchParams(url_construct),
-    class: "btn ",
+    class: "btn   ",
     style: style
-  }, " ", params.search_text, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_NbResultat__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_NbResultat__WEBPACK_IMPORTED_MODULE_8__["default"], {
     paren: true,
+    params: params,
     data: selectedSort
   }))))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_SearchLocationInput__WEBPACK_IMPORTED_MODULE_6__["default"], {
     state: state,
@@ -297707,6 +297708,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _images_flags_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../images/flags.png */ "./src/images/flags.png");
 /* harmony import */ var _constants_APIConfig__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../constants/APIConfig */ "./src/constants/APIConfig.js");
+/* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-loading */ "./node_modules/react-loading/dist/react-loading.js");
+/* harmony import */ var react_loading__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_loading__WEBPACK_IMPORTED_MODULE_4__);
+
 
 
 
@@ -297715,7 +297719,8 @@ __webpack_require__.r(__webpack_exports__);
 const NbResultat = props => {
   const {
     data,
-    paren
+    paren,
+    params
   } = props;
   let paren_odd = "(";
   let paren_even = ")";
@@ -297725,11 +297730,26 @@ const NbResultat = props => {
     paren_even = "";
   }
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", {
-    style: {
-      margin: "10px"
-    }
-  }, data ? paren_odd + data['count'] + " résultats " + paren_even : "");
+  let col = "col-4";
+  let col2 = "col-8 text-nowrap";
+
+  if (data) {
+    col = "col-6 ";
+    col2 = "col-6 text-nowrap";
+  }
+
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    class: "row"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    class: col2
+  }, params.search_text), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    class: col
+  }, data ? paren_odd + data['count'] + " résultats " + paren_even : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react_loading__WEBPACK_IMPORTED_MODULE_4___default.a, {
+    type: "bubbles",
+    color: "white",
+    height: '80%',
+    width: '80%'
+  })));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (NbResultat);
@@ -297779,7 +297799,7 @@ const Paginator = props => {
     activePage: activePage,
     style: {
       background: props.params.color,
-      fontSize: "15px"
+      fontSize: "13px"
     },
     onPageChange: onChange,
     secondary: true,
