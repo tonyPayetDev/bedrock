@@ -93,16 +93,16 @@ const SelectBox = (props) => {
     (props) => {
 
       if (search) {
-
+        console.log(search);
         tab[search.name] = search.value;
-        if (search.value === "") {// je supprime la clé si checkbox a false enleve la valeur dans l'url
+
+        if (search.value === "" || search.value === null) {// je supprime la clé si checkbox a false enleve la valeur dans l'url
           delete tab[search.name];
         }
 
-        setUrlConstruct(tab);
-        setSelectedSort("");
-        APIConfig.getItems(fetchURL + new URLSearchParams(tab)).then((data) => setSelectedSort(data));
-
+        if (search.type == "select" && search.value) {
+          tab[search.name] = search.value.value;
+        }
         if (search.type == "btn") {
           setActive(search.value);
         }
@@ -121,6 +121,11 @@ const SelectBox = (props) => {
             state[search.name] = true;
           }
         }
+        setUrlConstruct(tab);
+        setSelectedSort("");
+        APIConfig.getItems(fetchURL + new URLSearchParams(tab)).then((data) => setSelectedSort(data));
+
+
       }
     },
     [search, cars]
@@ -135,6 +140,7 @@ const SelectBox = (props) => {
       let col = data.col + " mt-1";
       return (
         <div class={col}>
+
           <Select
             theme={theme => ({
               ...theme,
@@ -146,11 +152,12 @@ const SelectBox = (props) => {
                 primary: params.color,
               },
             })}
-
             placeholder={data.label}
             // isMulti
+            isClearable
             options={data.value}
-            onChange={(e) => setSearch({ "name": data.name, "value": e.value })}
+            onChange={(e) => setSearch({ "name": data.name, "value": e, type: "select" })}
+
           // defaultValue={{ label: "vente", value: "Acheter" }}
           />
         </div >
@@ -213,7 +220,6 @@ const SelectBox = (props) => {
 
       // todo util pour le multi select
       return data.value.map((data_value, index) => {
-        console.log(state[data_value.value]);
         let value;
 
         if (!state[data_value.value]) {
@@ -236,7 +242,6 @@ const SelectBox = (props) => {
     }
 
   }
-  console.log(isOpened);
   let renderElement = params.type.map((data, index) => {
     if (!data.critere && !critere) {
 

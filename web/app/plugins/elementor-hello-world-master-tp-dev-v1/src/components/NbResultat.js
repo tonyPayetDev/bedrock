@@ -1,10 +1,10 @@
 import React from "react";
-import Icon from "../images/flags.png";
-import * as APIConfig from "../constants/APIConfig";
 import ReactLoading from "react-loading";
 
 const NbResultat = (props) => {
   const { data, paren, params } = props;
+  let { loading } = props;
+
   let paren_odd = "(";
   let paren_even = ")";
   if (!paren) {
@@ -20,13 +20,19 @@ const NbResultat = (props) => {
 
   }
 
+  if (loading) {
+    loading = <ReactLoading type='bubbles' color="white" height={'80%'} width={'80%'} />;
+
+  } else {
+    loading = "";
+  }
   return (
     <div class="row">
-      <div class={col2}>
+      {params.search_text ? <div class={col2}>
         {params.search_text}
-      </div>
+      </div> : ""}
       <div class={col}>
-        {data ? paren_odd + data['count'] + " résultats " + paren_even : <ReactLoading type='bubbles' color="white" height={'80%'} width={'80%'} />}
+        {data ? paren_odd + data['count'] + " résultats " + paren_even : loading}
       </div>
 
     </div>

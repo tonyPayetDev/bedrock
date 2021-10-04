@@ -58,14 +58,14 @@ const MarkerCarrierIcon = ({ lac, onMarkerClick, url_icon, params }) => {
         <Marker
             // label={label}
             onClick={() => handleToggleOpen()}
-            title={JSON.stringify(lac)}
+            // title={JSON.stringify(lac)}
             position={{ lat: latitude, lng: longitude }}
             icon={{
                 width: "10%",
                 url: url_icon,//`/images/${lac.carrier.toLowerCase()}_bw.png`,
+                data: JSON.stringify(lac),// passe les data ici car pas d'autre moyen avant passer dans title
                 anchor: window.google.maps.Point(16, 16),
                 scaledSize: window.google.maps.Size(32, 32),
-                condition: lac.condition,
             }}
             name={{
                 marque: lac.bien_type,
@@ -95,6 +95,7 @@ const MarkerCarrierIcon = ({ lac, onMarkerClick, url_icon, params }) => {
                         <div class={params.ekit_map_btn ? 'col-lg-12 col-md-12 col-xs-12 ' : params.col_post}  >
                             < DetailAnnonce name={lac} params={params} index={index} disable_even_odd > </DetailAnnonce>
                         </div>
+
                     </div>
 
                 </InfoWindow>

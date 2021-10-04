@@ -6,7 +6,7 @@ import ListeAnnonce from "./components/ListeAnnonce";
 import { Pagination } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 
-import SearchLocationInput from "./components/SearchLocationInput";
+// import SearchLocationInput from "./components/SearchLocationInput";
 import SelectBox from "./components/SelectBox";
 import NbResultat from "./components/NbResultat";
 import Text from "./components/Text";
@@ -110,7 +110,6 @@ const App = (props) => {
 
   }, [hidecontent]);
 
-
   // affiche ou cache la maps
   let col = "col-" + params.col_heading_text;
   return (
@@ -152,40 +151,35 @@ const App = (props) => {
         </div>
 
       </div>
-
-      {params.ekit_resultat ?
+      {!params.search_text ?
         <NbResultat
+          params={params}
+          loading={false}
           data={selectedSort}
-        ></NbResultat> : ""}
-
+        ></NbResultat> : ""
+      }
       <div class="row">
 
         <div class="col-12  justify-content-center mt-3 ">
           <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={2000} animationOutDuration={2000} >
             <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} class="btn   " style={style}>
-
-
               <NbResultat paren
-
                 params={params}
                 data={selectedSort}
               ></NbResultat>
-
-
-
             </a>
           </Animated>
         </div>
 
       </div>
 
-      <SearchLocationInput
+      {/* <SearchLocationInput
         state={state}
         updateState={updateState}
         cars={cars}
         setSelectedSort={setSelectedSort}
         params={params}
-      ></SearchLocationInput>
+      ></SearchLocationInput> */}
 
 
       {params.visible ?
@@ -211,17 +205,18 @@ const App = (props) => {
           <div class="col-md-6 " style={{ position: "absolute", left: " 49%" }}>
             {params.ekit_map_btn ?
               < Map
-
-                params={params}
-                fetchURL={fetchURL}
-                params={params}
-                defaultOptions={{
-                  scaleControl: true
-                }}
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0&libraries=visualization,drawing,geometry,places`}
                 loadingElement={<div style={{ height: '100%' }}> Loading... </div>}
                 containerElement={<div style={{ height: '70vh' }} />}
                 mapElement={<div style={{ height: '100%' }} />}
+                defaultOptions={{
+                  scaleControl: true
+                }}
+
+                params={params}
+                fetchURL={fetchURL}
+                params={params}
+
                 setSelectedSort={setSelectedSort}
                 selectedSort={selectedSort}
               />
@@ -247,6 +242,4 @@ const App = (props) => {
   );
 };
 
-export default GoogleApiWrapper({
-  apiKey: APIConfig.KEY_MAP,
-})(App);
+export default App;

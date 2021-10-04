@@ -39,6 +39,7 @@ import InfoContent from "./InfoContent.js";
 
 // import SearchBox from "./components/SearchBox";
 import MarkerCarrierIcon from "./MarkerCarrierIcon";
+import { Hidden } from "@material-ui/core";
 function SampleNextArrow(props) {
     const { className, style, onClick, color } = props;
     console.log(color);
@@ -76,7 +77,7 @@ const Map = withScriptjs(
         };
 
         const mapRef = useRef(null);
-        const [zoom, setZoom] = useState(10.3);
+        const [zoom, setZoom] = useState(10);
         const [marker, setMarker] = useState({ hasMarker: false, position: {} });
         const [center, setCenter] = useState({ lat: -21.1, lng: 55.5 });
         const [tab_infoWindow, setTabInfoWindow] = useState({});
@@ -85,29 +86,20 @@ const Map = withScriptjs(
             position: 0,
             tab_infoWindow: ""
         });
-        const [selectedSortMap, setSelectedSortMap] = useState({ "data": "" });
 
         let tab = [];
         var url = new URL(document.location.href);
         let url_icon = url.origin + "/app/plugins/elementor-hello-world-master-tp-dev-v1/build/" + Icon
-        if (props.selectedSortMap) {
-            Object.values(props.selectedSortMap['data']).map((value, index) => {
-                Object.values(value).map((value2, index) => {
-                    tab.push(value2)
-                });
-            });
-        }
         if (props.selectedSort) {
-            const select = props.selectedSort['data'];
-            Object.values(select).map((value, index) => {
-                Object.values(value).map((value2, index) => {
-                    tab.push(value2)
+            if (props.selectedSort['count'] != 0) {
+                const select = props.selectedSort['data'];
+                Object.values(select).map((value, index) => {
+                    Object.values(value).map((value2, index) => {
+                        tab.push(value2)
+                    });
                 });
-            });
-
+            }
         }
-
-
         // const handlePlacesChanged = (place) => {
         //     setZoom(16);
         //     setCenter({
@@ -122,13 +114,9 @@ const Map = withScriptjs(
         //         }
         //     });
         // };
-        const OPTIONS = {
-            minZoom: 8,
-            maxZoom: 13,
-        }
 
-        let renderInfo;
 
+        let renderInfo
         const onMarkerClustererClick = (markerClusterer) => {
             const m = markerClusterer.getMarkers();
             setState({
@@ -136,10 +124,12 @@ const Map = withScriptjs(
                 position: 0,
                 tab_infoWindow: "",
             });
+            console.log(m);
 
             if (m.length) {
                 for (let i in m) {
-                    let data = JSON.parse(m[i].getTitle());
+
+                    let data = JSON.parse(m[i].icon.data);
                     tab_infoWindow[i] = data;
                     setState({
                         isOpen: true,
@@ -203,7 +193,10 @@ const Map = withScriptjs(
         return (
             <GoogleMap
 
-                options={OPTIONS}
+                options={{
+                    minZoom: 5,
+                    maxZoom: 11.5,
+                }}
                 zoom={zoom}
                 ref={mapRef}
                 center={center}
@@ -272,34 +265,33 @@ const Map = withScriptjs(
                     {
                         state.isOpen &&
                         <InfoWindow
-
                             options={{
                                 maxWidth: 460,
+                                disableAutoPan: false,
+
                             }} pixelOffset={"0"} position={state.position} visible={state.isOpen}
                         >
                             {swiper ?
-                                <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={4000} animationOutDuration={2500} >
-                                    <div >
+                                <div
+                                >
 
-                                        {/* <InfoContent name={state.selectedPlace.name}> </InfoContent> */}
-                                        <a style={{ fontSize: "20px", color: params.color }} onClick={handleToggleClose} draggable="false" aria-label="Fermer" title="Fermer" type="button" class="gm-ui-hover-effect text-right col-12" >
-                                            <i class="fas fa-window-close"></i>
+                                    {/* <InfoContent name={state.selectedPlace.name}> </InfoContent> */}
+                                    <a style={{ fontSize: "20px", color: params.color, position: "absolute", marginLeft: "-12px" }} onClick={handleToggleClose} draggable="false" aria-label="Fermer" title="Fermer" type="button" class="gm-ui-hover-effect text-right col-12" >
+                                        <i class="fas fa-window-close"></i>
 
-                                        </a>
-                                        <div class=" row justify-content-center">
+                                    </a>
+                                    <div class=" row justify-content-center">
 
-                                            <div class="col-10 ">
-                                                <div class="text-center ">
-
-                                                    {swiper}
-                                                </div>
+                                        <div class="col-10 ">
+                                            <div class="text-center ">
+                                                {swiper}
                                             </div>
                                         </div>
-
-                                        <div class="col-12 m-2 text-center" > <span style={{ color: params.color, fontSize: "17px" }}><span class="font-weight-bold"> {nb_annonce}</span> </span> annonces </div>
                                     </div>
 
-                                </Animated>
+                                    <div class="col-12  text-center" > <span style={{ color: params.color, fontSize: "17px" }}><span class="font-weight-bold"> {nb_annonce}</span> </span> annonces </div>
+                                </div>
+
                                 : <div > </div>}
                         </InfoWindow>
                     }

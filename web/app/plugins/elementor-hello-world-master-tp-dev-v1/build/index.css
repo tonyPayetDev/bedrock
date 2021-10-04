@@ -38,6 +38,12 @@ body {
   -o-object-fit: cover;
      object-fit: cover;
 }
+
+.gm-style-iw-d{
+
+    overflow: hidden;
+
+}
 button.gm-ui-hover-effect {
     visibility: hidden;
     /* background-image: url('http://www.google.com/intl/en_us/mapfiles/close.gif') !important;

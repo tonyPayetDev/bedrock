@@ -16,6 +16,7 @@ const ListeAnnonce = ({
   const style = {
     backgroundColor: params.color ? params.color : "#ffffff",
     color: !params.color ? params.color : "#ffffff",
+    zIndex: -1
 
   };
   const [state, setState] = React.useState({
@@ -46,7 +47,6 @@ const ListeAnnonce = ({
 
   if (cars) {
     if (cars['count'] != 0) {
-      console.log(cars['data'][page]);
       renderAnnonce = cars['data'][page].map((annonce, index) => {
         if (annonce) {
           return (
