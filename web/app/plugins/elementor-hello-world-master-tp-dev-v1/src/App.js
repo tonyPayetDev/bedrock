@@ -22,7 +22,7 @@ var page_id = APIConfig.url_const.searchParams.get("page_id");
 import Map from './components/Map'
 
 const App = (props) => {
-  const { id } = props;; // charge les paremetres au premier rechargement
+  const { id } = props; // charge les paremetres au premier rechargement
 
   const [state, updateState] = React.useState({
     lat: -21,
@@ -35,7 +35,6 @@ const App = (props) => {
   });
   const [tab, setTab] = useState({});// # stock les filtre d'apres les type récupérer 
   let [tabDefault, setTabDefault] = useState({});// # stock les filtre d'apres les type récupérer 
-
   const [params, setParams] = useState(APIConfig.param(id)[0]);
   const fetchURL = `${params.API_URI}&`;
   //  todo cars a renormer en data
@@ -44,7 +43,6 @@ const App = (props) => {
   const [url_construct, setUrlConstruct] = useState({});
   const [hidecontent, setHideContent] = useState("");
   let [page, setPage] = useState(1);
-  console.log(url_construct);
 
   params.type.map((data, index) => {
     var value = APIConfig.url_const.searchParams.get(data.name);
@@ -251,7 +249,7 @@ const App = (props) => {
         </div >
         : ""
       }
-      {selectedSort && params.visible ?
+      {selectedSort && params.visible && params.paginator ?
 
 
         < Paginator

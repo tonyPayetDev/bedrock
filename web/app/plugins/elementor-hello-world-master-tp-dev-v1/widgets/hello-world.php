@@ -554,6 +554,18 @@ class Hello_World extends Widget_Base
         );
 
         $this->add_control(
+            'paginator',
+            [
+                'label' => esc_html__('Pagination', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+
+        $this->add_control(
             'ekit_resultat',
             [
                 'label' => esc_html__('Resultat 1', 'elementskit-lite'),
@@ -1469,7 +1481,7 @@ class Hello_World extends Widget_Base
             'col_post' => $settings['col_post'],
             'ekit_dynamic_text' => $settings['ekit_dynamic_text'],
             'first_load' =>  $settings['first_load'],
-
+            'paginator' =>  $settings['paginator'],
 
         );
         

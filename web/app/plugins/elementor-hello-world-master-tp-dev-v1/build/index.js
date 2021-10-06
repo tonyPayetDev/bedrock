@@ -323167,8 +323167,7 @@ var page_id = _constants_APIConfig__WEBPACK_IMPORTED_MODULE_12__["url_const"].se
 const App = props => {
   const {
     id
-  } = props;
-  ; // charge les paremetres au premier rechargement
+  } = props; // charge les paremetres au premier rechargement
 
   const [state, updateState] = react__WEBPACK_IMPORTED_MODULE_11___default.a.useState({
     lat: -21,
@@ -323192,7 +323191,6 @@ const App = props => {
   const [url_construct, setUrlConstruct] = Object(react__WEBPACK_IMPORTED_MODULE_11__["useState"])({});
   const [hidecontent, setHideContent] = Object(react__WEBPACK_IMPORTED_MODULE_11__["useState"])("");
   let [page, setPage] = Object(react__WEBPACK_IMPORTED_MODULE_11__["useState"])(1);
-  console.log(url_construct);
   params.type.map((data, index) => {
     var value = _constants_APIConfig__WEBPACK_IMPORTED_MODULE_12__["url_const"].searchParams.get(data.name);
 
@@ -323402,7 +323400,7 @@ const App = props => {
     params: params,
     setSelectedSort: setSelectedSort,
     selectedSort: selectedSort
-  }) : "")) : "", selectedSort && params.visible ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_Paginator__WEBPACK_IMPORTED_MODULE_9__["default"], {
+  }) : "")) : "", selectedSort && params.visible && params.paginator ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_Paginator__WEBPACK_IMPORTED_MODULE_9__["default"], {
     params: params,
     data: selectedSort,
     nb_page_afficher: 10,
