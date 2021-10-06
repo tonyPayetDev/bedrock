@@ -34,15 +34,32 @@ const App = (props) => {
 
   });
   const [tab, setTab] = useState({});// # stock les filtre d'apres les type récupérer 
+  let [tabDefault, setTabDefault] = useState({});// # stock les filtre d'apres les type récupérer 
+
   const [params, setParams] = useState(APIConfig.param(id)[0]);
   const fetchURL = `${params.API_URI}&`;
-
+  //  todo cars a renormer en data
+  const [cars, setCars] = useState();
+  const [selectedSort, setSelectedSort] = useState();
+  const [url_construct, setUrlConstruct] = useState({});
+  const [hidecontent, setHideContent] = useState("");
+  let [page, setPage] = useState(1);
+  console.log(url_construct);
 
   params.type.map((data, index) => {
-    // console.log(data.name);
-    var secteur = APIConfig.url_const.searchParams.get(data.name);
-    if (secteur) { // on récupére si fais partie des filtres elementor
-      tab[data.name] = secteur;
+    var value = APIConfig.url_const.searchParams.get(data.name);
+    if (value) { // on récupére si fais partie des filtres elementor
+      tab[data.name] = value;
+    }
+    tabDefault[data.name] = { label: value, value: value } // tableau qui remplis les valeurs par defaut lors de la rdirection vers page recherche recupere 
+
+    // recupere les valeurs active des filtre active
+    if (!params.first_load && data.value) {
+      data.value.map((value, index) => {
+        if (value.ekit_tab_active != false) {
+          url_construct[data.name] = value.value;
+        }
+      });
     }
   });
   const style = {
@@ -90,23 +107,25 @@ const App = (props) => {
     display: "none",
   };
 
-  //  todo cars a renormer en data
-  const [cars, setCars] = useState();
-  const [selectedSort, setSelectedSort] = useState();
-  const [url_construct, setUrlConstruct] = useState({ prestation_type: "", secteur: "", pro_res: "" });
-  const [hidecontent, setHideContent] = useState("");
-  let [page, setPage] = useState(1);
+  const StyleMapOverflow = { "overflow": "auto", height: '70vh' }
+  const StyleMapOverflowhidden = { "overflow": "hidden" }// active overflow si map activer ou pas
 
   useEffect((event) => {
     if (hidecontent == "carte") {
       params.ekit_map_btn = 'yes';
       setParams(params);
+      APIConfig.getItems(fetchURL + new URLSearchParams(tab)).then((data) => setSelectedSort(data));
+
     }
     if (hidecontent == "galerie") {
       params.ekit_map_btn = '';
       setParams(params);
+      APIConfig.getItems(fetchURL + new URLSearchParams(tab)).then((data) => setSelectedSort(data));
+
     }
-    APIConfig.getItems(fetchURL + new URLSearchParams(tab)).then((data) => setSelectedSort(data));
+    if (params.first_load) {
+      APIConfig.getItems(fetchURL + new URLSearchParams(tab)).then((data) => setSelectedSort(data));
+    }
 
   }, [hidecontent]);
 
@@ -141,12 +160,17 @@ const App = (props) => {
           <SelectBox
             setSelectedSort={setSelectedSort}
             setUrlConstruct={setUrlConstruct}
+            url_construct={url_construct}
             cars={cars}
             state={state}
             params={params}
             fetchURL={fetchURL}
             style_invers={style_invers}
             stylecriteres={stylecriteres}
+            tabDefault={tabDefault}
+            setTabDefault={setTabDefault}
+
+
           ></SelectBox>
         </div>
 
@@ -155,14 +179,15 @@ const App = (props) => {
         <NbResultat
           params={params}
           loading={false}
+          options="1"
           data={selectedSort}
         ></NbResultat> : ""
       }
-      <div class="row">
+      <div class="row justify-content-center">
 
-        <div class="col-12  justify-content-center mt-3 ">
+        <div class="col-5   mt-3 ">
           <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={2000} animationOutDuration={2000} >
-            <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} class="btn   " style={style}>
+            <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} class="btn btn-block  " style={style}>
               <NbResultat paren
                 params={params}
                 data={selectedSort}
@@ -183,7 +208,7 @@ const App = (props) => {
 
 
       {params.visible ?
-        <div class="row" style={{ "overflow-y": "auto", height: '70vh' }}>
+        <div class="row" style={params.ekit_map_btn ? StyleMapOverflow : StyleMapOverflowhidden}>
 
           <div class={params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12 ' : 'col-lg-12 col-md-12 col-xs-12 sticky-top'} >
             {selectedSort ? "" : <div class="col-12 d-flex justify-content-center" >  <ReactLoading type='bubbles' color={params.color} /></div >}

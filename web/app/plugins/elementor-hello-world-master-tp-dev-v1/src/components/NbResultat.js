@@ -2,7 +2,7 @@ import React from "react";
 import ReactLoading from "react-loading";
 
 const NbResultat = (props) => {
-  const { data, paren, params } = props;
+  const { data, paren, params, options } = props;
   let { loading } = props;
 
   let paren_odd = "(";
@@ -12,29 +12,27 @@ const NbResultat = (props) => {
     paren_even = "";
   }
   let col = "col-4";
-  let col2 = "col-8 text-nowrap";
+  let col2 = "col-12 ";
 
-  if (data) {
-    col = "col-6 "
-    col2 = "col-6 text-nowrap"
+  let load = "";
+  if (data == "") {
+    col2 = "col-8 ";
 
+    load = <div class="col-4">
+      <ReactLoading type='bubbles' color="white" height={'30%'} width={'30%'} />  </div>;
   }
 
-  if (loading) {
-    loading = <ReactLoading type='bubbles' color="white" height={'80%'} width={'80%'} />;
 
-  } else {
-    loading = "";
-  }
   return (
     <div class="row">
       {params.search_text ? <div class={col2}>
-        {params.search_text}
-      </div> : ""}
-      <div class={col}>
-        {data ? paren_odd + data['count'] + " résultats " + paren_even : loading}
-      </div>
+        {params.search_text}        {data ? paren_odd + data['count'] + " résultats " + paren_even : ""}
 
+      </div> : ""}
+
+      {load}
+
+      {data && options == "1" ? paren_odd + data['count'] + " résultats " + paren_even : ""}
     </div>
   );
 };

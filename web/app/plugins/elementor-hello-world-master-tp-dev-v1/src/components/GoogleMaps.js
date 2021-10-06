@@ -4,7 +4,6 @@ import { Map, InfoWindow, Marker, Circle } from "google-maps-react";
 import InfoContent from "./InfoContent.js";
 import Icon from "../images/logo.png";
 import * as APIConfig from "../constants/APIConfig";
-import PlacesAutocomplete from "react-places-autocomplete";
 
 const GoogleMaps = ({
   latitude,

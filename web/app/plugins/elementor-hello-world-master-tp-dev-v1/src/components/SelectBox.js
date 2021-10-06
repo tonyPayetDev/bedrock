@@ -59,12 +59,14 @@ const CssTextField = withStyles({
 })(TextField);
 
 const SelectBox = (props) => {
-  const { setSelectedSort, cars, params, setUrlConstruct, fetchURL, critere, stylecriteres, style_invers } = props;
+  const { setSelectedSort, cars, params, setUrlConstruct, fetchURL, critere, stylecriteres, style_invers, tabDefault, setTabDefault, url_construct } = props;
   const [search, setSearch] = useState("");
   const [isOpened, setIsOpened] = useState(false);
 
-  const [tab, setTab] = useState({});// # todo a recupérer en params
+  const [tab, setTab] = useState(url_construct);// # todo a recupérer en params
   const [active, setActive] = useState(false);// # todo a recupérer en params
+  const [desactive, setDesactive] = useState(true);// # todo a recupérer en params
+
   const [values, setValues] = React.useState({
     numberformat: ""
   });
@@ -93,9 +95,8 @@ const SelectBox = (props) => {
     (props) => {
 
       if (search) {
-        console.log(search);
-        tab[search.name] = search.value;
 
+        tab[search.name] = search.value;
         if (search.value === "" || search.value === null) {// je supprime la clé si checkbox a false enleve la valeur dans l'url
           delete tab[search.name];
         }
@@ -104,7 +105,11 @@ const SelectBox = (props) => {
           tab[search.name] = search.value.value;
         }
         if (search.type == "btn") {
+
           setActive(search.value);
+
+          setDesactive(false);
+
         }
         if (search.type == "text") {
           setValues({
@@ -123,6 +128,7 @@ const SelectBox = (props) => {
         }
         setUrlConstruct(tab);
         setSelectedSort("");
+
         APIConfig.getItems(fetchURL + new URLSearchParams(tab)).then((data) => setSelectedSort(data));
 
 
@@ -138,6 +144,10 @@ const SelectBox = (props) => {
   function filtre_facto(data, index) {
     if (data.type == "select") {
       let col = data.col + " mt-1";
+      let defaultValue = null;
+      if (tabDefault[data.name].value) {
+        defaultValue = tabDefault[data.name];
+      }
       return (
         <div class={col}>
 
@@ -158,7 +168,7 @@ const SelectBox = (props) => {
             options={data.value}
             onChange={(e) => setSearch({ "name": data.name, "value": e, type: "select" })}
 
-          // defaultValue={{ label: "vente", value: "Acheter" }}
+            defaultValue={defaultValue}
           />
         </div >
 
@@ -195,14 +205,19 @@ const SelectBox = (props) => {
     if (data.type == "button") {
       return data.value.map((data_value, index) => {
 
-        // on récupere la valeur active
-        if (!active && data_value.ekit_tab_active) {
-          data_value.ekit_tab_active = data_value.value;
+        if (desactive && tabDefault[data.name].value) {
+
+          data_value.ekit_tab_active = tabDefault[data.name].value;
+        } else {
+          if (!active && data_value.ekit_tab_active) {
+            data_value.ekit_tab_active = data_value.value;
+          }
+          else {
+            // si clique on récupere value actif
+            data_value.ekit_tab_active = active;
+          }
         }
-        else {
-          // si clique on récupere value actif
-          data_value.ekit_tab_active = active;
-        }
+
 
         let col = "btn mb-3 " + data.col;
         return (

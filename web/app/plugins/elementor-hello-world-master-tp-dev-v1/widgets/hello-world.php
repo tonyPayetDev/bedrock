@@ -408,7 +408,7 @@ class Hello_World extends Widget_Base
                 'label_on' => esc_html__('Show', 'elementskit-lite'),
                 'label_off' => esc_html__('Hide', 'elementskit-lite'),
 
-                'default'     => __('yes', 'elementor'),
+                'default'     => __('', 'elementor'),
                 'label_block' => true,
             ]
         );
@@ -532,7 +532,7 @@ class Hello_World extends Widget_Base
         $this->add_control(
             'ekit_map_btn',
             [
-                'label' => esc_html__('carte map', 'elementskit-lite'),
+                'label' => esc_html__('Carte map', 'elementskit-lite'),
                 'type' => Controls_Manager::SWITCHER,
                 'label_on' => esc_html__('Show', 'elementskit-lite'),
                 'label_off' => esc_html__('Hide', 'elementskit-lite'),
@@ -540,6 +540,19 @@ class Hello_World extends Widget_Base
                 'default' => 'yes',
             ]
         );
+
+        $this->add_control(
+            'first_load',
+            [
+                'label' => esc_html__('Premier chargement', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+
         $this->add_control(
             'ekit_resultat',
             [
@@ -555,7 +568,7 @@ class Hello_World extends Widget_Base
         $this->add_control(
             'ekit_search_btn',
             [
-                'label' => esc_html__('button search', 'elementskit-lite'),
+                'label' => esc_html__('Bouton recherche', 'elementskit-lite'),
                 'type' => Controls_Manager::SWITCHER,
                 'label_on' => esc_html__('Show', 'elementskit-lite'),
                 'label_off' => esc_html__('Hide', 'elementskit-lite'),
@@ -1429,6 +1442,8 @@ class Hello_World extends Widget_Base
            "id_active"=>get_permalink(get_the_ID()), // se base l'url de la page pour checker le bon parametre
            'type'=>$tab,
            'post'=>$post,
+
+           
            'ekit_resultat'=> $settings['ekit_resultat'],
            'cardbody'=> $settings['ekit_wb_225_code'],
            'card'=> $settings['ekit_wb_226_code'],
@@ -1452,7 +1467,9 @@ class Hello_World extends Widget_Base
             'ekit_map_btn' => $settings['ekit_map_btn'],
             'col_heading_text' => $settings['col_heading_text'],
             'col_post' => $settings['col_post'],
-            'ekit_dynamic_text' => $settings['ekit_dynamic_text']
+            'ekit_dynamic_text' => $settings['ekit_dynamic_text'],
+            'first_load' =>  $settings['first_load'],
+
 
         );
         
