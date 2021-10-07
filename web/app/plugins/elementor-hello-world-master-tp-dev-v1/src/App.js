@@ -167,8 +167,6 @@ const App = (props) => {
             stylecriteres={stylecriteres}
             tabDefault={tabDefault}
             setTabDefault={setTabDefault}
-
-
           ></SelectBox>
         </div>
 
@@ -219,6 +217,7 @@ const App = (props) => {
                 setSelectedSort={setSelectedSort}
                 cars={selectedSort}
                 page={page}
+                setPage={setPage}
 
               ></ListeAnnonce>
 

@@ -9,6 +9,7 @@ const ListeAnnonce = ({
   longitude,
   cars,
   setSelectedSort,
+  setPage,
   params,
   page,
 }) => {
@@ -44,9 +45,17 @@ const ListeAnnonce = ({
       });
     }
   };
+  React.useEffect(
+    (props) => {
+      // si utilisateur filtre on passe le page a 1 
+      setPage(1);
+    },
+    [cars]
+  );
 
   if (cars) {
     if (cars['count'] != 0) {
+      console.log(page);
       renderAnnonce = cars['data'][page].map((annonce, index) => {
         if (annonce) {
           return (
