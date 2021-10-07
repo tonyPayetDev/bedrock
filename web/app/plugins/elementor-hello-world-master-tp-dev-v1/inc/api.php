@@ -155,10 +155,10 @@ function title_filter($where, &$wp_query)
 
 function biens(WP_REST_Request $request)
 {
+    $paged = ($request->get_param('paged')) ? $request->get_param('paged') : 1;
+    $r=array();
+    $type=$request->get_param('type');
     if (!$request->get_param('name_select')) {
-        $paged = ($request->get_param('paged')) ? $request->get_param('paged') : 1;
-        $r=array();
-        $type=$request->get_param('type');
         foreach (name_select($type) as $key => $name) {
             if ($request->get_param($name)) {
                 $meta=     array(
@@ -221,15 +221,8 @@ function biens(WP_REST_Request $request)
         
             $tab_meta['data'][$per_page][]=$tab;
         }
-        $request_nb =  array(
-        'post_type' => $type,
-        'posts_per_page'   => -1 ,
-        'meta_query' => $r,
-      
-      ) ;
-
-        $count_biens = new WP_query($request_nb);
-        $tab_meta["count" ]=count($count_biens->posts);
+    
+        $tab_meta["count" ]=count($biens->posts);
     } else {
         $tab_meta["name_select" ]=name_select($type); // retourne si name_select = true
     }
