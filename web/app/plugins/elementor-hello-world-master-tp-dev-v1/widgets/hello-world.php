@@ -1372,17 +1372,14 @@ class Hello_World extends Widget_Base
         $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers('page');
         $page_settings_model = $page_settings_manager->get_model(get_the_ID());
         $url =$page_settings_model->get_settings($opt_key);
-        $response = wp_remote_get($url."&paged=4");//todo a voir pour optimiser la recuperation des champs
+        $response = wp_remote_get($url."&name_select=true");//todo a voir pour optimiser la recuperation des champs
         $body     = wp_remote_retrieve_body($response);
         $body =json_decode($body);
         if ($body && $opt_key) {
             foreach ($body as $key => $value) {
-                if ($key=='data') {
+                if ($key=='name_select') {
                     foreach ($value as $key2 => $value2) {
-                        foreach ($value2 as $key3 => $value3) {
-                            $tab_key_post[$key3 ]=  esc_html__($key3, 'elementskit-lite');
-                            $tab_key_post["Nombre"]=  esc_html__($key3, 'elementskit-lite');
-                        }
+                        $tab_key_post[$value2 ]=  esc_html__($value2, 'elementskit-lite');
                     }
                 }
             }

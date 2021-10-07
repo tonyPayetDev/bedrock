@@ -158,35 +158,36 @@ function biens(WP_REST_Request $request)
     $paged = ($request->get_param('paged')) ? $request->get_param('paged') : 1;
     $r=array();
     $type=$request->get_param('type');
-    
-    foreach (name_select($type) as $key => $name) {
-        if ($request->get_param($name)) {
-            $meta=     array(
+    if (!$request->get_param('name_select')) {
+        foreach (name_select($type) as $key => $name) {
+            if ($request->get_param($name)) {
+                $meta=     array(
                 'key' =>  (string)$name,
                 'value' => (string)$request->get_param($name),
               );
-            array_push($r, $meta);
-        }
-        if ($request->get_param($name."-max")) {// si le parametre passé contient max
-            $meta=     array(
+                array_push($r, $meta);
+            }
+            if ($request->get_param($name."-max")) {// si le parametre passé contient max
+                $meta=     array(
                 'key' =>  (string)$name,
                 'value' =>$request->get_param($name."-max"),
                 'type'    => 'numeric',
                 'compare' => '<',
               );
-            array_push($r, $meta);
-        }
-        if ($request->get_param($name."-min")) {// si le parametre passé contient max
-            $meta=     array(
+                array_push($r, $meta);
+            }
+            if ($request->get_param($name."-min")) {// si le parametre passé contient max
+                $meta=     array(
                 'key' =>  (string)$name,
                 'value' =>$request->get_param($name."-min"),
                 'type'    => 'numeric',
                 'compare' => '>',
               );
-            array_push($r, $meta);
+                array_push($r, $meta);
+            }
         }
-    }
-    $request_p =  array(
+    
+        $request_p =  array(
         'post_type' => $type,
         'posts_per_page'   => -1,//-1 all
         'meta_query' => $r,
@@ -195,42 +196,44 @@ function biens(WP_REST_Request $request)
         'meta_type' => 'DATE',
         'order' => 'DESC'
       ) ;
-    $biens = new WP_query($request_p);
-    $ville ;
-    $per_page=1;
-    $tab=[];
-    $cpt=0;
+        $biens = new WP_query($request_p);
+        $ville ;
+        $per_page=1;
+        $tab=[];
+        $cpt=0;
         
-    foreach ($biens->posts as $key => $value) {
-        $meta = get_post_meta($value->ID);
+        foreach ($biens->posts as $key => $value) {
+            $meta = get_post_meta($value->ID);
 
-        if ($cpt==10) {// decoupe par paquer de 10
-            $per_page++;
-            $cpt=0;
-        }
-        $cpt++;
-        foreach ($meta as $key => $value_meta) {
-            $tab["id"]=$value->ID;
-            $tab["post_name"]=$value->post_name;
-            $url = wp_get_attachment_image_src($value->photo, 'full')[0];// recupere juste l'ul
+            if ($cpt==10) {// decoupe par paquer de 10
+                $per_page++;
+                $cpt=0;
+            }
+            $cpt++;
+            foreach ($meta as $key => $value_meta) {
+                $tab["id"]=$value->ID;
+                $tab["post_name"]=$value->post_name;
+                $url = wp_get_attachment_image_src($value->photo, 'medium')[0];// recupere juste l'ul
             
-            $tab["photo"]= $url;
-            $tab[$key]=$value_meta[0];
-        }
+                $tab["photo"]= $url;
+                $tab[$key]=$value_meta[0];
+            }
         
-        $tab_meta['data'][$per_page][]=$tab;
-    }
-    $request_nb =  array(
+            $tab_meta['data'][$per_page][]=$tab;
+        }
+        $request_nb =  array(
         'post_type' => $type,
         'posts_per_page'   => -1 ,
         'meta_query' => $r,
       
       ) ;
 
-    $count_biens = new WP_query($request_nb);
+        $count_biens = new WP_query($request_nb);
 
-    $tab_meta["count" ]=count($count_biens->posts);
-    $tab_meta["name_select" ]=name_select($type);
+        $tab_meta["count" ]=count($count_biens->posts);
+    } else {
+        $tab_meta["name_select" ]=name_select($type); // retourne si name_select = true
+    }
 
     return $tab_meta;
 }
