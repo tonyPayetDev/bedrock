@@ -16,6 +16,7 @@ import {
   makeStyles,
   createTheme,
 } from '@material-ui/core/styles';
+import { TextShort, Zigbee } from "mdi-material-ui";
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -66,6 +67,8 @@ const SelectBox = (props) => {
   const [tab, setTab] = useState(url_construct);// # todo a recupérer en params
   const [active, setActive] = useState(false);// # todo a recupérer en params
   const [desactive, setDesactive] = useState(true);// # todo a recupérer en params
+  let [tabDefault2, settabDefault2] = useState({});// # todo a recupérer en params
+  let [firstload, setFirstload] = useState(true);// # todo a recupérer en params
 
   const [values, setValues] = React.useState({
     numberformat: ""
@@ -90,6 +93,17 @@ const SelectBox = (props) => {
     margin: ".25rem"
   };
 
+  // recupere les valeurs pars defauts au premier rechargement , la valeur sera mise a false a chaque filtre
+  if (firstload) {
+    Object.values(tabDefault).map((value, index) => {
+      console.log(value);
+      if (value.value) {
+        tab[value.name] = value.value
+
+      }
+    });
+
+  }
 
   useEffect(
     (props) => {
@@ -104,10 +118,10 @@ const SelectBox = (props) => {
         if (search.type == "select" && search.value) {
           tab[search.name] = search.value.value;
         }
+
         if (search.type == "btn") {
 
           setActive(search.value);
-
           setDesactive(false);
 
         }
@@ -119,19 +133,18 @@ const SelectBox = (props) => {
         }
 
         if (search.type == "checkbox") {
-
           if (state[search.name]) {
             state[search.name] = false;
           } else {
             state[search.name] = true;
           }
         }
+
         setUrlConstruct(tab);
         setSelectedSort("");
-
         APIConfig.getItems(fetchURL + new URLSearchParams(tab)).then((data) => setSelectedSort(data));
-
-
+        history.pushState({}, '', "?" + new URLSearchParams(tab)); // rempli l'url du navigateur
+        setFirstload(false);// mis a false pour ne plus etre appler qui est utile au premier chargement de page
       }
     },
     [search, cars]

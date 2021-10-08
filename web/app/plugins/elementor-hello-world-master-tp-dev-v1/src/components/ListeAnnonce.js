@@ -55,7 +55,6 @@ const ListeAnnonce = ({
 
   if (cars) {
     if (cars['count'] != 0) {
-      console.log(page);
       renderAnnonce = cars['data'][page].map((annonce, index) => {
         if (annonce) {
           return (

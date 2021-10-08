@@ -49,8 +49,7 @@ const App = (props) => {
     if (value) { // on récupére si fais partie des filtres elementor
       tab[data.name] = value;
     }
-    tabDefault[data.name] = { label: value, value: value } // tableau qui remplis les valeurs par defaut lors de la rdirection vers page recherche recupere 
-
+    tabDefault[data.name] = { name: data.name, label: value, value: value, active: true } // tableau qui remplis les valeurs par defaut lors de la rdirection vers page recherche recupere 
     // recupere les valeurs active des filtre active
     if (!params.first_load && data.value) {
       data.value.map((value, index) => {

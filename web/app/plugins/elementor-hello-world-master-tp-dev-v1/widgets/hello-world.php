@@ -368,17 +368,18 @@ class Hello_World extends Widget_Base
         );
     
         $serviceRepeater = new Repeater();
-
         $serviceRepeater->add_control(
             'category_slug',
             [
                 'label'       => __('Category Slug', 'elementor'),
-                'type'        => Controls_Manager::TEXT,
+                'type' => Controls_Manager::SELECT,
                 'default'     => __('category-name', 'elementor'),
                 'label_block' => true,
+                'options' =>$this->get_key_post($opt_key),
+
             ]
         );
-
+        
         $serviceRepeater->add_control(
             'service_title',
             [
@@ -1367,6 +1368,8 @@ class Hello_World extends Widget_Base
         }
         return $opt;
     }
+
+    // return la valeur des noms des filtres disponible
     public function get_key_post($opt_key)
     {
         $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers('page');
@@ -1451,8 +1454,6 @@ class Hello_World extends Widget_Base
            "id_active"=>get_permalink(get_the_ID()), // se base l'url de la page pour checker le bon parametre
            'type'=>$tab,
            'post'=>$post,
-
-           
            'ekit_resultat'=> $settings['ekit_resultat'],
            'cardbody'=> $settings['ekit_wb_225_code'],
            'card'=> $settings['ekit_wb_226_code'],

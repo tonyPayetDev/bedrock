@@ -22,7 +22,8 @@ function name_select($type)
         }
     }
           
-
+    $tab[]="details";
+    
     return array_unique($tab)  ;
 }
 /**
@@ -155,7 +156,6 @@ function title_filter($where, &$wp_query)
 
 function biens(WP_REST_Request $request)
 {
-    $paged = ($request->get_param('paged')) ? $request->get_param('paged') : 1;
     $r=array();
     $type=$request->get_param('type');
     if (!$request->get_param('name_select')) {
@@ -191,7 +191,6 @@ function biens(WP_REST_Request $request)
         'post_type' => $type,
         'posts_per_page'   => -1,//-1 all
         'meta_query' => $r,
-        'paged' => $paged,
         'orderby' => 'date_saisie',
         'meta_type' => 'DATE',
         'order' => 'DESC'
