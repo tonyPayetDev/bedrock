@@ -288,12 +288,14 @@ class Hello_World extends Widget_Base
             'category_slug',
             [
                 'label'       => __('Category Slug', 'elementor'),
-                'type'        => Controls_Manager::TEXT,
+                'type' => Controls_Manager::SELECT,
                 'default'     => __('category-name', 'elementor'),
                 'label_block' => true,
+                'options' =>$this->get_key_post($opt_key),
+    
             ]
         );
-    
+  
         $repeater->add_control(
             'category_title',
             [
