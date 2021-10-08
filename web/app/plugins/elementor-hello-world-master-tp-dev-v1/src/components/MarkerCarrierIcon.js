@@ -48,10 +48,6 @@ const MarkerCarrierIcon = ({ lac, onMarkerClick, url_icon, params }) => {
     let decalage = getRandomIntInclusive(0, 20) / 1000;
     let latitude = parseFloat(lac.longitude)// + decalage;// inverser quand modif dina 
     let longitude = parseFloat(lac.latitude) //+ decalage;
-
-
-    // console.log(latitude);
-    // console.log(longitude);
     let index = String(lac.id);
     return (
 

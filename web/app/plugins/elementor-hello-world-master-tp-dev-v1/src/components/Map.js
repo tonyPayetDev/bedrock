@@ -42,7 +42,6 @@ import MarkerCarrierIcon from "./MarkerCarrierIcon";
 import { Hidden } from "@material-ui/core";
 function SampleNextArrow(props) {
     const { className, style, onClick, color } = props;
-    console.log(color);
     return (
         <div className={className} onClick={onClick} style={{ ...style, display: "block", color: color, zIndex: 1, fontSize: "24px", float: "right", marginTop: "36px" }}><i aria-hidden="true" class="fas fa-arrow-circle-right"></i>  </div>
     );
@@ -100,20 +99,6 @@ const Map = withScriptjs(
                 });
             }
         }
-        // const handlePlacesChanged = (place) => {
-        //     setZoom(16);
-        //     setCenter({
-        //         lat: place.geometry.location.lat(),
-        //         lng: place.geometry.location.lng()
-        //     });
-        //     setMarker({
-        //         hasMarker: true,
-        //         position: {
-        //             lat: place.geometry.location.lat(),
-        //             lng: place.geometry.location.lng()
-        //         }
-        //     });
-        // };
 
 
         let renderInfo
@@ -124,7 +109,6 @@ const Map = withScriptjs(
                 position: 0,
                 tab_infoWindow: "",
             });
-            console.log(m);
 
             if (m.length) {
                 for (let i in m) {
@@ -152,31 +136,7 @@ const Map = withScriptjs(
                 </div>
             })
         }
-        // const swiper = <Swiper
-        //     centeredSlides={true}
-        //     roundLengths={true}
-        //     loop={true}
-        //     lazy={true}
-        //     preloadImages={true}
-        //     loopAdditionalSlides={30}
-        //     navigation={{
-        //         nextEl: ".swiper-button-next",
-        //         prevEl: ".swiper-button-prev"
-        //     }
-
-        //     }
-        //     autoplay={{
-        //         "delay": 3000,
-        //         "disableOnInteraction": true
-        //     }
-        //     } pagination={{
-        //         "clickable": false
-        //     }} navigation={true} className="mySwiper" >
-        //     {renderInfo}
-        // </Swiper >;
         const swiper = <Slider  {...settings}>
-
-
             {renderInfo}
 
         </Slider >

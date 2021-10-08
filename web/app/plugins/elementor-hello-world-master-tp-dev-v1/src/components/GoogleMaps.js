@@ -55,7 +55,6 @@ const GoogleMaps = ({
         }
       }
       renderCircle = Object.values(cars['map']).map((data_by_ville, index) => {
-        console.log(data_by_ville.length);
 
         return data_by_ville.map((data, index) => {
           let latitude = data.latitude;
@@ -86,23 +85,13 @@ const GoogleMaps = ({
           }
         });
       });
-      // let renderCount = cars['map'].map((data, index) => {
 
-      //   if (data.ville) {
-      //     console.log(data.ville);
-      //     //  console.log(data.longitude);
-
-      //   }
-      // });
       renderMarkers = Object.values(cars['map']).map((data_by_ville, index) => {
-        console.log(data_by_ville.length);
         nb_ville = data_by_ville.length;
         return data_by_ville.map((data, index) => {
-          // console.log(data);
           let latitude = data.latitude; //Math.round(data.latitude * 100) / 100;
           let longitude = data.longitude;//Math.round(data.longitude * 100) / 100;
-          // console.log(longitude);
-          // console.log(latitude);
+
           if (index == 0) {
 
 

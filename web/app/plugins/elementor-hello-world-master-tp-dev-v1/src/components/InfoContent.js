@@ -3,7 +3,6 @@ import Icon from "../images/logo.png";
 
 const InfoContent = (props) => {
   const { name } = props;
-  console.log(name);
   return (
     <div>
       {name ? (

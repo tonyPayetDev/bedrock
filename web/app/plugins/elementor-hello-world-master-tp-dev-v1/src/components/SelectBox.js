@@ -96,13 +96,11 @@ const SelectBox = (props) => {
   // recupere les valeurs pars defauts au premier rechargement , la valeur sera mise a false a chaque filtre
   if (firstload) {
     Object.values(tabDefault).map((value, index) => {
-      console.log(value);
       if (value.value) {
         tab[value.name] = value.value
 
       }
     });
-
   }
 
   useEffect(
