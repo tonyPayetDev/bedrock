@@ -1,10 +1,6 @@
 import React from "react";
-import Icon from "../images/flags.png";
 import { Animated } from "react-animated-css";
-import ParticlesBg from 'particles-bg'
-
 import * as Utils from "../constants/Utils";
-
 
 const DetailAnnonce = (props) => {
   const { name, params, classes, index, disable_even_odd } = props;

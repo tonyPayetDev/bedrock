@@ -1,6 +1,6 @@
 import React from "react";
 import { Pagination } from 'semantic-ui-react';
-
+import 'semantic-ui-css/semantic.min.css'
 const Paginator = (props) => {
   const { name, data, setPage } = props;
   let nb_page = Math.ceil(data['count'] / 10)

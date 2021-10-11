@@ -1,30 +1,6 @@
 import React, { useState, useRef } from "react";
-// import Swiper core and required modules
-// Import Swiper React components
-import { Animated } from "react-animated-css";
-
 import DetailAnnonce from "./DetailAnnonce.js";
 import Slider from "react-slick";
-
-import { Swiper, SwiperSlide } from "swiper/react";
-import 'swiper/swiper-bundle.min.css'
-import 'swiper/swiper.min.css'
-
-// Import Swiper styles
-import "swiper/components/pagination"
-import "swiper/components/navigation"
-
-// import "./styles.css";
-
-
-
-// import Swiper core and required modules
-import SwiperCore, {
-    Autoplay, Pagination, Navigation
-} from 'swiper';
-
-// install Swiper modules
-SwiperCore.use([Autoplay, Pagination, Navigation]);
 
 import {
     Marker,

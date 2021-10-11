@@ -1,8 +1,5 @@
 import React from "react";
-
 import DetailAnnonce from "./DetailAnnonce.js";
-
-import { Animated } from "react-animated-css";
 
 const ListeAnnonce = ({
   latitude,

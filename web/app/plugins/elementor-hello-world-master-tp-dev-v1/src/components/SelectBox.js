@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import * as APIConfig from "../constants/APIConfig";
-import { Animated } from "react-animated-css";
-import ReactLoading from "react-loading";
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import NumberFormat from "react-number-format";
@@ -42,9 +40,6 @@ const CssTextField = withStyles({
     "& label.Mui-focused": {
       color: "grey"
     },
-    // "& .MuiInput-underline:after": {
-    //   borderBottomColor: "grey"
-    // },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
         borderColor: "grey"

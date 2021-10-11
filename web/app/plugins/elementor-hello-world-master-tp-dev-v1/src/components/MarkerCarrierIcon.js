@@ -4,14 +4,6 @@ import DetailAnnonce from "./DetailAnnonce.js";
 
 import { makeStyles } from '@material-ui/styles'
 import { Marker, InfoWindow } from 'react-google-maps'
-import { InfoBox } from 'react-google-maps/lib/components/addons/InfoBox'
-import Icon from "../images/logo.png";
-
-import {
-    Alert as AlertOutlineIcon,
-    CloseCircle as CloseOutlineIcon,
-    LanguageC,
-} from 'mdi-material-ui'
 
 const useStyles = makeStyles({
     alertIcon: {
@@ -102,8 +94,5 @@ const MarkerCarrierIcon = ({ lac, onMarkerClick, url_icon, params }) => {
     )
 }
 
-// const mapDispatchToProps = dispatch => ({
-//   handleClick: lac => dispatch(ActionCreators.setPerimeterSelectedLac(lac))
-// })
 
 export default MarkerCarrierIcon

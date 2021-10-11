@@ -1,25 +1,14 @@
-
-
-import { GoogleApiWrapper } from "google-maps-react";
-import GoogleMaps from "./components/GoogleMaps";
 import ListeAnnonce from "./components/ListeAnnonce";
-import { Pagination } from 'semantic-ui-react'
-import 'semantic-ui-css/semantic.min.css'
-
-// import SearchLocationInput from "./components/SearchLocationInput";
 import SelectBox from "./components/SelectBox";
 import NbResultat from "./components/NbResultat";
 import Text from "./components/Text";
 import Paginator from "./components/Paginator";
+import Map from './components/Map'
 
 import { Animated } from "react-animated-css";
-
 import React, { useState, useEffect } from "react";
-import * as APIConfig from "./constants/APIConfig";
 import ReactLoading from "react-loading";
-
-var page_id = APIConfig.url_const.searchParams.get("page_id");
-import Map from './components/Map'
+import * as APIConfig from "./constants/APIConfig";
 
 const App = (props) => {
   const { id } = props; // charge les paremetres au premier rechargement
@@ -225,6 +214,7 @@ const App = (props) => {
 
           <div class="col-md-6 " style={{ position: "absolute", left: " 49%" }}>
             {params.ekit_map_btn ?
+
               < Map
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0&libraries=visualization,drawing,geometry,places`}
                 loadingElement={<div style={{ height: '100%' }}> Loading... </div>}
