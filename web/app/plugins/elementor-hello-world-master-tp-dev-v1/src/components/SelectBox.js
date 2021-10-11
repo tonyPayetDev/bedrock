@@ -128,6 +128,7 @@ const SelectBox = (props) => {
             ...values,
             [search.name]: search.value
           });
+
         }
 
         if (search.type == "checkbox") {
@@ -140,7 +141,11 @@ const SelectBox = (props) => {
 
         setUrlConstruct(tab);
         setSelectedSort("");
-        APIConfig.getItems(fetchURL + new URLSearchParams(tab)).then((data) => setSelectedSort(data));
+        setTimeout(() => {
+          APIConfig.getItems(fetchURL + new URLSearchParams(tab)).then((data) => setSelectedSort(data));
+
+        }, 800);// temps de chargement pour 
+
         history.pushState({}, '', "?" + new URLSearchParams(tab)); // rempli l'url du navigateur
         setFirstload(false);// mis a false pour ne plus etre appler qui est utile au premier chargement de page
       }

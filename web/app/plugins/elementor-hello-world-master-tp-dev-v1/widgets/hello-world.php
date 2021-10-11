@@ -51,6 +51,7 @@ class Hello_World extends Widget_Base
         //     $opt['api'.$i]=  esc_html__('api'.$i, 'elementskit-lite');
         // }
         $opt=$this->get_api();
+
         $this->add_control(
             'view',
             [
@@ -84,7 +85,7 @@ class Hello_World extends Widget_Base
                     'label' => esc_html__('Choix Field ', 'elementskit-lite'),
                     'type' => Controls_Manager::SELECT,
                     'default' => 'id',
-                    'options' =>$this->get_key_post($opt_key),
+                    'options' =>$this->get_name_selet($opt_key),
                     
 
                 ]
@@ -100,8 +101,9 @@ class Hello_World extends Widget_Base
                         'select'  => esc_html__('Select', 'elementskit-lite'),
                         'button' => esc_html__('Button', 'elementskit-lite'),
                         'photos' => esc_html__('Photos', 'elementskit-lite'),
-                        'condition' => esc_html__('condition', 'elementskit-lite'),
-                        'hide' => esc_html__('hide', 'elementskit-lite'),
+                        'condition' => esc_html__('Condition', 'elementskit-lite'),
+                        'hide' => esc_html__('Hide', 'elementskit-lite'),
+                        'millier' => esc_html__('Millier', 'elementskit-lite'),
 
                     ],
                 ]
@@ -132,7 +134,7 @@ class Hello_World extends Widget_Base
                     'label' => esc_html__('Url param ', 'elementskit-lite'),
                     'type' => Controls_Manager::SELECT,
                     'default' => 'id',
-                    'options' =>$this->get_key_post($opt_key),
+                    'options' =>$this->get_name_selet($opt_key),
                     
                 ]
             );
@@ -291,7 +293,7 @@ class Hello_World extends Widget_Base
                 'type' => Controls_Manager::SELECT,
                 'default'     => __('category-name', 'elementor'),
                 'label_block' => true,
-                'options' =>$this->get_key_post($opt_key),
+                'options' =>$this->get_name_selet($opt_key),
     
             ]
         );
@@ -342,6 +344,14 @@ class Hello_World extends Widget_Base
             ]
         );
         $repeater->add_control(
+            'name_plus',
+            [
+                'label' => esc_html__('Slug +', 'elementskit-lite'),
+                'type' => Controls_Manager::TEXT,
+                'label_block' => true,
+            ]
+        );
+        $repeater->add_control(
             'category_col',
             [
                 'label' => esc_html__('Nb column ', 'elementskit-lite'),
@@ -377,7 +387,7 @@ class Hello_World extends Widget_Base
                 'type' => Controls_Manager::SELECT,
                 'default'     => __('category-name', 'elementor'),
                 'label_block' => true,
-                'options' =>$this->get_key_post($opt_key),
+                'options' =>$this->get_name_selet($opt_key),
 
             ]
         );
@@ -1372,7 +1382,7 @@ class Hello_World extends Widget_Base
     }
 
     // return la valeur des noms des filtres disponible
-    public function get_key_post($opt_key)
+    public function get_name_selet($opt_key)
     {
         $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers('page');
         $page_settings_model = $page_settings_manager->get_model(get_the_ID());
@@ -1415,7 +1425,7 @@ class Hello_World extends Widget_Base
                     $tab_value[]= array("value"=>$service['service_title'],"label"=>$service['service_label'],"ekit_tab_active"=>$service['service_active'] );
                 }
             }
-            $tab[]= array('type'=>$category['type_element'],'symbole'=>$category['type_symbole'],  "name"=>$category['category_slug'] ,"col"=>$category['category_col']  ,"critere"=>$category['category_criteres'], "label"=>$category['category_title'], "value"=>$tab_value);
+            $tab[]= array('type'=>$category['type_element'],'symbole'=>$category['type_symbole'],  "name"=>$category['category_slug'].$category['name_plus'] ,"col"=>$category['category_col']  ,"critere"=>$category['category_criteres'], "label"=>$category['category_title'], "value"=>$tab_value);
         }
         // todo a voir si possible ici
 

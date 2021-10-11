@@ -15,11 +15,10 @@ const Paginator = (props) => {
   return (
     < div class="col m-2">
       <div class="row justify-content-center">
-        <Pagination inverted activePage={activePage} style={{ background: props.params.color, fontSize: "12px" }}
+        <Pagination inverted style={{ background: props.params.color, fontSize: "12px" }}
           onPageChange={onChange}
-
+          activePage={activePage}
           secondary
-          activePage={page_selected}
           totalPages={nb_page} />
       </div>
 

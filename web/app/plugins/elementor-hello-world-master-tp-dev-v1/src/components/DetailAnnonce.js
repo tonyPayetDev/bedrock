@@ -3,6 +3,7 @@ import Icon from "../images/flags.png";
 import { Animated } from "react-animated-css";
 import ParticlesBg from 'particles-bg'
 
+import * as Utils from "../constants/Utils";
 
 
 const DetailAnnonce = (props) => {
@@ -210,6 +211,12 @@ const DetailAnnonce = (props) => {
           }
         }
         if (annonce.type === "text" && value) {
+          return <div style={annonce} class={col} >
+            <i aria-hidden="true" class={annonce.icon.value}></i> {value}{annonce.text}
+          </div >;
+        }
+        if (annonce.type === "millier" && value) {
+          value = Utils.formatMillier(value);
           return <div style={annonce} class={col} >
             <i aria-hidden="true" class={annonce.icon.value}></i> {value}{annonce.text}
           </div >;
