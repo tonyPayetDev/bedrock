@@ -8,7 +8,7 @@ import * as APIConfig from "../constants/APIConfig";
 const GoogleMaps = ({
   latitude,
   longitude,
-  cars,
+  data,
 }) => {
   let renderMarkers;
   let renderCircle;
@@ -38,8 +38,8 @@ const GoogleMaps = ({
   };
   let nb_ville
 
-  if (cars) {
-    if (cars['count'] != 0) {
+  if (data) {
+    if (data['count'] != 0) {
 
 
       const places = {
@@ -54,7 +54,7 @@ const GoogleMaps = ({
           }
         }
       }
-      renderCircle = Object.values(cars['map']).map((data_by_ville, index) => {
+      renderCircle = Object.values(data['map']).map((data_by_ville, index) => {
 
         return data_by_ville.map((data, index) => {
           let latitude = data.latitude;
@@ -86,7 +86,7 @@ const GoogleMaps = ({
         });
       });
 
-      renderMarkers = Object.values(cars['map']).map((data_by_ville, index) => {
+      renderMarkers = Object.values(data['map']).map((data_by_ville, index) => {
         nb_ville = data_by_ville.length;
         return data_by_ville.map((data, index) => {
           let latitude = data.latitude; //Math.round(data.latitude * 100) / 100;

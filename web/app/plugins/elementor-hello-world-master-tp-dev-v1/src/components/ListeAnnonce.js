@@ -4,7 +4,7 @@ import DetailAnnonce from "./DetailAnnonce.js";
 const ListeAnnonce = ({
   latitude,
   longitude,
-  cars,
+  data,
   setSelectedSort,
   setPage,
   params,
@@ -46,13 +46,16 @@ const ListeAnnonce = ({
     (props) => {
       // si utilisateur filtre on passe le page a 1 
       setPage(1);
+
     },
-    [cars]
+    [data]
   );
 
-  if (cars) {
-    if (cars['count'] != 0) {
-      renderAnnonce = cars['data'][page].map((annonce, index) => {
+  if (data) {
+    if (data['count'] != 0) {
+      console.log(page);
+
+      renderAnnonce = data['data'][page].map((annonce, index) => {
         if (annonce) {
           return (
 

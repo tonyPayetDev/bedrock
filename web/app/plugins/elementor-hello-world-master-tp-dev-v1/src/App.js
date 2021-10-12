@@ -1,18 +1,19 @@
+import React, { useState, useEffect, Suspense } from "react";
+
 import ListeAnnonce from "./components/ListeAnnonce";
-import SelectBox from "./components/SelectBox";
 import NbResultat from "./components/NbResultat";
 import Text from "./components/Text";
-import Paginator from "./components/Paginator";
+import SelectBox from "./components/SelectBox";
 import Map from './components/Map'
+import Paginator from './components/Paginator';
+import * as APIConfig from "./constants/APIConfig";
+// import ModelComponent from "./components/ModelComponent";
 
 import { Animated } from "react-animated-css";
-import React, { useState, useEffect } from "react";
 import ReactLoading from "react-loading";
-import * as APIConfig from "./constants/APIConfig";
 
 const App = (props) => {
   const { id } = props; // charge les paremetres au premier rechargement
-
   const [state, updateState] = React.useState({
     lat: -21,
     lng: 55.5,
@@ -26,8 +27,8 @@ const App = (props) => {
   let [tabDefault, setTabDefault] = useState({});// # stock les filtre d'apres les type récupérer 
   const [params, setParams] = useState(APIConfig.param(id)[0]);
   const fetchURL = `${params.API_URI}&`;
-  //  todo cars a renormer en data
-  const [cars, setCars] = useState();
+  //  todo data a renormer en data
+  const [data, setData] = useState();
   const [selectedSort, setSelectedSort] = useState();
   const [url_construct, setUrlConstruct] = useState({});
   const [hidecontent, setHideContent] = useState("");
@@ -120,18 +121,17 @@ const App = (props) => {
   return (
     <div style={{ fontFamily: params.ekit_wb_3976_font, fontSize: 14 }}  >
       <h3>
-        <div class="row">
+        <div className="row">
           <Text
             data={selectedSort} text={url_construct} params={params} style={style}
           ></Text>
-
           {params.ekit_menu_active && (
 
-            <div class={col} style={{ fontSize: params.fontSize }}>
-              <div class="row justify-content-end">
+            <div className={col} style={{ fontSize: params.fontSize }}>
+              <div className="row justify-content-end">
 
-                <a type="button" class="btn   " onClick={(e) => setHideContent('carte')} style={params.ekit_map_btn ? stylemenu : stylecriteres}>Carte </a>
-                <a type="button" class="btn  mr-2 " onClick={(e) => setHideContent('galerie')} style={params.ekit_map_btn ? stylecriteres : stylemenu}>Galerie </a>
+                <a type="button" className="btn   " onClick={(e) => setHideContent('carte')} style={params.ekit_map_btn ? stylemenu : stylecriteres}>Carte </a>
+                <a type="button" className="btn  mr-2 " onClick={(e) => setHideContent('galerie')} style={params.ekit_map_btn ? stylecriteres : stylemenu}>Galerie </a>
               </div>
 
             </div>
@@ -141,13 +141,14 @@ const App = (props) => {
       </h3 >
 
 
-      <div class="row">
-        <div class="col-12 ">
+      <div className="row">
+        <div className="col-12 ">
           <SelectBox
+            id="1"
             setSelectedSort={setSelectedSort}
             setUrlConstruct={setUrlConstruct}
             url_construct={url_construct}
-            cars={cars}
+            data={data}
             state={state}
             params={params}
             fetchURL={fetchURL}
@@ -167,11 +168,11 @@ const App = (props) => {
           data={selectedSort}
         ></NbResultat> : ""
       }
-      <div class="row justify-content-center">
+      <div className="row justify-content-center">
 
-        <div class="col-5   mt-3 ">
+        <div className="col-5   mt-3 ">
           <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={2000} animationOutDuration={2000} >
-            <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} class="btn btn-block  " style={style}>
+            <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} className="btn btn-block  " style={style}>
               <NbResultat paren
                 params={params}
                 data={selectedSort}
@@ -182,20 +183,11 @@ const App = (props) => {
 
       </div>
 
-      {/* <SearchLocationInput
-        state={state}
-        updateState={updateState}
-        cars={cars}
-        setSelectedSort={setSelectedSort}
-        params={params}
-      ></SearchLocationInput> */}
-
-
       {params.visible ?
-        <div class="row" style={params.ekit_map_btn ? StyleMapOverflow : StyleMapOverflowhidden}>
+        <div className="row" style={params.ekit_map_btn ? StyleMapOverflow : StyleMapOverflowhidden}>
 
-          <div class={params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12 ' : 'col-lg-12 col-md-12 col-xs-12 sticky-top'} >
-            {selectedSort ? "" : <div class="col-12 d-flex justify-content-center" >  <ReactLoading type='bubbles' color={params.color} /></div >}
+          <div className={params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12 ' : 'col-lg-12 col-md-12 col-xs-12 sticky-top'} >
+            {selectedSort ? "" : <div className="col-12 d-flex justify-content-center" >  <ReactLoading type='bubbles' color={params.color} /></div >}
 
             <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >
               < ListeAnnonce
@@ -203,7 +195,7 @@ const App = (props) => {
                 latitude={state.lat}
                 longitude={state.lng}
                 setSelectedSort={setSelectedSort}
-                cars={selectedSort}
+                data={selectedSort}
                 page={page}
                 setPage={setPage}
 
@@ -212,7 +204,7 @@ const App = (props) => {
             </Animated>
           </div>
 
-          <div class="col-md-6 " style={{ position: "absolute", left: " 49%" }}>
+          <div className="col-md-6 " style={{ position: "absolute", left: " 49%" }}>
             {params.ekit_map_btn ?
 
               < Map
@@ -239,14 +231,17 @@ const App = (props) => {
       }
       {selectedSort && params.visible && params.paginator ?
 
+        <Suspense fallback={<span>Loading...</span>}>
+          < Paginator
+            color={params.color} backgroundColor="white"
+            params={params}
+            data={selectedSort}
+            nb_page_afficher={10}
+            setPage={setPage}
 
-        < Paginator
-          params={params}
-          data={selectedSort}
-          nb_page_afficher={10}
-          setPage={setPage}
+          />
+        </Suspense>
 
-        />
         : ""}
     </div >
 

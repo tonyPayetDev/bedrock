@@ -11,7 +11,7 @@ const divStyle = {
 export default function SearchLocationInput({
   state,
   updateState,
-  cars,
+  data,
   setSelectedSort,
   params
 }) {
@@ -32,18 +32,18 @@ export default function SearchLocationInput({
 
       if (cars) {
 
-        const filtre_perimetre = cars
+        const filtre_perimetre = data
           .filter(
-            (cars) =>
-              state.lat + perimetre_lat >= cars.latitude &&
-              state.lat - perimetre_lat <= cars.latitude
+            (data) =>
+              state.lat + perimetre_lat >= data.latitude &&
+              state.lat - perimetre_lat <= data.latitude
           )
           .filter(
-            (cars) =>
-              state.lng + perimetre_long >= cars.longitude &&
-              state.lng - perimetre_long <= cars.longitude
+            (data) =>
+              state.lng + perimetre_long >= data.longitude &&
+              state.lng - perimetre_long <= data.longitude
           )
-          .map((cars) => cars);
+          .map((data) => data);
 
         // // setCarsPerimetre(filtre_perimetre);
         setSelectedSort(filtre_perimetre);

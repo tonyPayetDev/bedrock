@@ -1,7 +1,5 @@
-// import params_json from '../jsonFile.json';
 
 import { decode as base64_decode, encode as base64_encode } from 'base-64';
-// import * as App from "../App";
 
 export const HEADERS = new Headers({
   "Content-Type": "application/json",
@@ -10,21 +8,15 @@ export const HEADERS = new Headers({
   // Authorization: "Bearer VotreCléAPI",
 });
 
-export const KEY_MAP = "AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0";
+export const KEY_MAP = "AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0";// mettre en param elementor
 export const Zoom = 10;
 export const perimetre_long = 0.2;
 export const perimetre_lat = 0.05;
 export let fetchURL = "";
-
-var url = new URL(document.location.href);
-
-export const url_const = url;
-var page_id = url.searchParams.get("page_id");// pour la pagination
-
+export const url_const = new URL(document.location.href);
 export let params_json = "";
 
 export function param(id) {
-  let tab = []
   for (var i = 0; i < document.getElementsByClassName("app").length; i++) {
     let decoded = base64_decode(document.getElementsByClassName("app")[i].getAttribute("params"));
     params_json = JSON.parse(decoded);
@@ -39,20 +31,6 @@ export const getItems = ($filter) =>
     headers: HEADERS,
   }).then((res) => res.json());
 
-function Arrondir(nomber, nbApVirg) {
-  return (parseInt(nomber * Math.pow(10, nbApVirg) + 0.5)) / Math.pow(10, nbApVirg);
-}
-
-export function formatMillier(nombre) {
-  var nbrArrnd = Arrondir(nombre, 2);
-  return new Intl.NumberFormat().format(nbrArrnd);
-}
-// const fetchURLMoto = `${API_URI}/types`;
-// export const getItemsMoto = () =>
-//   fetch(fetchURLMoto, {
-//     method: "GET",
-//     headers: HEADERS,
-//   }).then((res) => res.json());
 
 
 

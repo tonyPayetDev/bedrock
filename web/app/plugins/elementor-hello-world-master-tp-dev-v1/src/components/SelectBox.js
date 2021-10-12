@@ -160,7 +160,7 @@ const SelectBox = (props) => {
         defaultValue = tabDefault[data.name];
       }
       return (
-        <div class={col}>
+        <div className={col}>
 
           <Select
             theme={theme => ({
@@ -190,7 +190,7 @@ const SelectBox = (props) => {
 
       return (
 
-        <div class={col}>
+        <div className={col}>
           <CssTextField
             style={{ marginTop: "0px", zIndex: 0, background: "white", color: params.color }}
 
@@ -232,7 +232,7 @@ const SelectBox = (props) => {
 
         let col = "btn mb-3 " + data.col;
         return (
-          <button class={col}
+          <button className={col}
             style={data_value.ekit_tab_active == data_value.value ? styletabactive : styletab}
             onClick={(e) => setSearch({ "name": data.name, "value": data_value.value, 'active': data_value.ekit_tab_active, type: 'btn' })}>
             {data_value.label}
@@ -255,7 +255,7 @@ const SelectBox = (props) => {
 
         }
         return (
-          <FormControlLabel class={col}
+          <FormControlLabel className={col}
             control={< Checkbox
               style={{ color: params.color }}
               onClick={(e) => setSearch(value)}
@@ -282,16 +282,16 @@ const SelectBox = (props) => {
 
   return (
 
-    <div class="row justify-content-center ">
+    <div className="row justify-content-center ">
 
       {renderElement}
 
       {params.ekit_critere_btn && (
-        <div class="col-12">
+        <div className="col-12">
 
-          <div class="row justify-content-center">
+          <div className="row justify-content-center">
 
-            <a type="button" onClick={toggle} class="btn "
+            <a type="button" onClick={toggle} className="btn "
               style={stylecriteres}>
               <i aria-hidden="true"
                 style={style_invers} className={isOpened ? "icon    icon-chevron-up" : "icon    icon-chevron-down"} >
