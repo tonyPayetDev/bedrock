@@ -76,11 +76,11 @@ function my_function()
     $data 										= json_decode($json, true);
     $data										= $data['annonce'];
     $count										= count($data);
-    $site=home_url($wp->request);
+    // $site=home_url($wp->request);
     for ($i = 0; $i < $count; $i++) {
         $d= &$data[$i];
         if (!empty($d)) {
-            $content='[elementor-template id="2584"]';// a modifier si migration ou a mettre en parametre de la cron
+            $content='[elementor-template id="15472"]';// a modifier si migration ou a mettre en parametre de la cron
             $dt = DateTime::createFromFormat('d/m/Y', $d['date_saisie'])->format('Y-m-d H:i:s');
             
             $resultat = $wpdb->insert(
@@ -277,8 +277,8 @@ function my_function()
                 
             wp_publish_post($id_post);
 
-            // $post = get_post($id_post);
-            // wp_update_post($post);
+            $post = get_post($id_post);
+            wp_update_post($post);
         }
     }
 }

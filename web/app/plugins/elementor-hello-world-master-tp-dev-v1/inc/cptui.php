@@ -6,20 +6,61 @@
  * @param array $data Options for the function.
  * @return string|null Post title for the latest, * or null if none.
  */
-function cptui_register_pro()
+// function cptui_register_pro()
+// {
+
+//     /**
+//      * Post Type: Programmes.
+//      */
+
+//     $labels = [
+//         "name" => __("Programmes", "custom-post-type-ui"),
+//         "singular_name" => __("Programme", "custom-post-type-ui"),
+//     ];
+
+//     $args = [
+//         "label" => __("Programmes", "custom-post-type-ui"),
+//         "labels" => $labels,
+//         "description" => "",
+//         "public" => true,
+//         "publicly_queryable" => true,
+//         "show_ui" => true,
+//         "show_in_rest" => true,
+//         "rest_base" => "",
+//         "rest_controller_class" => "WP_REST_Posts_Controller",
+//         "has_archive" => false,
+//         "show_in_menu" => true,
+//         "show_in_nav_menus" => true,
+//         "delete_with_user" => false,
+//         "exclude_from_search" => false,
+//         "capability_type" => "post",
+//         "map_meta_cap" => true,
+//         "hierarchical" => false,
+//         "rewrite" => [ "slug" => "programmes", "with_front" => true ],
+//         "query_var" => true,
+//         "supports" => [ "title", "editor", "thumbnail", "custom-fields" ],
+//         "show_in_graphql" => false,
+//     ];
+
+//     register_post_type("programmes", $args);
+// }
+
+// add_action('init', 'cptui_register_pro');
+
+function cptui_register_my_cpts_programmes()
 {
 
     /**
-     * Post Type: Programmes.
+     * Post Type: programmes.
      */
 
     $labels = [
-        "name" => __("Programmes", "custom-post-type-ui"),
-        "singular_name" => __("Programme", "custom-post-type-ui"),
+        "name" => __("programmes", "twentyeleven"),
+        "singular_name" => __("programme", "twentyeleven"),
     ];
 
     $args = [
-        "label" => __("Programmes", "custom-post-type-ui"),
+        "label" => __("programmes", "twentyeleven"),
         "labels" => $labels,
         "description" => "",
         "public" => true,
@@ -38,14 +79,14 @@ function cptui_register_pro()
         "hierarchical" => false,
         "rewrite" => [ "slug" => "programmes", "with_front" => true ],
         "query_var" => true,
-        "supports" => [ "title", "editor", "thumbnail", "custom-fields" ],
+        "supports" => [ "title", "editor", "thumbnail", "custom-fields", "comments", "revisions", "author" ],
         "show_in_graphql" => false,
     ];
 
     register_post_type("programmes", $args);
 }
 
-add_action('init', 'cptui_register_pro');
+add_action('init', 'cptui_register_my_cpts_programmes');
 
 
 /**
@@ -95,229 +136,225 @@ function cptui_register_biens()
 
 add_action('init', 'cptui_register_biens');
 
-// #addd acf_add_local_field_group  test
 
-if (function_exists('acf_add_local_field_group')):
 
-    acf_add_local_field_group(array(
-        'key' => 'group_6130a66755987',
-        'title' => 'programmes',
-        'fields' => array(
-            array(
-                'key' => 'field_6130a68d972d8',
-                'label' => 'titre',
-                'name' => 'titre',
-                'type' => 'text',
-                'instructions' => '',
-                'required' => 1,
-                'conditional_logic' => 0,
-                'wrapper' => array(
-                    'width' => '',
-                    'class' => '',
-                    'id' => '',
-                ),
-                'default_value' => '',
-                'placeholder' => '',
-                'prepend' => '',
-                'append' => '',
-                'maxlength' => '',
+acf_add_local_field_group(array(
+    'key' => 'group_6130a66755987',
+    'title' => 'programmes',
+    'fields' => array(
+        array(
+            'key' => 'field_6130a68d972d8',
+            'label' => 'titre',
+            'name' => 'titre',
+            'type' => 'text',
+            'instructions' => '',
+            'required' => 1,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
             ),
-            array(
-                'key' => 'field_6130a6ac972d9',
-                'label' => 'code_postal',
-                'name' => 'code_postal',
-                'type' => 'number',
-                'instructions' => '',
-                'required' => 0,
-                'conditional_logic' => 0,
-                'wrapper' => array(
-                    'width' => '',
-                    'class' => '',
-                    'id' => '',
-                ),
-                'default_value' => '',
-                'placeholder' => '',
-                'prepend' => '',
-                'append' => '',
-                'min' => '',
-                'max' => '',
-                'step' => '',
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
+        ),
+        array(
+            'key' => 'field_6130a6ac972d9',
+            'label' => 'code_postal',
+            'name' => 'code_postal',
+            'type' => 'number',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
             ),
-            array(
-                'key' => 'field_6130aa77b539f',
-                'label' => 'texte',
-                'name' => 'texte',
-                'type' => 'text',
-                'instructions' => '',
-                'required' => 0,
-                'conditional_logic' => 0,
-                'wrapper' => array(
-                    'width' => '',
-                    'class' => '',
-                    'id' => '',
-                ),
-                'default_value' => '',
-                'placeholder' => '',
-                'prepend' => '',
-                'append' => '',
-                'maxlength' => '',
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'min' => '',
+            'max' => '',
+            'step' => '',
+        ),
+        array(
+            'key' => 'field_6130aa77b539f',
+            'label' => 'texte',
+            'name' => 'texte',
+            'type' => 'text',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
             ),
-            array(
-                'key' => 'field_6130aa7eb53a0',
-                'label' => 'surface',
-                'name' => 'surface',
-                'type' => 'text',
-                'instructions' => '',
-                'required' => 0,
-                'conditional_logic' => 0,
-                'wrapper' => array(
-                    'width' => '',
-                    'class' => '',
-                    'id' => '',
-                ),
-                'default_value' => '',
-                'placeholder' => '',
-                'prepend' => '',
-                'append' => '',
-                'maxlength' => '',
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
+        ),
+        array(
+            'key' => 'field_6130aa7eb53a0',
+            'label' => 'surface',
+            'name' => 'surface',
+            'type' => 'text',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
             ),
-            array(
-                'key' => 'field_6130aa9cb53a1',
-                'label' => 'pro_res',
-                'name' => 'pro_res',
-                'type' => 'select',
-                'instructions' => '',
-                'required' => 0,
-                'conditional_logic' => 0,
-                'wrapper' => array(
-                    'width' => '',
-                    'class' => '',
-                    'id' => '',
-                ),
-                'choices' => array(
-                    'professionnel' => 'professionnel',
-                    'résidentiel' => 'résidentiel',
-                ),
-                'default_value' => false,
-                'allow_null' => 0,
-                'multiple' => 0,
-                'ui' => 0,
-                'return_format' => 'value',
-                'ajax' => 0,
-                'placeholder' => '',
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
+        ),
+        array(
+            'key' => 'field_6130aa9cb53a1',
+            'label' => 'pro_res',
+            'name' => 'pro_res',
+            'type' => 'select',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
             ),
-            array(
-                'key' => 'field_6130aaf6b53a2',
-                'label' => 'details_techniques',
-                'name' => 'ville',
-                'type' => 'text',
-                'instructions' => '',
-                'required' => 0,
-                'conditional_logic' => 0,
-                'wrapper' => array(
-                    'width' => '',
-                    'class' => '',
-                    'id' => '',
-                ),
-                'default_value' => '',
-                'placeholder' => '',
-                'prepend' => '',
-                'append' => '',
-                'maxlength' => '',
+            'choices' => array(
+                'professionnel' => 'professionnel',
+                'résidentiel' => 'résidentiel',
             ),
-            array(
-                'key' => 'field_6130abe6b53a3',
-                'label' => 'bien_type',
-                'name' => 'bien_type',
-                'type' => 'select',
-                'instructions' => '',
-                'required' => 0,
-                'conditional_logic' => 0,
-                'wrapper' => array(
-                    'width' => '',
-                    'class' => '',
-                    'id' => '',
-                ),
-                'choices' => array(
-                    'Maison' => 'Maison',
-                    'Appartement' => 'Appartement',
-                    'Bâtiment' => 'Bâtiment',
-                ),
-                'default_value' => false,
-                'allow_null' => 0,
-                'multiple' => 0,
-                'ui' => 0,
-                'return_format' => 'value',
-                'ajax' => 0,
-                'placeholder' => '',
+            'default_value' => false,
+            'allow_null' => 0,
+            'multiple' => 0,
+            'ui' => 0,
+            'return_format' => 'value',
+            'ajax' => 0,
+            'placeholder' => '',
+        ),
+        array(
+            'key' => 'field_6130aaf6b53a2',
+            'label' => 'details_techniques',
+            'name' => 'ville',
+            'type' => 'text',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
             ),
-            array(
-                'key' => 'field_6130ae0394b90',
-                'label' => 'photo',
-                'name' => 'photo',
-                'type' => 'image',
-                'instructions' => '',
-                'required' => 0,
-                'conditional_logic' => 0,
-                'wrapper' => array(
-                    'width' => '',
-                    'class' => '',
-                    'id' => '',
-                ),
-                'return_format' => 'id',
-                'preview_size' => 'full',
-                'library' => 'uploadedTo',
-                'min_width' => '',
-                'min_height' => '',
-                'min_size' => '',
-                'max_width' => '',
-                'max_height' => '',
-                'max_size' => '',
-                'mime_types' => '',
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
+        ),
+        array(
+            'key' => 'field_6130abe6b53a3',
+            'label' => 'bien_type',
+            'name' => 'bien_type',
+            'type' => 'select',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
             ),
+            'choices' => array(
+                'Maison' => 'Maison',
+                'Appartement' => 'Appartement',
+                'Bâtiment' => 'Bâtiment',
+            ),
+            'default_value' => false,
+            'allow_null' => 0,
+            'multiple' => 0,
+            'ui' => 0,
+            'return_format' => 'value',
+            'ajax' => 0,
+            'placeholder' => '',
+        ),
+        array(
+            'key' => 'field_6130ae0394b90',
+            'label' => 'photo',
+            'name' => 'photo',
+            'type' => 'image',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'return_format' => 'url',
+            'preview_size' => 'full',
+            'library' => 'uploadedTo',
+            'min_width' => '',
+            'min_height' => '',
+            'min_size' => '',
+            'max_width' => '',
+            'max_height' => '',
+            'max_size' => '',
+            'mime_types' => '',
+        ),
+        array(
+            'key' => 'field_6130ba14cba7b',
+            'label' => 'statut',
+            'name' => 'statut',
+            'type' => 'select',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'choices' => array(
+                'encours' => 'encours',
+                'terminer' => 'terminer',
+            ),
+            'default_value' => false,
+            'allow_null' => 0,
+            'multiple' => 0,
+            'ui' => 0,
+            'return_format' => 'value',
+            'ajax' => 0,
+            'placeholder' => '',
+        ),
+    ),
+    'location' => array(
+        array(
             array(
-                'key' => 'field_6130ba14cba7b',
-                'label' => 'statut',
-                'name' => 'statut',
-                'type' => 'select',
-                'instructions' => '',
-                'required' => 0,
-                'conditional_logic' => 0,
-                'wrapper' => array(
-                    'width' => '',
-                    'class' => '',
-                    'id' => '',
-                ),
-                'choices' => array(
-                    'encours' => 'encours',
-                    'terminer' => 'terminer',
-                ),
-                'default_value' => false,
-                'allow_null' => 0,
-                'multiple' => 0,
-                'ui' => 0,
-                'return_format' => 'value',
-                'ajax' => 0,
-                'placeholder' => '',
+                'param' => 'post_type',
+                'operator' => '==',
+                'value' => 'programmes',
             ),
         ),
-        'location' => array(
-            array(
-                array(
-                    'param' => 'post_type',
-                    'operator' => '==',
-                    'value' => 'programmes',
-                ),
-            ),
-        ),
-        'menu_order' => 0,
-        'position' => 'normal',
-        'style' => 'default',
-        'label_placement' => 'top',
-        'instruction_placement' => 'label',
-        'hide_on_screen' => '',
-        'active' => true,
-        'description' => '',
-    ));
-    
-    endif;
+    ),
+    'menu_order' => 0,
+    'position' => 'normal',
+    'style' => 'default',
+    'label_placement' => 'top',
+    'instruction_placement' => 'label',
+    'hide_on_screen' => '',
+    'active' => true,
+    'description' => '',
+));

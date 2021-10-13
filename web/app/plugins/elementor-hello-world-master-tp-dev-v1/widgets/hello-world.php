@@ -51,10 +51,10 @@ class Hello_World extends Widget_Base
         //     $opt['api'.$i]=  esc_html__('api'.$i, 'elementskit-lite');
         // }
         $opt=$this->get_api();
-
-        $this->add_control(
-            'view',
-            [
+        if ($opt) {
+            $this->add_control(
+                'view',
+                [
                 'label' => esc_html__('Choix api', 'elementskit-lite'),
                 'type' => Controls_Manager::SELECT,
                 'default' => 'api1',
@@ -64,24 +64,24 @@ class Hello_World extends Widget_Base
                 'label_block' => false,
                 'style_transfer' => true,
             ]
-        );
-        $col[]=" ";
-        for ($i = 1; $i <= 12; $i++) {
-            $col['col-'.$i]=esc_html__($i, 'elementskit-lite');
-        }
-        $float=[
+            );
+            $col[]=" ";
+            for ($i = 1; $i <= 12; $i++) {
+                $col['col-'.$i]=esc_html__($i, 'elementskit-lite');
+            }
+            $float=[
             " "=>esc_html__(" ", 'elementskit-lite'),
             "margin-left"=>esc_html__("margin-left", 'elementskit-lite'),
             "margin-right"=>esc_html__("margin-right", 'elementskit-lite')
             // "margin-center"=>esc_html__("auto", 'elementskit-lite')
 
         ];
-        foreach ($opt as $opt_key => $value) {
-            $repeater3 = new Repeater();
+            foreach ($opt as $opt_key => $value) {
+                $repeater3 = new Repeater();
 
-            $repeater3->add_control(
-                'choice_field',
-                [
+                $repeater3->add_control(
+                    'choice_field',
+                    [
                     'label' => esc_html__('Choix Field ', 'elementskit-lite'),
                     'type' => Controls_Manager::SELECT,
                     'default' => 'id',
@@ -89,10 +89,10 @@ class Hello_World extends Widget_Base
                     
 
                 ]
-            );
-            $repeater3->add_control(
-                "field_type",
-                [
+                );
+                $repeater3->add_control(
+                    "field_type",
+                    [
                     'label' => esc_html__('Type field ', 'elementskit-lite'),
                     'type' => Controls_Manager::SELECT,
                     'default' => 'text',
@@ -107,139 +107,139 @@ class Hello_World extends Widget_Base
 
                     ],
                 ]
-            );
+                );
             
-            $repeater3->add_control(
-                'ekit_page_list_background_url',
-                [
+                $repeater3->add_control(
+                    'ekit_page_list_background_url',
+                    [
                     'label' => esc_html__('Url param', 'elementskit-lite'),
                     'type' => Controls_Manager::HEADING,
                     'separator' => 'before',
                 ]
-            );
+                );
 
-            $repeater3->add_control(
-                'field_url',
-                [
+                $repeater3->add_control(
+                    'field_url',
+                    [
                     'label'       => __('Url', 'elementor'),
                     'type'        => Controls_Manager::TEXT,
                     'default'     => __("", 'elementor'),
                     'label_block' => true,
     
                 ]
-            );
-            $repeater3->add_control(
-                'field_url_param',
-                [
+                );
+                $repeater3->add_control(
+                    'field_url_param',
+                    [
                     'label' => esc_html__('Url param ', 'elementskit-lite'),
                     'type' => Controls_Manager::SELECT,
                     'default' => 'id',
                     'options' =>$this->get_name_selet($opt_key),
                     
                 ]
-            );
+                );
             
-            $repeater3->add_control(
-                'ekit_page_list_background_cs',
-                [
+                $repeater3->add_control(
+                    'ekit_page_list_background_cs',
+                    [
                     'label' => esc_html__('Color & size', 'elementskit-lite'),
                     'type' => Controls_Manager::HEADING,
                     'separator' => 'before',
                 ]
-            );
+                );
 
-            $repeater3->add_control(
-                'field_color',
-                [
+                $repeater3->add_control(
+                    'field_color',
+                    [
                     'label'       => __('Color', 'elementor'),
                     'type'        => Controls_Manager::COLOR,
                     'default'     => __("#FFFFFF", 'elementor'),
                     'label_block' => true,
     
                 ]
-            );
-            $repeater3->add_control(
-                'font_size',
-                [
+                );
+                $repeater3->add_control(
+                    'font_size',
+                    [
                     'label'       => __('Font size', 'elementor'),
                     'type'        => Controls_Manager::TEXT,
                     'default'     => __("12px", 'elementor'),
                     'label_block' => true,
     
                 ]
-            );
-            $repeater3->add_control(
-                'ekit_page_list_background_options',
-                [
+                );
+                $repeater3->add_control(
+                    'ekit_page_list_background_options',
+                    [
                     'label' => esc_html__('Plus options', 'elementskit-lite'),
                     'type' => Controls_Manager::HEADING,
                     'separator' => 'before',
                 ]
-            );
+                );
             
-            $repeater3->add_control(
-                'field_condition',
-                [
+                $repeater3->add_control(
+                    'field_condition',
+                    [
                     'label'       => __('Condition egalité (type condition)  ', 'elementor'),
                     'type'        => Controls_Manager::TEXT,
                     'default'     => __("", 'elementor'),
                     'label_block' => true,
     
                 ]
-            );
-            $repeater3->add_control(
-                'field_text',
-                [
+                );
+                $repeater3->add_control(
+                    'field_text',
+                    [
                     'label'       => __('Text', 'elementor'),
                     'type'        => Controls_Manager::TEXT,
                     'default'     => __("", 'elementor'),
                     'label_block' => true,
     
                 ]
-            );
-            $repeater3->add_control(
-                'ekit_page_list_background_placement',
-                [
+                );
+                $repeater3->add_control(
+                    'ekit_page_list_background_placement',
+                    [
                     'label' => esc_html__('Placement', 'elementskit-lite'),
                     'type' => Controls_Manager::HEADING,
                     'separator' => 'before',
                 ]
-            );
+                );
 
-            $repeater3->add_control(
-                'field_row',
-                [
+                $repeater3->add_control(
+                    'field_row',
+                    [
                     'label'       => __('Row', 'elementor'),
                     'type'        => Controls_Manager::TEXT,
                     'default'     => __("row", 'elementor'),
                     'label_block' => true,
     
                 ]
-            );
+                );
             
-            $repeater3->add_control(
-                'field_col',
-                [
+                $repeater3->add_control(
+                    'field_col',
+                    [
                     'label' => esc_html__('Nb column ', 'elementskit-lite'),
                     'type' => Controls_Manager::SELECT,
                     'default' => '0',
                     'options' =>$col
                 ]
-            );
-            $repeater3->add_control(
-                'field_float',
-                [
+                );
+                $repeater3->add_control(
+                    'field_float',
+                    [
                     'label' => esc_html__('Float ', 'elementskit-lite'),
                     'type' => Controls_Manager::SELECT,
                     'default' => '',
                     'options' =>$float
                 ]
-            );
+                );
  
 
-            $repeater3->add_responsive_control(
-                'field__margin',
-                [
+                $repeater3->add_responsive_control(
+                    'field__margin',
+                    [
                     'label' => esc_html__('Margin', 'elementskit-lite'),
                     'type' => Controls_Manager::DIMENSIONS,
                     'size_units' => [ 'px', '%', 'em' ],
@@ -247,10 +247,10 @@ class Hello_World extends Widget_Base
                         '{{WRAPPER}} .ekit_menu_label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                     ]
                 ]
-            );
-            $repeater3->add_control(
-                'field_icon',
-                array(
+                );
+                $repeater3->add_control(
+                    'field_icon',
+                    array(
                     'label' => esc_html__('Icons', 'elementskit-lite'),
                     'type'  => Controls_Manager::ICONS,
                     'show_label' => true ,
@@ -261,10 +261,10 @@ class Hello_World extends Widget_Base
                         'library' => '',
                     )
                 )
-            );
-            $this->add_control(
-                $opt_key.'fields',
-                [
+                );
+                $this->add_control(
+                    $opt_key.'fields',
+                    [
                     'label'       => __('Fields '.$opt_key, 'elementor'),
                     'type'        => Controls_Manager::REPEATER,
                     'fields'      => $repeater3->get_controls(),
@@ -272,9 +272,9 @@ class Hello_World extends Widget_Base
                     'condition' => ['view' => $opt_key]
     
                 ]
-            );
+                );
+            }
         }
-    
         $this->end_controls_section();
 
         $this->start_controls_section(

@@ -226,6 +226,7 @@ const DetailAnnonce = (props) => {
       let row = Object.values(value).map((annonce, index) => {
         let value = name[annonce.field];
         let url = name[annonce.url];
+        console.log(params.URL_POST + url);
         if (annonce.type === "photos") {
 
           return (
@@ -276,14 +277,10 @@ const DetailAnnonce = (props) => {
   return (
 
     <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={2500} animationOutDuration={2500} >
-
-
       <div class='col-lg-6 col-md-12 col-xs-12' style={card} class="card"  >
         {fieldsPhotos}
-        {/* todo pour plustard rajouer mouse over qui marche sur programmes et biens //onMouseOver={MouseOver} onMouseOut={MouseOut}  */}
         <div class="card-body" type="button" style={cardbody} >
           {fieldsAnnonce}
-
           <div class="btn-group row">
             {/* <button type="button" onMouseOver={MouseOver} onMouseOut={MouseOut} href="#" class="stretched-link btn  mr-3" style={styleContactPro} > <i aria-hidden="true" class="far fa-envelope"></i> contactez un pro</button>
         <button type="button" onMouseOver={MouseOverHeart} onMouseOut={MouseOutHeart} className={"stretched-link btn " + params.ekit_wb_3976_icons.value} style={style} ></button> */}
