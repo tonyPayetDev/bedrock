@@ -20,7 +20,6 @@ function getRandomIntInclusive(min, max) {
 }
 const MarkerCarrierIcon = ({ lac, onMarkerClick, url_icon, params }) => {
     const classes = useStyles()
-    const [selectedPoint, setselectedPoint] = React.useState(null);
     const [state, setState] = React.useState({
         isOpen: false
     });
@@ -37,9 +36,8 @@ const MarkerCarrierIcon = ({ lac, onMarkerClick, url_icon, params }) => {
         });
     }
 
-    let decalage = getRandomIntInclusive(0, 20) / 1000;
-    let latitude = parseFloat(lac.longitude)// + decalage;// inverser quand modif dina 
-    let longitude = parseFloat(lac.latitude) //+ decalage;
+    let latitude = parseFloat(lac.latitude)// + decalage;// inverser quand modif dina 
+    let longitude = parseFloat(lac.longitude) //+ decalage;
     let index = String(lac.id);
     return (
 
