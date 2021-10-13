@@ -1475,7 +1475,7 @@ class Hello_World extends Widget_Base
            'heading_text' =>  $settings['heading_text'],
            'url' =>  $settings['ekit_wb_226_url']["url"],
             "API_URI"=> $url,
-            "URL_POST"=> $settings['ekit_wb_225_url_post']["url"],
+            "URL_POST"=> $settings['ekit_wb_225_url']["url"],
             'color' =>  $settings['ekit_wb_1860_color'] ,
             'visible' => $settings['ekit_biens'],
             'visible_search_map' => $settings['ekit_maps'],
