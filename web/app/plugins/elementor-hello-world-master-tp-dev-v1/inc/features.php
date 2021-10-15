@@ -78,10 +78,10 @@ function afterPostUpdated($meta_id, $post_ID, $meta_key='', $meta_value='')
 {
     if ($meta_key=='_edit_lock') {
         $meta = get_post_meta($post_ID);
-        if ($meta["pro_res"][0]=="professionnel") {
+        if ($meta["pro_res"][0]=="résidentiel") {
             update_post_meta($post_ID, '_elementor_data', '[{"id":"493cd8e0","elType":"section","settings":[],"elements":[{"id":"401b0549","elType":"column","settings":{"_column_size":100},"elements":[{"id":"1c4def59","elType":"widget","settings":{"editor":"[elementor-template id=17361]"},"elements":[],"widgetType":"text-editor"}],"isInner":false}],"isInner":false}]');
         }
-        if ($meta["pro_res"][0]=="résidentiel") {
+        if ($meta["pro_res"][0]=="professionnel") {
             update_post_meta($post_ID, '_elementor_data', '[{"id":"493cd8e0","elType":"section","settings":[],"elements":[{"id":"401b0549","elType":"column","settings":{"_column_size":100},"elements":[{"id":"1c4def59","elType":"widget","settings":{"editor":"[elementor-template id=15941 ]"},"elements":[],"widgetType":"text-editor"}],"isInner":false}],"isInner":false}]');
         }
     }

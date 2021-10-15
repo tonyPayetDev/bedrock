@@ -234,8 +234,8 @@ acf_add_local_field_group(array(
                 'id' => '',
             ),
             'choices' => array(
-                'résidentiel' => 'résidentiel',
                 'professionnel' => 'professionnel',
+                'résidentiel' => 'résidentiel',
             ),
             'default_value' => false,
             'allow_null' => 0,
