@@ -79,7 +79,7 @@ function cptui_register_my_cpts_programmes()
         "hierarchical" => false,
         "rewrite" => [ "slug" => "programmes", "with_front" => true ],
         "query_var" => true,
-        "supports" => [ "title", "editor", "thumbnail", "custom-fields", "comments", "revisions", "author" ],
+        "supports" => [ "title", "editor", "thumbnail", "custom-fields" ],
         "show_in_graphql" => false,
     ];
 
@@ -234,8 +234,8 @@ acf_add_local_field_group(array(
                 'id' => '',
             ),
             'choices' => array(
-                'professionnel' => 'professionnel',
                 'résidentiel' => 'résidentiel',
+                'professionnel' => 'professionnel',
             ),
             'default_value' => false,
             'allow_null' => 0,

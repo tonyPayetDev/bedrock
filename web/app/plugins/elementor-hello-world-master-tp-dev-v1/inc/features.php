@@ -1,6 +1,94 @@
 <?php
 
 
+
+function capitaine_set_category_on_new_post($post_id, $post, $update)
+{
+    if (!$update && $post->post_status=="auto-draft" && $post->post_type=="programmes") {
+        global $wpdb;
+
+        $content='[elementor-template id="15941"]';// a modifier si migration ou a mettre en parametre de la cron
+     
+
+        $resultat = $wpdb->insert(
+            $wpdb->prefix . 'postmeta',
+            array(
+                    'meta_key' => '_wp_page_template',// a mettre par la suite dans annonce
+                    'meta_value' =>'elementor_canvas',
+                    'post_id' =>$post_id,
+                    
+                ),
+            array(
+                    '%s',
+                    '%s',
+                    '%s',
+                )
+        );
+        $resultat = $wpdb->insert(
+            $wpdb->prefix . 'postmeta',
+            array(
+                    'meta_key' => '_elementor_template_type',
+                    'meta_value' =>'wp-post',
+                    'post_id' =>$post_id,
+                    
+                ),
+            array(
+                    '%s',
+                    '%s',
+                    '%s',
+                )
+        );
+
+        $resultat = $wpdb->insert(
+            $wpdb->prefix . 'postmeta',
+            array(
+                    'meta_key' => '_elementor_edit_mode',
+                    'meta_value' =>'builder',
+                    'post_id' =>$post_id,
+                    
+                ),
+            array(
+                    '%s',
+                    '%s',
+                    '%s',
+                )
+        );
+        $resultat = $wpdb->insert(
+            $wpdb->prefix . 'postmeta',
+            array(
+                    'meta_key' => '_elementor_data',
+                    'meta_value' =>'[{"id":"493cd8e0","elType":"section","settings":[],"elements":[{"id":"401b0549","elType":"column","settings":{"_column_size":100},"elements":[{"id":"1c4def59","elType":"widget","settings":{"editor":'.json_encode($content).'},"elements":[],"widgetType":"text-editor"}],"isInner":false}],"isInner":false}]',
+                    'post_id' =>$post_id,
+                    
+                ),
+            array(
+                    '%s',
+                    '%s',
+                    '%s',
+                )
+        );
+        $post = get_post($post_id);
+        wp_update_post($post);
+    }
+}
+add_action('save_post', 'capitaine_set_category_on_new_post', 10, 3);
+
+
+function afterPostUpdated($meta_id, $post_ID, $meta_key='', $meta_value='')
+{
+    if ($meta_key=='_edit_lock') {
+        $meta = get_post_meta($post_ID);
+        if ($meta["pro_res"][0]=="professionnel") {
+            update_post_meta($post_ID, '_elementor_data', '[{"id":"493cd8e0","elType":"section","settings":[],"elements":[{"id":"401b0549","elType":"column","settings":{"_column_size":100},"elements":[{"id":"1c4def59","elType":"widget","settings":{"editor":"[elementor-template id=17361]"},"elements":[],"widgetType":"text-editor"}],"isInner":false}],"isInner":false}]');
+        }
+        if ($meta["pro_res"][0]=="résidentiel") {
+            update_post_meta($post_ID, '_elementor_data', '[{"id":"493cd8e0","elType":"section","settings":[],"elements":[{"id":"401b0549","elType":"column","settings":{"_column_size":100},"elements":[{"id":"1c4def59","elType":"widget","settings":{"editor":"[elementor-template id=15941 ]"},"elements":[],"widgetType":"text-editor"}],"isInner":false}],"isInner":false}]');
+        }
+    }
+}
+add_action('updated_post_meta', 'afterPostUpdated', 10, 4);
+
+
 add_action("wpcf7_before_send_mail", "kodex_wpcf7_before_send_mail");
 function kodex_wpcf7_before_send_mail($contact_form)
 {
@@ -53,7 +141,7 @@ function delete_post()
         foreach ($meta as $key => $value) {
             var_dump($key);
         
-            $bool =delete_post_meta($value->ID, $key, '');
+            $bool = delete_post_meta($value->ID, $key, '');
         }
     }
     return bool ;
