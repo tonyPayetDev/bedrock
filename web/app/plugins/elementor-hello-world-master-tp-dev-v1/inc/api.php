@@ -23,7 +23,8 @@ function name_select($type)
     }
           
     $tab[]="details";
-    
+    $tab[]="id";
+
     return array_unique($tab)  ;
 }
 /**
