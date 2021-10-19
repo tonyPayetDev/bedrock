@@ -153,7 +153,16 @@ function title_filter($where, &$wp_query)
     }
     return $where;
 }
+function biens_by_id(WP_REST_Request $request)
+{
+    $id=$request->get_param('id');
+    $meta=get_post_meta($id);
+    foreach ($meta as $key => $value_meta) {
+        $tab[$key]=$value_meta[0];
+    }
 
+    return  $tab;
+}
 function biens(WP_REST_Request $request)
 {
     $r=array();
@@ -238,6 +247,13 @@ add_action('rest_api_init', function () {
     register_rest_route('api/v1', '/data', array(
       'methods' => 'GET',
       'callback' => 'biens',
+    ));
+});
+
+add_action('rest_api_init', function () {
+    register_rest_route('api/v1', '/data_by_id', array(
+      'methods' => 'GET',
+      'callback' => 'biens_by_id',
     ));
 });
 
