@@ -31,7 +31,7 @@ function capitaine_set_category_on_new_post($post_id, $post, $update)
             $wpdb->prefix . 'postmeta',
             array(
                     'meta_key' => 'reference',// a mettre par la suite dans annonce
-                    'meta_value' =>reference_key(get_the_ID()),
+                    'meta_value' =>reference_key($post_id),
                     'post_id' =>$post_id,
                     
                 ),
