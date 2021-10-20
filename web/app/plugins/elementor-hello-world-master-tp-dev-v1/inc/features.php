@@ -27,7 +27,20 @@ function capitaine_set_category_on_new_post($post_id, $post, $update)
         global $wpdb;
 
         $content='[elementor-template id="15941"]';// a modifier si migration ou a mettre en parametre de la cron
-     
+        $resultat = $wpdb->insert(
+            $wpdb->prefix . 'postmeta',
+            array(
+                    'meta_key' => 'reference',// a mettre par la suite dans annonce
+                    'meta_value' =>reference_key(get_the_ID()),
+                    'post_id' =>$post_id,
+                    
+                ),
+            array(
+                    '%s',
+                    '%s',
+                    '%s',
+                )
+        );
         $resultat = $wpdb->insert(
             $wpdb->prefix . 'postmeta',
             array(
