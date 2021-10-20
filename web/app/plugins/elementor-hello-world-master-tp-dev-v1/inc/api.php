@@ -158,7 +158,6 @@ function title_filter($where, &$wp_query)
 function biens(WP_REST_Request $request)
 {
     $r=array();
- 
 
     if (!$request->get_param('name_select') && !$request->get_param('id')) {
         $type=$request->get_param('type');
@@ -216,7 +215,7 @@ function biens(WP_REST_Request $request)
             foreach ($meta as $key => $value_meta) {
                 $tab["id"]=$value->ID;
                 $tab["post_name"]=$value->post_name;
-                $url = wp_get_attachment_image_src($value->photo, 'thumbnail')[0];// recupere juste l'ul
+                $url = wp_get_attachment_image_src($value->photo, array( 630, 370 ))[0];// recupere juste l'ul
             
                 $tab["photo"]= $url;
                 $tab[$key]=$value_meta[0];

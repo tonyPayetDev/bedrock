@@ -1,7 +1,6 @@
 <?php
 
 
-
 function capitaine_set_category_on_new_post($post_id, $post, $update)
 {
     if (!$update && $post->post_status=="auto-draft" && $post->post_type=="programmes") {
@@ -9,7 +8,6 @@ function capitaine_set_category_on_new_post($post_id, $post, $update)
 
         $content='[elementor-template id="15941"]';// a modifier si migration ou a mettre en parametre de la cron
      
-
         $resultat = $wpdb->insert(
             $wpdb->prefix . 'postmeta',
             array(
@@ -89,23 +87,6 @@ function afterPostUpdated($meta_id, $post_ID, $meta_key='', $meta_value='')
 add_action('updated_post_meta', 'afterPostUpdated', 10, 4);
 
 
-add_action("wpcf7_before_send_mail", "kodex_wpcf7_before_send_mail");
-function kodex_wpcf7_before_send_mail($contact_form)
-{
-    // On récupère les propriétés du formulaire (réglages)
-    $current_mail_array = $contact_form->prop('mail');
- 
-    // On récupère les données du formulaire posté
-    $submission = WPCF7_Submission::get_instance();
-    $posted_data = $submission->get_posted_data();
-    if ($posted_data['contact_email']) {
-        $current_mail_array['recipient'] = $posted_data['contact_email'];
-        error_log("email envoyé à ".$posted_data['contact_email']);
-    }
-    
-    // On réattribue les nouvelles propriétés au formulaire
-    $contact_form->set_properties(array('mail'=>$current_mail_array));
-}
 
 
 // Clé d'API (au début du fichier, important)

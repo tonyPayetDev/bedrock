@@ -262,7 +262,7 @@ const DetailAnnonce = (props) => {
         else if (annonce.type === "button") {
 
           return (
-            <a type="button" style={annonce.post} class={col} style={styleContactPro} href={annonce.url + "?" + annonce.url_param + "=" + value} >
+            <a type="button" style={annonce.post} class={col} style={styleContactPro} href={annonce.url + "&" + annonce.url_param + "=" + value} >
               <i aria-hidden="true" class={annonce.icon.value}></i>  {annonce.text}
             </a>
 

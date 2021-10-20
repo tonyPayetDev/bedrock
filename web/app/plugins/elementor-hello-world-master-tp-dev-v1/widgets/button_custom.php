@@ -1,5 +1,8 @@
 <?php
-namespace Elementor;
+namespace ElementorHelloWorld\Widgets;
+
+use Elementor\Widget_Base;
+use Elementor\Controls_Manager;
 
 if (! defined('ABSPATH')) {
     exit; // Exit if accessed directly.
@@ -7,6 +10,12 @@ if (! defined('ABSPATH')) {
 
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Group_Control_Typography;
+use Elementor\Group_Control_Text_Shadow;
+use Elementor\Group_Control_Background;
+use Elementor\Group_Control_Border;
+use Elementor\Group_Control_Box_Shadow;
+use Elementor\Icons_Manager;
 
 /**
  * Elementor button widget.
@@ -16,7 +25,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
  *
  * @since 1.0.0
  */
-class Widget_Button extends Widget_Base
+class Button_Custom extends Widget_Base
 {
 
     /**
@@ -31,7 +40,7 @@ class Widget_Button extends Widget_Base
      */
     public function get_name()
     {
-        return 'button';
+        return 'button-custom-ktp';
     }
 
     /**
@@ -46,7 +55,7 @@ class Widget_Button extends Widget_Base
      */
     public function get_title()
     {
-        return __('Button', 'elementor');
+        return __('Button Custom ktp', 'elementor');
     }
 
     /**

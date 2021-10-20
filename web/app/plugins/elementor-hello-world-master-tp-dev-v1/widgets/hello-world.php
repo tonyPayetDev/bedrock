@@ -1409,7 +1409,7 @@ class Hello_World extends Widget_Base
         $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers('page');
         $page_settings_model = $page_settings_manager->get_model(get_the_ID());
         $url =$page_settings_model->get_settings($settings['view']);
-
+        $cpt="";
         // fin dynamique des champs todo mette dans une fonction
         $file = dirname(__DIR__)."/inc/jsonFile.json";
         $context = Timber::get_context();
