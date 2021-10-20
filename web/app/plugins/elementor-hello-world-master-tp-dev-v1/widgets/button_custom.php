@@ -534,7 +534,7 @@ class Button_Custom extends Widget_Base
     <div class="elementor-button-wrapper">
         <a id="{{ settings.button_css_id }}"
             class="elementor-button elementor-size-{{ settings.size }} elementor-animation-{{ settings.hover_animation }}"
-            href="" role="button">
+            href="{{ settings.link.url }}" role="button">
             <span class="elementor-button-content-wrapper">
                 <# if ( settings.icon || settings.selected_icon ) { #>
                     <span class="elementor-button-icon elementor-align-icon-{{ settings.icon_align }}">

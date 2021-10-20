@@ -136,19 +136,6 @@ class Widget_Button extends Widget_Base
                 'prefix_class' => 'elementor-button-',
             ]
         );
-        $this->add_control(
-            'url_param',
-            [
-                'label' => __('Url param', 'elementor'),
-                'type' => Controls_Manager::TEXT,
-                'dynamic' => [
-                    'active' => true,
-                ],
-                'default' => __('reference', 'elementor'),
-                'placeholder' => __('Url param', 'elementor'),
-            ]
-        );
-
 
         $this->add_control(
             'text',
@@ -480,8 +467,6 @@ class Widget_Button extends Widget_Base
         $this->add_render_attribute('wrapper', 'class', 'elementor-button-wrapper');
 
         if (! empty($settings['link']['url'])) {
-            $settings['link']['url']= $settings['link']['url'].$settings['url_param'].'='.do_shortcode('[acf field='.$settings['url_param'].']');
-         
             $this->add_link_attributes('button', $settings['link']);
             $this->add_render_attribute('button', 'class', 'elementor-button-link');
         }
@@ -525,7 +510,7 @@ class Widget_Button extends Widget_Base
     <div class="elementor-button-wrapper">
         <a id="{{ settings.button_css_id }}"
             class="elementor-button elementor-size-{{ settings.size }} elementor-animation-{{ settings.hover_animation }}"
-            href="" role="button">
+            href="{{ settings.link.url }}" role="button">
             <span class="elementor-button-content-wrapper">
                 <# if ( settings.icon || settings.selected_icon ) { #>
                     <span class="elementor-button-icon elementor-align-icon-{{ settings.icon_align }}">
