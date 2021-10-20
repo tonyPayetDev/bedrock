@@ -6,46 +6,6 @@
  * @param array $data Options for the function.
  * @return string|null Post title for the latest, * or null if none.
  */
-// function cptui_register_pro()
-// {
-
-//     /**
-//      * Post Type: Programmes.
-//      */
-
-//     $labels = [
-//         "name" => __("Programmes", "custom-post-type-ui"),
-//         "singular_name" => __("Programme", "custom-post-type-ui"),
-//     ];
-
-//     $args = [
-//         "label" => __("Programmes", "custom-post-type-ui"),
-//         "labels" => $labels,
-//         "description" => "",
-//         "public" => true,
-//         "publicly_queryable" => true,
-//         "show_ui" => true,
-//         "show_in_rest" => true,
-//         "rest_base" => "",
-//         "rest_controller_class" => "WP_REST_Posts_Controller",
-//         "has_archive" => false,
-//         "show_in_menu" => true,
-//         "show_in_nav_menus" => true,
-//         "delete_with_user" => false,
-//         "exclude_from_search" => false,
-//         "capability_type" => "post",
-//         "map_meta_cap" => true,
-//         "hierarchical" => false,
-//         "rewrite" => [ "slug" => "programmes", "with_front" => true ],
-//         "query_var" => true,
-//         "supports" => [ "title", "editor", "thumbnail", "custom-fields" ],
-//         "show_in_graphql" => false,
-//     ];
-
-//     register_post_type("programmes", $args);
-// }
-
-// add_action('init', 'cptui_register_pro');
 
 function cptui_register_my_cpts_programmes()
 {
@@ -136,12 +96,126 @@ function cptui_register_biens()
 
 add_action('init', 'cptui_register_biens');
 
+acf_add_local_field_group(array(
+    'key' => 'group_616d53072c5d1',
+    'title' => 'contact',
+    'fields' => array(
+        array(
+            'key' => 'field_616d53c4215cf',
+            'label' => 'secteur',
+            'name' => 'secteur',
+            'type' => 'select',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'choices' => array(
+                'nord' => 'nord',
+                'sud' => 'sud',
+                'ouest' => 'ouest',
+                'est' => 'est',
+            ),
+            'default_value' => false,
+            'allow_null' => 1,
+            'multiple' => 0,
+            'ui' => 0,
+            'return_format' => 'value',
+            'ajax' => 0,
+            'placeholder' => '',
+        ),
+        array(
+            'key' => 'field_616d5bf89b1eb',
+            'label' => 'professionnel ou résidentiel',
+            'name' => 'pro_res',
+            'type' => 'select',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'choices' => array(
+                'professionnel' => 'professionnel',
+                'résidentiel' => 'résidentiel',
+            ),
+            'default_value' => false,
+            'allow_null' => 1,
+            'multiple' => 0,
+            'ui' => 0,
+            'return_format' => 'value',
+            'ajax' => 0,
+            'placeholder' => '',
+        ),
+    ),
+    'location' => array(
+        array(
+            array(
+                'param' => 'user_form',
+                'operator' => '==',
+                'value' => 'all',
+            ),
+        ),
+    ),
+    'menu_order' => 0,
+    'position' => 'normal',
+    'style' => 'default',
+    'label_placement' => 'top',
+    'instruction_placement' => 'label',
+    'hide_on_screen' => '',
+    'active' => true,
+    'description' => '',
+));
 
 
 acf_add_local_field_group(array(
     'key' => 'group_6130a66755987',
     'title' => 'programmes',
     'fields' => array(
+
+        array(
+            'key' => 'field_616970d4eb7da',
+            'label' => 'contact_email',
+            'name' => 'contact_email',
+            'type' => 'email',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+        ),
+        array(
+            'key' => 'field_616ecf9415643',
+            'label' => 'reference',
+            'name' => 'reference',
+            'type' => 'text',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
+            'disabled' => 1,
+        ),
         array(
             'key' => 'field_6130a68d972d8',
             'label' => 'titre',

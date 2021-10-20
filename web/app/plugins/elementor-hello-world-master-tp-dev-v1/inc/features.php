@@ -1,6 +1,26 @@
 <?php
 
 
+/**
+ * Charger dynamiquement les choix d'un menu déroulant
+ * Filtre : acf/load_field
+ */
+function reference_key($post_id)
+{
+    $today = $post_id.'-'.date("md");
+    return   $today;
+}
+
+function msk_acf_populate_year_field($field)
+{
+    $field['disabled'] = 1;
+    $field['value'] = reference_key(get_the_ID());
+
+    return $field;
+}
+add_filter('acf/load_field/name=reference', 'msk_acf_populate_year_field');
+
+
 function capitaine_set_category_on_new_post($post_id, $post, $update)
 {
     if (!$update && $post->post_status=="auto-draft" && $post->post_type=="programmes") {
