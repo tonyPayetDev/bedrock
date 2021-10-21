@@ -63,12 +63,32 @@ class Email
             $contact_form->set_properties(array('mail'=>$current_mail_array));
         }
     }
-
-    public static function send_mail_by_id($contact_form, $current_mail_array, $type, $reference)
+    public static function send_mail_role($contact_form, $current_mail_array, $role)
     {
-        if ($reference) {
+        if ($role) {
+            error_log("role ".    $role);
+
+            $user_query = new WP_User_Query(array( 'role' =>   $role ));
+
+            if ($user_query->get_results()) {
+                foreach ($user_query->get_results() as $user) {
+                    error_log("email envoyé à test ". $user->user_email);
+                    $current_mail_array['recipient'] = $user->user_email;
+                }
+            } else {
+                $current_mail_array['recipient'] =null;
+            }
+            error_log("email envoyé à current_mail_array  ". $user->user_email);
+            $contact_form->set_properties(array('mail'=>$current_mail_array));
+        }
+    }
+
+    public static function send_mail_type_reference($contact_form, $current_mail_array, $type, $reference)
+    {
+        if ($reference &&  $type) {
             error_log("reference ".$reference);
-   
+            error_log("type ".$type);
+            
             $meta_values = get_meta_values('reference', $type, $reference);
       
             if ($meta_values['contact_email'][0]) {
@@ -98,6 +118,16 @@ add_action("wpcf7_before_send_mail", "kodex_wpcf7_before_send_mail");
          Email::send_mail_secteur_pro_res($contact_form, $current_mail_array, $posted_data['secteur'][0], $posted_data['pro_res'][0]);
      }
      if (isset($posted_data['type']) && isset($posted_data['reference'])) {
-         Email::send_mail_by_id($contact_form, $current_mail_array, $posted_data['type'], $posted_data['reference']);
+         Email::send_mail_type_reference($contact_form, $current_mail_array, $posted_data['type'], $posted_data['reference']);
+     }
+ 
+     if (isset($posted_data['role'])) {
+         Email::send_mail_role($contact_form, $current_mail_array, $posted_data['role']);
+     }
+
+     if (isset($posted_data['your-request'][0])) {
+         error_log("email envoyé à  ". $posted_data['your-request'][0]);
+
+         Email::send_mail_role($contact_form, $current_mail_array, $posted_data['your-request'][0]);
      }
  }
