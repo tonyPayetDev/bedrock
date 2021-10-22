@@ -145,19 +145,6 @@ class Button_Custom extends Widget_Base
                 'prefix_class' => 'elementor-button-',
             ]
         );
-        $this->add_control(
-            'url_param',
-            [
-                'label' => __('Url param', 'elementor'),
-                'type' => Controls_Manager::TEXT,
-                'dynamic' => [
-                    'active' => true,
-                ],
-                'default' => __('reference', 'elementor'),
-                'placeholder' => __('Url param', 'elementor'),
-            ]
-        );
-
 
         $this->add_control(
             'text',
@@ -186,7 +173,18 @@ class Button_Custom extends Widget_Base
                 ],
             ]
         );
-
+        $this->add_control(
+            'url_param',
+            [
+                'label' => __('Url param', 'elementor'),
+                'type' => Controls_Manager::TEXT,
+                'dynamic' => [
+                    'active' => true,
+                ],
+                'default' => __('reference', 'elementor'),
+                'placeholder' => __('Url param', 'elementor'),
+            ]
+        );
         $this->add_responsive_control(
             'align',
             [

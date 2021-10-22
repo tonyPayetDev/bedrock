@@ -45,11 +45,8 @@ class Hello_World extends Widget_Base
             ]
         );
     
-    
         // on limite a deux pour l'instant pourra étre ameliorer par la suite #todo recuperer le nombre d'api
-        // for ($i = 1; $i <= 2; $i++) {
-        //     $opt['api'.$i]=  esc_html__('api'.$i, 'elementskit-lite');
-        // }
+        
         $opt=$this->get_api();
         if ($opt) {
             $this->add_control(
@@ -85,7 +82,7 @@ class Hello_World extends Widget_Base
                     'label' => esc_html__('Choix Field ', 'elementskit-lite'),
                     'type' => Controls_Manager::SELECT,
                     'default' => 'id',
-                    'options' =>$this->get_name_selet($opt_key),
+                    'options' =>$this->get_name_select($opt_key),
                     
 
                 ]
@@ -100,6 +97,7 @@ class Hello_World extends Widget_Base
                         'text'  => esc_html__('Text', 'elementskit-lite'),
                         'select'  => esc_html__('Select', 'elementskit-lite'),
                         'button' => esc_html__('Button', 'elementskit-lite'),
+                        'button_param' => esc_html__('Button With Param', 'elementskit-lite'),
                         'photos' => esc_html__('Photos', 'elementskit-lite'),
                         'condition' => esc_html__('Condition', 'elementskit-lite'),
                         'hide' => esc_html__('Hide', 'elementskit-lite'),
@@ -134,7 +132,7 @@ class Hello_World extends Widget_Base
                     'label' => esc_html__('Url param ', 'elementskit-lite'),
                     'type' => Controls_Manager::SELECT,
                     'default' => 'id',
-                    'options' =>$this->get_name_selet($opt_key),
+                    'options' =>$this->get_name_select($opt_key),
                     
                 ]
                 );
@@ -293,7 +291,7 @@ class Hello_World extends Widget_Base
                 'type' => Controls_Manager::SELECT,
                 'default'     => __('category-name', 'elementor'),
                 'label_block' => true,
-                'options' =>$this->get_name_selet($opt_key),
+                'options' =>$this->get_name_select($opt_key),
     
             ]
         );
@@ -387,7 +385,7 @@ class Hello_World extends Widget_Base
                 'type' => Controls_Manager::SELECT,
                 'default'     => __('category-name', 'elementor'),
                 'label_block' => true,
-                'options' =>$this->get_name_selet($opt_key),
+                'options' =>$this->get_name_select($opt_key),
 
             ]
         );
@@ -1380,10 +1378,11 @@ class Hello_World extends Widget_Base
         }
         return $opt;
     }
-
+    
     // return la valeur des noms des filtres disponible
-    public function get_name_selet($opt_key)
+    public function get_name_select($opt_key)
     {
+        $tab_key_post= [];
         $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers('page');
         $page_settings_model = $page_settings_manager->get_model(get_the_ID());
         $url =$page_settings_model->get_settings($opt_key);

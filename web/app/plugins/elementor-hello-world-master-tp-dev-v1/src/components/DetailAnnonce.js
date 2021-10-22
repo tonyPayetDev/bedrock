@@ -260,6 +260,16 @@ const DetailAnnonce = (props) => {
         }
 
         else if (annonce.type === "button") {
+          let url = name[annonce.url];
+          console.log(params.URL_POST + url);
+          return (
+            <a type="button" style={annonce.post} class={col} style={styleContactPro} href={params.URL_POST + url} >
+              <i aria-hidden="true" class={annonce.icon.value}></i>  {annonce.text}
+            </a>
+
+          );
+        }
+        else if (annonce.type === "button_param") {
 
           return (
             <a type="button" style={annonce.post} class={col} style={styleContactPro} href={annonce.url + "&" + annonce.url_param + "=" + value} >

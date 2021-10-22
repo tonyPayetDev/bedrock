@@ -160,6 +160,7 @@ const App = (props) => {
         </div>
 
       </div>
+      {/* todo mettre condition pour cacher sur widget elem */}
       {!params.search_text ?
         <NbResultat
           params={params}
