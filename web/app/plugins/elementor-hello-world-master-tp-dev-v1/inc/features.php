@@ -1,6 +1,18 @@
 <?php
-
-
+// [acfcond field='']foobar[/afccond]
+function acfif($atts = [], $content = null)
+{
+    $atts = array_change_key_case((array)$atts, CASE_LOWER);
+ 
+    if (get_field($atts['field'])) {
+        $content =get_field($atts['field']).' '.$atts['label'];
+    } else {
+        $content = '';
+    }
+ 
+    return $content;
+}
+add_shortcode('acf-if', 'acfif');
 /**
  * Charger dynamiquement les choix d'un menu déroulant
  * Filtre : acf/load_field
