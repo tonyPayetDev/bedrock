@@ -107,13 +107,11 @@ function cux_gallery_embed_shortcode($atts)
 <div id="slider" class="flexslider">
     <ul class="slides">
         <?php   if ($images): ?>
-        <ul>
-            <?php foreach ($images as $image_id): ?>
-            <li>
-                <?php echo wp_get_attachment_image($image_id, 'full'); ?>
-            </li>
-            <?php endforeach; ?>
-        </ul>
+        <?php foreach ($images as $image_id): ?>
+        <li>
+            <?php echo wp_get_attachment_image($image_id, 'full'); ?>
+        </li>
+        <?php endforeach; ?>
         <?php endif; ?>
     </ul>
 </div>
