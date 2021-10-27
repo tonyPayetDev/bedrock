@@ -106,14 +106,12 @@ function cux_gallery_embed_shortcode($atts)
 
 <div id="slider" class="flexslider">
     <ul class="slides">
-        <?php   if ($images): ?>
         <?php foreach ($images as $image): ?>
         <li>
-            <img src="<?php echo esc_url($image['sizes']['thumbnail']); ?>"
-                alt="Thumbnail of <?php echo esc_url($image['alt']); ?>" />
+            <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>" />
+            <p><?php echo esc_html($image['caption']); ?></p>
         </li>
         <?php endforeach; ?>
-        <?php endif; ?>
     </ul>
 </div>
 <div class="custom-navigation">
