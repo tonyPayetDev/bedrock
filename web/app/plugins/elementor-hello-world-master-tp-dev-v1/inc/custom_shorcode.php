@@ -109,8 +109,8 @@ function cux_gallery_embed_shortcode($atts)
         <?php foreach ($images as $image):
      ?>
         <li>
-            <img style=" border-color:<?php echo $atts['color']; ?>;margin-left: 0px;margin-top: 0px;background: rgb(250, 250, 250);border-width: 0px 0px 3px;border-style: solid;border-image: initial;border-radius: 0px 23px 23px 0px;padding: 0px;width: 879px;height: 530px;box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px;left: 5px;"
-                src="<?php echo $image["url"]; ?>" />
+            <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>" />
+            <p><?php echo esc_html($image['caption']); ?></p>
         </li>
         <?php endforeach; ?>
     </ul>
