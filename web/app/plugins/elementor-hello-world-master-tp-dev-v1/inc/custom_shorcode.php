@@ -107,9 +107,10 @@ function cux_gallery_embed_shortcode($atts)
 <div id="slider" class="flexslider">
     <ul class="slides">
         <?php   if ($images): ?>
-        <?php foreach ($images as $image_id): ?>
+        <?php foreach ($images as $image): ?>
         <li>
-            <?php echo wp_get_attachment_image($image_id, 'full'); ?>
+            <img src="<?php echo esc_url($image['sizes']['thumbnail']); ?>"
+                alt="Thumbnail of <?php echo esc_url($image['alt']); ?>" />
         </li>
         <?php endforeach; ?>
         <?php endif; ?>
