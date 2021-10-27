@@ -215,9 +215,13 @@ function biens(WP_REST_Request $request)
             foreach ($meta as $key => $value_meta) {
                 $tab["id"]=$value->ID;
                 $tab["post_name"]=$value->post_name;
-                $url = wp_get_attachment_image_src($value->photo, array( 630, 370 ))[0];// recupere juste l'ul
-            
-                $tab["photo"]= $url;
+                if (!empty($value->photo)) {
+                    $url = wp_get_attachment_image_src($value->photo, array( 630, 370 ))[0];// recupere juste l'ul
+                    if (!empty($url)) {// si n'est pas pas un id worpdress passé mais une url
+                        $tab["photo"]= $url;
+                    }
+                }
+         
                 $tab[$key]=$value_meta[0];
             }
         

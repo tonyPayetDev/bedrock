@@ -201,3 +201,4 @@ require_once(__DIR__ . '/inc/features.php');
 require_once(__DIR__ . '/inc/api.php');
 require_once(__DIR__ . '/inc/cptui.php');
 require_once(__DIR__ . '/inc/contact.php');
+require_once(__DIR__ . '/inc/custom_shorcode.php');

@@ -56,10 +56,12 @@ class Plugin
         // wp_enqueue_script('example-app2', plugins_url('assets/js/hello-world.js', __FILE__), [ 'jquery' ],  time(), true);
         $stylesheet_url =  plugins_url('build/index.css', __FILE__);
         wp_enqueue_style('my-custom-styles', esc_url($stylesheet_url));
-        
+        // wp_enqueue_script('flexslider', 'https://raw.githubusercontent.com/woocommerce/FlexSlider/master/jquery.flexslider-min.js', array('jquery'), 1, true);
+
+        // $stylesheet_url =  plugins_url('build/styles.css', __FILE__);
+        // wp_enqueue_style('my-custom-styles2', esc_url($stylesheet_url));
         // 	// Chargement des styles et des scripts Bootstrap sur WordPress
         // 	// wp_enqueue_style('style', get_stylesheet_uri());
-        // wp_enqueue_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css');
         //    wp_enqueue_script('jquery');
         //    wp_enqueue_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', array('jquery'), 1, true);
         //    wp_enqueue_script('boostrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array('jquery', 'popper'), 1, true);

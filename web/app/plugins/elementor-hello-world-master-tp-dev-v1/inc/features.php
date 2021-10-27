@@ -219,15 +219,47 @@ function my_function()
             );
             
             $id_post=$wpdb->insert_id;
-
-                
+            
             if (!empty($d['photos']['photo'])) {
+                $tab_photo=null;
+
                 if (is_array($d['photos']['photo'])) {
+                    foreach ($d['photos']['photo'] as $photo => $photo_value) {
+                        $tab_photo[]['url']= $photo_value;
+                    }
                     $resultat = $wpdb->insert(
                         $wpdb->prefix . 'postmeta',
                         array(
                                 'meta_key' => "photos",
-                                'meta_value' => $d['photos']['photo'][0],	// recupere premier image
+                                'meta_value' => json_encode($tab_photo),	// recupere premier image
+                                'post_id' =>$id_post,
+                                
+                            ),
+                        array(
+                                '%s',
+                                '%s',
+                                '%s',
+                            )
+                    );
+                    $resultat = $wpdb->insert(
+                        $wpdb->prefix . 'postmeta',
+                        array(
+                                'meta_key' => "photo",
+                                'meta_value' =>$d['photos']['photo'][0] ,	// recupere premier image
+                                'post_id' =>$id_post,
+                                
+                            ),
+                        array(
+                                '%s',
+                                '%s',
+                                '%s',
+                            )
+                    );
+                    $resultat = $wpdb->insert(
+                        $wpdb->prefix . 'postmeta',
+                        array(
+                                'meta_key' => "nb_photo",
+                                'meta_value' =>  count($tab_photo),
                                 'post_id' =>$id_post,
                                 
                             ),
@@ -238,11 +270,41 @@ function my_function()
                             )
                     );
                 } else {
+                    $tab_photo[]['url']=$d['photos']['photo'];
+
                     $resultat = $wpdb->insert(
                         $wpdb->prefix . 'postmeta',
                         array(
                                 'meta_key' => "photos",
-                                'meta_value' => $d['photos']['photo'],	// recupere premier image
+                                'meta_value' => json_encode($tab_photo),	// recupere premier image
+                                'post_id' =>$id_post,
+                                
+                            ),
+                        array(
+                                '%s',
+                                '%s',
+                                '%s',
+                            )
+                    );
+                    $resultat = $wpdb->insert(
+                        $wpdb->prefix . 'postmeta',
+                        array(
+                                'meta_key' => "photo",
+                                'meta_value' =>$d['photos']['photo'] ,	// recupere premier image
+                                'post_id' =>$id_post,
+                                
+                            ),
+                        array(
+                                '%s',
+                                '%s',
+                                '%s',
+                            )
+                    );
+                    $resultat = $wpdb->insert(
+                        $wpdb->prefix . 'postmeta',
+                        array(
+                                'meta_key' => "nb_photo",
+                                'meta_value' =>  count($tab_photo),
                                 'post_id' =>$id_post,
                                 
                             ),
