@@ -57,7 +57,6 @@ class Plugin
         $stylesheet_url =  plugins_url('build/index.css', __FILE__);
         wp_enqueue_style('my-custom-styles', esc_url($stylesheet_url));
         // wp_enqueue_script('flexslider', 'https://raw.githubusercontent.com/woocommerce/FlexSlider/master/jquery.flexslider-min.js', array('jquery'), 1, true);
-
         // $stylesheet_url =  plugins_url('build/styles.css', __FILE__);
         // wp_enqueue_style('my-custom-styles2', esc_url($stylesheet_url));
         // 	// Chargement des styles et des scripts Bootstrap sur WordPress
@@ -125,6 +124,8 @@ class Plugin
     {
         require_once(__DIR__ . '/widgets/hello-world.php');
         require_once(__DIR__ . '/widgets/button_custom.php');
+        require_once(__DIR__ . '/widgets/google_maps_custom.php');
+
         //    require_once(__DIR__ . '/widgets/inline-editing.php');
     }
 
@@ -144,6 +145,8 @@ class Plugin
         // Register Widgets
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\Hello_World());
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\Button_Custom());
+        \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\Google_Maps_Custom());
+
         //    \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\Inline_Editing());
     }
 

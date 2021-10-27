@@ -1,5 +1,17 @@
 <?php
-// [acfcond field='']foobar[/afccond]
+
+
+// Clé d'API (au début du fichier, important)
+define('CAPITAINE_GMAP_API_KEY', 'AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0');
+
+// Clé Google Maps pour le champ ACF (à la suite de votre code existant)
+function capitaine_acf_google_map_api($api)
+{
+    $api['key'] = CAPITAINE_GMAP_API_KEY;
+    return $api;
+}
+
+// acf condition afffiche la valeur plus label si valeur éxiste
 function acfif($atts = [], $content = null)
 {
     $atts = array_change_key_case((array)$atts, CASE_LOWER);
@@ -13,6 +25,7 @@ function acfif($atts = [], $content = null)
     return $content;
 }
 add_shortcode('acf-if', 'acfif');
+
 /**
  * Charger dynamiquement les choix d'un menu déroulant
  * Filtre : acf/load_field
@@ -134,16 +147,7 @@ add_action('updated_post_meta', 'afterPostUpdated', 10, 4);
 
 
 
-// Clé d'API (au début du fichier, important)
-define('CAPITAINE_GMAP_API_KEY', 'AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0');
 
-
-// Clé Google Maps pour le champ ACF (à la suite de votre code existant)
-function capitaine_acf_google_map_api($api)
-{
-    $api['key'] = CAPITAINE_GMAP_API_KEY;
-    return $api;
-}
 add_filter('acf/fields/google_map/api', 'capitaine_acf_google_map_api');
 // define the elementor/editor/after_save callback
 add_action('elementor/editor/after_save', 'custom_elementor_editor_after_save', 10, 2);

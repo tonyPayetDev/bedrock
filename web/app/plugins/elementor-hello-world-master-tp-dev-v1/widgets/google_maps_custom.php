@@ -1,5 +1,12 @@
 <?php
-namespace Elementor;
+namespace ElementorHelloWorld\Widgets;
+
+use Elementor\Widget_Base;
+use Elementor\Controls_Manager;
+use Elementor\Group_Control_Css_Filter;
+use Elementor\Plugin;
+use Elementor\Settings;
+
 
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 
@@ -8,13 +15,13 @@ if (! defined('ABSPATH')) {
 }
 
 /**
- * Elementor google maps widget.
+ * Elementor google maps widget. Custom récuperer dans widget elementor adater pour prendre en compte field acf
  *
  * Elementor widget that displays an embedded google map.
  *
  * @since 1.0.0
  */
-class Widget_Google_Maps extends Widget_Base
+class Google_Maps_Custom extends Widget_Base
 {
 
     /**
@@ -29,7 +36,7 @@ class Widget_Google_Maps extends Widget_Base
      */
     public function get_name()
     {
-        return 'google_maps';
+        return 'google_maps_ktp';
     }
 
     /**
@@ -44,7 +51,7 @@ class Widget_Google_Maps extends Widget_Base
      */
     public function get_title()
     {
-        return __('Google Maps', 'elementor');
+        return __('Google Maps ktp', 'elementor');
     }
 
     /**
@@ -138,12 +145,19 @@ class Widget_Google_Maps extends Widget_Base
                 'type' => Controls_Manager::TEXT,
                 'dynamic' => [
                     'active' => true,
-                    'categories' => [
-                        TagsModule::POST_META_CATEGORY,
-                    ],
+                    'categories' =>""
                 ],
                 'placeholder' => $default_address,
                 'default' => $default_address,
+                'label_block' => true,
+            ]
+        );
+        $this->add_control(
+            'acf',
+            [
+                'label' => __('Field acf', 'elementor'),
+                'type' => Controls_Manager::TEXT,
+                'placeholder' => "acf",
                 'label_block' => true,
             ]
         );
@@ -276,17 +290,21 @@ class Widget_Google_Maps extends Widget_Base
     protected function render()
     {
         $settings = $this->get_settings_for_display();
-
+    
         if (empty($settings['address'])) {
             return;
         }
 
+        if ($settings['acf']) {
+            $settings['address']=  do_shortcode('[acf field='.$settings['acf'].']');
+        }
+        
         if (0 === absint($settings['zoom']['size'])) {
             $settings['zoom']['size'] = 10;
         }
 
         $api_key = esc_html(get_option('elementor_google_maps_api_key'));
-
+      
         $params = [
             rawurlencode($settings['address']),
             absint($settings['zoom']['size']),
