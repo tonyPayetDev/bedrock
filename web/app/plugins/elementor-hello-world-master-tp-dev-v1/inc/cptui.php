@@ -448,7 +448,7 @@ acf_add_local_field_group(array(
                 'class' => '',
                 'id' => '',
             ),
-            'return_format' => 'array',
+            'return_format' => 'url',
             'preview_size' => 'medium',
             'insert' => 'append',
             'library' => 'all',
