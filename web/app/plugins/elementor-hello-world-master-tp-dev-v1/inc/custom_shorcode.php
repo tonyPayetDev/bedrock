@@ -69,6 +69,11 @@ function cux_gallery_embed_shortcode($atts)
 
 }
 
+.custom-img:hover {
+
+    filter: saturate(1.5) !important;
+}
+
 .custom-img {
 
     color: <?php echo $atts['color'];
@@ -76,14 +81,14 @@ function cux_gallery_embed_shortcode($atts)
     margin-left: 0px;
     margin-top: 0px;
     background: rgb(250, 250, 250);
-    border-width: 0px 0px 3px !important;
+    border-width: 0px 0px 4px !important;
     border-style: solid !important;
     border-image: initial !important;
     border-radius: 0px 23px 23px 0px !important;
     padding: 0px;
     width: 879px !important;
     height: 530px !important;
-    box-shadow: "rgba(0, 0, 0, 0.2) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px";
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px !important;
     left: 5px;
 
 
@@ -102,8 +107,7 @@ function cux_gallery_embed_shortcode($atts)
     
         foreach (json_decode($images) as $image): ?>
         <li>
-            <img style=" border-color:<?php echo $atts['color']; ?>;margin-left: 0px;margin-top: 0px;background: rgb(250, 250, 250);border-width: 0px 0px 3px;border-style: solid;border-image: initial;border-radius: 0px 23px 23px 0px;padding: 0px;width: 879px;height: 530px;box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px;left: 5px;"
-                src="<?php echo $image->url; ?>" />
+            <img class="custom-img" src="<?php echo $image->url; ?>" />
         </li>
         <?php endforeach; ?>
 
