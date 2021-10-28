@@ -1,5 +1,6 @@
 <?php
    
+
 // function to grab all possible meta values of the chosen meta key.
 function get_meta_values($meta_key, $post_type = 'post', $ref)
 {
@@ -40,7 +41,7 @@ class Email
               array(
                   'key'     => 'secteur',
                   'value'   => $secteur,
-                   'compare' => '='
+                   'compare' => 'LIKE'
               ),
               array(
                   'key'     => 'pro_res',

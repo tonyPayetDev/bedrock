@@ -121,7 +121,7 @@ acf_add_local_field_group(array(
             ),
             'default_value' => false,
             'allow_null' => 1,
-            'multiple' => 0,
+            'multiple' => 1,
             'ui' => 0,
             'return_format' => 'value',
             'ajax' => 0,
