@@ -1,6 +1,16 @@
 <?php
 
+add_filter("login_redirect", "gkp_subscriber_login_redirect", 10, 3);
+function gkp_subscriber_login_redirect($redirect_to, $request, $user)
+{
+    if (is_array($user->roles)) {
+        if (in_array('administrator', $user->roles)) {
+            return site_url('/wp-admin/');
+        }
+    }
 
+    return home_url();
+}
 // Clé d'API (au début du fichier, important)
 define('CAPITAINE_GMAP_API_KEY', 'AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0');
 
