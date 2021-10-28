@@ -5,7 +5,7 @@ function gkp_subscriber_login_redirect($redirect_to, $request, $user)
 {
     if (is_array($user->roles)) {
         if (in_array('administrator', $user->roles)) {
-            return site_url('/wp-admin/');
+            return site_url('/wp/wp-admin/index.php');
         }
     }
 
