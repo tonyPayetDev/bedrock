@@ -108,8 +108,8 @@ function cux_gallery_embed_shortcode($atts)
     <ul class="slides">
         <?php foreach ($images as $image): ?>
         <li>
-            <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>" />
-            <p><?php echo esc_html($image['caption']); ?></p>
+            <img src="<?php echo esc_url($image['sizes']['large']); ?>"
+                alt="Thumbnail of <?php echo esc_url($image['alt']); ?>" />
         </li>
         <?php endforeach; ?>
     </ul>
