@@ -69,7 +69,25 @@ function cux_gallery_embed_shortcode($atts)
 
 }
 
-.custom-img {}
+.custom-img {
+
+    color: <?php echo $atts['color'];
+    ?>;
+    margin-left: 0px;
+    margin-top: 0px;
+    background: rgb(250, 250, 250);
+    border-width: 0px 0px 3px !important;
+    border-style: solid !important;
+    border-image: initial !important;
+    border-radius: 0px 23px 23px 0px !important;
+    padding: 0px;
+    width: 879px !important;
+    height: 530px !important;
+    box-shadow: "rgba(0, 0, 0, 0.2) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px";
+    left: 5px;
+
+
+}
 
 .custom-navigation .flex-next {
     text-align: right;
@@ -106,10 +124,9 @@ function cux_gallery_embed_shortcode($atts)
 
 <div id="slider" class="flexslider">
     <ul class="slides">
-        <?php foreach ($images as $image): ?>
+        <?php foreach ($images as $image_id): ?>
         <li>
-            <img src="<?php echo esc_url($image['sizes']['large']); ?>"
-                alt="Thumbnail of <?php echo esc_url($image['alt']); ?>" />
+            <?php echo wp_get_attachment_image($image_id, 'full', false, array('class' => 'custom-img')); ?>
         </li>
         <?php endforeach; ?>
     </ul>
