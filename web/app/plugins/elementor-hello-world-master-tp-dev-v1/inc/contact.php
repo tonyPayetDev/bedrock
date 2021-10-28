@@ -93,7 +93,7 @@ class Email
       
             if ($meta_values['contact_email'][0]) {
                 error_log("email envoyé a ".$meta_values['contact_email'][0]);
-                $current_mail_array['recipient'] = $user->user_email; // decommenter pour la prod;
+                $current_mail_array['recipient'] =$meta_values['contact_email'][0]; // decommenter pour la prod;
             } else {
                 $current_mail_array['recipient'] =null;
             }
