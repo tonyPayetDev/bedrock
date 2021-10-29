@@ -125,6 +125,7 @@ class Plugin
         require_once(__DIR__ . '/widgets/hello-world.php');
         require_once(__DIR__ . '/widgets/button_custom.php');
         require_once(__DIR__ . '/widgets/google_maps_custom.php');
+        require_once(__DIR__ . '/widgets/qr_code_custom.php');
 
         //    require_once(__DIR__ . '/widgets/inline-editing.php');
     }
@@ -146,7 +147,9 @@ class Plugin
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\Hello_World());
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\Button_Custom());
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\Google_Maps_Custom());
+        \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\QrCode_Custom());
 
+        
         //    \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\Inline_Editing());
     }
 

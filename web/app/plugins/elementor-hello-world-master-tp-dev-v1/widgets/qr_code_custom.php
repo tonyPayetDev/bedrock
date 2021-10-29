@@ -1,0 +1,335 @@
+<?php
+namespace ElementorHelloWorld\Widgets;
+
+use Elementor\Widget_Base;
+use Elementor\Controls_Manager;
+use Elementor\Group_Control_Css_Filter;
+use Elementor\Plugin;
+use Elementor\Settings;
+
+
+use Elementor\Modules\DynamicTags\Module as TagsModule;
+
+if (! defined('ABSPATH')) {
+    exit; // Exit if accessed directly.
+}
+
+/**
+ * Elementor google maps widget. Custom récuperer dans widget elementor adater pour prendre en compte field acf
+ *
+ * Elementor widget that displays an embedded google map.
+ *
+ * @since 1.0.0
+ */
+class QrCode_Custom extends Widget_Base
+{
+
+    /**
+     * Get widget name.
+     *
+     * Retrieve google maps widget name.
+     *
+     * @since 1.0.0
+     * @access public
+     *
+     * @return string Widget name.
+     */
+    public function get_name()
+    {
+        return 'qrcode_ktp';
+    }
+
+    /**
+     * Get widget title.
+     *
+     * Retrieve google maps widget title.
+     *
+     * @since 1.0.0
+     * @access public
+     *
+     * @return string Widget title.
+     */
+    public function get_title()
+    {
+        return __('Qr code ktp', 'elementor');
+    }
+
+    /**
+     * Get widget icon.
+     *
+     * Retrieve google maps widget icon.
+     *
+     * @since 1.0.0
+     * @access public
+     *
+     * @return string Widget icon.
+     */
+    public function get_icon()
+    {
+        return 'eicon-barcode';
+    }
+
+    /**
+     * Get widget categories.
+     *
+     * Retrieve the list of categories the google maps widget belongs to.
+     *
+     * Used to determine where to display the widget in the editor.
+     *
+     * @since 2.0.0
+     * @access public
+     *
+     * @return array Widget categories.
+     */
+    public function get_categories()
+    {
+        return [ 'basic' ];
+    }
+
+    /**
+     * Get widget keywords.
+     *
+     * Retrieve the list of keywords the widget belongs to.
+     *
+     * @since 2.1.0
+     * @access public
+     *
+     * @return array Widget keywords.
+     */
+    public function get_keywords()
+    {
+        return [ 'qrcode', 'code' ];
+    }
+
+    /**
+     * Register google maps widget controls.
+     *
+     * Adds different input fields to allow the user to change and customize the widget settings.
+     *
+     * @since 3.1.0
+     * @access protected
+     */
+    protected function register_controls()
+    {
+        $this->start_controls_section(
+            'section_map',
+            [
+                'label' => __('Qr code', 'elementor'),
+            ]
+        );
+
+        // if (Plugin::$instance->editor->is_edit_mode()) {
+        //     $api_key = get_option('elementor_google_maps_api_key');
+
+        //     if (! $api_key) {
+        //         $this->add_control(
+        //             'api_key_notification',
+        //             [
+        //                 'type' => Controls_Manager::RAW_HTML,
+        //                 'raw' => sprintf(
+        //                     __('Set your Google Maps API Key in Elementor\'s <a href="%1$s" target="_blank">Integrations Settings</a> page. Create your key <a href="%2$s" target="_blank">here.', 'elementor'),
+        //                     Settings::get_url() . '#tab-integrations',
+        //                     'https://developers.google.com/maps/documentation/embed/get-api-key'
+        //                 ),
+        //                 'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+        //             ]
+        //         );
+        //     }
+        // }
+
+        // $default_address = __('London Eye, London, United Kingdom', 'elementor');
+        // $this->add_control(
+        //     'address',
+        //     [
+        //         'label' => __('Location', 'elementor'),
+        //         'type' => Controls_Manager::TEXT,
+        //         'dynamic' => [
+        //             'active' => true,
+        //             'categories' =>""
+        //         ],
+        //         'placeholder' => $default_address,
+        //         'default' => $default_address,
+        //         'label_block' => true,
+        //     ]
+        // );
+        // $this->add_control(
+        //     'acf',
+        //     [
+        //         'label' => __('Field acf', 'elementor'),
+        //         'type' => Controls_Manager::TEXT,
+        //         'placeholder' => "acf",
+        //         'label_block' => true,
+        //     ]
+        // );
+
+        // $this->add_control(
+        //     'zoom',
+        //     [
+        //         'label' => __('Zoom', 'elementor'),
+        //         'type' => Controls_Manager::SLIDER,
+        //         'default' => [
+        //             'size' => 10,
+        //         ],
+        //         'range' => [
+        //             'px' => [
+        //                 'min' => 1,
+        //                 'max' => 20,
+        //             ],
+        //         ],
+        //         'separator' => 'before',
+        //     ]
+        // );
+
+        // $this->add_responsive_control(
+        //     'height',
+        //     [
+        //         'label' => __('Height', 'elementor'),
+        //         'type' => Controls_Manager::SLIDER,
+        //         'range' => [
+        //             'px' => [
+        //                 'min' => 40,
+        //                 'max' => 1440,
+        //             ],
+        //             'vh' => [
+        //                 'min' => 0,
+        //                 'max' => 100,
+        //             ],
+        //         ],
+        //         'size_units' => [ 'px', 'vh' ],
+        //         'selectors' => [
+        //             '{{WRAPPER}} iframe' => 'height: {{SIZE}}{{UNIT}};',
+        //         ],
+        //     ]
+        // );
+
+        // $this->add_control(
+        //     'view',
+        //     [
+        //         'label' => __('View', 'elementor'),
+        //         'type' => Controls_Manager::HIDDEN,
+        //         'default' => 'traditional',
+        //     ]
+        // );
+
+        // $this->end_controls_section();
+
+        // $this->start_controls_section(
+        //     'section_map_style',
+        //     [
+        //         'label' => __('Map', 'elementor'),
+        //         'tab'   => Controls_Manager::TAB_STYLE,
+        //     ]
+        // );
+
+        // $this->start_controls_tabs('map_filter');
+
+        // $this->start_controls_tab(
+        //     'normal',
+        //     [
+        //         'label' => __('Normal', 'elementor'),
+        //     ]
+        // );
+
+        // $this->add_group_control(
+        //     Group_Control_Css_Filter::get_type(),
+        //     [
+        //         'name' => 'css_filters',
+        //         'selector' => '{{WRAPPER}} iframe',
+        //     ]
+        // );
+
+        // $this->end_controls_tab();
+
+        // $this->start_controls_tab(
+        //     'hover',
+        //     [
+        //         'label' => __('Hover', 'elementor'),
+        //     ]
+        // );
+
+        // $this->add_group_control(
+        //     Group_Control_Css_Filter::get_type(),
+        //     [
+        //         'name' => 'css_filters_hover',
+        //         'selector' => '{{WRAPPER}}:hover iframe',
+        //     ]
+        // );
+
+        // $this->add_control(
+        //     'hover_transition',
+        //     [
+        //         'label' => __('Transition Duration', 'elementor'),
+        //         'type' => Controls_Manager::SLIDER,
+        //         'range' => [
+        //             'px' => [
+        //                 'max' => 3,
+        //                 'step' => 0.1,
+        //             ],
+        //         ],
+        //         'selectors' => [
+        //             '{{WRAPPER}} iframe' => 'transition-duration: {{SIZE}}s',
+        //         ],
+        //     ]
+        // );
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+
+        $this->end_controls_section();
+    }
+
+    /**
+     * Render google maps widget output on the frontend.
+     *
+     * Written in PHP and used to generate the final HTML.
+     *
+     * @since 1.0.0
+     * @access protected
+     */
+    protected function render()
+    {
+        $settings = $this->get_settings_for_display();
+    
+        if (empty($settings['address'])) {
+            return;
+        }
+
+        if ($settings['acf']) {
+            $settings['address']=  do_shortcode('[acf field='.$settings['acf'].']');
+        }
+        
+        if (0 === absint($settings['zoom']['size'])) {
+            $settings['zoom']['size'] = 10;
+        }
+
+        $api_key = esc_html(get_option('elementor_google_maps_api_key'));
+      
+        $params = [
+            rawurlencode($settings['address']),
+            absint($settings['zoom']['size']),
+            esc_attr($settings['address']),
+        ];
+        if (get_current_user_id()) {
+            $url="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=".get_permalink(get_the_ID())."&choe=UTF-8"; ?>
+
+<div class="elementor-custom-embed">
+    <a href="<?php echo $url ; ?>"> <img src="<?php echo $url ; ?>" /></a>
+
+</div>
+<?php
+        }
+    }
+
+    /**
+     * Render google maps widget output in the editor.
+     *
+     * Written as a Backbone JavaScript template and used to generate the live preview.
+     *
+     * @since 2.9.0
+     * @access protected
+     */
+    protected function content_template()
+    {
+    }
+}
