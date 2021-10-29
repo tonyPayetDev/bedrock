@@ -1384,18 +1384,20 @@ class Hello_World extends Widget_Base
     {
         $tab_key_post= [];
         
-        $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers('page');
-        $page_settings_model = $page_settings_manager->get_model(get_the_ID());
-        $url =$page_settings_model->get_settings($opt_key);
-        $response = wp_remote_get($url."&name_select=true");//todo a voir pour optimiser la recuperation des champs
-        $body     = wp_remote_retrieve_body($response);
-        $body =json_decode($body);
-    
-        if ($body && $opt_key) {
-            foreach ($body as $key => $value) {
-                if ($key=='name_select') {
-                    foreach ($value as $key2 => $value2) {
-                        $tab_key_post[$value2 ]=  esc_html__($value2, 'elementskit-lite');
+        if (get_current_user_id()) { // pour optimiser le temps de chargement  wp_remote_get appeler si connecter et elementor
+            $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers('page');
+            $page_settings_model = $page_settings_manager->get_model(get_the_ID());
+            $url =$page_settings_model->get_settings($opt_key);
+            $response = wp_remote_get($url."&name_select=true");//todo a voir pour optimiser la recuperation des champs
+            $body     = wp_remote_retrieve_body($response);
+            $body =json_decode($body);
+        
+            if ($body && $opt_key) {
+                foreach ($body as $key => $value) {
+                    if ($key=='name_select') {
+                        foreach ($value as $key2 => $value2) {
+                            $tab_key_post[$value2 ]=  esc_html__($value2, 'elementskit-lite');
+                        }
                     }
                 }
             }
@@ -1415,9 +1417,7 @@ class Hello_World extends Widget_Base
         // fin dynamique des champs todo mette dans une fonction
         $file = dirname(__DIR__)."/inc/jsonFile.json";
         $context = Timber::get_context();
-        // if ($_SERVER['QUERY_STRING']) {
-        //     var_dump($_SERVER['QUERY_STRING']);
-        // }
+        
         // recuperation valeurs select
         $type=[];
         foreach ($settings['categories'] as $category) {
