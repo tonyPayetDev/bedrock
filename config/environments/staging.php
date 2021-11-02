@@ -15,3 +15,4 @@ use Roots\WPConfig\Config;
  */
 Config::define('DISALLOW_FILE_MODS', false);
 Config::define('WP_DEBUG_LOG', true);
+Config::define('JETPACK_DEV_DEBUG', true);
