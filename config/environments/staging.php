@@ -18,3 +18,4 @@ Config::define('WP_DEBUG', true);
 Config::define('WP_DEBUG_LOG', true);
 Config::define('JETPACK_DEV_DEBUG', true);
 Config::define('WP_MEMORY_LIMIT', '1024M');
+Config::define('JETPACK_DEV_DEBUG', true);
