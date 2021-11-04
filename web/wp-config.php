@@ -6,7 +6,7 @@
  * WP is hardcoded to look in its own directory or one directory up for wp-config.php.
  */
 define('WP_CACHE', true);
-define('WPCACHEHOME', 'clickandbuilds/bedrock/web/app/plugins/wp-super-cache/');
+define( 'WPCACHEHOME', 'C:\wamp64\www\bedrock\web\app\plugins\wp-super-cache/' );
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 require_once dirname(__DIR__) . '/config/application.php';
 require_once ABSPATH . 'wp-settings.php';
