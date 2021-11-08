@@ -40,7 +40,16 @@ const App = (props) => {
       tab[data.name] = value;
     }
     tabDefault[data.name] = { name: data.name, label: value, value: value, active: true } // tableau qui remplis les valeurs par defaut lors de la rdirection vers page recherche recupere 
+    // recupere les valeurs active des filtre active
+    if (!params.first_load && data.value) {
+      // commenter fait  bugger les filtres 
+      // data.value.map((value, index) => {
+      //   if (value.ekit_tab_active != false) {
+      //     url_construct[data.name] = value.value;
+      //   }
+      // });
 
+    }
   });
   const style = {
     backgroundColor: params.color ? params.color : "#ffffff",
@@ -106,9 +115,9 @@ const App = (props) => {
     if (params.first_load) {
       APIConfig.getItems(fetchURL + new URLSearchParams(tab)).then((data) => setSelectedSort(data));
     }
+    console.log(fetchURL + new URLSearchParams(tab));
 
   }, [hidecontent]);
-
   // affiche ou cache la maps
   let col = "col-" + params.col_heading_text;
   return (
