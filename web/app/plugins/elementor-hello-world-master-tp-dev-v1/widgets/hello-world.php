@@ -102,6 +102,7 @@ class Hello_World extends Widget_Base
                         'condition' => esc_html__('Condition', 'elementskit-lite'),
                         'hide' => esc_html__('Hide', 'elementskit-lite'),
                         'millier' => esc_html__('Millier', 'elementskit-lite'),
+                        'share' => esc_html__('Share', 'elementskit-lite'),
 
                     ],
                 ]
@@ -1444,6 +1445,8 @@ class Hello_World extends Widget_Base
                         'url'=> $field['field_url'],
                         'font-size'=> $field['font_size'],
                         'url_param'=> $field['field_url_param'],
+                        'share'=> $field['share'],
+
                         'text'=> $field['field_text'],
                         'icon'=> $field['field_icon'],
                         'condition'=> $field['field_condition'],

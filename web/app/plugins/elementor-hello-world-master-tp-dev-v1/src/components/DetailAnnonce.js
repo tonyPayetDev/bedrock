@@ -1,6 +1,7 @@
 import React from "react";
 import { Animated } from "react-animated-css";
 import * as Utils from "../constants/Utils";
+import { InlineShareButtons } from 'sharethis-reactjs';
 
 const DetailAnnonce = (props) => {
   const { name, params, classes, index, disable_even_odd } = props;
@@ -114,6 +115,8 @@ const DetailAnnonce = (props) => {
   let fieldsAnnonce;
   let fieldsBtn;
   let fieldsPhotos;
+  let fieldsShare;
+
   let card;
   let cardbody;
   let styleImage;
@@ -186,6 +189,50 @@ const DetailAnnonce = (props) => {
     }
   }
   if (name) {
+    fieldsShare = Object.values(params.post).map(value => {
+      let row = Object.values(value).map((annonce, index) => {
+        let url = name[annonce.url];
+        let value = name[annonce.field];
+
+
+        if (annonce.type === "share") {
+          console.log(value);
+          console.log(url);
+          return <InlineShareButtons
+
+            config={{
+              alignment: 'center',  // alignment of buttons (left, center, right)
+              color: 'white',      // set the color of buttons (social, white)
+              enabled: true,        // show/hide buttons (true, false)
+              font_size: 12,        // font size for the buttons
+              labels: 'cta',        // button labels (cta, counts, null)
+              language: 'fr',       // which language to use (see LANGUAGES)
+              networks: [           // which networks to include (see SHARING NETWORKS)
+                'whatsapp',
+                'linkedin',
+                'facebook',
+                'twitter'
+              ],
+              padding: 8,          // padding within buttons (INTEGER)
+              radius: 6,            // the corner radius on each button (INTEGER)
+              show_total: false,
+              size: 34,             // the size of each button (INTEGER)
+
+              // OPTIONAL PARAMETERS
+              url: params.URL_POST + url, // (defaults to current url)
+              image: value,  // (defaults to og:image or twitter:image)
+              description: 'custom text',       // (defaults to og:description or twitter:description)
+              title: value,            // (defaults to og:title or twitter:title)
+              message: 'custom email text',     // (only for email sharing)
+              subject: 'custom email subject',  // (only for email sharing)
+              username: 'koytchaimmo' // (only for twitter sharing)
+            }}
+          />
+        }
+      });
+      return <div class="row">{row} </div>;
+
+    });
 
     fieldsAnnonce = Object.values(params.post).map(value => {
       let row = Object.values(value).map((annonce, index) => {
@@ -226,7 +273,8 @@ const DetailAnnonce = (props) => {
       let row = Object.values(value).map((annonce, index) => {
         let value = name[annonce.field];
         let url = name[annonce.url];
-        console.log(params.URL_POST + url);
+        //  console.log(params.URL_POST + url);
+
         if (annonce.type === "photos") {
 
           return (
@@ -248,7 +296,7 @@ const DetailAnnonce = (props) => {
       let row = Object.values(value).map((annonce, index) => {
         let value = name[annonce.field];
         let url = name[annonce.url];
-        let col = 'btn ' + annonce.col;
+        let col = 'btn m-2' + annonce.col;
 
         if (annonce.type === "condition") {
 
@@ -261,20 +309,26 @@ const DetailAnnonce = (props) => {
 
         else if (annonce.type === "button") {
           let url = name[annonce.url];
-          console.log(params.URL_POST + url);
+          //   console.log(params.URL_POST + url);
           return (
             <a type="button" style={annonce.post} class={col} style={styleContactPro} href={params.URL_POST + url} >
               <i aria-hidden="true" class={annonce.icon.value}></i>  {annonce.text}
             </a>
+
 
           );
         }
         else if (annonce.type === "button_param") {
 
           return (
-            <a type="button" style={annonce.post} class={col} style={styleContactPro} href={annonce.url + "&" + annonce.url_param + "=" + value} >
-              <i aria-hidden="true" class={annonce.icon.value}></i>  {annonce.text}
-            </a>
+            <span>
+
+              <a type="button" style={annonce.post} class={col} style={styleContactPro} href={annonce.url + "&" + annonce.url_param + "=" + value} >
+                <i aria-hidden="true" class={annonce.icon.value}></i>  {annonce.text}
+              </a>
+
+            </span>
+
 
           );
         }
@@ -288,13 +342,18 @@ const DetailAnnonce = (props) => {
 
     <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={2500} animationOutDuration={2500} >
       <div class='col-lg-6 col-md-12 col-xs-12' style={card} class="card"  >
+
         {fieldsPhotos}
         <div class="card-body" type="button" style={cardbody} >
+
           {fieldsAnnonce}
+          {fieldsShare}
+
           <div class="btn-group row">
-            {/* <button type="button" onMouseOver={MouseOver} onMouseOut={MouseOut} href="#" class="stretched-link btn  mr-3" style={styleContactPro} > <i aria-hidden="true" class="far fa-envelope"></i> contactez un pro</button>
-        <button type="button" onMouseOver={MouseOverHeart} onMouseOut={MouseOutHeart} className={"stretched-link btn " + params.ekit_wb_3976_icons.value} style={style} ></button> */}
+
+
             {fieldsBtn}
+
           </div>
         </div>
       </div>

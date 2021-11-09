@@ -115,7 +115,6 @@ const App = (props) => {
     if (params.first_load) {
       APIConfig.getItems(fetchURL + new URLSearchParams(tab)).then((data) => setSelectedSort(data));
     }
-    console.log(fetchURL + new URLSearchParams(tab));
 
   }, [hidecontent]);
   // affiche ou cache la maps
@@ -234,16 +233,14 @@ const App = (props) => {
       }
       {selectedSort && params.visible && params.paginator ?
 
-        <Suspense fallback={<span>Loading...</span>}>
-          < Paginator
-            color={params.color} backgroundColor="white"
-            params={params}
-            data={selectedSort}
-            nb_page_afficher={10}
-            setPage={setPage}
+        < Paginator
+          color={params.color} backgroundColor="white"
+          params={params}
+          data={selectedSort}
+          nb_page_afficher={10}
+          setPage={setPage}
 
-          />
-        </Suspense>
+        />
 
         : ""}
     </div >

@@ -21,7 +21,10 @@ const Paginator = (props) => {
 
   let nb_page = Math.ceil(data['count'] / 10)
   const [page_selected, setPageSelected] = React.useState(1);
-  setPage(page_selected);
+  if (page_selected) {
+    setPage(page_selected);
+
+  }
 
   const handleChange = (event, value) => {
     setPageSelected(value);
