@@ -64,7 +64,11 @@ class Hello_World extends Widget_Base
             );
             $col[]=" ";
             for ($i = 1; $i <= 12; $i++) {
-                $col['col-'.$i]=esc_html__($i, 'elementskit-lite');
+                $col['col-md-'.$i]=esc_html__($i, 'elementskit-lite');
+            }
+            $col_mobile[]=" ";
+            for ($i = 1; $i <= 12; $i++) {
+                $col_mobile['col-'.$i]=esc_html__($i, 'elementskit-lite');
             }
             $float=[
             " "=>esc_html__(" ", 'elementskit-lite'),
@@ -225,6 +229,7 @@ class Hello_World extends Widget_Base
                     'options' =>$col
                 ]
                 );
+          
                 $repeater3->add_control(
                     'field_float',
                     [
@@ -357,6 +362,15 @@ class Hello_World extends Widget_Base
                 'type' => Controls_Manager::SELECT,
                 'default' => 'col-3',
                 'options' =>$col
+            ]
+        );
+        $repeater->add_control(
+            'category_col_mobile',
+            [
+                'label' => esc_html__('Nb column mobile ', 'elementskit-lite'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'col-3',
+                'options' =>$col_mobile
             ]
         );
         $this->add_control(
@@ -1428,7 +1442,7 @@ class Hello_World extends Widget_Base
                     $tab_value[]= array("value"=>$service['service_title'],"label"=>$service['service_label'],"ekit_tab_active"=>$service['service_active'] );
                 }
             }
-            $tab[]= array('type'=>$category['type_element'],'symbole'=>$category['type_symbole'],  "name"=>$category['category_slug'].$category['name_plus'] ,"col"=>$category['category_col']  ,"critere"=>$category['category_criteres'], "label"=>$category['category_title'], "value"=>$tab_value);
+            $tab[]= array('type'=>$category['type_element'],'symbole'=>$category['type_symbole'],  "name"=>$category['category_slug'].$category['name_plus'] ,"col"=>$category['category_col'], "col_mobile"=>$category['category_col_mobile'] ,"critere"=>$category['category_criteres'], "label"=>$category['category_title'], "value"=>$tab_value);
         }
         // todo a voir si possible ici
 

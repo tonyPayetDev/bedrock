@@ -33,6 +33,9 @@ const App = (props) => {
   const [url_construct, setUrlConstruct] = useState({});
   const [hidecontent, setHideContent] = useState("");
   let [page, setPage] = useState(1);
+  let [valueMapLeft, setvalueMapLeft] = useState('49%');
+  const [hidecontent_mobile, setHideContentMobile] = useState(true);
+
 
   params.type.map((data, index) => {
     var value = APIConfig.url_const.searchParams.get(data.name);
@@ -40,16 +43,7 @@ const App = (props) => {
       tab[data.name] = value;
     }
     tabDefault[data.name] = { name: data.name, label: value, value: value, active: true } // tableau qui remplis les valeurs par defaut lors de la rdirection vers page recherche recupere 
-    // recupere les valeurs active des filtre active
-    if (!params.first_load && data.value) {
-      // commenter fait  bugger les filtres 
-      // data.value.map((value, index) => {
-      //   if (value.ekit_tab_active != false) {
-      //     url_construct[data.name] = value.value;
-      //   }
-      // });
 
-    }
   });
   const style = {
     backgroundColor: params.color ? params.color : "#ffffff",
@@ -100,6 +94,16 @@ const App = (props) => {
   const StyleMapOverflowhidden = { "overflow": "hidden" }// active overflow si map activer ou pas
 
   useEffect((event) => {
+    if (hidecontent == "liste_mobile") {
+      console.log(hidecontent_mobile);
+
+      setHideContentMobile(true)
+    }
+    if (hidecontent == "carte_mobile") {
+      console.log(hidecontent_mobile);
+      setHideContentMobile(false)
+
+    }
     if (hidecontent == "carte") {
       params.ekit_map_btn = 'yes';
       setParams(params);
@@ -120,9 +124,9 @@ const App = (props) => {
   // affiche ou cache la maps
   let col = "col-" + params.col_heading_text;
   return (
-    <div style={{ fontFamily: params.ekit_wb_3976_font, fontSize: 14 }}  >
+    <div style={{ fontFamily: params.ekit_wb_3976_font, fontSize: 14 }} >
       <h3>
-        <div className="row">
+        <div className="row  justify-content-center ">
           <Text
             data={selectedSort} text={url_construct} params={params} style={style}
           ></Text>
@@ -130,9 +134,11 @@ const App = (props) => {
 
             <div className={col} style={{ fontSize: params.fontSize }}>
               <div className="row justify-content-end">
+                <a type="button" className="btn d-lg-none  " onClick={(e) => setHideContent('liste_mobile')} style={!hidecontent_mobile ? stylecriteres : stylemenu}>Liste </a>
+                <a type="button" className="btn d-lg-none  mr-2 " onClick={(e) => setHideContent('carte_mobile')} style={hidecontent_mobile ? stylecriteres : stylemenu}>Carte </a>
 
-                <a type="button" className="btn   " onClick={(e) => setHideContent('carte')} style={params.ekit_map_btn ? stylemenu : stylecriteres}>Carte </a>
-                <a type="button" className="btn  mr-2 " onClick={(e) => setHideContent('galerie')} style={params.ekit_map_btn ? stylecriteres : stylemenu}>Galerie </a>
+                <a type="button" className="btn d-none d-lg-block   " onClick={(e) => setHideContent('carte')} style={params.ekit_map_btn ? stylemenu : stylecriteres}>Carte </a>
+                <a type="button" className="btn  d-none d-lg-block  mr-2 " onClick={(e) => setHideContent('galerie')} style={params.ekit_map_btn ? stylecriteres : stylemenu}>Galerie </a>
               </div>
 
             </div>
@@ -142,7 +148,7 @@ const App = (props) => {
       </h3 >
 
 
-      <div className="row">
+      <div className="row  justify-content-center ">
         <div className="col-12 ">
           <SelectBox
             id="1"
@@ -162,17 +168,18 @@ const App = (props) => {
 
       </div>
       {/* todo mettre condition pour cacher sur widget elem */}
-      {!params.search_text ?
-        <NbResultat
-          params={params}
-          loading={false}
-          options="1"
-          data={selectedSort}
-        ></NbResultat> : ""
+      {
+        !params.search_text ?
+          <NbResultat
+            params={params}
+            loading={false}
+            options="1"
+            data={selectedSort}
+          ></NbResultat> : ""
       }
       <div className="row justify-content-center">
 
-        <div className="col-5   mt-3 ">
+        <div className="col-md-5   mt-3 ">
           <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={2000} animationOutDuration={2000} >
             <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} className="btn btn-block  " style={style}>
               <NbResultat paren
@@ -185,64 +192,87 @@ const App = (props) => {
 
       </div>
 
-      {params.visible ?
-        <div className="row" style={params.ekit_map_btn ? StyleMapOverflow : StyleMapOverflowhidden}>
+      {
+        params.visible ?
+          <div className="row " style={params.ekit_map_btn ? StyleMapOverflow : StyleMapOverflowhidden}>
 
-          <div className={params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12 ' : 'col-lg-12 col-md-12 col-xs-12 sticky-top'} >
-            {selectedSort ? "" : <div className="col-12 d-flex justify-content-center" >  <ReactLoading type='bubbles' color={params.color} /></div >}
+            <div className={params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12 ' : 'col-lg-12 col-md-12 col-xs-12 sticky-top'} >
+              {selectedSort ? "" : <div className="col-12 d-flex justify-content-center" >  <ReactLoading type='bubbles' color={params.color} /></div >}
 
-            <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >
-              < ListeAnnonce
-                params={params}
-                latitude={state.lat}
-                longitude={state.lng}
-                setSelectedSort={setSelectedSort}
-                data={selectedSort}
-                page={page}
-                setPage={setPage}
+              <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >
+                < ListeAnnonce
+                  params={params}
+                  latitude={state.lat}
+                  longitude={state.lng}
+                  setSelectedSort={setSelectedSort}
+                  data={selectedSort}
+                  page={page}
+                  setPage={setPage}
 
-              ></ListeAnnonce>
+                ></ListeAnnonce>
 
-            </Animated>
-          </div>
+              </Animated>
+            </div>
 
-          <div className="col-md-6 " style={{ position: "absolute", left: " 49%" }}>
-            {params.ekit_map_btn ?
+            <div className="col-md-6   d-none d-lg-block " style={{ position: "absolute", left: valueMapLeft }}>
+              {params.ekit_map_btn ?
 
-              < Map
-                googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0&libraries=visualization,drawing,geometry,places`}
-                loadingElement={<div style={{ height: '100%' }}> Loading... </div>}
-                containerElement={<div style={{ height: '70vh' }} />}
-                mapElement={<div style={{ height: '100%' }} />}
-                defaultOptions={{
-                  scaleControl: true
-                }}
+                < Map
+                  googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0&libraries=visualization,drawing,geometry,places`}
+                  loadingElement={<div style={{ height: '100%' }}> Loading... </div>}
+                  containerElement={<div style={{ height: '70vh' }} />}
+                  mapElement={<div style={{ height: '100%' }} />}
+                  defaultOptions={{
+                    scaleControl: true
+                  }}
 
-                params={params}
-                fetchURL={fetchURL}
-                params={params}
+                  params={params}
+                  fetchURL={fetchURL}
+                  params={params}
 
-                setSelectedSort={setSelectedSort}
-                selectedSort={selectedSort}
-              />
+                  setSelectedSort={setSelectedSort}
+                  selectedSort={selectedSort}
+                />
+                : ""}
+            </div>
+            {hidecontent == "carte_mobile" ?
+              <div className="col-md-6   " style={{ position: "absolute", left: "0 %" }}>
+
+                < Map
+                  googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0&libraries=visualization,drawing,geometry,places`}
+                  loadingElement={<div style={{ height: '100%' }}> Loading... </div>}
+                  containerElement={<div style={{ height: '70vh' }} />}
+                  mapElement={<div style={{ height: '100%' }} />}
+                  defaultOptions={{
+                    scaleControl: true
+                  }}
+
+                  params={params}
+                  fetchURL={fetchURL}
+                  params={params}
+
+                  setSelectedSort={setSelectedSort}
+                  selectedSort={selectedSort}
+                />
+              </div >
               : ""}
-          </div>
-
-        </div >
-        : ""
+          </div >
+          : ""
       }
-      {selectedSort && params.visible && params.paginator ?
+      {
+        selectedSort && params.visible && params.paginator ?
 
-        < Paginator
-          color={params.color} backgroundColor="white"
-          params={params}
-          data={selectedSort}
-          nb_page_afficher={10}
-          setPage={setPage}
+          < Paginator
+            color={params.color} backgroundColor="white"
+            params={params}
+            data={selectedSort}
+            nb_page_afficher={10}
+            setPage={setPage}
 
-        />
+          />
 
-        : ""}
+          : ""
+      }
     </div >
 
   );

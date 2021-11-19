@@ -195,11 +195,10 @@ const DetailAnnonce = (props) => {
         let value = name[annonce.field];
         let col = 'btn m-2' + annonce.col;
 
-        console.log(annonce.type);
+        //  console.log(annonce.type);
 
         if (annonce.type === "share") {
-          console.log(value);
-          console.log(url);
+
           return (<BasicPopover value={value} params={params} url={url} annonce={annonce} col={col} styleContactPro={styleContactPro} />)
 
         }

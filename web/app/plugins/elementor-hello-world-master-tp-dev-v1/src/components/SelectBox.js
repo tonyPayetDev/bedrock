@@ -154,7 +154,7 @@ const SelectBox = (props) => {
 
   function filtre_facto(data, index) {
     if (data.type == "select") {
-      let col = data.col + " mt-1";
+      let col = data.col + " " + data.col_mobile + " mt-1";
       let defaultValue = null;
       if (tabDefault[data.name].value) {
         defaultValue = tabDefault[data.name];
@@ -186,7 +186,7 @@ const SelectBox = (props) => {
       );
     }
     if (data.type == "text") {
-      let col = data.col + " mt-1";
+      let col = data.col + " " + data.col_mobile + " mt-1";
 
       return (
 
@@ -230,7 +230,7 @@ const SelectBox = (props) => {
         }
 
 
-        let col = "btn mb-3 " + data.col;
+        let col = "btn mb-3 " + data.col + " " + data.col_mobile;
         return (
           <button className={col}
             style={data_value.ekit_tab_active == data_value.value ? styletabactive : styletab}
@@ -242,7 +242,7 @@ const SelectBox = (props) => {
     }
 
     if (data.type == "checkbox") {
-      let col = "mb-3 " + data.col;
+      let col = "mb-3 " + data.col + " " + data.col_mobile;
 
       // todo util pour le multi select
       return data.value.map((data_value, index) => {
