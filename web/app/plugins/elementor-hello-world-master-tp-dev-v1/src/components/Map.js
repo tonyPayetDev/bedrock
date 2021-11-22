@@ -218,7 +218,12 @@ const Map = withScriptjs(
                                     </a>
                                     <div class=" row justify-content-center">
 
-                                        <div class="col-10 ">
+                                        <div class="col-10 d-none d-lg-block ">
+                                            <div class="text-center ">
+                                                {swiper}
+                                            </div>
+                                        </div>
+                                        <div class="col-12 d-lg-none  ">
                                             <div class="text-center ">
                                                 {swiper}
                                             </div>
