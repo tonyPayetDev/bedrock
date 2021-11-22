@@ -9,6 +9,7 @@ const ListeAnnonce = ({
   setPage,
   params,
   page,
+  disable_even
 }) => {
   let renderAnnonce;
   const style = {
@@ -26,7 +27,6 @@ const ListeAnnonce = ({
     selectedPlace: { marque: "", motorisation: "", model: "" },
   });
   let [cpt, setCpt] = React.useState(0);
-
   const onMarkerClick = (props, marker, e) =>
     setState({
       selectedPlace: props,
@@ -61,7 +61,8 @@ const ListeAnnonce = ({
 
             <div class={params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12' : params.col_post}  >
 
-              < DetailAnnonce name={annonce} params={params} index={index}  > </DetailAnnonce>
+
+              < DetailAnnonce name={annonce} params={params} index={index} disable_even_odd={disable_even}  > </DetailAnnonce>
 
             </div>
           );

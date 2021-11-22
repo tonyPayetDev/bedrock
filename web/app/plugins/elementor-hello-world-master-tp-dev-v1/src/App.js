@@ -196,7 +196,7 @@ const App = (props) => {
         params.visible ?
           <div className="row " style={params.ekit_map_btn ? StyleMapOverflow : StyleMapOverflowhidden}>
 
-            <div className={params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12 ' : 'col-lg-12 col-md-12 col-xs-12 sticky-top'} >
+            <div className={params.ekit_map_btn ? ' d-none d-lg-block col-lg-6 col-md-12 col-xs-12 ' : 'col-lg-12 col-md-12 col-xs-12 sticky-top'} >
               {selectedSort ? "" : <div className="col-12 d-flex justify-content-center" >  <ReactLoading type='bubbles' color={params.color} /></div >}
 
               <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >
@@ -208,12 +208,31 @@ const App = (props) => {
                   data={selectedSort}
                   page={page}
                   setPage={setPage}
+                  disable_even={false}
+                ></ListeAnnonce>
+
+              </Animated>
+            </div>
+            {/* desactive even odd sur format mobile */}
+            <div className={params.ekit_map_btn ? ' d-lg-none col-12 col-lg-12 col-md-12 col-xs-12 ' : 'col-lg-12 col-md-12 col-xs-12 sticky-top'} >
+              {selectedSort ? "" : <div className="col-12 d-flex justify-content-center" >  <ReactLoading type='bubbles' color={params.color} /></div >}
+
+              <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >
+                < ListeAnnonce
+                  disable_even_odd
+                  params={params}
+                  latitude={state.lat}
+                  longitude={state.lng}
+                  setSelectedSort={setSelectedSort}
+                  data={selectedSort}
+                  page={page}
+                  setPage={setPage}
+                  disable_even={true}
 
                 ></ListeAnnonce>
 
               </Animated>
             </div>
-
             <div className="col-md-6   d-none d-lg-block " style={{ position: "absolute", left: valueMapLeft }}>
               {params.ekit_map_btn ?
 
@@ -236,8 +255,7 @@ const App = (props) => {
                 : ""}
             </div>
             {hidecontent == "carte_mobile" ?
-              <div className="col-md-6   " style={{ position: "absolute", left: "0 %" }}>
-
+              <div className="col-md-6   " style={{ position: "absolute", zIndex: '2', margin: "auto", width: '119%', left: '-10%', right: '-10%' }}>
                 < Map
                   googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0&libraries=visualization,drawing,geometry,places`}
                   loadingElement={<div style={{ height: '100%' }}> Loading... </div>}
@@ -260,7 +278,7 @@ const App = (props) => {
           : ""
       }
       {
-        selectedSort && params.visible && params.paginator ?
+        selectedSort && params.visible && params.paginator && hidecontent !== "carte_mobile" ?
 
           < Paginator
             color={params.color} backgroundColor="white"

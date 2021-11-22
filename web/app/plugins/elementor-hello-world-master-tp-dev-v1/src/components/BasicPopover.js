@@ -13,7 +13,7 @@ const BasicPopover = (props) => {
     backgroundColor: !params.color ? params.color : "white",
     fontSize: "14px",
     opacity: 0.8,
-    zIndex: 2,
+    zIndex: 1,
     top: "10px",
     left: "230px",
     position: "absolute"

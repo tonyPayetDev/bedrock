@@ -25,7 +25,7 @@ const DetailAnnonce = (props) => {
     boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
     backgroundColor: params.color ? params.color : "white",
     color: !params.color ? params.color : "white",
-    fontSize: "14px",
+    fontSize: "13px",
 
   };
   const styleBtnCondition = {
@@ -194,11 +194,7 @@ const DetailAnnonce = (props) => {
         let url = name[annonce.url];
         let value = name[annonce.field];
         let col = 'btn m-2' + annonce.col;
-
-        //  console.log(annonce.type);
-
         if (annonce.type === "share") {
-
           return (<BasicPopover value={value} params={params} url={url} annonce={annonce} col={col} styleContactPro={styleContactPro} />)
 
         }
@@ -232,7 +228,9 @@ const DetailAnnonce = (props) => {
           </div >;
         }
         if (annonce.type === "millier" && value) {
+
           value = Utils.formatMillier(value);
+
           return <div style={annonce} class={col} >
             <i aria-hidden="true" class={annonce.icon.value}></i> {value}{annonce.text}
           </div >;
@@ -246,15 +244,14 @@ const DetailAnnonce = (props) => {
       let row = Object.values(value).map((annonce, index) => {
         let value = name[annonce.field];
         let url = name[annonce.url];
-        //  console.log(params.URL_POST + url);
-
         if (annonce.type === "photos") {
 
           return (
             <a onMouseOver={MouseOverOpacity} onMouseOut={MouseOutOpacity} href={params.URL_POST + url}>
               <img
                 style={styleImage}
-                class="card-img-top"
+
+                class="img-responsive"
                 src={value}
                 alt="Logo" alt="Card image cap"  ></img>
             </a>
@@ -262,7 +259,7 @@ const DetailAnnonce = (props) => {
           );
         }
       });
-      return <div class=" text-center">{row} </div>;
+      return <div class="text-center">{row} </div>;
     });
 
     fieldsBtn = Object.values(params.post).map(value => {
@@ -282,7 +279,7 @@ const DetailAnnonce = (props) => {
 
         else if (annonce.type === "button") {
           let url = name[annonce.url];
-          //   console.log(params.URL_POST + url);
+          styleContactPro.fontSize = annonce['font-size'];
           return (
             <a type="button" style={annonce.post} class={col} style={styleContactPro} href={params.URL_POST + url} >
               <i aria-hidden="true" class={annonce.icon.value}></i>  {annonce.text}
@@ -290,7 +287,8 @@ const DetailAnnonce = (props) => {
           );
         }
         else if (annonce.type === "button_param") {
-
+          styleContactPro.fontSize = annonce['font-size'];
+          console.log(annonce);
           return (
             <span>
 
@@ -312,11 +310,11 @@ const DetailAnnonce = (props) => {
   return (
 
     <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={2500} animationOutDuration={2500} >
-      <div class='col-lg-6 col-md-12 col-xs-12' style={card} class="card"  >
+      <div class='col-6 col-lg-6 col-md-12 col-xs-12' style={card} class="card"  >
         {fieldsShare}
 
         {fieldsPhotos}
-        <div class="card-body" type="button" style={cardbody} >
+        <div class="card-body  " type="button" style={cardbody} >
 
           {fieldsAnnonce}
 
