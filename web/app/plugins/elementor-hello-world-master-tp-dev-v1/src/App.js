@@ -255,7 +255,7 @@ const App = (props) => {
                 : ""}
             </div>
             {hidecontent == "carte_mobile" ?
-              <div className="col-md-6   " style={{ position: "absolute", zIndex: '2', margin: "auto", width: '119%', left: '-10%', right: '-10%' }}>
+              <div className="col-md-6   " style={{ position: "absolute", zIndex: '2', margin: "auto", width: '122%', left: '-10%', right: '-10%' }}>
                 < Map
                   googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0&libraries=visualization,drawing,geometry,places`}
                   loadingElement={<div style={{ height: '100%' }}> Loading... </div>}
