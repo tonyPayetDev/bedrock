@@ -280,7 +280,7 @@ acf_add_local_field_group(array(
             'key' => 'field_6130aa77b539f',
             'label' => 'texte',
             'name' => 'texte',
-            'type' => 'text',
+            'type' => 'textarea',
             'instructions' => '',
             'required' => 0,
             'conditional_logic' => 0,

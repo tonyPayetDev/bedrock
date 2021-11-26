@@ -244,37 +244,10 @@ function biens(WP_REST_Request $request)
 
     return $tab_meta;
 }
-// add_action('rest_api_init', function () {
-//     register_rest_route('api/v1', '/params', array(
-//       'methods' => 'GET',
-//       'callback' => 'params',
-//     ));
-// });
+
 add_action('rest_api_init', function () {
     register_rest_route('api/v1', '/data', array(
       'methods' => 'GET',
       'callback' => 'biens',
     ));
 });
-
-
-
-// add_action('rest_api_init', function () {
-//     register_rest_route('api/v1', '/secteurs', array(
-//       'methods' => 'GET',
-//       'callback' => 'secteur',
-//     ));
-// });
-
-// add_action('rest_api_init', function () {
-//     register_rest_route('api/v1', '/types', array(
-//       'methods' => 'GET',
-//       'callback' => 'type',
-//     ));
-// });
-// add_action('rest_api_init', function () {
-//     register_rest_route('api/', '/url', array(
-//       'methods' => 'GET',
-//       'callback' => 'url',
-//     ));
-// });

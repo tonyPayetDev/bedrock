@@ -196,7 +196,7 @@ const App = (props) => {
         params.visible ?
           <div className="row " style={params.ekit_map_btn ? StyleMapOverflow : StyleMapOverflowhidden}>
 
-            <div className={params.ekit_map_btn ? ' d-none d-lg-block col-lg-6 col-md-12 col-xs-12 ' : 'col-lg-12 col-md-12 col-xs-12 sticky-top'} >
+            <div className={params.ekit_map_btn ? ' d-none d-lg-block col-lg-6 col-md-12 col-xs-12 ' : '  d-none d-lg-block col-lg-12 col-md-12 col-xs-12 sticky-top'} >
               {selectedSort ? "" : <div className="col-12 d-flex justify-content-center" >  <ReactLoading type='bubbles' color={params.color} /></div >}
 
               <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >
@@ -214,7 +214,7 @@ const App = (props) => {
               </Animated>
             </div>
             {/* desactive even odd sur format mobile */}
-            <div className={params.ekit_map_btn ? ' d-lg-none col-12 col-lg-12 col-md-12 col-xs-12 ' : 'col-lg-12 col-md-12 col-xs-12 sticky-top'} >
+            <div className={params.ekit_map_btn ? ' d-lg-none col-12 col-lg-12 col-md-12 col-xs-12 ' : ' d-lg-none col-lg-12 col-md-12 col-xs-12 sticky-top'} >
               {selectedSort ? "" : <div className="col-12 d-flex justify-content-center" >  <ReactLoading type='bubbles' color={params.color} /></div >}
 
               <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >

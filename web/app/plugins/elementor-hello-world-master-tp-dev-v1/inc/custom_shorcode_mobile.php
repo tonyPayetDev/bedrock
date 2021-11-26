@@ -1,6 +1,6 @@
 <?php
 // FLEXSLIDER
-function flexslider()
+function flexslider2()
 {
     if (!is_admin()) {
 
@@ -13,18 +13,18 @@ function flexslider()
         wp_enqueue_style('flexslider-style');
 
         // FlexSlider custom settings
-        add_action('wp_footer', 'flexslider_settings');
+        add_action('wp_footer', 'flexslider_settings2');
 
-        function flexslider_settings() { ?>
+        function flexslider_settings2() { ?>
 <script>
 jQuery(document).ready(function($) {
 
-    $('.flexslider').flexslider({
+    $('.flexslider_mobile').flexslider({
         animation: "fade",
         // controlNav: false,
 
-        controlsContainer: $(".custom-controls-container"),
-        customDirectionNav: $(".custom-navigation a")
+        controlsContainer: $(".custom-controls-container-r"),
+        customDirectionNav: $(".custom-navigation-r a")
     });
 });
 </script>
@@ -32,16 +32,16 @@ jQuery(document).ready(function($) {
         }
     }
 }
-add_action('init', 'flexslider');
+add_action('init', 'flexslider2');
 // todo transformer en widget elementor
-function cux_gallery_embed_shortcode($atts)
+function cux_gallery_embed_shortcode_mobile($atts)
 {
     $images = get_field($atts['field']);
     $atts = array_change_key_case((array)$atts, CASE_LOWER);
     if ($images): ?>
 
 <style>
-.flexslider {
+.flexslidermobile {
     margin-bottom: 10px;
 }
 
@@ -51,18 +51,19 @@ function cux_gallery_embed_shortcode($atts)
 
 }
 
-.custom-navigation {
+.custom-navigation-r {
     display: table;
     width: 100%;
     table-layout: fixed;
-
+    position: relative;
+    top: 240px;
 }
 
-.custom-navigation>* {
+.custom-navigation-r>* {
     display: table-cell;
 }
 
-.custom-navigation>a {
+.custom-navigation-r>a {
     width: 120px;
     font-family: normatica regular, Sans-serif;
     color: <?php echo $atts['color'];
@@ -71,12 +72,12 @@ function cux_gallery_embed_shortcode($atts)
 
 }
 
-.custom-img:hover {
+.custom-img-r:hover {
 
     filter: saturate(1.5) !important;
 }
 
-.custom-img {
+.custom-img-r {
 
     color: <?php echo $atts['color'];
     ?>;
@@ -89,27 +90,27 @@ function cux_gallery_embed_shortcode($atts)
     border-radius: 0px 23px 23px 0px !important;
     padding: 0px;
     width: 879px !important;
-    height: 530px !important;
+    height: 230px !important;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px !important;
     left: 5px;
 
 
 }
 
-.custom-navigation .flex-next {
-    text-align: right;
+.custom-navigation-r .flex-next {
+    text-align: center;
 }
 </style>
 <!-- <a><i aria-hidden="true" class="fas fa-arrow-circle-left"></i> <?php echo count($images).' photos'; ?></a> -->
 <?php if ($atts['type']=="json"): ?>
-<div id="slider" class="flexslider" style="direction:rtl">
+<div id="slider" class="flexslider_mobile  d-lg-none" style="direction:rtl">
     <ul class="slides">
 
         <?php
     
         foreach (json_decode($images) as $image): ?>
         <li>
-            <img class="custom-img" src="<?php echo $image->url; ?>" />
+            <img class="custom-img-r" src="<?php echo $image->url; ?>" />
         </li>
         <?php endforeach; ?>
 
@@ -118,9 +119,9 @@ function cux_gallery_embed_shortcode($atts)
 
 </div>
 <?php if (count(json_decode($images))>1): ?>
-<div class="custom-navigation">
+<div class="custom-navigation-r  d-lg-none">
     <a href="#" class="flex-prev"><i aria-hidden="true" class="fas fa-arrow-circle-left"></i> Précédent</a>
-    <div class="custom-controls-container"></div>
+    <div class="custom-controls-container-r"></div>
     <a href="#" class="flex-next">Suivant <i aria-hidden="true" class="fas fa-arrow-circle-right"></i></a>
 </div>
 <?php endif; ?>
@@ -128,18 +129,18 @@ function cux_gallery_embed_shortcode($atts)
 
 <?php if ($atts['type']!=="json"): ?>
 
-<div id="slider" class="flexslider">
+<div id="slider" class="flexslider_mobile  d-lg-none" style="direction:rtl">
     <ul class="slides">
         <?php foreach ($images as $image_id): ?>
         <li>
-            <?php echo wp_get_attachment_image($image_id, 'full', false, array('class' => 'custom-img')); ?>
+            <?php echo wp_get_attachment_image($image_id, 'medium', false, array('class' => 'custom-img-r')); ?>
         </li>
         <?php endforeach; ?>
     </ul>
 </div>
-<div class="custom-navigation">
+<div class="custom-navigation-r  d-lg-none">
     <a href="#" class="flex-prev"><i aria-hidden="true" class="fas fa-arrow-circle-left"></i> Précédent</a>
-    <div class="custom-controls-container"></div>
+    <div class="custom-controls-container-r"></div>
     <a href="#" class="flex-next">Suivant <i aria-hidden="true" class="fas fa-arrow-circle-right"></i></a>
 </div>
 <?php endif; ?>
@@ -148,4 +149,4 @@ function cux_gallery_embed_shortcode($atts)
 <?php
 }
 
-add_shortcode('cux_gallery_embed', 'cux_gallery_embed_shortcode');
+add_shortcode('cux_gallery_embed_mobil', 'cux_gallery_embed_shortcode_mobile');

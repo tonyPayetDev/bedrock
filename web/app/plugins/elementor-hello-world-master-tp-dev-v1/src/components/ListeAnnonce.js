@@ -61,7 +61,6 @@ const ListeAnnonce = ({
 
             <div class={params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12' : params.col_post}  >
 
-
               < DetailAnnonce name={annonce} params={params} index={index} disable_even_odd={disable_even}  > </DetailAnnonce>
 
             </div>
