@@ -23,9 +23,13 @@ function capitaine_acf_google_map_api($api)
 function acfif($atts = [], $content = null)
 {
     $atts = array_change_key_case((array)$atts, CASE_LOWER);
- 
     if (get_field($atts['field'])) {
         $content =get_field($atts['field']).' '.$atts['label'];
+        if ($atts['type']==='valueless') {
+            $content = $atts['label']."</br>";
+        } elseif ($atts['type']==='reverse') {
+            $content =$atts['label'].'  '.get_field($atts['field'])."</br>";
+        }
     } else {
         $content = '';
     }
@@ -34,6 +38,21 @@ function acfif($atts = [], $content = null)
 }
 add_shortcode('acf-if', 'acfif');
 
+// acf condition afffiche la valeur plus label si valeur éxiste
+function acfprice($atts = [], $content = null)
+{
+    $atts = array_change_key_case((array)$atts, CASE_LOWER);
+ 
+    if (get_field($atts['field'])) {
+        $content =get_field($atts['field']).' '.$atts['label'];
+        $nombre_format_francais = number_format($content, 0, ',', ' ');
+    } else {
+        $nombre_format_francais  = '';
+    }
+ 
+    return $nombre_format_francais ;
+}
+add_shortcode('acf-price', 'acfprice');
 /**
  * Charger dynamiquement les choix d'un menu déroulant
  * Filtre : acf/load_field
