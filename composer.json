@@ -55,7 +55,7 @@
     "wpackagist-plugin/custom-fonts": "^1.3",
     "pojome/elementor": "^0.4.1",
     "johnbillion/wp-crontrol": "^1.10",
-    "wpackagist-plugin/advanced-custom-fields": "^5.9",
+    "wpackagist-plugin/advanced-custom-fields": "5.9",
     "wpackagist-plugin/elementskit-lite": "^2.3",
     "wpackagist-plugin/capability-manager-enhanced": "^2.2",
     "wpackagist-plugin/wp-super-cache": "^1.7",
