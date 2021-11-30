@@ -70,7 +70,9 @@
     "wpackagist-plugin/loftloader": "^2.3",
     "wpackagist-plugin/autoptimize": "^2.9",
     "wpackagist-plugin/pdf-embedder": "^4.6",
-    "wpackagist-plugin/pdf-viewer-for-elementor": "^2.9"
+    "wpackagist-plugin/pdf-viewer-for-elementor": "^2.9",
+    "wpackagist-plugin/ultimate-social-media-plus": "^3.5",
+    "wpackagist-plugin/advanced-captcha-for-contact-form-7": "^1.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.6.0",
