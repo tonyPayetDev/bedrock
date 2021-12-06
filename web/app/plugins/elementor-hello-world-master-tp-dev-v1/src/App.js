@@ -136,7 +136,8 @@ const App = (props) => {
             <div className={col} style={{ fontSize: params.fontSize }}>
               <div className="row justify-content-end">
                 <a type="button" className="btn d-lg-none  " onClick={(e) => setHideContent('liste_mobile')} style={!hidecontent_mobile ? stylecriteres : stylemenu}>Liste </a>
-                <a type="button" className="btn d-lg-none  mr-2 " onClick={(e) => setHideContent('carte_mobile')} style={hidecontent_mobile ? stylecriteres : stylemenu}>Carte </a>
+                {/* desactive car manque de visibilité sur telephone infowindow */}
+                {/* <a type="button" className="btn d-lg-none  mr-2 " onClick={(e) => setHideContent('carte_mobile')} style={hidecontent_mobile ? stylecriteres : stylemenu}>Carte </a> */}
 
                 <a type="button" className="btn d-none d-lg-block   " onClick={(e) => setHideContent('carte')} style={params.ekit_map_btn ? stylemenu : stylecriteres}>Carte </a>
                 <a type="button" className="btn  d-none d-lg-block  mr-2 " onClick={(e) => setHideContent('galerie')} style={params.ekit_map_btn ? stylecriteres : stylemenu}>Galerie </a>
