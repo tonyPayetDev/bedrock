@@ -50,7 +50,8 @@ const App = (props) => {
     display: params.ekit_search_btn ? "" : "none",
     borderRadius: "4px",
     color: "white",
-    fontSize: "15px"
+    fontSize: "15px",
+    boxShadow: "rgb(0 0 0 / 20%) 0px 4px 8px 0px, rgb(0 0 0 / 19%) 0px 6px 20px 0px"
   };
   const style_invers = {
     backgroundColor: "white",
@@ -149,7 +150,7 @@ const App = (props) => {
 
 
       <div className="row  justify-content-center ">
-        <div className="col-12 ">
+        <div className="col-12  ">
           <SelectBox
             id="1"
             setSelectedSort={setSelectedSort}
@@ -181,7 +182,7 @@ const App = (props) => {
 
         <div className="col-md-5   mt-3 ">
           <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={2000} animationOutDuration={2000} >
-            <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} className="btn btn-block  " style={style}>
+            <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} className="btn btn-block  btn-lg " style={style}>
               <NbResultat paren
                 params={params}
                 data={selectedSort}

@@ -7,7 +7,10 @@
 button.gm-ui-hover-effect {
     visibility: hidden;
 }
+.dropdown-item.active, .dropdown-item:active {
 
+    background-color:#f8f9fa!important;
+}
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
