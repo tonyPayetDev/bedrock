@@ -71,8 +71,6 @@ const App = (props) => {
     display: params.ekit_alerte_btn ? "" : "none",
     borderRadius: "20px 20px 20px 20px",
     color: "white",
-
-
   };
   const stylemenu = {
     display: params.ekit_alerte_btn ? "" : "none",
@@ -87,10 +85,10 @@ const App = (props) => {
     fontSize: "14px",
 
   };
-  const divStyle = {
-    display: "none",
-  };
 
+  const styleResultat = {
+    color: params.color, fontSize: '15px', marginLeft: '1.5rem'
+  };
   const StyleMapOverflow = { "overflow": "auto", height: '70vh' }
   const StyleMapOverflowhidden = { "overflow": "hidden" }// active overflow si map activer ou pas
 
@@ -135,7 +133,7 @@ const App = (props) => {
 
             <div className={col} style={{ fontSize: params.fontSize }}>
               <div className="row justify-content-end">
-                <a type="button" className="btn d-lg-none  " onClick={(e) => setHideContent('liste_mobile')} style={!hidecontent_mobile ? stylecriteres : stylemenu}>Liste </a>
+                {/* <a type="button" className="btn d-lg-none  " onClick={(e) => setHideContent('liste_mobile')} style={!hidecontent_mobile ? stylecriteres : stylemenu}>Liste </a> */}
                 {/* desactive car manque de visibilité sur telephone infowindow */}
                 {/* <a type="button" className="btn d-lg-none  mr-2 " onClick={(e) => setHideContent('carte_mobile')} style={hidecontent_mobile ? stylecriteres : stylemenu}>Carte </a> */}
 
@@ -173,6 +171,9 @@ const App = (props) => {
       {
         !params.search_text ?
           <NbResultat
+            style={{
+              color: params.color, fontSize: '15px', marginLeft: '1.5rem'
+            }}
             params={params}
             loading={false}
             options="1"
@@ -187,6 +188,7 @@ const App = (props) => {
               <NbResultat paren
                 params={params}
                 data={selectedSort}
+
               ></NbResultat>
             </a>
           </Animated>

@@ -335,6 +335,7 @@ class Hello_World extends Widget_Base
                     'button' => esc_html__('Button', 'elementskit-lite'),
                     'text' => esc_html__('Input', 'elementskit-lite'),
                     'checkbox' => esc_html__('Checkbox', 'elementskit-lite'),
+                    'legend' => esc_html__('Legend', 'elementskit-lite'),
 
                 ],
             ]
@@ -457,15 +458,7 @@ class Hello_World extends Widget_Base
                 'label' => esc_html__('Settings', 'elementskit-lite')
             ]
         );
-        $this->add_control(
-            'heading_text',
-            [
-                'label' => __('Heading Text', 'elementor-custom-widget'),
-                'type' => Controls_Manager::TEXT,
-                'default' => '',
-                'title' => __('Enter some text', 'elementor-custom-widget'),
-            ]
-        );
+
         $this->add_control(
             'post',
             [
@@ -475,186 +468,6 @@ class Hello_World extends Widget_Base
                 'title' => __('Enter some text', 'elementor-custom-widget'),
             ]
         );
-        $this->add_control(
-            'col_heading_text',
-            [
-                'label' => __('Number column heading ', 'elementor-custom-widget'),
-                'type' => Controls_Manager::TEXT,
-                'default' => '',
-                'title' => __('Enter number column heading text', 'elementor-custom-widget'),
-            ]
-        );
-        $this->add_control(
-            'col_post',
-            [
-                'label' => __('Number column post ', 'elementor-custom-widget'),
-                'type' => Controls_Manager::TEXT,
-                'default' => 'col-3',
-                'title' => __('Enter number column post', 'elementor-custom-widget'),
-            ]
-        );
-        $this->add_control(
-            'ekit_dynamic_text',
-            [
-                'label' => esc_html__('Dynamique text heading ', 'elementskit-lite'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Show', 'elementskit-lite'),
-                'label_off' => esc_html__('Hide', 'elementskit-lite'),
-                'return_value' => 'yes',
-                'default' => 'yes',
-            ]
-        );
-        $this->add_control(
-            'search_text',
-            [
-                'label' => __('Search Text', 'elementor-custom-widget'),
-                'type' => Controls_Manager::TEXT,
-                'default' => '',
-                'title' => __('Enter search text', 'elementor-custom-widget'),
-            ]
-        );
-        
-        $this->add_control(
-            'posts_per_page',
-            [
-                'label' => __('Number of Posts', 'elementor-custom-widget'),
-                'type' => Controls_Manager::SELECT,
-                'default' => 5,
-                'options' => [
-                    1 => __('One', 'elementor-custom-widget'),
-                    2 => __('Two', 'elementor-custom-widget'),
-                    5 => __('Five', 'elementor-custom-widget'),
-                    10 => __('Ten', 'elementor-custom-widget'),
-                    -1 => __('All', 'elementor-custom-widget'),
-
-                ]
-            ]
-        );
-
-        $this->add_control(
-            'ekit_wb_1860_color',
-            array(
-                'label' => esc_html__('Color', 'elementskit-lite'),
-                'type' => Controls_Manager::COLOR,
-                'default' => esc_html('#000'),
-                'show_label' => true,
-                'label_block' => false,
-                'alpha' => true,
-            )
-        );
-
-        $this->add_control(
-            'ekit_href_target',
-            [
-                'label' => esc_html__('Target', 'elementskit-lite'),
-                'type' => Controls_Manager::SELECT,
-                'default' => '_blank',
-                'options' => [
-                    '_blank'  => esc_html__('Blank', 'elementskit-lite'),
-                    'self' => esc_html__('Self', 'elementskit-lite'),
-                ],
-            ]
-        );
-        $this->add_control(
-            'ekit_map_btn',
-            [
-                'label' => esc_html__('Carte map', 'elementskit-lite'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Show', 'elementskit-lite'),
-                'label_off' => esc_html__('Hide', 'elementskit-lite'),
-                'return_value' => 'yes',
-                'default' => 'yes',
-            ]
-        );
-
-        $this->add_control(
-            'first_load',
-            [
-                'label' => esc_html__('Premier chargement', 'elementskit-lite'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Show', 'elementskit-lite'),
-                'label_off' => esc_html__('Hide', 'elementskit-lite'),
-                'return_value' => 'yes',
-                'default' => 'yes',
-            ]
-        );
-
-        $this->add_control(
-            'paginator',
-            [
-                'label' => esc_html__('Pagination', 'elementskit-lite'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Show', 'elementskit-lite'),
-                'label_off' => esc_html__('Hide', 'elementskit-lite'),
-                'return_value' => 'yes',
-                'default' => 'yes',
-            ]
-        );
-
-        $this->add_control(
-            'ekit_resultat',
-            [
-                'label' => esc_html__('Resultat 1', 'elementskit-lite'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Show', 'elementskit-lite'),
-                'label_off' => esc_html__('Hide', 'elementskit-lite'),
-                'return_value' => 'yes',
-                'default' => 'yes',
-            ]
-        );
-        
-        $this->add_control(
-            'ekit_search_btn',
-            [
-                'label' => esc_html__('Bouton recherche', 'elementskit-lite'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Show', 'elementskit-lite'),
-                'label_off' => esc_html__('Hide', 'elementskit-lite'),
-                'return_value' => 'yes',
-                'default' => 'yes',
-            ]
-        );
-        $this->add_control(
-            'ekit_biens',
-            [
-                'label' => esc_html__('Biens', 'elementskit-lite'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Show', 'elementskit-lite'),
-                'label_off' => esc_html__('Hide', 'elementskit-lite'),
-                'return_value' => 'yes',
-                'default' => 'yes',
-            ]
-        );
-        $this->add_control(
-            'ekit_wb_3976_font',
-            array(
-                'label' => esc_html__('Font', 'elementskit-lite'),
-                'type'  => Controls_Manager::FONT,
-                'show_label' => true ,
-                'label_block' => true ,
-                'options' => array(
-                    'family-name' => 'Font Name',
-                ),
-                'groups' => array(
-                    'group-key' => 'group value',
-                ),
-            )
-        );
-        $this->add_control(
-            'ekit_wb_3976_icons',
-            array(
-                'label' => esc_html__('Icons', 'elementskit-lite'),
-                'type'  => Controls_Manager::ICONS,
-                'show_label' => true ,
-                'label_block' => true ,
-                'skin' => 'media' ,
-                'default' => array(
-                    'value' => '',
-                    'library' => '',
-                )
-            )
-        );
-        
         $this->add_control(
             'ekit_wb_225_url',
             array(
@@ -688,6 +501,97 @@ class Hello_World extends Widget_Base
             )
         );
         $this->add_control(
+            'first_load',
+            [
+                'label' => esc_html__('Premier chargement', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+
+  
+        $this->end_controls_section();
+        
+        $this->start_controls_section(
+            'showhide',
+            [
+                'label' => esc_html__('Show & hide', 'elementskit-lite')
+            ]
+        );
+        $this->add_control(
+            'ekit_dynamic_text',
+            [
+                'label' => esc_html__('Dynamique text heading ', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+        $this->add_control(
+            'ekit_map_btn',
+            [
+                'label' => esc_html__('Carte map', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+
+
+        $this->add_control(
+            'paginator',
+            [
+                'label' => esc_html__('Pagination', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+
+        $this->add_control(
+            'ekit_resultat',
+            [
+                'label' => esc_html__('Resultat', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+        
+        $this->add_control(
+            'ekit_search_btn',
+            [
+                'label' => esc_html__('Bouton recherche', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+        $this->add_control(
+            'ekit_biens',
+            [
+                'label' => esc_html__('Biens', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+        $this->add_control(
             'ekit_maps',
             [
                 'label' => esc_html__('Maps', 'elementskit-lite'),
@@ -696,6 +600,194 @@ class Hello_World extends Widget_Base
                 'label_off' => esc_html__('Hide', 'elementskit-lite'),
                 'return_value' => 'yes',
                 'default' => 'yes',
+            ]
+        );
+        // $this->add_control(
+        //     'ekit_menu_subtitle_color',
+        //     [
+        //         'label' => esc_html__('Color', 'elementskit-lite'),
+        //         'type' => Controls_Manager::COLOR,
+        //         'selectors' => [
+        //             '{{WRAPPER}} .ekit_menu_subtitle' => 'color: {{VALUE}}',
+        //         ],
+        //     ]
+        // );
+        
+
+        $this->add_control(
+            'ekit_critere_btn',
+            [
+                'label' => esc_html__('button critere', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+        $this->add_control(
+            'ekit_menu_active',
+            [
+                'label' => esc_html__('Affichage menu (carte galerie)', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+ 
+        $this->add_control(
+            'ekit_alerte_btn',
+            [
+                'label' => esc_html__('button alerte', 'elementskit-lite'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Show', 'elementskit-lite'),
+                'label_off' => esc_html__('Hide', 'elementskit-lite'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+
+ 
+
+            
+        $this->end_controls_section();
+
+
+        $this->start_controls_section(
+            'section_text_style',
+            [
+                'label' => esc_html__('Text', 'elementskit-lite'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'ekit_wb_3976_font',
+            array(
+                'label' => esc_html__('Font', 'elementskit-lite'),
+                'type'  => Controls_Manager::FONT,
+                'show_label' => true ,
+                'label_block' => true ,
+                'options' => array(
+                    'family-name' => 'Font Name',
+                ),
+                'groups' => array(
+                    'group-key' => 'group value',
+                ),
+            )
+        );
+        $this->add_control(
+            'heading_text',
+            [
+                'label' => __('Heading Text', 'elementor-custom-widget'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'title' => __('Enter some text', 'elementor-custom-widget'),
+            ]
+        );
+
+        $this->add_control(
+            'search_text',
+            [
+                'label' => __('Search Text', 'elementor-custom-widget'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'title' => __('Enter search text', 'elementor-custom-widget'),
+            ]
+        );
+        $this->add_responsive_control(
+            'icon_align',
+            [
+                'label' => esc_html__('Alignment', 'elementskit-lite'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => esc_html__('Left', 'elementskit-lite'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'elementskit-lite'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__('Right', 'elementskit-lite'),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                ],
+                'prefix_class' => 'elementor%s-align-',
+            ]
+        );
+
+        $this->add_control(
+            'col_heading_text',
+            [
+                'label' => __('Number column heading ', 'elementor-custom-widget'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'title' => __('Enter number column heading text', 'elementor-custom-widget'),
+            ]
+        );
+        $this->add_control(
+            'col_post',
+            [
+                'label' => __('Number column post ', 'elementor-custom-widget'),
+                'type' => Controls_Manager::TEXT,
+                'default' => 'col-3',
+                'title' => __('Enter number column post', 'elementor-custom-widget'),
+            ]
+        );
+  
+
+        
+        $this->add_control(
+            'ekit_wb_1860_color',
+            array(
+                'label' => esc_html__('Color', 'elementskit-lite'),
+                'type' => Controls_Manager::COLOR,
+                'default' => esc_html('#000'),
+                'show_label' => true,
+                'label_block' => false,
+                'alpha' => true,
+            )
+        );
+        $this->add_control(
+            'ekit_menu_button_color_critere',
+            [
+                'label' => esc_html__('Color Critere bouton ', 'elementskit-lite'),
+                'type' => Controls_Manager::COLOR,
+                'default' => esc_html('#000'),
+                'show_label' => true,
+                'label_block' => false,
+                'alpha' => true,
+             
+            ]
+        );
+
+        $this->add_control(
+            'ekit_menu_button_color_alerte',
+            [
+                'label' => esc_html__('Color Alerte bouton', 'elementskit-lite'),
+                'type' => Controls_Manager::COLOR,
+                'default' => esc_html('#000'),
+                'show_label' => true,
+                'label_block' => false,
+                'alpha' => true,
+            ]
+        );
+  
+
+
+
+        $this->end_controls_section();
+
+
+        $this->start_controls_section(
+            'section_css',
+            [
+                'label' => esc_html__('Css', 'elementskit-lite'),
+                'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
@@ -731,653 +823,6 @@ class Hello_World extends Widget_Base
                 'language' => 'json',
 
             )
-        );
-        $this->end_controls_section();
-
-        $this->start_controls_section(
-            'section_icon_list',
-            [
-                'label' => esc_html__('List', 'elementskit-lite'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'ekit_page_list_padding',
-            [
-                'label' => esc_html__('Padding', 'elementskit-lite'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => [ 'px', '%', 'em' ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-item > a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'ekit_page_list_margin',
-            [
-                'label' => esc_html__('Margin', 'elementskit-lite'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => [ 'px', '%', 'em' ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-item > a' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-
-        $this->add_control(
-            'ekit_page_list_border_radius',
-            [
-                'label' => esc_html__('Border Radius', 'elementskit-lite'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => [ 'px', '%', 'em' ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-item > a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        
-
-        $this->add_control(
-            'ekit_page_list_background_title',
-            [
-                'label' => esc_html__('Hover', 'elementskit-lite'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-
-        $this->add_control(
-            'ekit_page_list_background_title_hr',
-            [
-                'type' => Controls_Manager::DIVIDER,
-            ]
-        );
-
-
-        $this->add_responsive_control(
-            'icon_align',
-            [
-                'label' => esc_html__('Alignment', 'elementskit-lite'),
-                'type' => Controls_Manager::CHOOSE,
-                'options' => [
-                    'left' => [
-                        'title' => esc_html__('Left', 'elementskit-lite'),
-                        'icon' => 'eicon-text-align-left',
-                    ],
-                    'center' => [
-                        'title' => esc_html__('Center', 'elementskit-lite'),
-                        'icon' => 'eicon-text-align-center',
-                    ],
-                    'right' => [
-                        'title' => esc_html__('Right', 'elementskit-lite'),
-                        'icon' => 'eicon-text-align-right',
-                    ],
-                ],
-                'prefix_class' => 'elementor%s-align-',
-            ]
-        );
-
-        $this->add_control(
-            'divider',
-            [
-                'label' => esc_html__('Divider', 'elementskit-lite'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_off' => esc_html__('Off', 'elementskit-lite'),
-                'label_on' => esc_html__('On', 'elementskit-lite'),
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-item:not(:last-child):after' => 'content: ""',
-                ],
-                'separator' => 'before',
-                'prefix_class'	=> 'ekit-has-divider-'
-            ]
-        );
-
-        $this->add_control(
-            'divider_style',
-            [
-                'label' => esc_html__('Style', 'elementskit-lite'),
-                'type' => Controls_Manager::SELECT,
-                'options' => [
-                    'solid' => esc_html__('Solid', 'elementskit-lite'),
-                    'dotted' => esc_html__('Dotted', 'elementskit-lite'),
-                    'dashed' => esc_html__('Dashed', 'elementskit-lite'),
-                ],
-                'default' => 'solid',
-                'condition' => [
-                    'divider' => 'yes',
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-items:not(.elementor-inline-items) .elementor-icon-list-item:not(:last-child):after' => 'border-top-style: {{VALUE}}',
-                    '{{WRAPPER}} .elementor-icon-list-items.elementor-inline-items .elementor-icon-list-item:not(:last-child):after' => 'border-left-style: {{VALUE}}',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'divider_weight',
-            [
-                'label' => esc_html__('Weight', 'elementskit-lite'),
-                'type' => Controls_Manager::SLIDER,
-                'default' => [
-                    'size' => 1,
-                ],
-                'range' => [
-                    'px' => [
-                        'min' => 1,
-                        'max' => 20,
-                    ],
-                ],
-                'condition' => [
-                    'divider' => 'yes',
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-items:not(.elementor-inline-items) .elementor-icon-list-item:not(:last-child):after' => 'border-top-width: {{SIZE}}{{UNIT}}',
-                    '{{WRAPPER}} .elementor-inline-items .elementor-icon-list-item:not(:last-child):after' => 'border-left-width: {{SIZE}}{{UNIT}}',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'divider_width',
-            [
-                'label' => esc_html__('Width', 'elementskit-lite'),
-                'type' => Controls_Manager::SLIDER,
-                'default' => [
-                    'unit' => '%',
-                ],
-                'condition' => [
-                    'divider' => 'yes',
-                    'view!' => 'inline',
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-item:not(:last-child):after' => 'width: {{SIZE}}{{UNIT}}',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'divider_height',
-            [
-                'label' => esc_html__('Height', 'elementskit-lite'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => [ '%', 'px' ],
-                'default' => [
-                    'unit' => '%',
-                ],
-                'range' => [
-                    'px' => [
-                        'min' => 1,
-                        'max' => 100,
-                    ],
-                    '%' => [
-                        'min' => 1,
-                        'max' => 100,
-                    ],
-                ],
-                'condition' => [
-                    'divider' => 'yes',
-                    'view' => 'inline',
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-item:not(:last-child):after' => 'height: {{SIZE}}{{UNIT}}',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'divider_color',
-            [
-                'label' => esc_html__('Color', 'elementskit-lite'),
-                'type' => Controls_Manager::COLOR,
-                'default' => '#ddd',
-                'condition' => [
-                    'divider' => 'yes',
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-item:not(:last-child):after' => 'border-color: {{VALUE}}',
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        $this->start_controls_section(
-            'section_icon_style',
-            [
-                'label' => esc_html__('Icon', 'elementskit-lite'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-        $this->add_control(
-            'icon_position',
-            [
-                'label' => esc_html__('Icon Position', 'elementskit-lite'),
-                'type' => Controls_Manager::SELECT,
-                'default' => 'row',
-                'options' => [
-                    'row'  => esc_html__('Left', 'elementskit-lite'),
-                    'row-reverse' => esc_html__('Right', 'elementskit-lite'),
-                    'column' => esc_html__('Top', 'elementskit-lite'),
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .ekit_page_list_content' => 'flex-direction: {{VALUE}};'
-                ],
-            ]
-        );
-        $this->add_responsive_control(
-            'ekit_menu_list_icon_vetical_align',
-            [
-                'label' => esc_html__('Vertical Alignment', 'elementskit-lite'),
-                'type' => Controls_Manager::CHOOSE,
-                'options' => [
-                    'flex-start' => [
-                        'title' => esc_html__('Top', 'elementskit-lite'),
-                        'icon' => 'eicon-v-align-top',
-                    ],
-                    'center' => [
-                        'title' => esc_html__('Center', 'elementskit-lite'),
-                        'icon' => 'eicon-v-align-middle',
-                    ],
-                    'flex-end' => [
-                        'title' => esc_html__('Bottom', 'elementskit-lite'),
-                        'icon' => 'eicon-v-align-bottom',
-                    ],
-                ],
-                'default' => 'center',
-                'toggle' => true,
-                'condition' => [
-                    'icon_position!' => 'column'
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-icon' => 'align-self: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'icon_width',
-            [
-                'label' => esc_html__('Width', 'elementskit-lite'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => [ 'px', '%' ],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1000,
-                        'step' => 5,
-                    ],
-                    '%' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-item .elementor-icon-list-icon' => 'width: {{SIZE}}{{UNIT}};',
-                ],
-                'condition'	=> [
-                    'icon_position_bg_background!' => ''
-                ]
-            ]
-        );
-        $this->add_responsive_control(
-            'icon_height',
-            [
-                'label' => esc_html__('Height', 'elementskit-lite'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => [ 'px' ],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1000,
-                        'step' => 5,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-item .elementor-icon-list-icon' => 'line-height: calc({{SIZE}}{{UNIT}} + 5{{UNIT}}); height: {{SIZE}}{{UNIT}};',
-                ],
-                'condition'	=> [
-                    'icon_position_bg_background!' => ''
-                ]
-            ]
-        );
-
-        $this->add_responsive_control(
-            'icon_line_height',
-            [
-                'label' => esc_html__('Line Height', 'elementskit-lite'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => [ 'px', '%' ],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1000,
-                        'step' => 5,
-                    ],
-                    '%' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-item .elementor-icon-list-icon' => 'line-height: {{SIZE}}{{UNIT}};',
-                ],
-                'condition'	=> [
-                    'icon_position_bg_background!' => ''
-                ]
-            ]
-        );
-
-        $this->add_responsive_control(
-            'icon_border_radius',
-            [
-                'label' => esc_html__('Border Radius', 'elementskit-lite'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => [ 'px', '%' ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-item .elementor-icon-list-icon' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-                ],
-                'condition'	=> [
-                    'icon_position_bg_background!' => ''
-                ]
-            ]
-        );
-
-
-        $this->add_responsive_control(
-            'icon_color_hover',
-            [
-                'label' => esc_html__('Icon Hover', 'elementskit-lite'),
-                'type' => Controls_Manager::COLOR,
-                'default' => '',
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-item:hover .elementor-icon-list-icon i' => 'color: {{VALUE}};',
-                    '{{WRAPPER}} .elementor-icon-list-item:hover .elementor-icon-list-icon svg path'	=> 'stroke: {{VALUE}}; fill: {{VALUE}};'
-                ],
-            ]
-        );
-        $this->add_responsive_control(
-            'ekit_icon_margin',
-            [
-                'label' => esc_html__('Margin', 'elementskit-lite'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => [ 'px', '%', 'em' ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-icon' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'icon_size',
-            [
-                'label' => esc_html__('Size', 'elementskit-lite'),
-                'type' => Controls_Manager::SLIDER,
-                'default' => [
-                    'size' => 14,
-                ],
-                'range' => [
-                    'px' => [
-                        'min' => 6,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-icon' => 'width: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .elementor-icon-list-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .elementor-icon-list-icon svg'	=> 'max-width: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        $this->start_controls_section(
-            'section_text_style',
-            [
-                'label' => esc_html__('Text', 'elementskit-lite'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_control(
-            'text_color',
-            [
-                'label' => esc_html__('Text Color', 'elementskit-lite'),
-                'type' => Controls_Manager::COLOR,
-                'default' => '',
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-text' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'ekit_text_margin',
-            [
-                'label' => esc_html__('Margin', 'elementskit-lite'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => [ 'px', '%', 'em' ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-text' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'text_color_hover',
-            [
-                'label' => esc_html__('Hover', 'elementskit-lite'),
-                'type' => Controls_Manager::COLOR,
-                'default' => '',
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-item:hover .elementor-icon-list-text' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'text_indent',
-            [
-                'label' => esc_html__('Padding Left', 'elementskit-lite'),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => [
-                        'max' => 50,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementor-icon-list-text' => is_rtl() ? 'padding-right: {{SIZE}}{{UNIT}};' : 'padding-left: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-
-
-        $this->end_controls_section();
-
-        $this->start_controls_section(
-            'ekit_menu_subtitle_style_tab',
-            [
-                'label' => esc_html__('Button', 'elementskit-lite'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-        
-
-        $this->add_control(
-            'ekit_menu_subtitle_color',
-            [
-                'label' => esc_html__('Color', 'elementskit-lite'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .ekit_menu_subtitle' => 'color: {{VALUE}}',
-                ],
-            ]
-        );
-        
-        $this->add_control(
-            'ekit_menu_button_color_critere',
-            [
-                'label' => esc_html__('Color Critere bouton ', 'elementskit-lite'),
-                'type' => Controls_Manager::COLOR,
-                'default' => esc_html('#000'),
-                'show_label' => true,
-                'label_block' => false,
-                'alpha' => true,
-             
-            ]
-        );
-        $this->add_control(
-            'ekit_critere_btn',
-            [
-                'label' => esc_html__('button critere', 'elementskit-lite'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Show', 'elementskit-lite'),
-                'label_off' => esc_html__('Hide', 'elementskit-lite'),
-                'return_value' => 'yes',
-                'default' => 'yes',
-            ]
-        );
-        $this->add_control(
-            'ekit_menu_active',
-            [
-                'label' => esc_html__('Affichage menu (carte galerie)', 'elementskit-lite'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Show', 'elementskit-lite'),
-                'label_off' => esc_html__('Hide', 'elementskit-lite'),
-                'return_value' => 'yes',
-                'default' => 'yes',
-            ]
-        );
-        $this->add_control(
-            'ekit_menu_button_color_alerte',
-            [
-                'label' => esc_html__('Color Alerte bouton', 'elementskit-lite'),
-                'type' => Controls_Manager::COLOR,
-                'default' => esc_html('#000'),
-                'show_label' => true,
-                'label_block' => false,
-                'alpha' => true,
-            ]
-        );
-        $this->add_control(
-            'ekit_alerte_btn',
-            [
-                'label' => esc_html__('button alerte', 'elementskit-lite'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Show', 'elementskit-lite'),
-                'label_off' => esc_html__('Hide', 'elementskit-lite'),
-                'return_value' => 'yes',
-                'default' => 'yes',
-            ]
-        );
-
- 
-        $this->add_responsive_control(
-            'ekit_menu_subtitle_padding',
-            [
-                'label' => esc_html__('Padding', 'elementskit-lite'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => [ 'px', '%', 'em' ],
-                'selectors' => [
-                    '{{WRAPPER}} .ekit_menu_subtitle' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        $this->start_controls_section(
-            'section_label',
-            [
-                'label' => esc_html__('Label', 'elementskit-lite'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'ekit_menu_list_label_title_margin',
-            [
-                'label' => esc_html__('Margin', 'elementskit-lite'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => [ 'px', '%', 'em' ],
-                'selectors' => [
-                    '{{WRAPPER}} .ekit_menu_label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ]
-            ]
-        );
-        $this->add_responsive_control(
-            'ekit_menu_list_label_title_padding',
-            [
-                'label' => esc_html__('Padding', 'elementskit-lite'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => [ 'px', '%', 'em' ],
-                'selectors' => [
-                    '{{WRAPPER}} .ekit_menu_label' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ]
-            ]
-        );
-        $this->add_responsive_control(
-            'ekit_menu_list_label_title_border_radius',
-            [
-                'label' => esc_html__('Border radius', 'elementskit-lite'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => [ 'px', '%', 'em' ],
-                'selectors' => [
-                    '{{WRAPPER}} .ekit_menu_label' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ]
-            ]
-        );
-
-        $this->add_control(
-            'ekit_menu_list_label_align',
-            [
-                'label' => esc_html__('Horizontal Alignment', 'elementskit-lite'),
-                'type' => Controls_Manager::CHOOSE,
-                'options' => [
-                    'ekit_badge_left' => [
-                        'title' => esc_html__('Left', 'elementskit-lite'),
-                        'icon' => 'fa fa-align-left',
-                    ],
-                    'ekit_badge_right' => [
-                        'title' => esc_html__('Right', 'elementskit-lite'),
-                        'icon' => 'fa fa-align-right',
-                    ],
-                ],
-                'default' => 'ekit_badge_left',
-                'toggle' => true
-            ]
-        );
-
-        $this->add_responsive_control(
-            'ekit_menu_list_label_vetical_align_left',
-            [
-                'label' => esc_html__('Vertical Alignment', 'elementskit-lite'),
-                'type' => Controls_Manager::CHOOSE,
-                'options' => [
-                    'flex-start' => [
-                        'title' => esc_html__('Top', 'elementskit-lite'),
-                        'icon' => 'eicon-v-align-top',
-                    ],
-                    'center' => [
-                        'title' => esc_html__('Center', 'elementskit-lite'),
-                        'icon' => 'eicon-v-align-middle',
-                    ],
-                    'flex-end' => [
-                        'title' => esc_html__('Bottom', 'elementskit-lite'),
-                        'icon' => 'eicon-v-align-bottom',
-                    ],
-                ],
-                'default' => 'center',
-                'toggle' => true,
-                'selectors' => [
-                    '{{WRAPPER}} .ekit_menu_label' => 'align-self: {{VALUE}};',
-                ],
-            ]
         );
     }
     // return les api saisie dans param elementor
@@ -1504,7 +949,6 @@ class Hello_World extends Widget_Base
             'ekit_menu_active' => $settings['ekit_menu_active'],
             'ekit_menu_button_color_alerte' => $settings['ekit_menu_button_color_alerte'],
             'ekit_alerte_btn' => $settings['ekit_alerte_btn'],
-            'ekit_wb_3976_icons' => $settings['ekit_wb_3976_icons'],
             'ekit_map_btn' => $settings['ekit_map_btn'],
             'col_heading_text' => $settings['col_heading_text'],
             'col_post' => $settings['col_post'],

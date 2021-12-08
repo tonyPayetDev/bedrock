@@ -87,6 +87,15 @@ const SelectBox = (props) => {
     color: params.color ? params.color : "white",
     margin: ".25rem"
   };
+  const stylelegend = {
+    // display: params.ekit_alerte_btn ? "" : "none",
+    fontFamily: params.fontFamily ? params.fontFamily : "",
+    color: params.color ? params.color : "",
+    fontSize: '15px',
+    marginTop: ".5rem",
+    marginBottom: ".5rem"
+
+  };
 
   // recupere les valeurs pars defauts au premier rechargement , la valeur sera mise a false a chaque filtre
   if (firstload) {
@@ -264,6 +273,18 @@ const SelectBox = (props) => {
           />
         );
       })
+
+    }
+    if (data.type == "legend") {
+      console.log(data);
+      return (
+        <span
+          className={data.col + " text-center"}
+          style={stylelegend}
+        >
+          {data.label}
+        </span >
+      );
 
     }
 
