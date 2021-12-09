@@ -97,7 +97,7 @@
         "type:wordpress-theme"
       ]
     },
-    "wordpress-install-dir": "web/wp"
+    "wordpress-install-dir": "public_html/wp"
   },
   "scripts": {
     "post-root-package-install": [
