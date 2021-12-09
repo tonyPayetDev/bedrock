@@ -51,7 +51,6 @@
     "roots/wp-password-bcrypt": "1.0.0",
     "timber/timber": "^1.18",
     "wpackagist-plugin/wp-migrate-db": "^2.0",
-    "pojome/elementor": "^3.3.1",
     "yangm97/elementor-pro": "^3.0",
     "upstatement/timber-starter-theme": "^1.2",
     "wpackagist-plugin/custom-fonts": "^1.3",
