@@ -10,6 +10,8 @@ public_html/app/uploads/*
 public_html/app/ai1wm-backups/
 !public_html/app/uploads/.gitkeep
 !public_html/app/plugins/elementor-hello-world-master-tp-dev-v1
+!public_html/app/plugins/all-in-one-wp-migration
+!public_html/app/plugins/all-in-one-wp-migration-file-extension
 
 
 # WordPress
