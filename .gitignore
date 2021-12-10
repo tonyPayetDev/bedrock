@@ -1,19 +1,19 @@
 # Application
-web/app/plugins/*
-!web/app/plugins/.gitkeep
-!web/app/plugins/react-plugin
-web/app/plugins/react-plugin/node_modules
-web/app/plugins/react-plugin/build
-web/app/mu-plugins/*/
-web/app/upgrade
-web/app/uploads/*
-web/app/ai1wm-backups/
-!web/app/uploads/.gitkeep
-!web/app/plugins/elementor-hello-world-master-tp-dev-v1
+public_html/app/plugins/*
+!public_html/app/plugins/.gitkeep
+!public_html/app/plugins/react-plugin
+public_html/app/plugins/react-plugin/node_modules
+public_html/app/plugins/react-plugin/build
+public_html/app/mu-plugins/*/
+public_html/app/upgrade
+public_html/app/uploads/*
+public_html/app/ai1wm-backups/
+!public_html/app/uploads/.gitkeep
+!public_html/app/plugins/elementor-hello-world-master-tp-dev-v1
 
 
 # WordPress
-web/wp
+public_html/wp
 
 # Logs
 *.log
