@@ -318,7 +318,7 @@ const SelectBox = (props) => {
                 style={style_invers} className={isOpened ? "icon    icon-chevron-up" : "icon    icon-chevron-down"} >
 
               </i>
-              {isOpened ? " - de critéres" : " + de critéres"}
+              {isOpened ? " - de critères" : " + de critères"}
 
             </a>
           </div >
