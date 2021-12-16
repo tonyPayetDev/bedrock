@@ -6,6 +6,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import NumberFormat from "react-number-format";
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import ColorToggleButton from "./ColorToggleButton";
 
 import {
   alpha,
@@ -54,6 +55,9 @@ const CssTextField = withStyles({
   }
 })(TextField);
 
+
+
+
 const SelectBox = (props) => {
   const { setSelectedSort, cars, params, setUrlConstruct, fetchURL, critere, stylecriteres, style_invers, tabDefault, setTabDefault, url_construct } = props;
   const [search, setSearch] = useState("");
@@ -72,7 +76,22 @@ const SelectBox = (props) => {
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
+  const styletoggle = {
+    color: params.color,
+    boxShadow: "rgb(0 0 0 / 20%) 0px 4px 8px 0px, rgb(0 0 0 / 19%) 0px 6px 20px 0px",
+    fontSize: 13,
+    fontFamily: params.ekit_wb_3976_font,
+    '&.Mui-selected': {
+      backgroundColor: params.color,
+      color: "#FFFFFF",
+    },
+    backgroundColor: "#FFFFFF",
+    '&:hover': {
+      backgroundColor: params.color,
+      color: "#FFFFFF",
 
+    },
+  }
   const styletabactive = {
     // display: params.ekit_alerte_btn ? "" : "none",
     boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
@@ -107,6 +126,7 @@ const SelectBox = (props) => {
     });
   }
 
+
   useEffect(
     (props) => {
 
@@ -123,6 +143,17 @@ const SelectBox = (props) => {
 
         if (search.type == "btn") {
 
+          setActive(search.value);
+          setDesactive(false);
+
+        }
+        if (search.type == "step") {
+          let element = document.getElementsByName(parseInt(search.step) + 1);
+
+          for (var i = 0; i < element.length; i++) {
+            ReactDOM.findDOMNode(element[i]).classList.remove("d-none")
+          }
+          // params.ekit_critere_btn = true;
           setActive(search.value);
           setDesactive(false);
 
@@ -161,15 +192,22 @@ const SelectBox = (props) => {
     setIsOpened(wasOpened => !wasOpened);
   }
 
-  function filtre_facto(data, index) {
+  function filtre_facto(data, index2) {
     if (data.type == "select") {
-      let col = data.col + " " + data.col_mobile + " mt-1";
+      let col;
+      if (index2 != 0 && data.step != "") {
+        col = data.col + " " + data.col_mobile + " mt-1 d-none";
+      } else {
+        col = data.col + " " + data.col_mobile + " mt-1";
+      }
       let defaultValue = null;
       if (tabDefault[data.name].value) {
         defaultValue = tabDefault[data.name];
       }
       return (
-        <div className={col}>
+        <div
+          name={data.step}
+          className={col}>
 
           <Select
             theme={theme => ({
@@ -187,7 +225,6 @@ const SelectBox = (props) => {
             isClearable
             options={data.value}
             onChange={(e) => setSearch({ "name": data.name, "value": e, type: "select" })}
-
             defaultValue={defaultValue}
           />
         </div >
@@ -249,7 +286,13 @@ const SelectBox = (props) => {
         );
       })
     }
+    if (data.type == "step") {
+      return (
+        <ColorToggleButton styletoggle={styletoggle} color={params.color} fontFamily={params.ekit_wb_3976_font} data={data} class="col-md-12" index2={index2} setSearch={setSearch} >
+        </ColorToggleButton >
+      );
 
+    }
     if (data.type == "checkbox") {
       let col = "mb-3 " + data.col + " " + data.col_mobile;
 
@@ -291,7 +334,6 @@ const SelectBox = (props) => {
   }
   let renderElement = params.type.map((data, index) => {
     if (!data.critere && !critere) {
-
       return filtre_facto(data, index);
     }
     if (isOpened) {
@@ -303,12 +345,12 @@ const SelectBox = (props) => {
 
   return (
 
-    <div className="row justify-content-center ">
+    <div className=" row justify-content-center ">
 
       {renderElement}
 
       {params.ekit_critere_btn && (
-        <div className="col-12">
+        <div className="col-12 ">
 
           <div className="row justify-content-center">
 

@@ -336,8 +336,18 @@ class Hello_World extends Widget_Base
                     'text' => esc_html__('Input', 'elementskit-lite'),
                     'checkbox' => esc_html__('Checkbox', 'elementskit-lite'),
                     'legend' => esc_html__('Legend', 'elementskit-lite'),
+                    'step' => esc_html__('Step', 'elementskit-lite'),
 
                 ],
+            ]
+        );
+        $repeater->add_control(
+            'category_step',
+            [
+                'label'       => __('Step', 'elementor'),
+                'type'        => Controls_Manager::TEXT,
+                'default'     => __('', 'elementor'),
+                'label_block' => true,
             ]
         );
         $repeater->add_control(
@@ -887,7 +897,7 @@ class Hello_World extends Widget_Base
                     $tab_value[]= array("value"=>$service['service_title'],"label"=>$service['service_label'],"ekit_tab_active"=>$service['service_active'] );
                 }
             }
-            $tab[]= array('type'=>$category['type_element'],'symbole'=>$category['type_symbole'],  "name"=>$category['category_slug'].$category['name_plus'] ,"col"=>$category['category_col'], "col_mobile"=>$category['category_col_mobile'] ,"critere"=>$category['category_criteres'], "label"=>$category['category_title'], "value"=>$tab_value);
+            $tab[]= array('type'=>$category['type_element'],'step'=>$category['category_step'],'symbole'=>$category['type_symbole'],  "name"=>$category['category_slug'].$category['name_plus'] ,"col"=>$category['category_col'], "col_mobile"=>$category['category_col_mobile'] ,"critere"=>$category['category_criteres'], "label"=>$category['category_title'], "value"=>$tab_value);
         }
         // todo a voir si possible ici
 
@@ -930,6 +940,7 @@ class Hello_World extends Widget_Base
            "id_active"=>get_permalink(get_the_ID()), // se base l'url de la page pour checker le bon parametre
            'type'=>$tab,
            'post'=>$post,
+           'step'=>true,
            'ekit_resultat'=> $settings['ekit_resultat'],
            'cardbody'=> $settings['ekit_wb_225_code'],
            'card'=> $settings['ekit_wb_226_code'],
