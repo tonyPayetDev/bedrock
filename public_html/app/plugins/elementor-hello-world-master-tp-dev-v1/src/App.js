@@ -34,6 +34,7 @@ const App = (props) => {
   let [page, setPage] = useState(1);
   let [valueMapLeft, setvalueMapLeft] = useState('49%');
   const [hidecontent_mobile, setHideContentMobile] = useState(true);
+  let [highlightSpot, setHighlightSpot] = useState();
 
 
   params.type.map((data, index) => {
@@ -193,6 +194,7 @@ const App = (props) => {
 
               <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >
                 < ListeAnnonce
+                  setHighlightSpot={setHighlightSpot}
                   params={params}
                   latitude={state.lat}
                   longitude={state.lng}
@@ -211,6 +213,7 @@ const App = (props) => {
 
               <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} >
                 < ListeAnnonce
+                  setHighlightSpot={setHighlightSpot}
                   disable_even_odd
                   params={params}
                   latitude={state.lat}
@@ -229,6 +232,7 @@ const App = (props) => {
               {params.ekit_map_btn ?
 
                 < Map
+                  highlightSpot={highlightSpot}
                   googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0&libraries=visualization,drawing,geometry,places`}
                   loadingElement={<div style={{ height: '100%' }}> Loading... </div>}
                   containerElement={<div style={{ height: '70vh' }} />}
@@ -249,6 +253,7 @@ const App = (props) => {
             {hidecontent == "carte_mobile" ?
               <div className="col-md-6   " style={{ position: "absolute", zIndex: '2', margin: "auto", width: '122%', left: '-10%', right: '-10%' }}>
                 < Map
+                  highlightSpot={highlightSpot}
                   googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0&libraries=visualization,drawing,geometry,places`}
                   loadingElement={<div style={{ height: '100%' }}> Loading... </div>}
                   containerElement={<div style={{ height: '70vh' }} />}

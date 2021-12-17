@@ -18,13 +18,21 @@ function getRandomIntInclusive(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-const MarkerCarrierIcon = ({ lac, onMarkerClick, url_icon, params }) => {
+function MouseOverOpacity(event) {
+    console.log(event);
+}
+function MouseOutOpacity(event) {
+    console.log(event);
+}
+const MarkerCarrierIcon = ({ lac, onMarkerClick, url_icon, url_icon2, params, highlightSpot }) => {
     const classes = useStyles()
+
+
     const [state, setState] = React.useState({
         isOpen: false
     });
     const handleToggleOpen = () => {
-
+        console.log(index);
         setState({
             isOpen: true
         });
@@ -39,14 +47,21 @@ const MarkerCarrierIcon = ({ lac, onMarkerClick, url_icon, params }) => {
     let latitude = parseFloat(lac.latitude)// + decalage;// inverser quand modif dina 
     let longitude = parseFloat(lac.longitude) //+ decalage;
     let index = String(lac.id);
+    if (highlightSpot == lac.id) {
+        url_icon = url_icon2;
+    }
+
     return (
 
         <Marker
             // label={label}
-            onClick={() => handleToggleOpen()}
+            onMouseOver={() => handleToggleOpen(index)}
+            // onClick={() => handleToggleOpen()}
+
             // title={JSON.stringify(lac)}
             position={{ lat: latitude, lng: longitude }}
             icon={{
+
                 width: "10%",
                 url: url_icon,//`/images/${lac.carrier.toLowerCase()}_bw.png`,
                 data: JSON.stringify(lac),// passe les data ici car pas d'autre moyen avant passer dans title

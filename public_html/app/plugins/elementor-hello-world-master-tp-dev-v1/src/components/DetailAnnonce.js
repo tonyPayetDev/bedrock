@@ -288,7 +288,6 @@ const DetailAnnonce = (props) => {
         }
         else if (annonce.type === "button_param") {
           styleContactPro.fontSize = annonce['font-size'];
-          console.log(annonce);
           return (
             <span>
 

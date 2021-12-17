@@ -4,12 +4,14 @@ import DetailAnnonce from "./DetailAnnonce.js";
 const ListeAnnonce = ({
   latitude,
   longitude,
-  data,
   setSelectedSort,
+  data,
   setPage,
   params,
   page,
-  disable_even
+  disable_even,
+  setHighlightSpot
+
 }) => {
   let renderAnnonce;
   const style = {
@@ -26,7 +28,6 @@ const ListeAnnonce = ({
     activeMarker: {}, // Shows the active marker upon click
     selectedPlace: { marque: "", motorisation: "", model: "" },
   });
-  let [cpt, setCpt] = React.useState(0);
   const onMarkerClick = (props, marker, e) =>
     setState({
       selectedPlace: props,
@@ -50,20 +51,27 @@ const ListeAnnonce = ({
     },
     [data]
   );
+  const handleOver = (id) => {
+    setHighlightSpot(id);
+  }
+  const handleOut = (id) => {
+    setHighlightSpot(null);
+  }
+
 
   if (data) {
     if (data['count'] != 0) {
-      console.log(page);
 
       renderAnnonce = data['data'][page].map((annonce, index) => {
         if (annonce) {
           return (
 
-            <div class={params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12' : params.col_post}  >
+            <div onMouseOver={() => handleOver(annonce.id)} onMouseOut={() => handleOut()}
+              id={annonce.id} class={params.ekit_map_btn ? 'col-lg-6 col-md-12 col-xs-12' : params.col_post}  >
 
               < DetailAnnonce name={annonce} params={params} index={index} disable_even_odd={disable_even}  > </DetailAnnonce>
 
-            </div>
+            </div >
           );
         }
       });

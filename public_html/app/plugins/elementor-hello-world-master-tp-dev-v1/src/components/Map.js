@@ -11,6 +11,8 @@ import {
 } from "react-google-maps";
 import { MarkerClusterer } from "react-google-maps/lib/components/addons/MarkerClusterer";
 import Icon from "../images/logo.png";
+import Icon2 from "../images/logo2.png";
+
 import InfoContent from "./InfoContent.js";
 
 // import SearchBox from "./components/SearchBox";
@@ -38,6 +40,7 @@ const Map = withScriptjs(
     withGoogleMap((props) => {
 
         let params = props.params;
+
         var settings = {
             dots: false,
             lazyLoad: true,
@@ -65,6 +68,8 @@ const Map = withScriptjs(
         let tab = [];
         var url = new URL(document.location.href);
         let url_icon = url.origin + "/app/plugins/elementor-hello-world-master-tp-dev-v1/build/" + Icon
+        let url_icon2 = url.origin + "/app/plugins/elementor-hello-world-master-tp-dev-v1/build/" + Icon2
+
         if (props.selectedSort) {
             if (props.selectedSort['count'] != 0) {
                 const select = props.selectedSort['data'];
@@ -194,7 +199,14 @@ const Map = withScriptjs(
                 >
                     {
                         tab.map((lac, index) => (
-                            < MarkerCarrierIcon key={index} lac={lac} url_icon={url_icon} params={params}
+                            < MarkerCarrierIcon
+                                highlightSpot={props.highlightSpot}
+                                key={index}
+                                lac={lac}
+                                url_icon={url_icon}
+                                url_icon2={url_icon2}
+
+                                params={params}
                             />
                         ))
                     }
