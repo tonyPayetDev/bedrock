@@ -351,6 +351,15 @@ class Hello_World extends Widget_Base
             ]
         );
         $repeater->add_control(
+            'category_condition',
+            [
+                'label'       => __('Condition', 'elementor'),
+                'type'        => Controls_Manager::TEXT,
+                'default'     => __('', 'elementor'),
+                'label_block' => true,
+            ]
+        );
+        $repeater->add_control(
             'type_symbole',
             [
                 'label' => esc_html__('Symbole', 'elementskit-lite'),
@@ -449,7 +458,30 @@ class Hello_World extends Widget_Base
                 'label_block' => true,
             ]
         );
-
+        $serviceRepeater->add_control(
+            'service_icon',
+            array(
+            'label' => esc_html__('Icons', 'elementskit-lite'),
+            'type'  => Controls_Manager::ICONS,
+            'show_label' => true ,
+            'label_block' => true ,
+            'skin' => 'media' ,
+            'default' => array(
+                'value' => '',
+                'library' => '',
+            )
+        )
+        );
+        $serviceRepeater->add_control(
+            'service_condition',
+            [
+                'label'       => __('Condition', 'elementor'),
+                'type'        => Controls_Manager::TEXT,
+                'default'     => __('', 'elementor'),
+                'label_block' => true,
+            ]
+        );
+        
         $this->add_control(
             'services',
             [
@@ -894,10 +926,10 @@ class Hello_World extends Widget_Base
             $tab_value=null;
             foreach ($settings['services'] as $service) {
                 if ($category['category_slug'] === $service['category_slug']) {
-                    $tab_value[]= array("value"=>$service['service_title'],"label"=>$service['service_label'],"ekit_tab_active"=>$service['service_active'] );
+                    $tab_value[]= array("value"=>$service['service_title'],"label"=>$service['service_label'],"ekit_tab_active"=>$service['service_active'],"icon"=>$service['service_icon']  , "condition"=>$service['service_condition']);
                 }
             }
-            $tab[]= array('type'=>$category['type_element'],'step'=>$category['category_step'],'symbole'=>$category['type_symbole'],  "name"=>$category['category_slug'].$category['name_plus'] ,"col"=>$category['category_col'], "col_mobile"=>$category['category_col_mobile'] ,"critere"=>$category['category_criteres'], "label"=>$category['category_title'], "value"=>$tab_value);
+            $tab[]= array('type'=>$category['type_element'],'condition'=>$category['category_condition'],'step'=>$category['category_step'],'symbole'=>$category['type_symbole'],  "name"=>$category['category_slug'].$category['name_plus'] ,"col"=>$category['category_col'], "col_mobile"=>$category['category_col_mobile'] ,"critere"=>$category['category_criteres'], "label"=>$category['category_title'], "value"=>$tab_value);
         }
         // todo a voir si possible ici
 

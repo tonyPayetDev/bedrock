@@ -7,15 +7,7 @@ import NumberFormat from "react-number-format";
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ColorToggleButton from "./ColorToggleButton";
-
-import {
-  alpha,
-  ThemeProvider,
-  withStyles,
-  makeStyles,
-  createTheme,
-} from '@material-ui/core/styles';
-import { TextShort, Zigbee } from "mdi-material-ui";
+import { withStyles, } from '@material-ui/core/styles';
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -66,20 +58,17 @@ const SelectBox = (props) => {
   const [tab, setTab] = useState(url_construct);// # todo a recupérer en params
   const [active, setActive] = useState(false);// # todo a recupérer en params
   const [desactive, setDesactive] = useState(true);// # todo a recupérer en params
-  let [tabDefault2, settabDefault2] = useState({});// # todo a recupérer en params
   let [firstload, setFirstload] = useState(true);// # todo a recupérer en params
 
   const [values, setValues] = React.useState({
     numberformat: ""
   });
   const [state, setState] = React.useState({});
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
+
   const styletoggle = {
     color: params.color,
     boxShadow: "rgb(0 0 0 / 20%) 0px 4px 8px 0px, rgb(0 0 0 / 19%) 0px 6px 20px 0px",
-    fontSize: 13,
+    fontSize: 14.5,
     fontFamily: params.ekit_wb_3976_font,
     '&.Mui-selected': {
       backgroundColor: params.color,
@@ -204,6 +193,13 @@ const SelectBox = (props) => {
       if (tabDefault[data.name].value) {
         defaultValue = tabDefault[data.name];
       }
+      let arrayfilter = data.value;
+      console.log(tab);
+      if (data.condition) {
+        arrayfilter = data.value.filter(item => item.condition == tab[data.condition])
+      } else {
+        arrayfilter = data.value;
+      }
       return (
         <div
           name={data.step}
@@ -213,6 +209,7 @@ const SelectBox = (props) => {
             theme={theme => ({
               ...theme,
               borderRadius: 5,
+              zIndex: 2,
               colors: {
                 ...theme.colors,
                 neutral80: params.color,
@@ -223,7 +220,7 @@ const SelectBox = (props) => {
             placeholder={data.label}
             // isMulti
             isClearable
-            options={data.value}
+            options={arrayfilter}
             onChange={(e) => setSearch({ "name": data.name, "value": e, type: "select" })}
             defaultValue={defaultValue}
           />
@@ -288,7 +285,7 @@ const SelectBox = (props) => {
     }
     if (data.type == "step") {
       return (
-        <ColorToggleButton styletoggle={styletoggle} color={params.color} fontFamily={params.ekit_wb_3976_font} data={data} class="col-md-12" index2={index2} setSearch={setSearch} >
+        <ColorToggleButton styletoggle={styletoggle} data={data} class="col-md-12" index2={index2} setSearch={setSearch} >
         </ColorToggleButton >
       );
 

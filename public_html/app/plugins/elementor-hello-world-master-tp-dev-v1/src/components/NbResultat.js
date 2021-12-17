@@ -3,7 +3,6 @@ import ReactLoading from "react-loading";
 
 const NbResultat = (props) => {
   const { data, paren, params, options, style } = props;
-  let { loading } = props;
 
   let paren_odd = "(";
   let paren_even = ")";
@@ -26,10 +25,12 @@ const NbResultat = (props) => {
   return (
     <div class="row" style={style}
     >
-      {params.search_text ? <div class={col2}>
-        {params.search_text}        {data ? paren_odd + data['count'] + " résultats " + paren_even : ""}
+      {params.search_text ?
+        <div class={col2}>
+          {params.search_text}
+          {data ? paren_odd + data['count'] + " résultats " + paren_even : ""}
 
-      </div> : ""}
+        </div> : ""}
 
       {load}
 

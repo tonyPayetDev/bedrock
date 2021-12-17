@@ -1,6 +1,7 @@
 import React from "react";
 import Icon from "../images/flags.png";
 import * as APIConfig from "../constants/APIConfig";
+import Parser from 'html-react-parser';
 
 const Text = (props) => {
   const { data, text, params, style } = props;
@@ -24,7 +25,7 @@ const Text = (props) => {
   }
   return (
     <span className={col} style={{ margin: "12px", fontSize: '28px', color: "#54595f" }}>
-      {t}
+      {Parser(t)}
     </span>
 
 

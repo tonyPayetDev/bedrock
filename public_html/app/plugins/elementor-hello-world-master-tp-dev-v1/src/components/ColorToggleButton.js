@@ -5,11 +5,16 @@ import { styled } from '@mui/material/styles';
 import { purple } from '@mui/material/colors';
 
 export default function ColorToggleButton(props) {
-  const { data, setSearch, index2, color, fontFamily, styletoggle } = props;
-  const [alignment, setAlignment] = React.useState('web');
-  const handleChange = (event, newAlignment) => {
-    setAlignment(newAlignment);
+  const { data, setSearch, index2, styletoggle } = props;
+  const [alignment, setAlignment] = React.useState('left');
+
+
+  const handleAlignment = (event, newAlignment) => {
+    if (newAlignment !== null) {
+      setAlignment(newAlignment);
+    }
   };
+
   const ToggleButtonCustom = styled(ToggleButton)(({ theme }) => (styletoggle));
 
   let coldnone;
@@ -29,7 +34,13 @@ export default function ColorToggleButton(props) {
         'active': data_value.ekit_tab_active,
         type: 'step'
       })}
-      value={data_value.label}   >{data_value.label}</ToggleButtonCustom>
+      value={data_value.label}   >
+      <i aria-hidden="true"
+        style={{ fontSize: 16 }}
+        className={data_value.icon.value + " mb-1 mr-1"} >
+
+      </i>
+      {data_value.label}</ToggleButtonCustom>
     )
   });
 
@@ -39,7 +50,7 @@ export default function ColorToggleButton(props) {
       value={alignment}
       name={data.step}
       exclusive
-      onChange={handleChange}
+      onChange={handleAlignment}
     >
       {render}
     </ToggleButtonGroup>

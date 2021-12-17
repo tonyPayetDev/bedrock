@@ -7,10 +7,9 @@ import SelectBox from "./components/SelectBox";
 import Map from './components/Map'
 import Paginator from './components/Paginator';
 import * as APIConfig from "./constants/APIConfig";
-// import ModelComponent from "./components/ModelComponent";
-
 import { Animated } from "react-animated-css";
 import ReactLoading from "react-loading";
+// import ModelComponent from "./components/ModelComponent";
 
 const App = (props) => {
   const { id } = props; // charge les paremetres au premier rechargement
@@ -50,7 +49,7 @@ const App = (props) => {
     display: params.ekit_search_btn ? "" : "none",
     borderRadius: "4px",
     color: "white",
-    fontSize: "15px",
+    fontSize: "14px",
     boxShadow: "rgb(0 0 0 / 20%) 0px 4px 8px 0px, rgb(0 0 0 / 19%) 0px 6px 20px 0px"
   };
   const style_invers = {
@@ -66,29 +65,19 @@ const App = (props) => {
 
   };
 
-  const stylealerte = {
-    backgroundColor: params.ekit_menu_button_color_alerte ? params.ekit_menu_button_color_alerte : "#ffffff",
-    display: params.ekit_alerte_btn ? "" : "none",
-    borderRadius: "20px 20px 20px 20px",
-    color: "white",
-  };
   const stylemenu = {
     display: params.ekit_alerte_btn ? "" : "none",
     borderRadius: "20px 20px 20px 20px",
     color: params.ekit_menu_button_color_alerte ? params.ekit_menu_button_color_alerte : "#ffffff",
 
   };
-  const styleContactPro = {
-    boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-    backgroundColor: !params.color ? params.color : "white",
-    color: params.color ? params.color : "white",
-    fontSize: "14px",
 
-  };
-
-  const styleResultat = {
-    color: params.color, fontSize: '15px', marginLeft: '1.5rem'
-  };
+  function MouseOverOpacity(event) {
+    event.target.style.filter = " saturate(1.2)";
+  }
+  function MouseOutOpacity(event) {
+    event.target.style.filter = "saturate(1)";
+  }
   const StyleMapOverflow = { "overflow": "auto", height: '70vh' }
   const StyleMapOverflowhidden = { "overflow": "hidden" }// active overflow si map activer ou pas
 
@@ -133,7 +122,7 @@ const App = (props) => {
 
             <div className={col} style={{ fontSize: params.fontSize }}>
               <div className="row justify-content-end">
-                {/* <a type="button" className="btn d-lg-none  " onClick={(e) => setHideContent('liste_mobile')} style={!hidecontent_mobile ? stylecriteres : stylemenu}>Liste </a> */}
+                {/* desactive la maps sous format mobile <a type="button" className="btn d-lg-none  " onClick={(e) => setHideContent('liste_mobile')} style={!hidecontent_mobile ? stylecriteres : stylemenu}>Liste </a> */}
                 {/* desactive car manque de visibilité sur telephone infowindow */}
                 {/* <a type="button" className="btn d-lg-none  mr-2 " onClick={(e) => setHideContent('carte_mobile')} style={hidecontent_mobile ? stylecriteres : stylemenu}>Carte </a> */}
 
@@ -167,12 +156,11 @@ const App = (props) => {
         </div>
 
       </div>
-      {/* todo mettre condition pour cacher sur widget elem */}
       {
         !params.search_text ?
           <NbResultat
             style={{
-              color: params.color, fontSize: '15px', marginLeft: '1.5rem'
+              color: params.color, fontSize: '13px', marginLeft: '1.5rem'
             }}
             params={params}
             loading={false}
@@ -184,7 +172,7 @@ const App = (props) => {
 
         <div className="col-md-5   mt-3 ">
           <Animated isVisible={true} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={2000} animationOutDuration={2000} >
-            <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} className="btn btn-block  btn-lg " style={style}>
+            <a type="button" href={params.url + '?' + new URLSearchParams(url_construct)} onMouseOver={MouseOverOpacity} onMouseOut={MouseOutOpacity} className="btn btn-block  btn-lg " style={style}>
               <NbResultat paren
                 params={params}
                 data={selectedSort}
