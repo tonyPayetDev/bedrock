@@ -1,4 +1,3 @@
-/* global google */
 import React from 'react'
 import DetailAnnonce from "./DetailAnnonce.js";
 
@@ -32,7 +31,6 @@ const MarkerCarrierIcon = ({ lac, onMarkerClick, url_icon, url_icon2, params, hi
         isOpen: false
     });
     const handleToggleOpen = () => {
-        console.log(index);
         setState({
             isOpen: true
         });
@@ -47,25 +45,24 @@ const MarkerCarrierIcon = ({ lac, onMarkerClick, url_icon, url_icon2, params, hi
     let latitude = parseFloat(lac.latitude)// + decalage;// inverser quand modif dina 
     let longitude = parseFloat(lac.longitude) //+ decalage;
     let index = String(lac.id);
+    let condition = false;
     if (highlightSpot == lac.id) {
         url_icon = url_icon2;
+        condition = true;
     }
-
     return (
 
         <Marker
             // label={label}
-            onMouseOver={() => handleToggleOpen(index)}
-            // onClick={() => handleToggleOpen()}
-
-            // title={JSON.stringify(lac)}
+            onClick={() => handleToggleOpen(index)}
             position={{ lat: latitude, lng: longitude }}
             icon={{
-
                 width: "10%",
                 url: url_icon,//`/images/${lac.carrier.toLowerCase()}_bw.png`,
                 data: JSON.stringify(lac),// passe les data ici car pas d'autre moyen avant passer dans title
                 anchor: window.google.maps.Point(16, 16),
+                id: lac.id,
+                condition: condition,
                 scaledSize: window.google.maps.Size(32, 32),
             }}
             name={{
@@ -81,11 +78,17 @@ const MarkerCarrierIcon = ({ lac, onMarkerClick, url_icon, url_icon2, params, hi
 
             {
                 state.isOpen &&
-                <InfoWindow options={{
-                    maxWidth: 460,
+                <InfoWindow
+                    options={{
+                        maxWidth: 460,
+                        maxHeight: 200,
 
-                }} pixelOffset={"0"} position={state.position} visible={state.isOpen} >
-                    <div class="row text-right">
+                    }}
+                    pixelOffset={"0"}
+                    position={state.position}
+                    visible={state.isOpen} >
+
+                    <div class="row text-right ">
                         <div class="col-lg-12 col-md-12 col-xs-12">
 
                             <a style={{ fontSize: "20px", color: params.color }} onClick={handleToggleClose} draggable="false" aria-label="Fermer" title="Fermer" type="button" class="gm-ui-hover-effect  " >

@@ -1,9 +1,8 @@
 
 .gm-style-iw-d{
-
-    overflow: hidden;
-
+    overflow: auto!important;
 }
+
 button.gm-ui-hover-effect {
     visibility: hidden;
 }

@@ -10,14 +10,12 @@ import {
     InfoWindow
 } from "react-google-maps";
 import { MarkerClusterer } from "react-google-maps/lib/components/addons/MarkerClusterer";
-import Icon from "../images/logo.png";
-import Icon2 from "../images/logo2.png";
-
-import InfoContent from "./InfoContent.js";
+import Icon1 from "../images/maps-koytcha-zoom.png";
+import Icon2 from "../images/maps-koytcha.png";
 
 // import SearchBox from "./components/SearchBox";
 import MarkerCarrierIcon from "./MarkerCarrierIcon";
-import { Hidden } from "@material-ui/core";
+
 function SampleNextArrow(props) {
     const { className, style, onClick, color } = props;
     return (
@@ -67,8 +65,9 @@ const Map = withScriptjs(
 
         let tab = [];
         var url = new URL(document.location.href);
-        let url_icon = url.origin + "/app/plugins/elementor-hello-world-master-tp-dev-v1/build/" + Icon
-        let url_icon2 = url.origin + "/app/plugins/elementor-hello-world-master-tp-dev-v1/build/" + Icon2
+        let url_icon2 = url.origin + "/app/plugins/elementor-hello-world-master-tp-dev-v1/build/" + Icon1
+        let url_icon3 = url.origin + "/app/plugins/elementor-hello-world-master-tp-dev-v1/build/" + Icon2
+
 
         if (props.selectedSort) {
             if (props.selectedSort['count'] != 0) {
@@ -80,7 +79,6 @@ const Map = withScriptjs(
                 });
             }
         }
-
 
         let renderInfo
         const onMarkerClustererClick = (markerClusterer) => {
@@ -96,6 +94,7 @@ const Map = withScriptjs(
 
                     let data = JSON.parse(m[i].icon.data);
                     tab_infoWindow[i] = data;
+
                     setState({
                         isOpen: true,
                         position: m[i].position,
@@ -129,8 +128,9 @@ const Map = withScriptjs(
             });
             setTabInfoWindow({});
         }
+        const color_img = "#54595f";
 
-
+        console.log(props.highlightSpot);
         return (
             <GoogleMap
 
@@ -156,43 +156,23 @@ const Map = withScriptjs(
                     // minimumClusterSize={8}
                     onClick={onMarkerClustererClick}
 
-                // styles={[
-                //     {
-                //         url: "/img/map-cluster/m1.png",
-                //         height: 26,
-                //         width: 26,
-                //         fontFamily: "Lato",
-                //         textColor: "#FFF",
-                //     },
-                //     {
-                //         url: "/img/map-cluster/m2.png",
-                //         height: 29,
-                //         width: 29,
-                //         fontFamily: "Lato",
-                //         textColor: "#FFF",
-                //     },
-                //     {
-                //         url: "/img/map-cluster/m3.png",
-                //         height: 34,
-                //         width: 34,
-                //         fontFamily: "Lato",
-                //         textColor: "#FFF",
-                //     },
-                //     {
-                //         url: "/img/map-cluster/m4.png",
-                //         height: 40,
-                //         width: 40,
-                //         fontFamily: "Lato",
-                //         textColor: "#FFF",
-                //     },
-                //     {
-                //         url: "/img/map-cluster/m5.png",
-                //         height: 46,
-                //         width: 46,
-                //         fontFamily: "Lato",
-                //         textColor: "#FFF",
-                //     }
-                // ]}
+                    styles={[
+                        {
+
+                            url: url_icon3,
+                            height: 40,
+                            width: 40,
+                            fontFamily: params.fontFamily,
+                            textColor: color_img,
+                        },
+                        {
+                            url: url_icon2,
+                            height: 60,
+                            width: 60,
+                            fontFamily: params.fontFamily,
+                            textColor: color_img,
+                        }
+                    ]}
                 // icon={{// todo changer imagr cluster
                 //     url: url_icon
                 // }}
@@ -203,7 +183,7 @@ const Map = withScriptjs(
                                 highlightSpot={props.highlightSpot}
                                 key={index}
                                 lac={lac}
-                                url_icon={url_icon}
+                                url_icon={url_icon3}
                                 url_icon2={url_icon2}
 
                                 params={params}
@@ -228,6 +208,8 @@ const Map = withScriptjs(
                                         <i class="fas fa-window-close"></i>
 
                                     </a>
+                                    <div class="col-12  text-center" > <span style={{ color: params.color, fontSize: "17px" }}><span class="font-weight-bold"> {nb_annonce}</span> </span> annonces </div>
+
                                     <div class=" row justify-content-center">
 
                                         <div class="col-10 d-none d-lg-block ">
@@ -240,9 +222,9 @@ const Map = withScriptjs(
                                                 {swiper}
                                             </div>
                                         </div>
+
                                     </div>
 
-                                    <div class="col-12  text-center" > <span style={{ color: params.color, fontSize: "17px" }}><span class="font-weight-bold"> {nb_annonce}</span> </span> annonces </div>
                                 </div>
 
                                 : <div > </div>}
@@ -259,14 +241,15 @@ export default Map;
 
 // https://nooshu.github.io/blog/2012/10/03/marker-cluster-calculator-for-google-maps-v3/
 const markerClustererCalculator = (markers, numStyles) => {
-    const index = markers.find((marker) => marker.icon.condition === "anormal")
-        ? 3
-        : markers.find((marker) => marker.icon.condition === "alerta")
-            ? 2
-            : markers.find((marker) => marker.icon.condition === "normal")
-                ? 1
-                : 4;
 
+    // const index = markers.find((marker) => marker.icon.condition === "anormal")
+    //     ? 3
+    //     : markers.find((marker) => marker.icon.condition === "alerta")
+    //         ? 2
+    //         : markers.find((marker) => marker.icon.condition === "normal")
+    //             ? 1
+    //             : 4;
+    const index = markers.find((marker) => marker.icon.condition) ? 2 : 1;
     return {
         index: index,
         text: markers.length
