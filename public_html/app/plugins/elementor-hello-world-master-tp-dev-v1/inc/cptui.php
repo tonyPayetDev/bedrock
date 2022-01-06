@@ -236,6 +236,25 @@ acf_add_local_field_group(array(
             'append' => '',
             'maxlength' => '',
         ),
+        array(
+            'key' => 'field_6130a68d972d9',
+            'label' => 'exclusif',
+            'name' => 'exclusif',
+            'type' => 'text',
+            'instructions' => 'exemple: saisir coup de coeur ou exclusivité',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
+        ),
 
         array(
             'key' => 'field_6130a6ac972d2',
