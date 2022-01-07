@@ -162,6 +162,16 @@ class Hello_World extends Widget_Base
                 ]
                 );
                 $repeater3->add_control(
+                    'field_background',
+                    [
+                    'label'       => __('Background Color', 'elementor'),
+                    'type'        => Controls_Manager::COLOR,
+                    'default'     => __("#FFFFFF", 'elementor'),
+                    'label_block' => true,
+    
+                ]
+                );
+                $repeater3->add_control(
                     'font_size',
                     [
                     'label'       => __('Font size', 'elementor'),
@@ -940,6 +950,7 @@ class Hello_World extends Widget_Base
                     $array_field= array(
                         'field'=> $field['choice_field'] ,
                         'color'=> $field['field_color'] ,
+                        'background'=> $field['field_background'] ,
                         'col'=> $field['field_col']=='0'?" ":$field['field_col'],
                         $field['field_float']=> "auto",
                         'type'=> $field['field_type'],
