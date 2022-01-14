@@ -199,24 +199,7 @@ acf_add_local_field_group(array(
             'maxlength' => '',
             'disabled' => 1,
         ),
-        array(
-            'key' => 'field_616970d4eb7da',
-            'label' => 'contact_email',
-            'name' => 'contact_email',
-            'type' => 'email',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'default_value' => '',
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-        ),
+      
         array(
             'key' => 'field_6130a68d972d8',
             'label' => 'titre',
@@ -235,6 +218,24 @@ acf_add_local_field_group(array(
             'prepend' => '',
             'append' => '',
             'maxlength' => '',
+        ),
+        array(
+            'key' => 'field_616970d4eb7da',
+            'label' => 'contact_email',
+            'name' => 'contact_email',
+            'type' => 'email',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
         ),
         array(
             'key' => 'field_6130a68d972d9',
@@ -417,7 +418,11 @@ acf_add_local_field_group(array(
             'choices' => array(
                 'Maison' => 'Maison',
                 'Appartement' => 'Appartement',
-                'Bâtiment' => 'Bâtiment',
+                'Bureauxcommerces' => 'Bureaux et commerces',
+                'Entrepôtscommerces' => 'Entrepôts et commerces',
+                'Bureaux' => 'Bureaux',
+
+
             ),
             'default_value' => false,
             'allow_null' => 0,
