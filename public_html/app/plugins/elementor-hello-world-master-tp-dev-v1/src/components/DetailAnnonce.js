@@ -174,7 +174,7 @@ const DetailAnnonce = (props) => {
   if (!disable_even_odd) {
 
     if (index % 2 === 1) {
-      cardbody.right = "-20px";
+      cardbody.right = "-10px";
       cardbody.left = "";
       card.left = "5px";
       card.borderRadius = "0px 0px 14px 0px ";
@@ -182,7 +182,7 @@ const DetailAnnonce = (props) => {
 
     } else {
       cardbody.right = "";
-      cardbody.left = "-20px";
+      cardbody.left = "-10px";
       card.left = "25px";
       card.borderRadius = "0px 0px 0px 14px ";
 

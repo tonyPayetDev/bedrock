@@ -418,11 +418,9 @@ acf_add_local_field_group(array(
             'choices' => array(
                 'Maison' => 'Maison',
                 'Appartement' => 'Appartement',
-                'Bureauxcommerces' => 'Bureaux et commerces',
-                'Entrepôtscommerces' => 'Entrepôts et commerces',
+                'Bureaux et commerces' => 'Bureauxcommerces ',
+                'Entrepôts et commerces' => 'Entrepôtscommerces',
                 'Bureaux' => 'Bureaux',
-
-
             ),
             'default_value' => false,
             'allow_null' => 0,
