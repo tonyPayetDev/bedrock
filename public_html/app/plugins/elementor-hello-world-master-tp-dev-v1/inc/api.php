@@ -28,8 +28,13 @@ function name_select($type)
     return array_unique($tab)  ;
 }
 
-
-function biens(WP_REST_Request $request)
+/**
+ * retourne un liste de data d'apres les parametres donnés
+ *
+ * @param array $data Options for the function.
+ * @return string|null Post title for the latest, * or null if none.
+ */
+function data(WP_REST_Request $request)
 {
     $r=array();
 
@@ -122,6 +127,6 @@ function biens(WP_REST_Request $request)
 add_action('rest_api_init', function () {
     register_rest_route('api/v1', '/data', array(
       'methods' => 'GET',
-      'callback' => 'biens',
+      'callback' => 'data',
     ));
 });
