@@ -1,5 +1,27 @@
 <?php
 
+
+function wbp_hook_js_footer_captcha($redirect_to, $request, $user)
+{
+    ?>
+<script>
+window.axeptioSettings = {
+    clientId: "61e94ff432d77327afb3842b",
+};
+
+(function(d, s) {
+    var t = d.getElementsByTagName(s)[0],
+        e = d.createElement(s);
+    e.async = true;
+    e.src = "//static.axept.io/sdk.js";
+    t.parentNode.insertBefore(e, t);
+})(document, "script");
+</script>
+<?php
+}
+add_action("wbp_hook_js_footer_captcha", "wbp_hook_js_footer_captcha", 10, 3);
+
+
 add_filter("login_redirect", "gkp_subscriber_login_redirect", 10, 3);
 function gkp_subscriber_login_redirect($redirect_to, $request, $user)
 {
