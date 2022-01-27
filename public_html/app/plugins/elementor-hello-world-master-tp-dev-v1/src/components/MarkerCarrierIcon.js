@@ -17,12 +17,7 @@ function getRandomIntInclusive(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-function MouseOverOpacity(event) {
-    console.log(event);
-}
-function MouseOutOpacity(event) {
-    console.log(event);
-}
+
 const MarkerCarrierIcon = ({ lac, onMarkerClick, url_icon, url_icon2, params, highlightSpot }) => {
     const classes = useStyles()
 

@@ -194,7 +194,6 @@ const SelectBox = (props) => {
         defaultValue = tabDefault[data.name];
       }
       let arrayfilter = data.value;
-      console.log(tab);
       if (data.condition) {
         arrayfilter = data.value.filter(item => item.condition == tab[data.condition])
       } else {
@@ -316,7 +315,6 @@ const SelectBox = (props) => {
 
     }
     if (data.type == "legend") {
-      console.log(data);
       return (
         <span
           className={data.col + " text-center"}

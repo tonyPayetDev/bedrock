@@ -130,7 +130,6 @@ const Map = withScriptjs(
         }
         const color_img = "#54595f";
 
-        console.log(props.highlightSpot);
         return (
             <GoogleMap
 

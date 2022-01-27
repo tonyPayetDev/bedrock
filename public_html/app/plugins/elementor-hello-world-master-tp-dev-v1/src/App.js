@@ -84,14 +84,10 @@ const App = (props) => {
 
   useEffect((event) => {
     if (hidecontent == "liste_mobile") {
-      console.log(hidecontent_mobile);
-
       setHideContentMobile(true)
     }
     if (hidecontent == "carte_mobile") {
-      console.log(hidecontent_mobile);
       setHideContentMobile(false)
-
     }
     if (hidecontent == "carte") {
       params.ekit_map_btn = 'yes';
