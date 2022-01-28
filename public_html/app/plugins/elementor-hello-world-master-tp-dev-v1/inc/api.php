@@ -40,13 +40,14 @@ function data(WP_REST_Request $request)
 
     if (!$request->get_param('name_select') && !$request->get_param('id')) {
         $type=$request->get_param('type');
-
+        $cpt_critere=0;
         foreach (name_select($type) as $key => $name) {
             if ($request->get_param($name)) {
                 $meta=     array(
                 'key' =>  (string)$name,
                 'value' => (string)$request->get_param($name),
               );
+                $cpt_critere++;
                 array_push($r, $meta);
             }
             if ($request->get_param($name."-max")) {// si le parametre passé contient max
@@ -56,6 +57,8 @@ function data(WP_REST_Request $request)
                 'type'    => 'numeric',
                 'compare' => '<',
               );
+                $cpt_critere++;
+
                 array_push($r, $meta);
             }
             if ($request->get_param($name."-min")) {// si le parametre passé contient max
@@ -65,23 +68,36 @@ function data(WP_REST_Request $request)
                 'type'    => 'numeric',
                 'compare' => '>',
               );
+                $cpt_critere++;
+
                 array_push($r, $meta);
             }
         }
+  
+        if (count($request->get_params())==1) { // verifier qu'il ya un parametre si un parametre c'est que le type
+            $request_p =  array(
+                'post_type' => $type,
+                'posts_per_page'   => -1,//-1 all
+                'orderby' => 'date_saisie',
+                'meta_type' => 'DATE',
+                'order' => 'DESC'
+              ) ;
+        } elseif (count($request->get_params())-1==$cpt_critere) { //  verifie le nombre de critere demander dans l'url et le nombre de critere trouver si le nombre n'est pas le main ca veut dire que le critere n'existe pas
+            $request_p =  array(
+                'post_type' => $type,
+                'posts_per_page'   => -1,//-1 all
+                'meta_query' => $r,
+                'orderby' => 'date_saisie',
+                'meta_type' => 'DATE',
+                'order' => 'DESC'
+              ) ;
+        }
     
-        $request_p =  array(
-        'post_type' => $type,
-        'posts_per_page'   => -1,//-1 all
-        'meta_query' => $r,
-        'orderby' => 'date_saisie',
-        'meta_type' => 'DATE',
-        'order' => 'DESC'
-      ) ;
         $biens = new WP_query($request_p);
         $ville ;
         $per_page=1;
         $cpt=0;
-        
+
         foreach ($biens->posts as $key => $value) {
             $tab=[];
             $meta = get_post_meta($value->ID);
