@@ -9,7 +9,7 @@
  * License:      MIT License
  */
 
-if (defined('WP_ENV') && WP_ENV !== 'production' && !is_admin()) {
+// if (defined('WP_ENV') && WP_ENV !== 'production' && !is_admin()) {
 
-    add_action('pre_option_blog_public', '__return_zero');
-}
+//     add_action('pre_option_blog_public', '__return_zero');
+// }
