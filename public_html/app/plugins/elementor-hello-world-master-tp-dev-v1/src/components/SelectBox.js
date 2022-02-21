@@ -8,7 +8,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ColorToggleButton from "./ColorToggleButton";
 import { withStyles, } from '@material-ui/core/styles';
-
+import { styled } from "@material-ui/core";
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
 
@@ -54,6 +54,7 @@ const SelectBox = (props) => {
   const { setSelectedSort, cars, params, setUrlConstruct, fetchURL, critere, stylecriteres, style_invers, tabDefault, setTabDefault, url_construct } = props;
   const [search, setSearch] = useState("");
   const [isOpened, setIsOpened] = useState(false);
+  const [isDisabled, setisDisabled] = useState(false);
 
   const [tab, setTab] = useState(url_construct);// # todo a recupérer en params
   const [active, setActive] = useState(false);// # todo a recupérer en params
@@ -97,7 +98,6 @@ const SelectBox = (props) => {
   };
   const stylelegend = {
     // display: params.ekit_alerte_btn ? "" : "none",
-    fontFamily: params.fontFamily ? params.fontFamily : "",
     color: params.color ? params.color : "",
     fontSize: '15px',
     marginTop: ".5rem",
@@ -196,9 +196,12 @@ const SelectBox = (props) => {
       let arrayfilter = data.value;
       if (data.condition) {
         arrayfilter = data.value.filter(item => item.condition == tab[data.condition])
+        console.log(arrayfilter);
+
       } else {
         arrayfilter = data.value;
       }
+
       return (
         <div
           name={data.step}
@@ -218,11 +221,13 @@ const SelectBox = (props) => {
             })}
             placeholder={data.label}
             // isMulti
+            isDisabled={isDisabled}
             isClearable
             options={arrayfilter}
             onChange={(e) => setSearch({ "name": data.name, "value": e, type: "select" })}
             defaultValue={defaultValue}
           />
+
         </div >
 
       );
@@ -315,13 +320,14 @@ const SelectBox = (props) => {
 
     }
     if (data.type == "legend") {
+      const TextCustom = styled("span")(({ theme }) => (stylelegend));
+
       return (
-        <span
+        <TextCustom
           className={data.col + " text-center"}
-          style={stylelegend}
         >
           {data.label}
-        </span >
+        </TextCustom >
       );
 
     }

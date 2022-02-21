@@ -1,10 +1,12 @@
 import React from "react";
 import DetailAnnonce from "./DetailAnnonce.js";
+import * as APIConfig from "../constants/APIConfig";
 
+import { styled } from '@mui/material/styles';
+
+import { Button } from "@mui/material";
 const ListeAnnonce = ({
-  latitude,
-  longitude,
-  setSelectedSort,
+
   data,
   setPage,
   params,
@@ -15,9 +17,11 @@ const ListeAnnonce = ({
 }) => {
   let renderAnnonce;
   const style = {
-    backgroundColor: params.color ? params.color : "#ffffff",
-    color: !params.color ? params.color : "#ffffff",
-    zIndex: -1
+    root: {
+      backgroundColor: params.color ? params.color : "#ffffff",
+      color: !params.color ? params.color : "",
+    }
+
 
   };
   const [state, setState] = React.useState({
@@ -76,10 +80,31 @@ const ListeAnnonce = ({
         }
       });
     } else {
-      // todo a voir si mettre dans component nbresultat
-      renderAnnonce = <div class="row"><span class="col-6"> Desolé, nous avons aucune annonce qui correspond a votre recherche
-      </span> <a class="col-6 btn " type="button" href="" style={style}> Prendre RDV avec un commercial
-        </a></div>
+      const ButtonCustom = styled("a")(({ theme }) => ({
+        textTransform: 'none',
+        fontSize: 16,
+        margin: ' 10px,',
+        padding: '6px 20px',
+        border: '0px solid',
+        color: "#FFFFFF",
+        boxShadow: "rgb(0 0 0 / 20%) 0px 4px 8px 0px, rgb(0 0 0 / 19%) 0px 6px 20px 0px",
+        backgroundColor: params.color,
+        borderRadius: '0.25rem',
+        '&:hover': {
+          backgroundColor: "#FFFFFF",
+          color: params.color,
+          borderColor: params.color,
+          boxShadow: "rgb(0 0 0 / 20%) 0px 4px 8px 0px, rgb(0 0 0 / 19%) 0px 6px 20px 0px",
+        },
+      }));
+      renderAnnonce = <div class="row "><div class="col-6">
+        Désolés, nous n'avons aucune annonce qui correspond à votre recherche.
+      </div>
+        <ButtonCustom class="col-6" href={params.redirect_contact} >
+          Prendre RDV avec un commercial
+        </ButtonCustom>
+
+      </div >
     }
   }
   return (

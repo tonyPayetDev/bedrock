@@ -2,7 +2,6 @@ import * as React from 'react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { styled } from '@mui/material/styles';
-import { purple } from '@mui/material/colors';
 
 export default function ColorToggleButton(props) {
   const { data, setSearch, index2, styletoggle } = props;

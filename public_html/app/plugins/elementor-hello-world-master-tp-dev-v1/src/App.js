@@ -119,10 +119,6 @@ const App = (props) => {
 
             <div className={col} style={{ fontSize: params.fontSize }}>
               <div className="row justify-content-end">
-                {/* desactive la maps sous format mobile <a type="button" className="btn d-lg-none  " onClick={(e) => setHideContent('liste_mobile')} style={!hidecontent_mobile ? stylecriteres : stylemenu}>Liste </a> */}
-                {/* desactive car manque de visibilité sur telephone infowindow */}
-                {/* <a type="button" className="btn d-lg-none  mr-2 " onClick={(e) => setHideContent('carte_mobile')} style={hidecontent_mobile ? stylecriteres : stylemenu}>Carte </a> */}
-
                 <a type="button" className="btn d-none d-lg-block   " onClick={(e) => setHideContent('carte')} style={params.ekit_map_btn ? stylemenu : stylecriteres}>Carte </a>
                 <a type="button" className="btn  d-none d-lg-block  mr-2 " onClick={(e) => setHideContent('galerie')} style={params.ekit_map_btn ? stylecriteres : stylemenu}>Galerie </a>
               </div>
@@ -229,7 +225,7 @@ const App = (props) => {
 
                 < Map
                   highlightSpot={highlightSpot}
-                  googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0&libraries=visualization,drawing,geometry,places`}
+                  googleMapURL={`https://maps.googleapis.com/maps/api/js?key=` + params.key_map + `&libraries=visualization,drawing,geometry,places`}
                   loadingElement={<div style={{ height: '100%' }}> Loading... </div>}
                   containerElement={<div style={{ height: '70vh' }} />}
                   mapElement={<div style={{ height: '100%' }} />}
@@ -250,7 +246,7 @@ const App = (props) => {
               <div className="col-md-6   " style={{ position: "absolute", zIndex: '2', margin: "auto", width: '122%', left: '-10%', right: '-10%' }}>
                 < Map
                   highlightSpot={highlightSpot}
-                  googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAhjz-cs3ZBPDRp19uRtpMPchvs9yQIyM0&libraries=visualization,drawing,geometry,places`}
+                  googleMapURL={`https://maps.googleapis.com/maps/api/js?key=` + params.key_map + `&libraries=visualization,drawing,geometry,places`}
                   loadingElement={<div style={{ height: '100%' }}> Loading... </div>}
                   containerElement={<div style={{ height: '70vh' }} />}
                   mapElement={<div style={{ height: '100%' }} />}

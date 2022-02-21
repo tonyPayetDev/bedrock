@@ -553,6 +553,33 @@ class Hello_World extends Widget_Base
             )
         );
         $this->add_control(
+            'redirect_contact',
+            array(
+                'label' => esc_html__('URL CONTACT', 'elementskit-lite'),
+                'type'  => Controls_Manager::URL,
+                'placeholder' =>  esc_html('Saisir url du contact ou redirigé si aucun résultat'),
+                'show_label' => true ,
+                'label_block' => true ,
+                'show_external' => true ,
+                'default' => array(
+                    'url' => '',
+                    'is_external' => true,
+                    'nofollow' => true,
+                ),
+            )
+        );
+        $this->add_control(
+            'key_map',
+            array(
+                'label' => esc_html__('KEY_GOOGLE MAP', 'elementskit-lite'),
+                'type' => Controls_Manager::TEXT,
+                'placeholder' =>  esc_html('Saisir la clé google maps'),
+                'default' => '',
+            )
+        );
+
+        
+        $this->add_control(
             'first_load',
             [
                 'label' => esc_html__('Premier chargement', 'elementskit-lite'),
@@ -992,6 +1019,8 @@ class Hello_World extends Widget_Base
            'search_text' =>  $settings['search_text'],
            'heading_text' =>  $settings['heading_text'],
            'url' =>  $settings['ekit_wb_226_url']["url"],
+           'redirect_contact' =>  $settings['redirect_contact']["url"],
+           'key_map' =>  $settings['key_map'],
             "API_URI"=> $url,
             "URL_POST"=> $settings['ekit_wb_225_url']["url"],
             'color' =>  $settings['ekit_wb_1860_color'] ,
