@@ -1,0 +1,21 @@
+
+{% block content %}
+    {# on affiche la prewiew si on est en ligne  #}
+    {% if online == true  and  request.get.action=='elementor'  %}
+        <span  style="margin: 12px; font-size: 28px; font-family:{{ekit_wb_3976_font}}">
+             Search ktp {{id}}
+
+            {{heading_text}}
+            <br>
+            <button type="button"  class="btn " style="color:white;background-color:{{color}}">{{search_text}}</button>
+        </span>
+    {% endif %}
+    
+    <div id="{{id}}" class="app" params='{{params}}' ></div>
+
+    {# <pre>
+    dump({{params}});
+     </pre> #}
+  
+
+{% endblock %}

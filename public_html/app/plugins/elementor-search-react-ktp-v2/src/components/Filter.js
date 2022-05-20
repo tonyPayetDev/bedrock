@@ -1,0 +1,305 @@
+import React, { useState, useEffect } from "react";
+import Select from "react-select";
+import * as APIConfig from "../constants/APIConfig";
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import ColorToggleButton from "./under-component/ColorToggleButton";
+import TextComponent from "./under-component/TextComponent.js";
+import { styled } from "@material-ui/core";
+
+
+const Filter = (props) => {
+  const { HEADERS, setSelectedSort, params, setUrlConstruct, fetchURL, critere, tabDefault, url_construct } = props;
+  const [search, setSearch] = useState("");
+  const [isOpened, setIsOpened] = useState(false);
+  const [isDisabled, setisDisabled] = useState(false);
+  const [tab, setTab] = useState(url_construct);
+  const [active, setActive] = useState(false);
+  const [desactive, setDesactive] = useState(true);
+  let [firstload, setFirstload] = useState(true);
+
+  const [values, setValues] = React.useState({
+    numberformat: ""
+  });
+  const [state, setState] = React.useState({});
+
+  const styletoggle = {
+    color: params.color,
+    boxShadow: "rgb(0 0 0 / 20%) 0px 4px 8px 0px, rgb(0 0 0 / 19%) 0px 6px 20px 0px",
+    fontSize: 14.5,
+    fontFamily: params.ekit_wb_3976_font,
+    '&.Mui-selected': {
+      backgroundColor: params.color,
+      color: "#FFFFFF",
+    },
+    backgroundColor: "#FFFFFF",
+    '&:hover': {
+      backgroundColor: params.color,
+      color: "#FFFFFF",
+
+    },
+  }
+  const styletabactive = {
+    boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+    color: !params.color ? params.color : "white",
+    backgroundColor: params.color ? params.color : "white",
+    margin: ".25rem"
+
+  };
+  const styletab = {
+    boxShadow: " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+    color: params.color ? params.color : "white",
+    margin: ".25rem"
+  };
+  const stylelegend = {
+    color: params.color ? params.color : "",
+    fontSize: '15px',
+    marginTop: ".5rem",
+    marginBottom: ".5rem"
+
+  };
+
+  // recupere les valeurs pars defauts au premier rechargement , la valeur sera mise a false a chaque filtre
+  if (firstload) {
+    Object.values(tabDefault).map((value, index) => {
+      if (value.value) {
+        tab[value.name] = value.value
+
+      }
+    });
+  }
+
+
+  useEffect(
+    (props) => {
+
+      if (search) {
+
+        tab[search.name] = search.value;
+        if (search.value === "" || search.value === null) {// je supprime la clé si checkbox a false enleve la valeur dans l'url
+          delete tab[search.name];
+        }
+
+        if (search.type == "select" && search.value) {
+          tab[search.name] = search.value.value;
+        }
+
+        if (search.type == "btn") {
+
+          setActive(search.value);
+          setDesactive(false);
+
+        }
+        if (search.type == "step") {
+          let element = document.getElementsByName(parseInt(search.step) + 1);
+
+          for (var i = 0; i < element.length; i++) {
+            ReactDOM.findDOMNode(element[i]).classList.remove("d-none")
+          }
+          setActive(search.value);
+          setDesactive(false);
+
+        }
+        if (search.type == "text") {
+          setValues({
+            ...values,
+            [search.name]: search.value
+          });
+
+        }
+
+        if (search.type == "checkbox") {
+          if (state[search.name]) {
+            state[search.name] = false;
+          } else {
+            state[search.name] = true;
+          }
+        }
+
+        setUrlConstruct(tab);
+        setSelectedSort("");
+        setTimeout(() => {
+          APIConfig.getItems(fetchURL + new URLSearchParams(tab), HEADERS).then((data) => setSelectedSort(data));
+
+        }, 800);// temps de chargement pour 
+
+        history.pushState({}, '', "?" + new URLSearchParams(tab)); // rempli l'url du navigateur
+        setFirstload(false);// mis a false pour ne plus etre appler qui est utile au premier chargement de page
+      }
+    },
+    [search]
+  );
+
+  function toggle() {
+    setIsOpened(wasOpened => !wasOpened);
+  }
+
+  function filtre_facto(data, index2) {
+
+    if (data.type == "select") {
+      let col;
+      if (index2 != 0 && data.step != "") {
+        col = data.col + " " + data.col_mobile + " mt-1 d-none";
+      } else {
+        col = data.col + " " + data.col_mobile + " mt-1";
+      }
+      let defaultValue = null;
+      if (tabDefault[data.name].value) {
+        defaultValue = tabDefault[data.name];
+      }
+      let arrayfilter = data.value;
+      if (data.condition) {
+        arrayfilter = data.value.filter(item => item.condition == tab[data.condition])
+
+      } else {
+        arrayfilter = data.value;
+      }
+
+      return (
+        <div
+          name={data.step}
+          className={col}>
+
+          <Select
+            theme={theme => ({
+              ...theme,
+              borderRadius: 5,
+              zIndex: 2,
+              colors: {
+                ...theme.colors,
+                neutral80: params.color,
+                primary25: '#FAFAFA',
+                primary: params.color,
+              },
+            })}
+            placeholder={data.label}
+            isDisabled={isDisabled}
+            isClearable
+            options={arrayfilter}
+            onChange={(e) => setSearch({ "name": data.name, "value": e, type: "select" })}
+            defaultValue={defaultValue}
+          />
+
+        </div >
+
+      );
+    }
+    if (data.type == "text") {
+      return (
+        <TextComponent data={data} params={params} setSearch={setSearch}></TextComponent>
+      );
+    }
+    if (data.type == "button") {
+      return data.value.map((data_value, index) => {
+
+        if (desactive && tabDefault[data.name].value) {
+
+          data_value.ekit_tab_active = tabDefault[data.name].value;
+        } else {
+          if (!active && data_value.ekit_tab_active) {
+            data_value.ekit_tab_active = data_value.value;
+          }
+          else {
+            // si clique on récupere value actif
+            data_value.ekit_tab_active = active;
+          }
+        }
+
+
+        let col = "btn mb-3 " + data.col + " " + data.col_mobile;
+        return (
+          <button className={col}
+            style={data_value.ekit_tab_active == data_value.value ? styletabactive : styletab}
+            onClick={(e) => setSearch({ "name": data.name, "value": data_value.value, 'active': data_value.ekit_tab_active, type: 'btn' })}>
+            {data_value.label}
+          </button >
+        );
+      })
+    }
+    if (data.type == "step") {
+      return (
+        <ColorToggleButton styletoggle={styletoggle} data={data} class="col-md-12" index2={index2} setSearch={setSearch} >
+        </ColorToggleButton >
+      );
+    }
+    if (data.type == "checkbox") {
+      let col = "mb-3 " + data.col + " " + data.col_mobile;
+
+      // todo util pour le multi select
+      return data.value.map((data_value, index) => {
+        let value;
+
+        if (!state[data_value.value]) {
+          value = { "name": data_value.value, "value": 1, type: 'checkbox' };
+        } else {
+          value = { "name": data_value.value, "value": '', type: 'checkbox' };
+
+        }
+        return (
+          <FormControlLabel className={col}
+            control={< Checkbox
+              style={{ color: params.color }}
+              onClick={(e) => setSearch(value)}
+              name={data_value.name} />}
+            label={data_value.label}
+          />
+        );
+      })
+
+    }
+    if (data.type == "legend") {
+      const TextCustom = styled("span")(({ theme }) => (stylelegend));
+
+      return (
+        <TextCustom
+          className={data.col + " text-center"}
+        >
+          {data.label}
+        </TextCustom >
+      );
+
+    }
+
+  }
+  let renderElement = params.type.map((data, index) => {
+    if (!data.critere && !critere) {
+      return filtre_facto(data, index);
+    }
+    if (isOpened) {
+
+      return filtre_facto(data, index);
+    }
+
+  });
+
+  return (
+
+    <div className=" row justify-content-center ">
+
+      {renderElement}
+
+      {params.ekit_critere_btn && (
+        <div className="col-12 ">
+
+          <div className="row justify-content-center">
+
+            <a type="button" onClick={toggle} className="btn "
+            >
+              <i aria-hidden="true"
+                className={isOpened ? "icon    icon-chevron-up" : "icon    icon-chevron-down"} >
+
+              </i>
+              {isOpened ? " - de critères" : " + de critères"}
+
+            </a>
+          </div >
+        </div >
+      )
+      }
+
+    </div >
+
+  );
+};
+
+export default Filter;

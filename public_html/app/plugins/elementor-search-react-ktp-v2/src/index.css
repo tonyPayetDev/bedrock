@@ -1,0 +1,28 @@
+.gm-style-iw-d {
+    overflow: auto !important;
+}
+
+button.gm-ui-hover-effect {
+    visibility: hidden;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+
+    background-color: #f8f9fa !important;
+}
+
+
+a.img-download {
+    position: relative;
+
+}
+
+a:hover .text-color {
+    padding: 4px 2px 4px 2px;
+    border-radius: 4px;
+    background-color: #54595f !important;
+    opacity: 0.8;
+    color: #ffffff !important;
+
+}

@@ -9,16 +9,17 @@ public_html/app/upgrade
 public_html/app/uploads/*
 public_html/app/ai1wm-backups/
 !public_html/app/uploads/.gitkeep
-!public_html/app/plugins/elementor-hello-world-master-tp-dev-v1
+!public_html/app/plugins/elementor-search-react-ktp-v2
 !public_html/app/plugins/all-in-one-wp-migration
 !public_html/app/plugins/all-in-one-wp-migration-file-extension
 !public_html/app/plugins/ultimate-social-media-icons
-
+public_html/app/plugins/elementor-search-react-ktp-v2/inc/jsonFile.json
 # WordPress
 public_html/wp
 
 # Logs
 *.log
+composer.lock
 
 # Dotenv
 .env
@@ -30,3 +31,7 @@ public_html/wp
 
 # WP-CLI
 wp-cli.local.yml
+*.lock
+public_html/app/cache/autoptimize/css/index.html
+public_html/app/cache/autoptimize/js/index.html
+public_html/app/cache/autoptimize/index.html
