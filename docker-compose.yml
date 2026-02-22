@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+  bedrock:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bedrock_app
+    working_dir: /srv/bedrock
+    volumes:
+      - ./:/srv/bedrock
+    environment:
+      - WP_HOME=${WP_HOME}
+      - WP_SITEURL=${WP_SITEURL}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=db
+    depends_on:
+      - db
+    networks:
+      - bedrock-network
+
+  db:
+    image: mysql:8.0
+    container_name: bedrock_db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - bedrock-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: bedrock_nginx
+    volumes:
+      - ./:/srv/bedrock:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - "80:80"
+    depends_on:
+      - bedrock
+    networks:
+      - bedrock-network
+
+volumes:
+  db_data:
+
+networks:
+  bedrock-network:
