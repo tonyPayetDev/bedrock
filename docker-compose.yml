@@ -19,7 +19,7 @@ services:
     restart: unless-stopped
     working_dir: /var/www/html/web
     volumes:
-      - ./web:/var/www/html/web
+      - ./public_html:/var/www/html/web
     environment:
       DB_NAME: bedrock
       DB_USER: wpuser
@@ -36,7 +36,7 @@ services:
       - "80:80"
     volumes:
       - ./nginx:/etc/nginx/conf.d
-      - ./web:/var/www/html/web
+      - ./public_html:/var/www/html/web
     depends_on:
       - wordpress
 
