@@ -1,54 +1,41 @@
-version: "3.9"
+version: '3.8'
 
 services:
-  bedrock:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: bedrock_app
-    working_dir: /srv/bedrock
+  db:
+    image: mariadb:10.9
+    container_name: bedrock-db
     volumes:
-      - ./:/srv/bedrock
+      - bedrock-db-data:/var/lib/mysql
     environment:
-      - WP_HOME=${WP_HOME}
-      - WP_SITEURL=${WP_SITEURL}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=db
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: bedrock
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: wppassword
+
+  wordpress:
+    image: wordpress:6.5-php8.2-fpm
+    container_name: bedrock-wordpress
+    working_dir: /var/www/html/web
+    volumes:
+      - ./web:/var/www/html/web
+    environment:
+      DB_NAME: bedrock
+      DB_USER: wpuser
+      DB_PASSWORD: wppassword
+      DB_HOST: db:3306
     depends_on:
       - db
-    networks:
-      - bedrock-network
-
-  db:
-    image: mysql:8.0
-    container_name: bedrock_db
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - db_data:/var/lib/mysql
-    networks:
-      - bedrock-network
 
   nginx:
     image: nginx:alpine
-    container_name: bedrock_nginx
-    volumes:
-      - ./:/srv/bedrock:ro
-      - ./nginx/conf.d:/etc/nginx/conf.d
+    container_name: bedrock-nginx
     ports:
       - "80:80"
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./web:/var/www/html/web
     depends_on:
-      - bedrock
-    networks:
-      - bedrock-network
+      - wordpress
 
 volumes:
-  db_data:
-
-networks:
-  bedrock-network:
+  bedrock-db-data:
