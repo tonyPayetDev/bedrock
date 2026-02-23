@@ -2,8 +2,9 @@ version: '3.8'
 
 services:
   db:
-    image: mariadb:10.9
+    image: mariadb:10.11 # plus stable et légère
     container_name: bedrock-db
+    restart: unless-stopped
     volumes:
       - bedrock-db-data:/var/lib/mysql
     environment:
@@ -13,8 +14,9 @@ services:
       MYSQL_PASSWORD: wppassword
 
   wordpress:
-    image: wordpress:6.5-php8.2-fpm
+    image: wordpress:6.5-php8.2-fpm-alpine # image plus légère
     container_name: bedrock-wordpress
+    restart: unless-stopped
     working_dir: /var/www/html/web
     volumes:
       - ./web:/var/www/html/web
@@ -27,12 +29,13 @@ services:
       - db
 
   nginx:
-    image: nginx:alpine
+    image: nginx:stable-alpine # plus légère que alpine pure
     container_name: bedrock-nginx
+    restart: unless-stopped
     ports:
       - "80:80"
     volumes:
-      - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx:/etc/nginx/conf.d
       - ./web:/var/www/html/web
     depends_on:
       - wordpress
